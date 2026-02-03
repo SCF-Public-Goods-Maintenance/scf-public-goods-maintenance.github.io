@@ -1,3 +1,8 @@
+---
+title: Public Goods Award Experiment
+nav_order: 3
+---
+
 # Public Goods Award
 
 ## Voting

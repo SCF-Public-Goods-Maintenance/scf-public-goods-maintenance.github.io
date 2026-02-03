@@ -1,0 +1,29 @@
+# Basic site settings
+title: SCF Public Goods Maintenance Working Group
+description: Community hub for sustainable public goods funding and maintenance in the Stellar ecosystem
+baseurl: "" # Empty for root publishing
+url: "https://scf-public-goods-maintenance.github.io"
+
+# Just the Docs remote theme (supported on GitHub Pages)
+remote_theme: just-the-docs/just-the-docs
+
+# Required plugin for remote_theme
+plugins:
+  - jekyll-remote-theme
+
+# Just the Docs configuration
+search_enabled: true
+heading_anchors: true
+footer_content: "Last updated: February 2026"
+color_scheme: dark # Options: light, dark, nil (auto)
+
+# Auxiliary links (top-right header)
+aux_links:
+  "Repository on GitHub":
+    - "https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io"
+  "Stellar Developers Discord":
+    - "https://discord.gg/stellardev"
+
+# Back to top button
+back_to_top: true
+back_to_top_text: "Back to top"

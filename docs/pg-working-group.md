@@ -1,3 +1,8 @@
+---
+title: Working Group Consensus
+nav_order: 2
+---
+
 ## Maintenance of Public Goods
 
 **Purpose**

@@ -1,3 +1,8 @@
+---
+title: Home
+nav_order: 1
+---
+
 # SCF Public Goods Maintenance Working Group
 
 ## Welcome
@@ -10,7 +15,7 @@ Public goods — open-source tooling, libraries, explorers, RPC infrastructure, 
 
 The core vision, purpose, outcomes, and open questions are captured in the living consensus document:
 
-- [Public Goods Maintenance Working Group Overview](/docs/pg-working-group.md)
+- [Public Goods Maintenance Working Group Overview](/pg-working-group.md)
 
 This document represents the preliminary and evolving agreement among active contributors (including Pilots, maintainers, and SDF observers) as of early 2026. It's a snapshot of a source document that is still accepting edits, and does not represent the latest consensus.
 
@@ -22,7 +27,7 @@ The working group is piloting an experiment in 2026 to transition the quarterly 
 
 Detailed design, voting mechanics, and NQG integration:
 
-- [Public Goods Award Experiment Specification](/docs/public-goods-award.md) *(under active development)*
+- [Public Goods Award Experiment Specification](/public-goods-award.md) *(under active development)*
 
 ## Public Goods Atlas (Metrics Backbone)
 
@@ -32,7 +37,7 @@ Key components include dependency graphing, transitive criticality scoring, pony
 
 Architecture and technical specification:
 
-- [PG Atlas Technical Architecture](/docs/pg-atlas.md) *(under active development)*
+- [PG Atlas Technical Architecture](/pg-atlas.md) *(under active development)*
 
 ## Get Involved
 
@@ -42,5 +47,3 @@ This is a community-led initiative. All discussions remain open to SCF Pilots in
 - Pilots are especially encouraged to review, comment, and contribute via PRs in this git repo.
 
 Repository contributions follow standard GitHub flow. Issues and discussions are enabled for async input.
-
-*Last updated: February 2026*
