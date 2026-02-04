@@ -1,0 +1,44 @@
+<nav class="page-navigation" aria-label="Page navigation">
+  <div class="nav-prev">
+    {% if page.previous.url %}
+      <a href="{{ page.previous.url | relative_url }}" class="btn btn-outline">
+        ← {{ page.previous.title | default: "Previous" }}
+      </a>
+    {% endif %}
+  </div>
+  <div class="nav-next">
+    {% if page.next.url %}
+      <a href="{{ page.next.url | relative_url }}" class="btn btn-outline">
+        {{ page.next.title | default: "Next" }} →
+      </a>
+    {% endif %}
+  </div>
+</nav>
+
+<style>
+  .page-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin: 3rem 0 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--global-divider-color);
+  }
+  .nav-prev, .nav-next {
+    flex: 1;
+  }
+  .nav-next {
+    text-align: right;
+  }
+  .page-navigation .btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--global-theme-color);
+    border-radius: 0.25rem;
+    color: var(--global-theme-color);
+    text-decoration: none;
+  }
+  .page-navigation .btn:hover {
+    background: var(--global-theme-color);
+    color: var(--global-text-color);
+  }
+</style>

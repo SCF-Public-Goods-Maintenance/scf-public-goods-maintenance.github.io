@@ -14,8 +14,7 @@ plugins:
 # Just the Docs configuration
 search_enabled: true
 heading_anchors: true
-footer_content: "Last updated: February 2026"
-color_scheme: dark # Options: light, dark, nil (auto)
+color_scheme: dark
 
 # Auxiliary links (top-right header)
 aux_links:
