@@ -6,7 +6,8 @@ has_children: true
 
 # PG Atlas Architecture Documentation
 
-Welcome to the technical architecture specification for **PG Atlas** — the metrics backbone for SCF's Public Goods Maintenance program.
+Welcome to the technical architecture specification for **PG Atlas** — the metrics backbone for
+SCF's Public Goods Maintenance program.
 
 This site is under active development by the SCF Public Goods Working Group.
 
