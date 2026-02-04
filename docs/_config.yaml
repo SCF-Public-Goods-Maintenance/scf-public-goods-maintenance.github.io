@@ -1,5 +1,5 @@
 # Basic site settings
-title: SCF Public Goods Maintenance Working Group
+title: SCF PG Maintenance WG
 description: Community hub for sustainable public goods funding and maintenance in the Stellar ecosystem
 baseurl: "" # Empty for root publishing
 url: "https://scf-public-goods-maintenance.github.io"
