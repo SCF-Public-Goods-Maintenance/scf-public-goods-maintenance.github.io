@@ -10,6 +10,9 @@ remote_theme: just-the-docs/just-the-docs
 # Required plugin for remote_theme
 plugins:
   - jekyll-remote-theme
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
 
 # Just the Docs configuration
 search_enabled: true
@@ -26,3 +29,7 @@ aux_links:
 # Back to top button
 back_to_top: true
 back_to_top_text: "Back to top"
+
+# Custom includes
+includes:
+  footer: footer_custom
