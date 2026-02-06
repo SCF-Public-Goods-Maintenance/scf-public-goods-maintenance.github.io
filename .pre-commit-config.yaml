@@ -1,0 +1,21 @@
+repos:
+  # Standard hooks for general file hygiene
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+
+  # Prettier for "folding" prose to 101 characters
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.1.0
+    hooks:
+      - id: prettier
+        types_or: [markdown]
+        args: ["--print-width", "101", "--prose-wrap", "always"]
+
+  # Markdownlint for structural validation
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.13.0
+    hooks:
+      - id: markdownlint-cli2

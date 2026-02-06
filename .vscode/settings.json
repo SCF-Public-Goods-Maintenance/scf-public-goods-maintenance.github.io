@@ -1,0 +1,10 @@
+{
+  "[markdown]": {
+    "editor.wordWrapColumn": 101,
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "prettier.printWidth": 101,
+  "prettier.proseWrap": "always",
+  "editor.formatOnSave": true
+}
