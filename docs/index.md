@@ -26,21 +26,22 @@ This document represents the preliminary and evolving agreement among active con
 Pilots, maintainers, and SDF observers) as of early 2026. It's a snapshot of a source document that
 is still accepting edits, and does not represent the latest consensus.
 
-## Public Goods Award (2026 Experiments)
+## Public Goods Award
+
+The SCF Public Goods Award supports the ongoing maintenance, security, documentation, and incremental
+evolution of public goods that are broadly beneficial to the Stellar/Soroban ecosystem.
+
+- [Public Goods Award Process and Rules](/public-goods-award.md)
 
 The working group is piloting an experiment in 2026 to transition the quarterly Public Goods Award
-toward a hybrid retroactive + maintenance retainer model:
+toward a hybrid retroactive + maintenance retainer model. See the detailed design, voting mechanics,
+and NQG integration:
 
-- **Public Goods Award beta on Tansu** – Decentralized proposal intake, NQG-weighted voting, and
-  anonymous voter participation.
+- [PG Award Voting Experiment](/pg-award/2026-voting-experiment.md) _(under active development)_
 
-Detailed design, voting mechanics, and NQG integration:
+## Public Goods Atlas
 
-- [Public Goods Award Experiment Specification](/public-goods-award.md) _(under active development)_
-
-## Public Goods Atlas (Metrics Backbone)
-
-PG Atlas is the objective metrics layer that aims to provide transparent, verifiable signals for
+PG Atlas is the objective metrics backbone that aims to provide transparent, verifiable signals for
 funding decisions.
 
 Key components include dependency graphing, transitive criticality scoring, pony factor analysis, and

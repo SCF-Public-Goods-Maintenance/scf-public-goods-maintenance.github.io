@@ -1,57 +1,112 @@
 ---
-title: Public Goods Award Experiment
+title: Public Goods Award
+has_children: true
 nav_order: 3
 ---
 
 # Public Goods Award
 
-## Voting
+## Overview
 
-We would like to propose to use Tansu as a decentralized voting platform to manage the proposals.
+The SCF Public Goods Award supports the ongoing maintenance, security, documentation, and incremental
+evolution of open-source public goods — tools, infrastructure, explorers, SDKs, and services that are
+non-excludable, non-rivalrous, and broadly beneficial to the Stellar/Soroban ecosystem.
 
-There are a few ways we could make this work, projects themselves won’t necessarily have to be
-registered on Tansu. Instead, we are going to create a specific organization for SCF in Tansu. For
-visibility, we can attach projects to a given space, but again we don’t need to require this from
-projects.
+Managed as a community-driven program with increasing decentralization, the Award provides
+predictable funding (up to $50K in XLM\* per proposal per quarter) based on demonstrated retroactive
+impact, proposed maintenance/features, and objective metrics from [PG Atlas](/pg-atlas.md). Funding
+combines retroactive rewards for past contributions with forward retainers tied to clear deliverables
+and Service Level Objectives (SLOs).
 
-At a higher level:
+The program evolves in stages, with the current focus on transitioning from soft-launch
+centralization to data-informed, Pilot-governed processes. Continued funding requires validated
+impact, multi-maintainer progress, and alignment with ecosystem needs.
 
-1. Create a SCF Governance space (non-code project on Tansu),
-2. Maintainers to make a proposal by themselves in SCF Governance space. The key here is that the
-   proposals should be made anonymous. Tansu uses a traditional Pedersen commitment scheme meaning
-   that the owner of the SCF space would be able to inspect votes (as it is the case now.) The main
-   difference being that people don’t have to use multiple addresses.
-3. Get all pilots to vote on proposals using their NQG.
+## Award Structure
 
-Tansu is getting some new options when creating a proposal. We will soon be able to either use a
-token based vote (locking a collateral based on the selected weight) or a badge based vote. At the
-moment, said badges are hardcoded. Depending on how we would like to move, we could plug the NQG
-scores either on the token side, or the badge side without much work.
+- **Cap**: Up to $50K in XLM\* per proposal per quarter (tunable based on PG Atlas scores and
+  community signal in future stages).
+- **Types**: Hybrid — retro rewards for proven impact + maintenance retainers for ongoing work (with
+  SLO checkpoints).
+- **Distribution**: Initial tranche post-approval; subsequent via milestone/SLO validation.
+- **Reapplication**: Quarterly, with evidence of past deliverables and new ecosystem-aligned goals.
 
-Votes on Tansu can execute arbitrary smart contracts. We could use this mechanism in multiple ways
-such as updating the voting history for NQG scoring or even triggering a payment. The last point
-would require more extensive discussions and we might want to leave that conversation for a phase 2.
+**Stages** (subject to community iteration):
 
-## NQG
+- **Current** (transition): GitHub-issue intake, Pilot eligibility quorum, Metric Gate context,
+  Tansu-based voting experiment.
+- **Future** (hypothetical): Full on-chain treasury, streamed payouts, broader plural streams (e.g.,
+  dependency-matching pool).
 
-At the moment, the everyone’s NQG score is calculated and stored in this contract:
+## Eligibility Criteria
 
-<https://github.com/stellar/stellar-community-fund-contracts>
+Projects must:
 
-We would like to propose to build a small abstraction on top as a soulbound and dynamic NFT
-(following SEP-50 as to be compatible with Freighter at least.) This would allow each participant to
-have a clear view on their score and a nice way to represent and share their accomplishments. Pilots
-should be proud of their status.
+- Be open-source and clearly non-excludable/non-rivalrous.
+  - Some exceptions to FOSS are possible for free-to-use permissionless services such as block
+    explorers.
+- Demonstrate ecosystem-wide value (e.g., multiple dependents via PG Atlas).
+- Have transparent maintenance (pony factor tracking, progress toward multi-maintainer).
+- Meet basic due diligence (no sanctions, legal compliance — coordinated minimally via SDF if
+  needed).
 
-When the NQG score of participants changes, the NFT would be updated to reflect that change.
+**New project intake**:
 
-A second objective could be to move the role based system here as well.
+- Submit templated GitHub issue in this repo ("New PG Proposal" template).
+- Require simplified Pilot quorum: Minimum 3 thumbs-up reactions; each thumbs-down requires 2
+  additional thumbs-up to override (formula: `required_ups = 3 + 2 × downs`).
+- Discussion period: ≥1 week.
+- Approved issues advance to full proposal.
 
-Having all that information readily available on-chain would not only help us with voting on
-proposals. It would allow other projects to leverage this trust system. E.g. Soroban Security is
-using the Discord API to allow Pilots to add audit reports onto their platform. Pilots can do more
-for the community if we have the tools. And this would be an easy lift.
+Existing/returning projects may resubmit directly with impact updates.
 
-Of course, we would have some accompanying art to show the status evolution. We can even have
-something composable if we want. E.g. make a game-card like version and as an image the profile
-picture someone would select.
+## Program Phases
+
+1. **Proposal Initiation**: Open GitHub issue (new) or update existing project page for returning
+   projects.
+1. **Community Discussion**: Async feedback in issue (Discord may be used to discuss, but recaps are
+   posted to GitHub).
+1. **Eligibility Quorum**: Pilots signal via reactions (see [Eligibility](#eligibility-criteria)).
+1. **Full Proposal**: Submit detailed project page in PR, with impact evidence, SLOs, and a budget
+   breakdown.
+1. **Metric Review**: PG Atlas scores published for context.
+1. **Voting Round**:
+   1. Proposals are added to Tansu and link to project pages.
+   1. Tansu-based NQG vote (see [2026 Voting Experiment](/pg-award/2026-voting-experiment.md)).
+1. **Award Distribution**: Tranches tied to approval + milestones/SLOs.
+1. **Resubmission**: Quarterly with progress reports.
+
+## Public Good Categories
+
+Additional categories may be added based on community discussion. Generally, the SCF Public Goods
+Award will not support educational categories but exceptions can be made for Developer Experience
+tools.
+
+| Category                  | Purpose                                                                                             | Eligibility Rationale                                                                     | Examples            |
+| ------------------------- | --------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ------------------- |
+| SDKs                      | Maintain SDKs in popular programming languages to enable easier Stellar integration.                | Core ecosystem infra required by developers for app and protocol development.             | Python Stellar SDK  |
+| Data Support              | Provide dashboards, indexers, or APIs to expose Stellar data, analytics, or insights.               | Supports visibility, growth tracking, and transparency across the ecosystem.              | Dune Dashboards     |
+| Wallet Support            | Develop shared wallet tooling or starter kits to reduce dev effort and improve UX.                  | Encourages better wallets and faster onboarding; critical for adoption.                   | Stellar Wallets Kit |
+| Developer Experience      | Tools that enhance productivity and access for smart contract, backend, or frontend devs.           | Lowering friction in building on Stellar improves ecosystem velocity.                     | Solang Compiler     |
+| Ecosystem Visibility      | Surface projects, developer activity, use cases, and funding history in the ecosystem.              | Transparency drives engagement, investor interest, and governance participation.          | Stellarlight.xyz    |
+| Infrastructure Monitoring | Tools for observing validators, node status, uptime, or key protocol signals.                       | Ensures network reliability and decentralization monitoring.                              | Stellarbeat         |
+| Governance Tools          | Public interfaces, analytics, or coordination tools to support voting and participation.            | Supports decentralization and open participation in funding or protocol-level governance. | Soroban Governor    |
+| Security & Auditing Tools | Build or maintain tools that help identify, prevent, or analyze vulnerabilities in smart contracts. | Increases trust and reduces systemic risk for DeFi or financial tooling on Stellar.       | Fuzzing Framework   |
+
+## Changes to General Rules
+
+(Adapted from current rules — publicity consent, disclaimers, privacy policy linkage preserved;
+centralized Council references removed and replaced with community processes.)
+
+**Open Questions**:
+
+- Tune $50K cap to metric-based bands?
+- Formalize SLO templates per category?
+- KYC scope in decentralized intake?
+- Do we need the simplified new project intake vote to be anonymous?
+- How to open up eligibility for widely used infra that can be monetized, but needs awards on the
+  road to financial sustainability?
+
+This page reflects a transition design as of February 2026 — evolving via repo PRs.
+
+_See sub-page: [2026 Voting Experiment](/docs/2026-voting-experiment.md) for Tansu pilot details._
