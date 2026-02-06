@@ -12,19 +12,19 @@ PG Atlas operations must balance simplicity, reliability, and low ongoing mainte
 community-driven project:
 
 - **Push-to-deploy simplicity**: Git push to main should trigger builds/deploys without manual
-intervention.
+  intervention.
 - **Minimal DevOps overhead**: Prefer managed services over raw VMs; avoid complex orchestration
-(Kubernetes) for v0.
+  (Kubernetes) for v0.
 - **Single-machine capable**: Backend (graph DB + API) fits on one modest instance.
 - **Reliable periodic jobs**: Shadow crawls, metric recomputes, adoption signal pulls, activity flag
-batch updates — scheduled (various frequencies) with logging and alerts.
+  batch updates — scheduled (various frequencies) with logging and alerts.
 - **Cost control**: Target <$100/month total; free tiers where possible.
 - **GitHub-centric where feasible**: Repo already unavoidable for code/SBOM ingestion — leverage
-Actions for jobs.
+  Actions for jobs.
 - **Resilience & monitoring**: Basic health checks, logs, uptime; easy rollback.
 - **Community accessibility**: Public endpoints, no heavy vendor lock-in.
 - **Frontend hosting**: Static-friendly, fast CDN; at least one Stellar-native or decentralized
-option.
+  option.
 
 Security: HTTPS enforced, rate limiting, no public writes.
 
@@ -35,7 +35,7 @@ Security: HTTPS enforced, rate limiting, no public writes.
 **Description**:
 
 - Graph DB (JanusGraph/BerkeleyDB or chosen backend) on a basic Droplet (e.g., $20–40/month
-CPU-optimized).
+  CPU-optimized).
 - FastAPI container on DigitalOcean App Platform (managed PaaS, auto-deploys from GitHub).
 - Periodic workers: App Platform background workers or scheduled Droplet cron + supervisor.
 - Dashboard: Static build (Next.js or Streamlit exported) on App Platform static site or separate.
@@ -81,7 +81,7 @@ CPU-optimized).
 - Backend/API/DB on DigitalOcean App Platform + Droplet (as Option 1) or Fly.io (global edge).
 - Periodic jobs via provider schedulers or GitHub Actions.
 - Dashboard frontend: Static build hosted on xlm.sh (Stellar-native decentralized/static hosting via
-Soroban or IPFS gateway).
+  Soroban or IPFS gateway).
 
 **Pros**:
 
@@ -133,9 +133,9 @@ activity flag batch updates) from the FastAPI request cycle.
 **Deployment options**:
 
 - **Self-hosted on main instance** (Droplet/Fly machine): Run Redis container + Celery worker(s) via
-Docker Compose/supervisor. Low cost, full control.
+  Docker Compose/supervisor. Low cost, full control.
 - **Managed**: Redis Cloud (free tier sufficient) or DigitalOcean Managed Redis; Celery workers on
-App Platform background tasks or same host.
+  App Platform background tasks or same host.
 
 **Pros of managed**: Auto-scaling, backups, no persistence worries.
 
@@ -149,9 +149,9 @@ breadcrumbs for debugging.
 **Options**:
 
 - **Sentry.io SaaS** (open-source plan free for public projects): DSN integration in FastAPI,
-automatic error grouping, releases tracking.
+  automatic error grouping, releases tracking.
 - **Self-hosted Sentry**: Possible on Droplet but high overhead (multi-container: Postgres, Redis,
-workers) — not recommended for v0.
+  workers) — not recommended for v0.
 
 **Recommendation**: Start with Sentry.io free tier — zero setup beyond SDK, aligns with community
 transparency.
@@ -166,7 +166,7 @@ transparency.
 **Logging**:
 
 - Structured JSON logs to stdout; provider capture (DigitalOcean (Betterstack or Papertrail add-on)
-or Fly logs).
+  or Fly logs).
 
 **Monitoring & Alerts**:
 
@@ -176,7 +176,7 @@ or Fly logs).
 **Backups**:
 
 - Database dumps (Postgres pg_dump and/or JanusGraph snapshots) to S3-compatible bucket or repo
-artifacts.
+  artifacts.
 - Automated via cron/GitHub Actions.
 
 <!-- FUTURE SELF: Integrate Sentry performance tracing once API endpoints stabilized. -->
@@ -187,7 +187,7 @@ artifacts.
 - Periodic job runtime needs (e.g., full recompute duration estimate)?
 - xlm.sh feasibility for interactive dashboard (client-side graph rendering size/limits)?
 - Any advantages to have billing in USDC through e.g. Rozo.ai or
-[Flashback](https://www.flashback.tech/)?
+  [Flashback](https://www.flashback.tech/)?
 - Celery beat scheduler location (same worker or separate for reliability)?
 - Acceptable cost threshold for managed auxiliaries?
 - Alert channels (Discord webhook, email)?

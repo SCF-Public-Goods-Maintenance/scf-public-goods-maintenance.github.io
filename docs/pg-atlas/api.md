@@ -27,15 +27,15 @@ RESTful principles for predictability and ease of consumption.
 - Provide off-chain context for Tansu rounds without on-chain dependency.
 - Mitigate Python lock-in via OpenAPI docs and multi-language examples (TypeScript, Rust, Go).
 - Support dashboard needs plus broader ecosystem tooling (e.g., custom scorecards, dependency
-alerts).
+  alerts).
 
 ## Base URL & Formats
 
 - Base: `/api/v1` (versioned for future stability).
 - Response format: JSON (default); optional CSV for table structures and raw artifacts via Accept
-header.
+  header.
 - Error responses: Standard HTTP codes with JSON body `{ "detail": "message" }`, following FastAPI +
-Pydantic defaults.
+  Pydantic defaults.
 
 ## Authentication & Authorization (v0)
 
@@ -58,9 +58,10 @@ Pydantic defaults.
 ### Ecosystem Projects
 
 - `GET /projects` — List project vertices with pagination and filters.
+
   - Query params: `type=pg_root`, `active=true`, `search=keyword`, `limit=50`, `offset=0`.
   - Response: Paginated list with basic fields (id, display_name, type, active, latest_version,
-criticality_score, pony_factor).
+    criticality_score, pony_factor).
 
 - `GET /projects/{canonical_id}` — Detailed project vertex + edges view.
   - Includes: metadata, adoption signals, direct dependents and dependees.
@@ -68,19 +69,22 @@ criticality_score, pony_factor).
 ### Dependencies
 
 - `GET /projects/{canonical_id}/dependents` — Direct (active) dependents.
+
   - Query: `active=true`, `within_ecosystem=true`.
 
 - `GET /projects/{canonical_id}/dependencies` — Direct/upstream dependencies.
+
   - Query: `active=true`, `within_ecosystem=true`.
 
 - `GET /projects/{canonical_id}/blast-radius` — Transitive within-ecosystem dependents, only
-available for `type=pg_root` vertices, 404 otherwise.
+  available for `type=pg_root` vertices, 404 otherwise.
 
 ### Metrics & Scores
 
 These are early thoughts. Needs to be revisited after fleshing out use cases.
 
 - `GET /scores` — Leaderboard of PGs sorted by composite or individual metric.
+
   - Query: `sort=-criticality`, `min_criticality=5`.
 
 - `GET /scores/{canonical_id}` — Full PG Score breakdown (components JSON).
@@ -89,7 +93,7 @@ These are early thoughts. Needs to be revisited after fleshing out use cases.
 
 - `GET /export/projects` — CSV/JSON dump of all nodes (cached quarterly).
 - `GET /export/graph` — Simplified graph JSON (within-ecosystem nodes + edges array, for offline
-analysis).
+  analysis).
 
 ## Caching & Performance
 

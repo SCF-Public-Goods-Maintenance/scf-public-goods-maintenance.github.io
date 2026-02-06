@@ -12,9 +12,9 @@ The ingestion layer is responsible for collecting and normalizing data that feed
 graph and contributor statistics. For v0, ingestion focuses on three primary streams:
 
 1. **SBOM submissions** – explicit dependency declarations from SCF-funded projects (verification
-layer).
+   layer).
 2. **Reference graph bootstrapping** – automated crawling of public package registries to build an
-initial graph from known Stellar/Soroban PG roots.
+   initial graph from known Stellar/Soroban PG roots.
 3. **Git contributor logs** – for pony factor calculation (separate but parallel ingestion).
 
 The goal is rapid bootstrapping of a meaningful graph while encouraging accurate, ongoing SBOM
@@ -28,18 +28,18 @@ updates without full reprocessing.
 **Workflow**:
 
 - Teams add a lightweight GitHub Action that generates a CycloneDX or SPDX SBOM (JSON format
-preferred for parsing ease).
+  preferred for parsing ease).
 - Action posts the SBOM to a designated endpoint directly from the GitHub hosted runner. (only
-accepts allow-listed callers)
+  accepts allow-listed callers)
 - Optional: allow non-GitHub SBOM submissions which are signed with a project key for provenance
-(deferred for v0).
+  (deferred for v0).
 
 **Processing**:
 
 - Validate format and schema.
 - Extract dependencies (package name + version range).
 - Map to canonical ecosystem nodes (normalize ecosystem-specific names, e.g., `soroban-sdk` across
-crates/npm).
+  crates/npm).
 - Create/update "depends-on" edges from the submitting project (leaf) to declared PGs (roots).
 - Flag conflicts with reference graph (e.g., missing declared deps) for manual review.
 
@@ -47,15 +47,15 @@ crates/npm).
 
 - Soft: Bonus points in PG scoring for early/complete submissions.
 - Planned: Tie to SCF Build testnet tranche release (preferred over mainnet to capture dependencies
-early).
+  early).
 
 <!-- FUTURE SELF: Add example GitHub Action YAML snippet here once finalized. Link to template repo.
 -->
 
 **Open Questions**:
 
-- Mandatory vs. optional for v0? (Risk: low uptake → sparse graph; mitigation: strong reference
-graph bootstrapping).
+- Mandatory vs. optional for v0? (Risk: low uptake → sparse graph; mitigation: strong reference graph
+  bootstrapping).
 - Which SBOM format to standardize on (CycloneDX JSON recommended for tool support)?
 
 ## Reference Graph Bootstrapping
@@ -78,9 +78,9 @@ metadata, starting from curated root nodes.
 
 1. Populate the (unconnected) within-ecosystem nodes from OpenGrants SCF Awarded projects.
 1. Maintain a curated seed list of known Stellar/Soroban public goods (e.g., `soroban-sdk`,
-`stellar-js-sdk`, `stellar-sdk` on PyPI, common Soroban contracts/libs).
-1. Crawl reverse dependencies (who imports these roots) up to 2–3 hops (configurable depth to
-bound scope).
+   `stellar-js-sdk`, `stellar-sdk` on PyPI, common Soroban contracts/libs).
+1. Crawl reverse dependencies (who imports these roots) up to 2–3 hops (configurable depth to bound
+   scope).
 1. Normalize package names and create nodes/edges.
 1. Mark reference-derived nodes as "possibly outside of ecosystem" until verified by SBOM.
 1. Run periodically (weekly for v0) or on triggers (new SCF project approval).
@@ -99,11 +99,11 @@ bound scope).
 **Process**:
 
 - Parse `git log --format='%aN' | sort | uniq -c | sort -nr` (or equivalent) over the last 12–24
-months.
-- Reuse patterns from [Scientific Python
-devstats](https://devstats.scientific-python.org/_generated/scipy/).
-- Store raw contributor counts and computed pony factor (number of contributors responsible for
-≥50% of lines of code).
+  months.
+- Reuse patterns from
+  [Scientific Python devstats](https://devstats.scientific-python.org/_generated/scipy/).
+- Store raw contributor counts and computed pony factor (number of contributors responsible for ≥50%
+  of lines of code).
 - Update on triggers (new release tag, quarterly refresh).
 
 **Open Questions**:

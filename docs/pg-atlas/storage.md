@@ -19,7 +19,7 @@ milestone status changes flipping many activity flags).
 - Incremental updates from ingestion (fast writes for single-project SBOMs).
 - Batch efficiency for activity flag recalculations.
 - Version labeling: full versioning for published packages (PG roots/upstream), latest git hash/tag
-for leaf projects.
+  for leaf projects.
 - Visibility into outside-ecosystem dependencies of within-ecosystem PGs.
 - Separate pony factor data (git contributor logs).
 - Auditability via retained raw SBOMs/crawl snapshots.
@@ -28,8 +28,8 @@ for leaf projects.
 
 **Decision status**: Final backend deferred until the second full architecture iteration.
 Requirements and trade-offs will become clearer as our picture of storage use-cases matures. Current
-shortlist: JanusGraph (BerkeleyDB), Sqlg (PostgreSQL), HugeGraph (RocksDB). All are FOSS,
-single-node capable, and TinkerPop-compatible.
+shortlist: JanusGraph (BerkeleyDB), Sqlg (PostgreSQL), HugeGraph (RocksDB). All are FOSS, single-node
+capable, and TinkerPop-compatible.
 
 ## Data Model
 
@@ -50,7 +50,7 @@ use-cases, and eventually performance-oriented benchmark experiments.
 **Versioned Releases** (for PG roots/upstream):
 
 - Separate vertices per version, or multi-properties on main vertex (v0 simplicity favors
-multi-properties).
+  multi-properties).
 
 **Edges** (dependencies):
 
@@ -60,7 +60,7 @@ multi-properties).
 **Pony Factor**:
 
 - Separate vertex property or side table/collection (JSON map of contributor counts + computed
-pony_factor).
+  pony_factor).
 
 **Activity Flag (v0)**:
 
@@ -81,8 +81,8 @@ implementation? Mermaid ERD before implementation? -->
 
 **Pros**:
 
-- Native TinkerPop/Gremlin — optimal for traversals (active subgraph upstream propagation) and
-OLAP batch jobs.
+- Native TinkerPop/Gremlin — optimal for traversals (active subgraph upstream propagation) and OLAP
+  batch jobs.
 - BerkeleyDB is embeddable/file-based — true zero-cluster persistence, low overhead.
 - Efficient indexed writes for per-project updates; supports batch transactions.
 - Proven for property graphs with versioning/multi-properties.
@@ -100,7 +100,7 @@ OLAP batch jobs.
 
 - Gremlin queries on familiar relational backend — no new infrastructure.
 - PostgreSQL excels at mixed workloads: graph edges + tabular pony factor/git logs in separate
-schemas.
+  schemas.
 - Excellent batch update performance (SQL SET for activity flags across thousands of rows).
 - Fast incremental writes via standard ORM.
 - Easy audit/export with SQL tools.
@@ -114,12 +114,14 @@ schemas.
 ### HugeGraph (RocksDB backend — single-node)
 
 **Pros**:
+
 - Native Gremlin with strong OLTP/OLAP support.
 - RocksDB embeddable and high-performance for writes.
 - Built-in schema flexibility for versioning.
 - Good batch transaction support.
 
 **Cons**:
+
 - Less mature community/maintenance than JanusGraph.
 - Configuration overhead higher than BerkeleyDB embed.
 - Pony factor/git logs require separate handling or JSON blobs.
@@ -128,19 +130,20 @@ schemas.
 ## Recommended Path
 
 Assume **JanusGraph + BerkeleyDB** for detailed implementation:
+
 - Best native graph performance for v0 metrics (transitive counts, active subgraph).
 - Per-project updates: Gremlin transactions for edge/vertex changes.
 - Batch activity updates: Scripted Gremlin or bulk load for flag flips.
 - Pony factor: Materialize on repo vertices but store intermediate git contributor stats as an edge
-type or in a separate data structure.
+  type or in a separate data structure.
 
 ## Migration & Extensibility
 
 All options preserve TinkerPop compatibility:
 
 - Start with chosen single-node → add distributed backend later if needed.
-- Export path: Gremlin bulk dump or standard serialization. Traversals stay in Gremlin and won't
-need a major port/rewrite later on.
+- Export path: Gremlin bulk dump or standard serialization. Traversals stay in Gremlin and won't need
+  a major port/rewrite later on.
 
 ## Open Questions
 

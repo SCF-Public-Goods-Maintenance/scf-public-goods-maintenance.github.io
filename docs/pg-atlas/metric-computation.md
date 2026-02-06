@@ -36,7 +36,7 @@ leaf project. This filters out dead branches and ensures criticality reflects cu
 **Logic** (upstream propagation):
 
 - Start from all vertices where `active == true` and `in-degree == 0` (true leaves) or all active
-leaves.
+  leaves.
 - Traverse upstream along "depends-on" edges (outgoing from dependents to dependencies).
 - Mark all reached ancestors as part of the active ecosystem.
 - Result: Subgraph containing only nodes with paths from active leaves.
@@ -55,8 +55,7 @@ g.V().has('active', true)
  .cap('active-ecosystem')
 ```
 
-**Efficiency**: O(V + E) per full run — acceptable at projected scale; cache active set between
-runs.
+**Efficiency**: O(V + E) per full run — acceptable at projected scale; cache active set between runs.
 
 <!-- FUTURE SELF: Materialize active_subgraph membership as vertex property for faster filtering in
 repeated queries. -->
@@ -81,8 +80,7 @@ supports (JanusGraph does natively). -->
 
 ### Pony Factor
 
-**Definition**: Minimum number of contributors responsible for ≥50% of commits (lower = higher
-risk).
+**Definition**: Minimum number of contributors responsible for ≥50% of commits (lower = higher risk).
 
 **Calculation** (from git logs):
 
@@ -143,7 +141,7 @@ possibly separate from SBOM/shadow, but research synergies. -->
 
 - Full vs. incremental recompute frequency (quarterly full + per-SBOM delta)?
 - Weighting formula for composite PG Score in Metric Gate (start with criticality 50%, pony/adoption
-25% each)?
+  25% each)?
 - Thresholds for risk flags (e.g., `pony_factor == 1` → red)?
 
 <!-- QUESTION FOR LEAD: Include Mermaid flowchart for active subgraph and criticality calculation?

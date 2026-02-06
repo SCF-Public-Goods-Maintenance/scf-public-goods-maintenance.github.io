@@ -9,19 +9,19 @@ nav_order: 9
 ## Overview
 
 PG Atlas is designed for iterative evolution beyond v0, supporting new signals, metrics, and scale
-without major rewrites. Extensibility focuses on modularity (abstracted layers, stable API) to
-enable community contributions and future features. Migration paths preserve data and logic when
-upgrading backends (e.g., from prototyping to production graph DB).
+without major rewrites. Extensibility focuses on modularity (abstracted layers, stable API) to enable
+community contributions and future features. Migration paths preserve data and logic when upgrading
+backends (e.g., from prototyping to production graph DB).
 
 **Guiding principles**:
 
 - **Modular architecture**: Ingestion, storage, computation, API, and dashboard as loosely coupled
-components.
+  components.
 - **Stable public interface**: API endpoints versioned; backward compatibility for consumers
-(dashboard, Tansu context).
+  (dashboard, Tansu context).
 - **Data portability**: Export/import formats (Gremlin bulk, JSON dumps) for backend swaps.
-- **Community-driven growth**: PR-friendly extensions (new metrics via plugins, ingestion sources
-via config).
+- **Community-driven growth**: PR-friendly extensions (new metrics via plugins, ingestion sources via
+  config).
 
 **Long-term vision**: Evolve into a comprehensive ecosystem observatory (on-chain usage, security
 scoring, predictive risk models) while remaining lightweight and transparent.
@@ -32,10 +32,10 @@ scoring, predictive risk models) while remaining lightweight and transparent.
 
 - **On-chain integration**: Add user-facing classic/Soroban tx stats for usage weighting (v1+).
 - **Advanced activity scoring**: Granular score replacing binary flag (commit recency, survey depth,
-deployment signals).
+  deployment signals).
 - **Security/Quality**: CVE feeds, audit status attestation, test coverage from CI.
 - **Plugin model**: Metric modules (Python classes) registered via config; computed in batch
-pipeline.
+  pipeline.
 
 <!-- STORAGE/IMPACT: New properties or side tables for additional signals (e.g., on-chain call
 counts). -->
@@ -51,7 +51,7 @@ counts). -->
 ### Storage & Backend Migration
 
 - **Shortlist evolution**: Start with prototyping backend → migrate to JanusGraph (BerkeleyDB →
-distributed Cassandra/Scylla).
+  distributed Cassandra/Scylla).
 - **Path**:
   1. Abstract operations (e.g., `GraphProvider` interface for traversals).
   2. Bulk export (Gremlin or SQL dump).

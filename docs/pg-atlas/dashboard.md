@@ -10,28 +10,28 @@ nav_order: 6
 
 As a **PG maintainer**:
 
-- I want to see my tool's criticality score, pony factor, and adoption trends so I can understand
-its ecosystem impact and prioritize maintenance.
+- I want to see my tool's criticality score, pony factor, and adoption trends so I can understand its
+  ecosystem impact and prioritize maintenance.
 - I want to view direct/transitive dependents (with active filters) to identify who relies on me and
-reach out for feedback/contributions.
+  reach out for feedback/contributions.
 
 As an **SCF voter/Pilot (Tansu round participant)**:
 
-- I want a searchable leaderboard of PGs ranked by metrics (criticality, risk flags) so I can
-quickly evaluate proposals with objective context.
-- I want to drill into a specific PG's dependency graph and score breakdown to inform my
-NQG-weighted vote.
+- I want a searchable leaderboard of PGs ranked by metrics (criticality, risk flags) so I can quickly
+  evaluate proposals with objective context.
+- I want to drill into a specific PG's dependency graph and score breakdown to inform my NQG-weighted
+  vote.
 
 As a **dependent project team (SCF Build applicant)**:
 
 - I want to explore the PG landscape to discover reusable tools and see their reliability scores
-before integrating.
+  before integrating.
 - I want to visualize my own project's dependencies to ensure I'm building on healthy infrastructure.
 
 As a **general community member or observer**:
 
-- I want an intuitive overview of ecosystem health (active PG coverage, pony factor distribution,
-top critical tools) to gauge Stellar/Soroban resilience.
+- I want an intuitive overview of ecosystem health (active PG coverage, pony factor distribution, top
+  critical tools) to gauge Stellar/Soroban resilience.
 - I want to search/browse the full graph to understand interconnections and spot risks/gaps.
 
 ## Desired UX Overview
@@ -40,19 +40,19 @@ The dashboard should be public, zero-auth (read-only), mobile-responsive, and fo
 **transparency and explorability**. Core flows:
 
 - Landing page: High-level ecosystem summary (total active nodes, dependency coverage %, risk
-heatmap, top 10 critical PGs).
+  heatmap, top 10 critical PGs).
 - Searchable leaderboard: Table view with filters/sort (criticality, pony factor, adoption, active
-status) and risk flags (e.g., red for `pony_factor == 1`).
+  status) and risk flags (e.g., red for `pony_factor == 1`).
 - PG detail pages: Score breakdown, timeline trends (if extended), direct dependents list,
-interactive dependency subgraph visualization.
+  interactive dependency subgraph visualization.
 - Graph explorer: Interactive full/zoomed view (force-directed or hierarchical layout) with active
-subgraph highlighting and search/highlight nodes.
+  subgraph highlighting and search/highlight nodes.
 
 **UX principles**:
 
 - Fast loading (cached metrics, lazy graph rendering).
 - Clear tooltips/explainers for metrics (e.g., "Criticality = number of active projects depending on
-this").
+  this").
 - Export options (CSV for tables, PNG/SVG for graphs).
 - Accessibility: Dark/light mode, keyboard navigation, screen-reader labels.
 - No overload: Progressive disclosure (summary → detail → full graph).
@@ -61,8 +61,8 @@ this").
 
 ## Implementation Options
 
-We have a RESTful FastAPI backend with endpoints for nodes, scores, dependents, and bulk exports.
-The dashboard consumes this API exclusively (no direct DB access).
+We have a RESTful FastAPI backend with endpoints for nodes, scores, dependents, and bulk exports. The
+dashboard consumes this API exclusively (no direct DB access).
 
 ### Option 1: Streamlit
 

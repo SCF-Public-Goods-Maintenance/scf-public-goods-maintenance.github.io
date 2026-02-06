@@ -16,10 +16,10 @@ community trust.
 **Core principles**:
 
 - **Privacy-first**: No tracking of individual users; avoid cookies/session storage.
-- **Personal data minimization**: Collect zero PII; git logs processed only for aggregate
-contributor stats (no email exposure).
+- **Personal data minimization**: Collect zero PII; git logs processed only for aggregate contributor
+  stats (no email exposure).
 - **Auditability for maintainers**: Multiple community maintainers access backend — all actions
-logged immutably.
+  logged immutably.
 - **CIA triad alignment**:
   - Confidentiality (public data only, but protect ingest sources)
   - Integrity (verified inputs, reproducible metrics)
@@ -36,23 +36,23 @@ logged immutably.
 ## Confidentiality
 
 - **Data classification**: All stored/computed data public by design (open-source manifests, git
-logs, metrics).
+  logs, metrics).
 - **Ingest protection**: SBOM webhooks validate GitHub signatures (if Action-signed) or repo
-provenance; shadow crawls from trusted registries only.
+  provenance; shadow crawls from trusted registries only.
 - **No secrets exposure**: API keys/secrets in environment variables or provider vaults; never in
-repo.
+  repo.
 - **Future**: Optional maintainer 2FA/multi-sig for admin actions.
 
 ## Integrity
 
 - **Input validation**: Strict schema checks on SBOMs (CycloneDX/SPDX validation libraries); reject
-malformed.
+  malformed.
 - **Reproducibility**: Raw artifacts retained; metric computation is deterministic.
 - **Maintainer actions**: Audit log all admin changes insofar this is possible.
 - **Code integrity**: Signed Git commits; dependabot alerts; reproducible builds where possible.
 
-**Open practice**: Public issue tracker for reported discrepancies (e.g., wrong edges) — resolved
-via PR.
+**Open practice**: Public issue tracker for reported discrepancies (e.g., wrong edges) — resolved via
+PR.
 
 ## Availability
 
@@ -64,7 +64,7 @@ via PR.
 ## Privacy-Specific Measures
 
 - **Web analytics**: [Plausible](https://plausible.io) — cookie-less, privacy-respecting aggregate
-stats only (page views, referrers anonymized).
+  stats only (page views, referrers anonymized).
 - **No trackers**: Avoid Google Analytics, Meta pixels, etc.; no client-side fingerprinting.
 - **Dashboard**: Local storage optional for preferences (e.g., dark mode) — no server sync.
 - **Git log handling**: Obfuscate author emails by hashing or ellipsis redaction.
