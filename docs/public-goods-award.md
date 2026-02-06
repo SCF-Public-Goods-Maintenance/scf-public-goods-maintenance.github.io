@@ -18,9 +18,9 @@ At a higher level:
 
 1. Create a SCF Governance space (non-code project on Tansu),
 2. Maintainers to make a proposal by themselves in SCF Governance space. The key here is that the
-proposals should be made anonymous. Tansu uses a traditional Pedersen commitment scheme meaning that
-the owner of the SCF space would be able to inspect votes (as it is the case now.) The main
-difference being that people don’t have to use multiple addresses.
+   proposals should be made anonymous. Tansu uses a traditional Pedersen commitment scheme meaning
+   that the owner of the SCF space would be able to inspect votes (as it is the case now.) The main
+   difference being that people don’t have to use multiple addresses.
 3. Get all pilots to vote on proposals using their NQG.
 
 Tansu is getting some new options when creating a proposal. We will soon be able to either use a

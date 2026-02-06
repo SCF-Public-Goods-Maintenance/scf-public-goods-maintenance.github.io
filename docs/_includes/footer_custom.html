@@ -1,15 +1,41 @@
 <nav class="page-navigation" aria-label="Page navigation">
+  {% assign top_level_pages = site.pages | where_exp: "p", "p.nav_order" | where_exp: "p", "p.parent == nil" | sort: 'nav_order' %}
+  {% assign flattened_pages = "" | split: "" %}
+
+  {% for top_page in top_level_pages %}
+    {% assign flattened_pages = flattened_pages | push: top_page %}
+    {% if top_page.has_children %}
+      {% assign child_pages = site.pages | where_exp: "p", "p.parent == top_page.title" | sort: 'nav_order' %}
+      {% for child_page in child_pages %}
+        {% assign flattened_pages = flattened_pages | push: child_page %}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+
+  {% for p in flattened_pages %}
+    {% if p.url == page.url %}
+      {% assign current_index = forloop.index0 %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+
+  {% assign prev_index = current_index | minus: 1 %}
+  {% assign next_index = current_index | plus: 1 %}
+
+  {% assign prev_page = flattened_pages[prev_index] %}
+  {% assign next_page = flattened_pages[next_index] %}
+
   <div class="nav-prev">
-    {% if page.previous.url %}
-      <a href="{{ page.previous.url | relative_url }}" class="btn btn-outline">
-        ← {{ page.previous.title | default: "Previous" }}
+    {% if prev_index >= 0 and prev_page %}
+      <a href="{{ prev_page.url | relative_url }}" class="btn btn-outline">
+        ← {{ prev_page.title | default: "Previous" }}
       </a>
     {% endif %}
   </div>
   <div class="nav-next">
-    {% if page.next.url %}
-      <a href="{{ page.next.url | relative_url }}" class="btn btn-outline">
-        {{ page.next.title | default: "Next" }} →
+    {% if next_page %}
+      <a href="{{ next_page.url | relative_url }}" class="btn btn-outline">
+        {{ next_page.title | default: "Next" }} →
       </a>
     {% endif %}
   </div>

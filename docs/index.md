@@ -32,23 +32,23 @@ The working group is piloting an experiment in 2026 to transition the quarterly 
 toward a hybrid retroactive + maintenance retainer model:
 
 - **Public Goods Award beta on Tansu** – Decentralized proposal intake, NQG-weighted voting, and
-anonymous voter participation.
+  anonymous voter participation.
 
 Detailed design, voting mechanics, and NQG integration:
 
-- [Public Goods Award Experiment Specification](/public-goods-award.md) *(under active development)*
+- [Public Goods Award Experiment Specification](/public-goods-award.md) _(under active development)_
 
 ## Public Goods Atlas (Metrics Backbone)
 
 PG Atlas is the objective metrics layer that aims to provide transparent, verifiable signals for
 funding decisions.
 
-Key components include dependency graphing, transitive criticality scoring, pony factor analysis,
-and an active subgraph projection.
+Key components include dependency graphing, transitive criticality scoring, pony factor analysis, and
+an active subgraph projection.
 
 Architecture and technical specification:
 
-- [PG Atlas Technical Architecture](/pg-atlas.md) *(under active development)*
+- [PG Atlas Technical Architecture](/pg-atlas.md) _(under active development)_
 
 ## Get Involved
 
