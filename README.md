@@ -2,6 +2,8 @@
 
 Project documentation for SCF Public Goods Maintenance process and tooling.
 
+Browse the documentation here: <https://scf-public-goods-maintenance.github.io/>
+
 ## Contributor Setup: Automated Formatting & Linting
 
 To maintain a consistent line length of 101 characters across all documentation, we use `pre-commit`
