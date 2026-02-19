@@ -9,50 +9,68 @@ nav_order: 4
 ## Overview
 
 The metric computation layer derives objective scores from the stored graph and contributor data to
-power the Metric Gate and public dashboards. Computations run on triggers (per-project SBOM
-ingestion) and scheduled batch jobs (quarterly or on survey release).
+power the Metric Gate and public dashboards. Computations run on triggers (per-repo SBOM ingestion,
+git log refresh) and scheduled batch jobs (yearly on survey release, plus higher-frequency
+triangulation from OpenGrants and git activity).
 
 **v0 focus**:
 
-- Criticality via transitive active dependent count.
-- Pony factor as primary decentralization/risk metric.
-- Basic adoption signals (off-chain: downloads/stars via registry APIs).
+- Criticality via transitive active dependent count (computed at repo level, aggregated to project).
+- Pony factor as primary decentralization/risk metric (per-repo, aggregated to project).
+- Basic adoption signals (off-chain: downloads/stars via registry APIs, per-repo).
 - Active subgraph projection as foundational step for all graph metrics.
 
 All heavy computations occur offline (batch or incremental), with results materialized back to
-storage (e.g., cached scores on vertices) for fast API/dashboard queries.
+storage (e.g., cached scores on repo and project rows) for fast API/dashboard queries.
 
 **Implementation approach**:
 
-- Load full graph into memory (NetworkX DiGraph or native TinkerPop traversal) for batch runs.
+- Load full graph into memory (NetworkX DiGraph) for batch runs. The graph operates at **repo
+  resolution** — all `depends_on` edges connect repos (or external repos).
 - Incremental updates where possible (e.g., delta propagation on new edges).
-- Backend-agnostic Gremlin preferred long-term; v0 accepts NetworkX for speed.
+- Project-level metrics are derived by aggregating repo-level results.
+- Backend-agnostic Gremlin preferred long-term; v0 uses NetworkX for speed.
 
 ## Active Subgraph Projection
 
-**Purpose**: Identify the "live" portion of the ecosystem — nodes that support at least one active
-leaf project. This filters out dead branches and ensures criticality reflects current health.
+**Purpose**: Identify the "live" portion of the ecosystem — repo nodes that support at least one
+active leaf project. This filters out dead branches and ensures criticality reflects current health.
 
 **Logic** (upstream propagation):
 
-- Start from all vertices where `active == true` and `in-degree == 0` (true leaves) or all active
-  leaves.
+- Start from all **repo** vertices where `project.activity_status IN ('live', 'in-dev')` and
+  `in-degree == 0` in the repo-level dependency graph (true leaves: repos with no dependents).
 - Traverse upstream along "depends-on" edges (outgoing from dependents to dependencies).
 - Mark all reached ancestors as part of the active ecosystem.
-- Result: Subgraph containing only nodes with paths from active leaves.
+- Result: Subgraph containing only repo nodes with paths from active leaves.
+
+Repo-level activity status is derived from the parent project's status (see
+[Activity Status Update Logic](/pg-atlas/storage.md#activity-status-update-logic) in Storage). Both
+`live` and `in-dev` repos are treated as active for subgraph projection.
 
 **Preferred v0 implementation**:
 
 - In-memory NetworkX: BFS/DFS from active leaves on reversed graph view (O(V + E)).
-- Alternative (if JanusGraph selected): Gremlin `repeat(out())` from active leaves.
 
-```groovy
-// Identify all nodes that are roots of or ancestors to an ACTIVE leaf
-g.V().has('active', true)
- .filter(inE().count().is(0)) // Start at active leaf nodes
- .repeat(outE().subgraph('active-ecosystem').inV())
- .emit()
- .cap('active-ecosystem')
+```python
+import networkx as nx
+
+def project_active_subgraph(G: nx.DiGraph) -> set:
+    """Return set of repo node IDs reachable from active leaves."""
+    # Active leaves: active repos with no dependents (in-degree == 0 in depends-on direction)
+    active_leaves = {
+        n for n, d in G.nodes(data=True)
+        if d.get('activity_status') in ('live', 'in-dev')
+        and G.in_degree(n) == 0
+    }
+
+    # Traverse upstream (reverse direction) to find all dependencies of active repos
+    reversed_G = G.reverse()
+    active_nodes = set()
+    for leaf in active_leaves:
+        active_nodes.update(nx.descendants(reversed_G, leaf))
+    active_nodes.update(active_leaves)
+    return active_nodes
 ```
 
 **Efficiency**: O(V + E) per full run — acceptable at projected scale; cache active set between runs.
@@ -64,37 +82,43 @@ repeated queries. -->
 
 ### Criticality Score
 
-**Definition**: Count of active nodes that have a directed path to this node (i.e., transitive
-dependents in active subgraph).
+**Definition**: Count of active repo nodes that have a directed path to this repo node (i.e.,
+transitive dependents in active subgraph). Computed at the **repo level**.
 
 **Calculation**:
 
-1. Project active subgraph.
-2. For each target node, count ancestors in the reversed active subgraph (nodes reaching it).
-3. Materialize as `criticality_score` property.
+1. Project active subgraph (repo-level graph).
+2. For each target repo node, count ancestors in the reversed active subgraph (repos depending on it,
+   transitively).
+3. Materialize as `criticality_score` on repo row.
+4. **Project-level aggregation**: `Project.criticality_score = SUM(repo.criticality_score)` across
+   all repos belonging to the project. This reflects total ecosystem dependency pressure on the
+   project.
 
-**Incremental potential**: On new active leaf/edge, propagate delta upward.
-
-<!-- NOTE: Requires reversed graph index/view for efficient ancestor counts — add if backend
-supports (JanusGraph does natively). -->
+**Incremental potential**: On new active leaf/edge, propagate delta upward through the repo graph.
 
 ### Pony Factor
 
 **Definition**: Minimum number of contributors responsible for ≥50% of commits (lower = higher risk).
 
-**Calculation** (from git logs):
+**Calculation** (from git logs, per-repo):
 
-- Parse author counts over 12–24 month window.
+- Parse author counts over 12–24 month window (from `contributed_to` edges).
 - Sort descending, cumulative sum until ≥50%.
-- Store computed value + raw stats.
+- Store computed value on `Repo.pony_factor`.
+
+**Project-level aggregation**: Compute pony factor across all repos' contributors (unique
+contributors, deduplicated by `Contributor.email_hash`). This avoids double-counting a contributor
+who works across multiple repos in the same project. The aggregation method (union of contributors
+across repos, then standard pony factor calculation) may need tuning — see Open Questions.
 
 **Extended stats**:
 
-Desirable, comparable to Scientific Python devstats.
+Desirable, comparable to Scientific Python devstats:
 
 - Total contributors.
 - Commit distribution (top 10 authors %).
-- First/last commit dates.
+- First/last commit dates (from `contributed_to.first_commit_date`/`last_commit_date`).
 - Author experience (tenure).
 
 **v0 scope**: Basic pony factor only.
@@ -107,15 +131,21 @@ requires new ingestion pipeline, possible synergy with SBOM upload action. -->
 
 ### Adoption Signals
 
-**Sources** (off-chain):
+**Sources** (off-chain, per-repo):
 
-- Registry downloads (npm/crates/PyPI last month).
-- GitHub stars/forks/clones (via API).
+- `adoption_downloads`: Registry package downloads (npm/crates/PyPI last 30 days). Stored on `Repo`.
+- `adoption_stars`: GitHub stars. Stored on `Repo`.
+- `adoption_forks`: GitHub forks. Stored on `Repo`.
 
 **Calculation**:
 
-- Normalized, smoothed scores per node.
-- Aggregate into composite adoption metric.
+- Normalize each signal across all repos (e.g., percentile rank or log-scale normalization).
+- Smooth over time if historical snapshots are available.
+- Aggregate into composite `adoption_score` per repo, then to project level.
+
+**Project-level aggregation**: `Project.adoption_score` is a composite of its repos' adoption
+signals. Aggregation method TBD (sum, max, or weighted average depending on signal type — downloads
+may sum well, stars may use max).
 
 <!-- INGESTION CHANGE NEEDED: Periodic registry API crawl job to populate adoption fields —
 possibly separate from SBOM/shadow, but research synergies. -->
@@ -133,16 +163,23 @@ possibly separate from SBOM/shadow, but research synergies. -->
 
 ## Materialization & Caching
 
-- Computed scores stored as vertex properties.
-- Timestamp last computation.
-- Dashboard/API read from cache; trigger recompute on significant graph changes.
+- Computed scores stored on `Repo` rows (criticality_score, pony_factor, adoption signals).
+- Project-level aggregates stored on `Project` rows (criticality_score, pony_factor, adoption_score).
+- Timestamp last computation (`updated_at`).
+- Dashboard/API read from materialized values; trigger recompute on significant graph changes.
 
 ## Open Questions
 
-- Full vs. incremental recompute frequency (quarterly full + per-SBOM delta)?
-- Weighting formula for composite PG Score in Metric Gate (start with criticality 50%, pony/adoption
-  25% each)?
+- Full vs. incremental recompute frequency (yearly full on survey + per-SBOM delta + periodic git
+  refresh)?
+- Weighting formula for composite PG Score in Metric Gate: the working group has proposed
+  (criticality 50%, pony/adoption 25% each) as a starting point, but this is not yet decided. We
+  won't operationalize the Metric Gate in v0 — the PG Score formula will be refined based on
+  experience from the first rounds.
 - Thresholds for risk flags (e.g., `pony_factor == 1` → red)?
+- Project-level pony factor aggregation: union of unique contributors across all repos (then standard
+  pony factor calculation), or some other method?
+- Project-level adoption score aggregation: sum vs. max vs. weighted average per signal type?
 
 <!-- QUESTION FOR LEAD: Include Mermaid flowchart for active subgraph and criticality calculation?
 -->
