@@ -351,7 +351,7 @@ P.add_edges_from(project_edges)
 
 **Active subgraph projection** (see [Metric Computation](/pg-atlas/metric-computation.md)):
 
-- Filter to `activity_status IN ('live', 'in-dev')` repo leaves (in-degree == 0 in dependency
+- Filter to `project.activity_status IN ('live', 'in-dev')` repo leaves (in-degree == 0 in dependency
   direction).
 - BFS/DFS to mark all reachable ancestors.
 - Result is boolean mask or subgraph for criticality scoring.
