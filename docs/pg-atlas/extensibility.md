@@ -31,7 +31,7 @@ scoring, predictive risk models) while remaining lightweight and transparent.
 ### New Metrics & Signals
 
 - **On-chain integration**: Add user-facing classic/Soroban tx stats for usage weighting (v1+).
-- **Advanced activity scoring**: Granular score replacing binary flag (commit recency, survey depth,
+- **Advanced activity scoring**: Granular score replacing 4-value enum (commit recency, survey depth,
   deployment signals).
 - **Security/Quality**: CVE feeds, audit status attestation, test coverage from CI.
 - **Plugin model**: Metric modules (Python classes) registered via config; computed in batch
@@ -50,18 +50,8 @@ counts). -->
 
 ### Storage & Backend Migration
 
-- **Shortlist evolution**: Start with prototyping backend → migrate to JanusGraph (BerkeleyDB →
-  distributed Cassandra/Scylla).
-- **Path**:
-  1. Abstract operations (e.g., `GraphProvider` interface for traversals).
-  2. Bulk export (Gremlin or SQL dump).
-  3. Load into target (JanusGraph bulk loader).
-- **Intermediate**: Sqlg over Postgres for Gremlin queries without full swap.
-
-**Pros of planned migration**:
-
-- Zero downtime (run parallel, switch API pointer).
-- Data fidelity preserved.
+From v0 backend → migrate to JanusGraph (single-node BerkeleyDB → distributed Cassandra/Scylla). See
+[Graph Scaling](/pg-atlas/graph-scaling.md) for future options.
 
 ### API & Dashboard Growth
 

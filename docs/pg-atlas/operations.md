@@ -15,7 +15,7 @@ community-driven project:
   intervention.
 - **Minimal DevOps overhead**: Prefer managed services over raw VMs; avoid complex orchestration
   (Kubernetes) for v0.
-- **Single-machine capable**: Backend (graph DB + API) fits on one modest instance.
+- **Single-machine capable**: Backend fits on one modest instance.
 - **Reliable periodic jobs**: Shadow crawls, metric recomputes, adoption signal pulls, activity flag
   batch updates — scheduled (various frequencies) with logging and alerts.
 - **Cost control**: Target <$100/month total; free tiers where possible.
@@ -30,26 +30,23 @@ Security: HTTPS enforced, rate limiting, no public writes.
 
 ## Deployment Options
 
-### Option 1: DigitalOcean Hybrid (Droplet + App Platform)
+### Option 1: DigitalOcean App Platform
 
 **Description**:
 
-- Graph DB (JanusGraph/BerkeleyDB or chosen backend) on a basic Droplet (e.g., $20–40/month
-  CPU-optimized).
+- Hosted PostgreSQL.
 - FastAPI container on DigitalOcean App Platform (managed PaaS, auto-deploys from GitHub).
-- Periodic workers: App Platform background workers or scheduled Droplet cron + supervisor.
-- Dashboard: Static build (Next.js or Streamlit exported) on App Platform static site or separate.
+- Periodic workers: App Platform background workers or separate Celery container.
+- Dashboard: Static build (Next.js) on App Platform static site or separate.
 
 **Pros**:
 
 - App Platform excels at push-to-deploy with zero-config scaling/health checks.
-- Droplet gives full control for single-node graph DB persistence.
 - Unified billing/dashboard.
-- Good logging (Papertrail add-on) and monitoring.
+- Good logging (through add-ons) and monitoring.
 
 **Cons**:
 
-- Two components to manage (Droplet + Apps).
 - Workers less elegant (cron vs. managed queues).
 - Not GitHub-native for all parts.
 
@@ -59,7 +56,7 @@ Security: HTTPS enforced, rate limiting, no public writes.
 
 - API + DB in container self-hosted on low-cost + low-carbon VPS (Hetzner/Linode).
 - Periodic jobs exclusively in GitHub Actions Workflows (scheduled cron syntax).
-- Dashboard: Static site on GitHub Pages (if Streamlit export or Next.js SSG feasible).
+- Dashboard: Static site on GitHub Pages.
 - Ingestion webhooks via GitHub App or Actions dispatch.
 
 **Pros**:
@@ -78,7 +75,7 @@ Security: HTTPS enforced, rate limiting, no public writes.
 
 **Description**:
 
-- Backend/API/DB on DigitalOcean App Platform + Droplet (as Option 1) or Fly.io (global edge).
+- Backend/API/DB on DigitalOcean App Platform or Fly.io (global edge).
 - Periodic jobs via provider schedulers or GitHub Actions.
 - Dashboard frontend: Static build hosted on xlm.sh (Stellar-native decentralized/static hosting via
   Soroban or IPFS gateway).
@@ -123,7 +120,7 @@ seamlessly.
 ### Task Queue & Workers
 
 **Purpose**: Offload long-running tasks (SBOM processing, shadow crawls, full metric recomputes,
-activity flag batch updates) from the FastAPI request cycle.
+activity status batch updates) from the FastAPI request cycle.
 
 **Components**:
 
@@ -175,8 +172,7 @@ transparency.
 
 **Backups**:
 
-- Database dumps (Postgres pg_dump and/or JanusGraph snapshots) to S3-compatible bucket or repo
-  artifacts.
+- Database dumps (Postgres pg_dump) to S3-compatible bucket or repo artifacts.
 - Automated via cron/GitHub Actions.
 
 <!-- FUTURE SELF: Integrate Sentry performance tracing once API endpoints stabilized. -->
