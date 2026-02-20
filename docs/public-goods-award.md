@@ -6,6 +6,9 @@ nav_order: 3
 
 # Public Goods Award
 
+_This structure proposes [significant changes](/pg-award/2026q2-award-round.md) compared to previous
+rounds._
+
 ## Overview
 
 The SCF Public Goods Award supports the ongoing maintenance, security, documentation, and incremental
@@ -72,7 +75,7 @@ Existing/returning projects may resubmit directly with impact updates.
 1. **Metric Review**: PG Atlas scores published for context.
 1. **Voting Round**:
    1. Proposals are added to Tansu and link to project pages.
-   1. Tansu-based NQG vote (see [2026 Voting Experiment](/pg-award/2026-voting-experiment.md)).
+   1. Tansu-based NQG vote (see [Tansu Modifications](/pg-award/tansu-modifications.md)).
 1. **Award Distribution**: Tranches tied to approval + milestones/SLOs.
 1. **Resubmission**: Quarterly with progress reports.
 
@@ -109,4 +112,4 @@ centralized Council references removed and replaced with community processes.)
 
 This page reflects a transition design as of February 2026 — evolving via repo PRs.
 
-_See sub-page: [2026 Voting Experiment](/docs/2026-voting-experiment.md) for Tansu pilot details._
+_See sub-page: [Tansu Modifications](/pg-award/tansu-modification.md) for Tansu pilot details._
