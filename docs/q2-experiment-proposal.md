@@ -75,11 +75,11 @@ process.
 
 ## SCF Build Tranche Deliverables
 
-<!-- UNTANGLE DELIVERABLES BEFORE ASSIGNING WORK ITEMS TO TRANCHES -->
+### Tranche 1
 
-### Tansu
+30% of budget for first tranche (2 weeks)
 
-#### D1. SCF Governance Space
+#### T1. SCF Governance Space
 
 Create a dedicated SCF Governance organization on Tansu. This is the on-chain space where PG Award
 proposals will be submitted, discussed, and voted on. Projects applying for awards don't need to be
@@ -88,7 +88,13 @@ registered on Tansu themselves—the governance space is independent.
 - Scope: Configuration and deployment of an SCF-specific Tansu space; proposal templates for PG Award
   applications; operational documentation.
 
-#### D2. NQG Score Integration
+#### Tranche 1 Completion Date: March 8
+
+### Tranche 2
+
+30% of budget for second tranche (2 weeks)
+
+#### T2. NQG Score Integration
 
 Integrate SCF's existing NQG (Neural Quorum Governance) scores as voting weights in Tansu. Currently,
 NQG scores are calculated and stored in the
@@ -104,7 +110,13 @@ group will finalize this during implementation.
 - Scope: Smart contract integration between NQG score source and Tansu voting weights; frontend
   updates to display NQG-weighted voting power; testing on testnet before mainnet deployment.
 
-#### D3. NQG Soulbound NFT (SEP-50)
+#### Tranche 2 Completion Date: March 22
+
+### Tranche 3
+
+40% of budget for third tranche (3 weeks)
+
+#### T3. NQG Soulbound NFT (SEP-50)
 
 Build NQG scores as dynamic, soulbound NFTs following the
 [SEP-50](https://github.com/stellar/stellar-protocol/blob/master/ecosystem/sep-0050.md) standard for
@@ -119,11 +131,15 @@ on-chain credential would be a direct improvement).
   visualization; Freighter integration testing; documentation.
 
 > **Note on anonymous voting:** Tansu already supports anonymous voting using BLS12-381 Pedersen
-> commitment schemes. This is available out of the box for the PG Award—the SCF space maintainer can
+> commitment schemes. This is available out of the box for the PG Award: the SCF space maintainer can
 > inspect votes (comparable to current process), while individual voter choices remain hidden from
 > other participants. No additional development is needed for this capability.
 
+#### Tranche 3 Completion Date: April 12
+
 ### PG Atlas
+
+<!-- UNTANGLE DELIVERABLES BEFORE ASSIGNING WORK ITEMS TO TRANCHES -->
 
 #### D4. Data Ingestion Pipeline
 
