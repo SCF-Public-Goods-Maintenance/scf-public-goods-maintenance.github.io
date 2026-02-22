@@ -6,7 +6,7 @@ Technical Architecture Document:<https://scf-public-goods-maintenance.github.io/
 
 GitHub URL: <https://github.com/SCF-Public-Goods-Maintenance/>
 
-Video URL: ???
+Video URL: <https://www.youtube.com/watch?v=JyQcCRPEEFU>
 
 ## Products & Services
 
