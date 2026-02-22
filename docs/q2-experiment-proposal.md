@@ -93,7 +93,7 @@ to be registered on Tansu themselves—the governance space is independent.
 1. There is a proposal template for PG Award applications
 1. It is clearly documented how the SCF Governance space will be used in the award process
 
-**Budget**: $???
+**Budget**: $2,000
 
 #### A1. Repository Scaffolding & CI/CD
 
@@ -109,7 +109,7 @@ This is the prerequisite for all parallel development work on the backend, inges
 1. Each repository has a README with local development setup instructions
 1. Each repository has a FOSS license to ensure code reusability
 
-**Budget**: $???
+**Budget**: $3,000
 
 #### A2. PostgreSQL Schema & Hosting
 
@@ -124,7 +124,7 @@ storage foundation that all ingestion pipelines write to.
 1. The full schema is applied and version-controlled as a migration script
 1. The migration script is documented and can be applied from scratch to reproduce the schema
 
-**Budget**: $???
+**Budget**: $5,000
 
 #### A3. FastAPI Application Scaffold & SBOM Webhook
 
@@ -141,7 +141,7 @@ submissions for downstream processing (A8).
 1. Submissions with invalid or missing GitHub Action signatures are rejected with an appropriate
    error response
 
-**Budget**: $???
+**Budget**: $9,000
 
 #### A4. SBOM GitHub Action
 
@@ -157,7 +157,7 @@ before the Q2 voting round.
 1. Usage documentation and an example workflow YAML are published
 1. The action has been announced to SCF public goods maintainers
 
-**Budget**: $???
+**Budget**: $6,000
 
 #### A5. OpenGrants Project Bootstrapper
 
@@ -173,7 +173,7 @@ projects as starting nodes for the dependency graph.
    `git_org_url`, and `activity_status` populated
 1. The bootstrapper is documented and runnable as both a one-off script and a scheduled job
 
-**Budget**: $???
+**Budget**: $4,000
 
 #### Tranche 1 Completion Date: March 8
 
@@ -205,7 +205,7 @@ group will finalize this during implementation.
 1. Frontend updates display NQG-weighted voting power
 1. Integration is deployed on testnet and is verified to work
 
-**Budget**: $???
+**Budget**: $15,000
 
 #### A6. Registry Crawlers & Active Subgraph Projection
 
@@ -224,7 +224,7 @@ criticality scoring in Tranche 3.
 1. The active subgraph projection produces a correct, queryable set of active nodes
 1. Crawlers are idempotent and safe to re-run without duplicating nodes or edges
 
-**Budget**: $???
+**Budget**: $16,000
 
 #### A7. Git Log Parser & Contributor Statistics
 
@@ -241,7 +241,7 @@ for pony factor computation in Tranche 3.
 1. `Repo.latest_commit_date` is updated for all processed repos
 1. The parser handles repos with no commits or inaccessible URLs gracefully (logged, not fatal)
 
-**Budget**: $???
+**Budget**: $10,000
 
 #### A8. SBOM Processing Pipeline
 
@@ -262,7 +262,7 @@ full processing logic.
 1. End-to-end verified: a test SBOM submission results in observable Repo and edge changes in the
    database
 
-**Budget**: $???
+**Budget**: $8,000
 
 #### Tranche 2 Completion Date: March 22
 
@@ -288,7 +288,7 @@ an on-chain credential would be a direct improvement).
 1. Freighter integration testing is performed and documented
 1. Comprehensive documentation for the NFT system is published
 
-**Budget**: $???
+**Budget**: $15,000
 
 #### A9. Criticality Scores & Pony Factor Materialization
 
@@ -310,7 +310,7 @@ for the full algorithms.
 1. A batch recompute runs on schedule and is triggered by significant graph changes (e.g., new SBOM
    ingestion)
 
-**Budget**: $???
+**Budget**: $9,000
 
 #### A10. Adoption Signals
 
@@ -326,7 +326,7 @@ signal for voters and reviewers.
 1. Adoption signals are aggregated to project level in `projects.adoption_score`
 1. A periodic refresh job keeps adoption signals up to date
 
-**Budget**: $???
+**Budget**: $5,000
 
 #### A11. Public REST API & TypeScript SDK
 
@@ -343,7 +343,7 @@ TypeScript SDK for easy consumption by external integrations.
 1. Rate limiting (100 req/min per IP) is enforced
 1. A TypeScript SDK is generated from the OpenAPI spec, published, and documented with usage examples
 
-**Budget**: $???
+**Budget**: $15,000
 
 #### A12. Public Dashboard
 
@@ -363,7 +363,7 @@ REST API exclusively.
    statistics
 1. An interactive dependency (sub-)graph visualization is accessible from project detail pages
 
-**Budget**: $???
+**Budget**: $15,000
 
 #### A13. Deployment & Operations
 
@@ -379,7 +379,7 @@ the [operations specification](https://scf-public-goods-maintenance.github.io/pg
 1. Error tracking (Sentry) is active for the API and ingestion services
 1. Database backups are automated (daily `pg_dump` to a remote location)
 
-**Budget**: $???
+**Budget**: $10,000
 
 #### A14. Community Feedback Loop
 
@@ -394,6 +394,6 @@ complete an initial data quality pass before the Q2 voting round opens.
 1. The first correction cycle has been initiated: community feedback is being received, reviewed, and
    reflected in the graph
 
-**Budget**: $???
+**Budget**: $3,000
 
 #### Tranche 3 Completion Date: April 12
