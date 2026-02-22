@@ -79,7 +79,7 @@ process.
 
 ### Tranche 1
 
-30% of budget for first tranche (2 weeks)
+19% of budget for first tranche (2 weeks)
 
 #### T1. SCF Governance Space
 
@@ -179,7 +179,7 @@ projects as starting nodes for the dependency graph.
 
 ### Tranche 2
 
-30% of budget for second tranche (2 weeks)
+33% of budget for second tranche (2 weeks)
 
 #### T2. NQG Score Integration
 
@@ -268,7 +268,7 @@ full processing logic.
 
 ### Tranche 3
 
-40% of budget for third tranche (3 weeks)
+48% of budget for third tranche (3 weeks, with most of the work started earlier)
 
 #### T3. NQG Soulbound NFT (SEP-50)
 
