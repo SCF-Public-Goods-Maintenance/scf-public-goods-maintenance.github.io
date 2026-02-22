@@ -6,6 +6,8 @@ Technical Architecture Document:<https://scf-public-goods-maintenance.github.io/
 
 GitHub URL: <https://github.com/SCF-Public-Goods-Maintenance/>
 
+Video URL: ???
+
 ## Products & Services
 
 Realizing the new Public Goods Award structure requires updates to one existing product and the
@@ -81,12 +83,97 @@ process.
 
 #### T1. SCF Governance Space
 
-Create a dedicated SCF Governance organization on Tansu. This is the on-chain space where PG Award
-proposals will be submitted, discussed, and voted on. Projects applying for awards don't need to be
-registered on Tansu themselves—the governance space is independent.
+Create a dedicated SCF Governance organization on Tansu. This is the on-chain space where eligible PG
+Award proposals will be submitted, discussed, and voted on. Projects applying for awards don't need
+to be registered on Tansu themselves—the governance space is independent.
 
-- Scope: Configuration and deployment of an SCF-specific Tansu space; proposal templates for PG Award
-  applications; operational documentation.
+**Acceptance Criteria**:
+
+1. The SCF Governance space has a Soroban Domain and is visible on Tansu.dev
+1. There is a proposal template for PG Award applications
+1. It is clearly documented how the SCF Governance space will be used in the award process
+
+**Budget**: $???
+
+#### A1. Repository Scaffolding & CI/CD
+
+Set up the PG Atlas component repositories and continuous integration pipelines under the
+[SCF Public Goods Maintenance GitHub organization](https://github.com/SCF-Public-Goods-Maintenance/).
+This is the prerequisite for all parallel development work on the backend, ingestion, and dashboard.
+
+**Acceptance Criteria**:
+
+1. Component repositories for the PG Atlas backend (API + ingestion) and dashboard are created and
+   publicly accessible under the SCF Public Goods Maintenance org
+1. Each repository has a passing CI pipeline (linting and tests) on the main branch
+1. Each repository has a README with local development setup instructions
+1. Each repository has a FOSS license to ensure code reusability
+
+**Budget**: $???
+
+#### A2. PostgreSQL Schema & Hosting
+
+Provision a hosted PostgreSQL instance and apply the
+[two-level data model](https://scf-public-goods-maintenance.github.io/pg-atlas/storage): Projects,
+Repos, ExternalRepos, Contributors, `depends_on` edges, and `contributed_to` edges. This is the
+storage foundation that all ingestion pipelines write to.
+
+**Acceptance Criteria**:
+
+1. A hosted PostgreSQL instance is running and accessible to the development team
+1. The full schema is applied and version-controlled as a migration script
+1. The migration script is documented and can be applied from scratch to reproduce the schema
+
+**Budget**: $???
+
+#### A3. FastAPI Application Scaffold & SBOM Webhook
+
+Bootstrap the FastAPI application with a health endpoint and a SBOM webhook receiver. The webhook is
+the entry point for project teams submitting SBOMs—it accepts, validates format, and queues
+submissions for downstream processing (A8).
+
+**Acceptance Criteria**:
+
+1. The FastAPI application is deployed and reachable at a live URL
+1. `GET /health` returns a valid response
+1. `POST /ingest/sbom` accepts a CycloneDX SBOM payload, validates its format, and returns 202
+   Accepted for valid submissions
+1. Submissions with invalid or missing GitHub Action signatures are rejected with an appropriate
+   error response
+
+**Budget**: $???
+
+#### A4. SBOM GitHub Action
+
+Publish a [GitHub Action](https://scf-public-goods-maintenance.github.io/pg-atlas/ingestion) that
+project teams add to their CI pipelines. The action generates a CycloneDX SBOM and submits it to the
+PG Atlas webhook. Early release gives SCF public goods maintainers maximum lead time to onboard
+before the Q2 voting round.
+
+**Acceptance Criteria**:
+
+1. The GitHub Action is published and installable from a public repository
+1. The action generates a valid CycloneDX SBOM and submits it to the configured PG Atlas endpoint
+1. Usage documentation and an example workflow YAML are published
+1. The action has been announced to SCF public goods maintainers
+
+**Budget**: $???
+
+#### A5. OpenGrants Project Bootstrapper
+
+Build a script that seeds the Projects table from
+[OpenGrants](https://opengrants.daostar.org/system/scf), the DAOIP-5-compatible registry of
+SCF-awarded projects. This provides the initial set of known public goods and their dependent SCF
+projects as starting nodes for the dependency graph.
+
+**Acceptance Criteria**:
+
+1. The bootstrapper fetches SCF project data from OpenGrants and populates the Projects table
+1. The Projects table contains >150 known Stellar/Soroban projects with `display_name`,
+   `git_org_url`, and `activity_status` populated
+1. The bootstrapper is documented and runnable as both a one-off script and a scheduled job
+
+**Budget**: $???
 
 #### Tranche 1 Completion Date: March 8
 
@@ -107,8 +194,75 @@ proportional to assigned weight) or badge-based (mapping NQG scores to on-chain 
 feasible with modest contract work. The choice depends on UX and governance preferences—the working
 group will finalize this during implementation.
 
-- Scope: Smart contract integration between NQG score source and Tansu voting weights; frontend
-  updates to display NQG-weighted voting power; testing on testnet before mainnet deployment.
+> **Note on anonymous voting:** Tansu already supports anonymous voting using BLS12-381 Pedersen
+> commitment schemes. This is available out of the box for the PG Award: the SCF space maintainer can
+> inspect votes (comparable to current process), while individual voter choices remain hidden from
+> other participants. No additional development is needed for this capability.
+
+**Acceptance Criteria**:
+
+1. Smart contract integration between NQG score source and Tansu voting weights is implemented
+1. Frontend updates display NQG-weighted voting power
+1. Integration is deployed on testnet and is verified to work
+
+**Budget**: $???
+
+#### A6. Registry Crawlers & Active Subgraph Projection
+
+Build crawlers for npm, crates.io, PyPI, and the Go proxy that populate the dependency graph from
+public package registries, starting from curated Stellar/Soroban root packages. Once the graph is
+populated, compute the
+[active subgraph projection](https://scf-public-goods-maintenance.github.io/pg-atlas/metric-computation)—the
+set of repos reachable from at least one active project leaf—which is the prerequisite for
+criticality scoring in Tranche 3.
+
+**Acceptance Criteria**:
+
+1. Crawler(s) for npm, crates.io, PyPI, and Go proxy have completed at least one full run
+1. The dependency graph contains >100 Repo/ExternalRepo nodes with `depends_on` edges marked
+   `inferred_shadow`
+1. The active subgraph projection produces a correct, queryable set of active nodes
+1. Crawlers are idempotent and safe to re-run without duplicating nodes or edges
+
+**Budget**: $???
+
+#### A7. Git Log Parser & Contributor Statistics
+
+Build the git log ingestion pipeline that parses contributor history for the git repositories in the
+Repos table. This populates Contributor vertices and `contributed_to` edges, providing the raw data
+for pony factor computation in Tranche 3.
+
+**Acceptance Criteria**:
+
+1. The git log parser runs against all Stellar public goods repos, and on other (SCF project or
+   external) repos as desired
+1. Contributor vertices and `contributed_to` edges (with commit counts, first/last commit dates) are
+   populated in the database
+1. `Repo.latest_commit_date` is updated for all processed repos
+1. The parser handles repos with no commits or inaccessible URLs gracefully (logged, not fatal)
+
+**Budget**: $???
+
+#### A8. SBOM Processing Pipeline
+
+Implement the downstream processing pipeline for queued SBOM submissions: schema validation,
+dependency extraction, repo and edge upserts, and NetworkX graph reload. This closes the loop between
+the webhook receiver (A3) and the live graph. SBOMs submitted by early-adopting projects will be
+reflected in graph queries once A8 is complete. See the
+[Ingestion specification](https://scf-public-goods-maintenance.github.io/pg-atlas/ingestion) for the
+full processing logic.
+
+**Acceptance Criteria**:
+
+1. Queued SBOM submissions are validated against the CycloneDX schema; malformed submissions are
+   rejected and logged
+1. Valid SBOMs are processed end-to-end: the submitting Repo is upserted, declared dependency edges
+   are created or updated with `verified_sbom` confidence
+1. The NetworkX graph is invalidated or reloaded after each processed SBOM
+1. End-to-end verified: a test SBOM submission results in observable Repo and edge changes in the
+   database
+
+**Budget**: $???
 
 #### Tranche 2 Completion Date: March 22
 
@@ -119,147 +273,127 @@ group will finalize this during implementation.
 #### T3. NQG Soulbound NFT (SEP-50)
 
 Build NQG scores as dynamic, soulbound NFTs following the
-[SEP-50](https://github.com/stellar/stellar-protocol/blob/master/ecosystem/sep-0050.md) standard for
-Freighter wallet compatibility. Each Pilot gets a visible, on-chain representation of their
+[SEP-50](https://github.com/stellar/stellar-protocol/blob/master/ecosystem/sep-0050.md) spec for
+Freighter wallet compatibility. Each SCF Pilot gets a visible, on-chain representation of their
 governance reputation that updates as their NQG score changes.
 
-This has value beyond the PG Award—any Stellar project could leverage this trust signal (e.g.,
-Soroban Security already uses Discord-based Pilot verification for audit report submissions; an
-on-chain credential would be a direct improvement).
+This has value beyond the PG Award: any Stellar ecosystem project could leverage this trust signal
+(e.g., Soroban Security already uses Discord-based Pilot verification for audit report submissions;
+an on-chain credential would be a direct improvement).
 
-- Scope: Smart contract for soulbound dynamic NFT issuance and updates; art/design for status
-  visualization; Freighter integration testing; documentation.
+**Acceptance Criteria**:
 
-> **Note on anonymous voting:** Tansu already supports anonymous voting using BLS12-381 Pedersen
-> commitment schemes. This is available out of the box for the PG Award: the SCF space maintainer can
-> inspect votes (comparable to current process), while individual voter choices remain hidden from
-> other participants. No additional development is needed for this capability.
+1. Smart contract for soulbound dynamic NFT issuance and updates is implemented
+1. Art/design for status visualization is completed
+1. Freighter integration testing is performed and documented
+1. Comprehensive documentation for the NFT system is published
+
+**Budget**: $???
+
+#### A9. Criticality Scores & Pony Factor Materialization
+
+Compute and materialize the two primary impact and risk metrics—criticality scores and pony
+factors—at both repo and project level. Criticality (transitive active dependent count) builds on the
+active subgraph from A6; pony factor builds on the git contributor data from A7. These are the
+headline signals that are displayed on the dashboard and can later be used in the Metric Gate. See
+the
+[Metric Computation specification](https://scf-public-goods-maintenance.github.io/pg-atlas/metric-computation)
+for the full algorithms.
+
+**Acceptance Criteria**:
+
+1. Criticality scores are computed for all repos in the active subgraph and materialized to
+   `repos.criticality_score`
+1. Project-level criticality is aggregated and materialized to `projects.criticality_score`
+1. Pony factors are computed from `contributed_to` edge data and materialized to `repos.pony_factor`
+   and `projects.pony_factor`
+1. A batch recompute runs on schedule and is triggered by significant graph changes (e.g., new SBOM
+   ingestion)
+
+**Budget**: $???
+
+#### A10. Adoption Signals
+
+Fetch and store off-chain adoption data—registry download counts (last 30 days), GitHub stars, and
+forks—for all repos in the Projects table. These supplement criticality and pony factor as a third
+signal for voters and reviewers.
+
+**Acceptance Criteria**:
+
+1. Download counts are fetched from npm, crates.io, and PyPI for all known packages and stored in
+   `repos.adoption_downloads`
+1. GitHub stars and forks are fetched and stored in `repos.adoption_stars` and `repos.adoption_forks`
+1. Adoption signals are aggregated to project level in `projects.adoption_score`
+1. A periodic refresh job keeps adoption signals up to date
+
+**Budget**: $???
+
+#### A11. Public REST API & TypeScript SDK
+
+Build the full public, read-only
+[REST API](https://scf-public-goods-maintenance.github.io/pg-atlas/api) that exposes all PG Atlas
+data to the dashboard, Tansu voting context, and community tools. Includes an auto-generated
+TypeScript SDK for easy consumption by external integrations.
+
+**Acceptance Criteria**:
+
+1. Core endpoints are live and return real data: `/projects`, `/projects/{id}`, `/repos`,
+   `/repos/{id}`, `/repos/{id}/dependents`, `/repos/{id}/dependencies`, `/scores`, and graph export
+1. OpenAPI spec is auto-generated and can be interactively tested at `/docs`
+1. Rate limiting (100 req/min per IP) is enforced
+1. A TypeScript SDK is generated from the OpenAPI spec, published, and documented with usage examples
+
+**Budget**: $???
+
+#### A12. Public Dashboard
+
+Build the public, zero-auth
+[React-based dashboard](https://scf-public-goods-maintenance.github.io/pg-atlas/dashboard) that makes
+PG Atlas data browsable for voters, maintainers, and community observers. The dashboard consumes the
+REST API exclusively.
+
+**Acceptance Criteria**:
+
+1. The dashboard is publicly accessible at a live URL with no login required
+1. The landing page displays an ecosystem summary: total active projects, top critical PGs, and a
+   risk distribution overview
+1. The searchable leaderboard shows projects sortable by criticality, pony factor, and adoption, with
+   risk flags (e.g., pony factor = 1 highlighted)
+1. Project detail pages show score breakdowns, dependent and dependency lists, and contributor
+   statistics
+1. An interactive dependency (sub-)graph visualization is accessible from project detail pages
+
+**Budget**: $???
+
+#### A13. Deployment & Operations
+
+Put all PG Atlas components into production with automated scheduling, monitoring, and backups, per
+the [operations specification](https://scf-public-goods-maintenance.github.io/pg-atlas/operations).
+
+**Acceptance Criteria**:
+
+1. Scheduled jobs are running: registry crawls (weekly), git log refresh (periodic), and metric
+   recomputes (scheduled batch + triggered on SBOM ingestion)
+1. Health monitoring is configured: the `/health` endpoint is monitored externally with alerting on
+   failure
+1. Error tracking (Sentry) is active for the API and ingestion services
+1. Database backups are automated (daily `pg_dump` to a remote location)
+
+**Budget**: $???
+
+#### A14. Community Feedback Loop
+
+Establish the mechanisms for the community to report graph errors and propose project additions, and
+complete an initial data quality pass before the Q2 voting round opens.
+
+**Acceptance Criteria**:
+
+1. Issue templates for reporting graph corrections and proposing new project additions are published
+   in the GitHub repo
+1. Known Stellar/Soroban public goods are present in the graph with plausible metric values
+1. The first correction cycle has been initiated: community feedback is being received, reviewed, and
+   reflected in the graph
+
+**Budget**: $???
 
 #### Tranche 3 Completion Date: April 12
-
-### PG Atlas
-
-<!-- UNTANGLE DELIVERABLES BEFORE ASSIGNING WORK ITEMS TO TRANCHES -->
-
-#### D4. Data Ingestion Pipeline
-
-Build the ingestion layer that populates the dependency graph and contributor statistics from three
-sources:
-
-- **SBOM submissions:** A GitHub Action that project teams add to their CI pipelines. It generates a
-  CycloneDX SBOM and submits it to PG Atlas. This is the verification layer—explicit,
-  project-declared dependencies.
-- **Reference graph bootstrapping:** Automated crawling of public package registries (npm, crates.io,
-  PyPI, Go proxy) and [OpenGrants](https://opengrants.daostar.org/system/scf) to build an initial
-  graph from known Stellar/Soroban roots. This ensures a meaningful graph even before SBOM adoption
-  ramps up.
-- **Git contributor logs:** Parsing of git history to compute pony factor and contributor statistics
-  per repository.
-
-All ingestion writes at the repository level. Project-level data is derived by aggregation. See the
-[Ingestion specification](https://scf-public-goods-maintenance.github.io/pg-atlas/ingestion) for
-details.
-
-- Scope: GitHub Action for SBOM generation/submission; FastAPI webhook endpoint for ingestion;
-  registry crawlers (npm, crates.io, PyPI, Go proxy); git log parser; OpenGrants project
-  bootstrapper; validation and deduplication logic.
-
-#### D5. Storage & Data Model
-
-Implement the [two-level data model](https://scf-public-goods-maintenance.github.io/pg-atlas/storage)
-(Project → Repo, one-to-many) in PostgreSQL with NetworkX for graph analytics:
-
-- **Vertex types:** Project (funding unit), Repo (ingestion unit), ExternalRepo (out-of-ecosystem
-  dependencies), Contributor.
-- **Edge types:** `depends_on` (repo → repo/external repo), `contributed_to` (contributor → repo).
-- **Activity status tracking:** 4-value enum (live, in-dev, discontinued, non-responsive) sourced
-  from SCF Impact Survey with higher-resolution updates from OpenGrants completion data and git
-  activity.
-
-The working group chose PostgreSQL + NetworkX over native graph databases for v0 based on team
-expertise, speed to ship, scale appropriateness (5–10K nodes, 50–100K edges fits in memory), and
-operational simplicity. The architecture preserves a migration path to TinkerPop-compatible graph
-databases if needed. The decision rationale is fully documented in the
-[Storage specification](https://scf-public-goods-maintenance.github.io/pg-atlas/storage).
-
-- Scope: PostgreSQL schema (SQLAlchemy models); NetworkX graph construction and synchronization;
-  incremental update logic for SBOM ingestion, batch updates for activity status, and periodic
-  reference graph sync.
-
-#### D6. Metric Computation Engine
-
-Implement the core metrics that power the Metric Gate, computed at repository level and aggregated to
-project level:
-
-- **Criticality score:** Transitive active dependent count—how many active projects depend on this
-  one, directly or indirectly. Computed via active subgraph projection (BFS from active leaves on
-  reversed dependency graph).
-- **Pony factor:** Minimum number of contributors responsible for ≥50% of commits. The primary
-  risk/decentralization metric.
-- **Adoption signals:** Registry downloads, GitHub stars/forks—normalized and aggregated per project.
-
-All computation happens offline (batch or incremental) with results materialized to database rows for
-fast API/dashboard reads. The
-[Metric Computation specification](https://scf-public-goods-maintenance.github.io/pg-atlas/metric-computation)
-documents the algorithms and aggregation methods.
-
-- Scope: Active subgraph projection algorithm; criticality score computation and propagation; pony
-  factor calculation from git logs; adoption signal normalization; materialization pipeline;
-  trigger-based recomputation on graph changes.
-
-> **Explicitly out of scope for v0:** On-chain telemetry (Soroban invocation metrics—no unified
-> source exists yet), composite PG Score formula (deferred until we have experience from first
-> rounds), versioned package blast radius modeling, and advanced sybil-resistant usage signals.
-
-#### D7. API Layer
-
-A public, read-only [REST API](https://scf-public-goods-maintenance.github.io/pg-atlas/api) built
-with FastAPI that exposes PG Atlas data to the dashboard, Tansu voting context, and community tools:
-
-- Project and repo listings with filtering, pagination, and search.
-- Dependency and dependent lookups (direct and transitive).
-- Metric scores and leaderboards.
-- Bulk exports (CSV/JSON) for offline analysis and community verification.
-- Auto-generated OpenAPI spec with Swagger UI, plus a TypeScript SDK generated from the spec.
-
-No authentication required for reads. Rate-limited at 100 requests/minute per IP.
-
-- Scope: FastAPI application; endpoint implementation; OpenAPI documentation; caching layer; rate
-  limiting; TypeScript SDK generation.
-
-#### D8. Public Dashboard
-
-A public, zero-auth [dashboard](https://scf-public-goods-maintenance.github.io/pg-atlas/dashboard)
-providing visual access to PG Atlas data:
-
-- **Landing page:** Ecosystem summary—total active projects, dependency coverage, risk distribution,
-  top critical PGs.
-- **Searchable leaderboard:** Filterable table of projects ranked by metrics, with risk flags (e.g.,
-  pony factor = 1 highlighted in red).
-- **Project detail pages:** Score breakdown, dependent/dependency lists, contributor statistics.
-- **Graph explorer:** Interactive dependency graph visualization with active subgraph highlighting.
-
-The technology choice (Panel or React/Next.js) is still
-[under discussion](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/3).
-The working group is evaluating speed-to-launch vs. long-term flexibility. The dashboard consumes the
-API exclusively—no direct database access.
-
-- Scope: Frontend implementation; API integration; graph visualization; responsive design; deployment
-  and hosting.
-
-#### D9. Deployment & Operations
-
-Production deployment of PG Atlas targeting <$100/month operational cost:
-
-- Push-to-deploy CI/CD pipeline.
-- PostgreSQL hosting (managed or self-hosted).
-- Periodic job scheduling for registry crawls, metric recomputes, and activity status updates.
-- Health monitoring, error tracking (Sentry), and backup strategy.
-- HTTPS enforcement, rate limiting, and ingestion input validation.
-
-Deployment strategy options are
-[documented in detail](https://scf-public-goods-maintenance.github.io/pg-atlas/operations). The
-working group is evaluating DigitalOcean App Platform, GitHub-maximal (VPS + Actions), and Fly.io.
-
-- Scope: Infrastructure provisioning; CI/CD setup; monitoring and alerting; backup automation;
-  operational documentation.
