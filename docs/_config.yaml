@@ -1,8 +1,12 @@
 # Basic site settings
 title: SCF PG Maintenance WG
-description: Community hub for sustainable public goods funding and maintenance in the Stellar ecosystem
+description:
+  Community hub for sustainable public goods funding and maintenance in the Stellar ecosystem
 baseurl: "" # Empty for root publishing
 url: "https://scf-public-goods-maintenance.github.io"
+
+# Add permalink setting to omit .html extensions in links
+permalink: pretty
 
 # Just the Docs remote theme (supported on GitHub Pages)
 remote_theme: just-the-docs/just-the-docs

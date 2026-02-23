@@ -64,9 +64,9 @@ The working group chose PostgreSQL + NetworkX for v0 based on:
 ## Data Model
 
 The schema is designed to map naturally to property graphs, facilitating network analytics hand-off
-to NetworkX, and enabling [future scaling](/pg-atlas/graph-scaling.md) to a native graph DB. This
-schema is minimal and likely incomplete; it'll be expanded based on downstream use-cases, and
-eventually performance-oriented benchmark experiments.
+to NetworkX, and enabling [future scaling](graph-scaling.md) to a native graph DB. This schema is
+minimal and likely incomplete; it'll be expanded based on downstream use-cases, and eventually
+performance-oriented benchmark experiments.
 
 ### Core Modeling Decision: Project vs. Repo
 
@@ -349,7 +349,7 @@ P.add_edges_from(project_edges)
 # Attach project-level attributes from projects table
 ```
 
-**Active subgraph projection** (see [Metric Computation](/pg-atlas/metric-computation.md)):
+**Active subgraph projection** (see [Metric Computation](metric-computation.md)):
 
 - Filter to `project.activity_status IN ('live', 'in-dev')` repo leaves (in-degree == 0 in dependency
   direction).

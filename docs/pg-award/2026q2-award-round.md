@@ -62,7 +62,7 @@ decision stack that combines objective data, expert review, and community voice.
 **Decision stack (per round):**
 
 1. **Metric Gate (objective filter)** — Each applicant's project is scored on objective signals from
-   [PG Atlas](/pg-atlas/overview.md) (adoption, criticality, pony factor, etc.). The Metric Gate
+   [PG Atlas](../pg-atlas/overview.md) (adoption, criticality, pony factor, etc.). The Metric Gate
    serves two roles: it filters intake so that only projects meeting a baseline threshold advance to
    review and voting, and it provides published context that reviewers and voters can reference when
    evaluating proposals. Metrics inform decisions—they do not determine them.
@@ -72,9 +72,9 @@ decision stack that combines objective data, expert review, and community voice.
 3. **NQG Community Vote (legitimacy)** — Reputation-weighted community vote via
    [Tansu](https://tansu.dev), using NQG scores for sybil resistance and voice credit weighting. This
    is where funding decisions are made. Voters see metric scores, expert reviews, and proposal
-   details to inform their vote. See [Tansu Modifications](/pg-award/2026q2-award-round.md)
+   details to inform their vote. See [Tansu Modifications](tansu-modifications.md)
 
-The working group's [consensus document](/pg-working-group.md) also envisions a fourth step—a
+The working group's [consensus document](../pg-working-group.md) also envisions a fourth step—a
 programmatic Budget Solve that combines metric, expert, and community signals with configurable
 weights (proposed starting point: Metrics 50%, Experts 30%, NQG 20%) to optimally fit awards within
 the available pool. This is a longer-term goal. For the Q2 experiment, the community vote is the
@@ -99,7 +99,7 @@ primary decision mechanism, with metrics and expert reviews providing structured
 **Public Good categories** include SDKs, data support, wallet support, developer experience,
 ecosystem visibility, infrastructure monitoring, governance tools, and security/auditing tools. The
 full category definitions and eligibility criteria are published in the
-[Public Goods Award rules](/public-goods-award.md).
+[Public Goods Award rules](../public-goods-award.md).
 
 ### What This Addresses
 

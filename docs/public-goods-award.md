@@ -1,12 +1,12 @@
 ---
 title: Public Goods Award
 has_children: true
-nav_order: 3
+nav_order: 2
 ---
 
 # Public Goods Award
 
-_This structure proposes [significant changes](/pg-award/2026q2-award-round.md) compared to previous
+_This structure proposes [significant changes](pg-award/2026q2-award-round.md) compared to previous
 rounds._
 
 ## Overview
@@ -17,7 +17,7 @@ non-excludable, non-rivalrous, and broadly beneficial to the Stellar/Soroban eco
 
 Managed as a community-driven program with increasing decentralization, the Award provides
 predictable funding (up to $50K in XLM\* per proposal per quarter) based on demonstrated retroactive
-impact, proposed maintenance/features, and objective metrics from [PG Atlas](/pg-atlas.md). Funding
+impact, proposed maintenance/features, and objective metrics from [PG Atlas](pg-atlas.md). Funding
 combines retroactive rewards for past contributions with forward retainers tied to clear deliverables
 and Service Level Objectives (SLOs).
 
@@ -75,7 +75,7 @@ Existing/returning projects may resubmit directly with impact updates.
 1. **Metric Review**: PG Atlas scores published for context.
 1. **Voting Round**:
    1. Proposals are added to Tansu and link to project pages.
-   1. Tansu-based NQG vote (see [Tansu Modifications](/pg-award/tansu-modifications.md)).
+   1. Tansu-based NQG vote (see [Tansu Modifications](pg-award/tansu-modifications.md)).
 1. **Award Distribution**: Tranches tied to approval + milestones/SLOs.
 1. **Resubmission**: Quarterly with progress reports.
 
@@ -112,4 +112,4 @@ centralized Council references removed and replaced with community processes.)
 
 This page reflects a transition design as of February 2026 — evolving via repo PRs.
 
-_See sub-page: [Tansu Modifications](/pg-award/tansu-modification.md) for Tansu pilot details._
+_See sub-page: [Tansu Modifications](pg-award/tansu-modifications.md) for Tansu pilot details._
