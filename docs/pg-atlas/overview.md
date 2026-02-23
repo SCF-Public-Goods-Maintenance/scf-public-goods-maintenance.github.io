@@ -60,14 +60,14 @@ Target: Usable by April 12, 2026
 - SBOM ingestion via GitHub Action (verification layer).
 - **Two-level data model**: `Project` (funding/scoring unit, DAOIP-5 URIs) → `Repo` (1-to-many,
   ingestion unit). Separate `ExternalRepo` table for out-of-ecosystem dependencies. All ingestion
-  writes at repo level; project-level metrics derived by aggregation. See
-  [Storage](/pg-atlas/storage.md) for schema details.
+  writes at repo level; project-level metrics derived by aggregation. See [Storage](storage.md) for
+  schema details.
 - Directed `depends_on` graph at repo resolution, with project-level view derived by collapsing repo
   edges.
 - **Activity status**: 4-value enum (`live`, `in-dev`, `discontinued`, `non-responsive`) on `Project`
   — sourced from SCF Impact Survey (yearly baseline) with higher-resolution triangulation from
   OpenGrants completion % and repo `latest_commit_date`. See
-  [Activity Status Update Logic](/pg-atlas/storage.md#activity-status-update-logic).
+  [Activity Status Update Logic](storage.md#activity-status-update-logic).
 - Active subgraph projection via upstream propagation from active leaves.
 - Core metrics: transitive dependent count, pony factor (git log parsing), basic off-chain adoption —
   all computed at repo level, aggregated to project level. PG Score composite formula deferred.
@@ -82,7 +82,7 @@ Target: Usable by April 12, 2026
 - On-chain telemetry (Soroban contract/RPC call volume) — no unified activity metrics yet.
 - Versioned package modeling (blast radius per release).
 - Native property graph DB deployment — PostgreSQL + NetworkX is the v0 choice; graph DB options
-  documented in [Graph Scaling](/pg-atlas/graph-scaling.md) for future evaluation.
+  documented in [Graph Scaling](graph-scaling.md) for future evaluation.
 - Automated on-chain Metric Gate integration with Tansu.
 - Advanced Sybil-resistant usage signals.
 - PG Score composite weighting formula (deferred until experience from first rounds).

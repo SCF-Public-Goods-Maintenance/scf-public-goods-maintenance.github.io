@@ -51,7 +51,7 @@ counts). -->
 ### Storage & Backend Migration
 
 From v0 backend → migrate to JanusGraph (single-node BerkeleyDB → distributed Cassandra/Scylla). See
-[Graph Scaling](/pg-atlas/graph-scaling.md) for future options.
+[Graph Scaling](graph-scaling.md) for future options.
 
 ### API & Dashboard Growth
 

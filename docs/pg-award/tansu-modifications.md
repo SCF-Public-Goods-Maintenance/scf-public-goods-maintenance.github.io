@@ -1,10 +1,10 @@
 ---
-title: 2026 Voting Experiment
+title: Tansu Modifications
 parent: Public Goods Award
-nav_order: 1
+nav_order: 2
 ---
 
-# 2026 Voting Experiment
+# Tansu Modifications
 
 ## Voting
 
