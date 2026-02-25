@@ -45,8 +45,8 @@ active leaf project. This filters out dead branches and ensures criticality refl
 - Result: Subgraph containing only repo nodes with paths from active leaves.
 
 Repo-level activity status is derived from the parent project's status (see
-[Activity Status Update Logic](/pg-atlas/storage.md#activity-status-update-logic) in Storage). Both
-`live` and `in-dev` repos are treated as active for subgraph projection.
+[Activity Status Update Logic](storage.md#activity-status-update-logic) in Storage). Both `live` and
+`in-dev` repos are treated as active for subgraph projection.
 
 **Preferred v0 implementation**:
 

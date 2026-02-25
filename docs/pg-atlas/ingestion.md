@@ -32,16 +32,44 @@ Each SBOM submission is associated with a specific **Repo**, not a project direc
 
 **Workflow**:
 
-- Teams add a lightweight GitHub Action that generates a CycloneDX or SPDX SBOM (JSON format
-  preferred for parsing ease).
-- Action posts the SBOM to a designated endpoint directly from the GitHub hosted runner. (only
-  accepts allow-listed callers)
+- Teams add a
+  [lightweight GitHub Action](https://github.com/SCF-Public-Goods-Maintenance/pg-atlas-sbom-action)
+  to their workflows. The action fetches the repo's SPDX 2.3 dependency graph from the
+  [GitHub Dependency Graph API](https://docs.github.com/en/rest/dependency-graph/sboms) and submits
+  it to the PG Atlas ingestion endpoint, authenticated via a GitHub OIDC token. Supports both public
+  and private repos.
 - Optional: allow non-GitHub SBOM submissions which are signed with a project key for provenance
   (deferred for v0).
 
+**Authentication**:
+
+The action requests a short-lived GitHub OIDC token (RS256-signed JWT issued by GitHub's OIDC
+provider) with the PG Atlas API URL as the audience, and sends it in the `Authorization: Bearer`
+header of the submission request. No secrets need to be configured in the calling repository — the
+only caller-side requirement is `id-token: write` in the workflow's `permissions` block.
+
+The API verifies the token by:
+
+1. Fetching GitHub's public JWKS from `https://token.actions.githubusercontent.com/.well-known/jwks`.
+2. Verifying the RS256 signature and standard claims (`iss`, `exp`, `aud`).
+3. Extracting the `repository` claim (`owner/repo`) to establish which repo submitted the SBOM, and
+   recording the `actor` (triggering user) for audit purposes.
+
+Both GitHub-hosted and self-hosted runners are supported. The OIDC token in both cases is signed by
+GitHub's OIDC provider and contains a `runner_environment` claim (`github-hosted` or `self-hosted`).
+
+**Trust model**: The OIDC token cryptographically proves the _identity_ of the submitting repo — it
+guarantees that the submission originated from a workflow running in the context of `owner/repo`,
+authorized by a GitHub user with write access. It does **not** independently verify the _content_ of
+the submitted SBOM: a workflow author controls the workflow YAML and could in principle modify the
+payload before submission. The principal mitigations are: (1) the reference graph cross-check (A8)
+flags declared dependencies that diverge from the inferred graph; (2) all submissions are logged with
+the `repository` and `actor` claims, making falsification an attributable act; (3) community review
+and the public leaderboard create social accountability.
+
 **Processing**:
 
-- Validate format and schema.
+- Validate SPDX 2.3 format and schema.
 - Extract dependencies (package name + version range).
 - Map each dependency to a `Repo` (if within-ecosystem) or `ExternalRepo` (if external). Normalize
   ecosystem-specific names (e.g., `soroban-sdk` across crates/npm) to match `canonical_id` format
@@ -58,14 +86,26 @@ Each SBOM submission is associated with a specific **Repo**, not a project direc
 - Planned: Tie to SCF Build testnet tranche release (preferred over mainnet to capture dependencies
   early).
 
-<!-- FUTURE SELF: Add example GitHub Action YAML snippet here once finalized. Link to template repo.
--->
+**Example workflow**:
+
+```yaml
+jobs:
+  sbom:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read # for GitHub Dependency Graph API
+      id-token: write # for OIDC authentication to PG Atlas
+    steps:
+      - uses: SCF-Public-Goods-Maintenance/pg-atlas-sbom-action@<full-commit-hash>
+```
+
+The `api-url` input defaults to the production PG Atlas endpoint and does not need to be set. The
+calling repo must have the GitHub dependency graph enabled.
 
 **Open Questions**:
 
 - Mandatory vs. optional for v0? (Risk: low uptake → sparse graph; mitigation: strong reference graph
   bootstrapping).
-- Which SBOM format to standardize on (CycloneDX JSON recommended for tool support)?
 
 ## Reference Graph Bootstrapping
 
@@ -89,7 +129,7 @@ metadata, starting from curated root nodes.
 1. **Bootstrap Project vertices from OpenGrants**: Load SCF-awarded projects as `Project` rows.
    Populate `activity_status` from SCF Impact Survey data when available; default to `non-responsive`
    for projects with no survey response (see
-   [Activity Status Update Logic](/pg-atlas/storage.md#activity-status-update-logic)).
+   [Activity Status Update Logic](storage.md#activity-status-update-logic)).
 1. **Discover Repos**: From each project's `git_org_url`, enumerate repositories and create `Repo`
    vertices linked to the parent `Project` via `project_id` foreign key.
 1. Maintain a curated seed list of known Stellar/Soroban public goods (e.g., `soroban-sdk`,
@@ -125,7 +165,7 @@ Cloned repos may be LRU-cached to avoid re-cloning on every refresh.
   commits). Aggregate to `Project.pony_factor` by computing pony factor over the union of unique
   contributors across all project repos (deduplicated by `Contributor.email_hash`).
 - Update `Repo.latest_commit_date` from git log — feeds into activity status triangulation (see
-  [Activity Status Update Logic](/pg-atlas/storage.md#activity-status-update-logic)).
+  [Activity Status Update Logic](storage.md#activity-status-update-logic)).
 - Update on triggers (new release tag, quarterly refresh).
 
 **Open Questions**:
@@ -148,7 +188,7 @@ Cloned repos may be LRU-cached to avoid re-cloning on every refresh.
 - Store raw ingested artifacts (SBOM files, crawl snapshots) in repo or S3/IPFS for auditability.
 - All writes target `Repo`, `ExternalRepo`, `Contributor`, and edge tables. `Project` vertices are
   bootstrapped from OpenGrants and updated via survey/OpenGrants pipelines (see
-  [Incremental Updates](/pg-atlas/storage.md#incremental-updates) in Storage).
+  [Incremental Updates](storage.md#incremental-updates) in Storage).
 
 <!-- QUESTION FOR LEAD: Do we want a diagram here (Mermaid of ingestion flows: SBOM → API →
 Validation → Graph Update vs. Reference Crawl → Periodic Job)? -->
