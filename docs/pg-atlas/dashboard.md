@@ -61,7 +61,7 @@ The dashboard should be public, zero-auth (read-only), mobile-responsive, and fo
 
 ## Technology Decision
 
-**Decided (Issue #3):** **Option C — React/Next.js** (or Vite). The dashboard will be a custom
+**Decided (Issue #3):** **Option C — React** (Next.js or Vite). The dashboard will be a custom
 TypeScript frontend, consuming the RESTful FastAPI backend exclusively (no direct DB access) and
 dogfooding our OpenAPI-generated TypeScript SDK.
 
@@ -69,13 +69,14 @@ dogfooding our OpenAPI-generated TypeScript SDK.
 
 - **TypeScript SDK dogfooding** — We should be the first consumers of our own SDK; a Python dashboard
   would mean catching SDK ergonomics issues only when external developers hit them.
-- **Contributor accessibility** — Next/TypeScript is the most widely adopted frontend stack. To
+- **Contributor accessibility** — TypeScript with React is the most widely adopted frontend stack. To
   attract contributions (bug fixes, visualizations, accessibility, localization), lowering the
   barrier matters. The ecosystem (shadcn/ui, React Flow, Tailwind, etc.) lets us move fast and
   benefit from community momentum.
-- **Scoped v0** — A static Next.js app with the leaderboard and basic PG detail pages is achievable
-  in the timeframe without over-engineering. The interactive graph explorer can be deferred to v1
-  with a table-first approach initially.
+- **Scoped v0** — A static build Next.js or Vite-based app with the leaderboard and basic PG detail
+  pages is achievable in the timeframe without over-engineering, with a table-first approach
+  initially. Only the interactive full-graph explorer can be deferred to v1. The "drill into a
+  specific PG's dependency graph" user story is absolutely essential for v0.
 
 ### Ownership
 
@@ -85,5 +86,9 @@ coordination to finalize and confirm the features to include. See
 
 ## Open Questions
 
+- Graph viz library choice (Cytoscape.js or Sigma.js)?
+  - needs to support interactive (incremental) loading of additional vertices and edges.
 - Analytics/integration (e.g. Plausible for usage tracking).
-- Include mockup descriptions or Mermaid UI flow in this doc?
+- Host on xlm.sh? What are its limitations compared to other static site hosting options?
+
+<!-- QUESTION FOR KoxyG: Include mockup descriptions or Mermaid UI flow here? -->
