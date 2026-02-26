@@ -59,78 +59,31 @@ The dashboard should be public, zero-auth (read-only), mobile-responsive, and fo
 
 <!-- FUTURE SELF: Wireframes or Figma link once prototyped. -->
 
-## Implementation Options
+## Technology Decision
 
-We have a RESTful FastAPI backend with endpoints for nodes, scores, dependents, and bulk exports. The
-dashboard consumes this API exclusively (no direct DB access).
+**Decided (Issue #3):** **Option C — React/Next.js** (or Vite). The dashboard will be a custom
+TypeScript frontend, consuming the RESTful FastAPI backend exclusively (no direct DB access) and
+dogfooding our OpenAPI-generated TypeScript SDK.
 
-### Option 1: Streamlit
+### Rationale
 
-**Description**: Build with Streamlit — rapid prototyping, data-focused, Python-only stack.
+- **TypeScript SDK dogfooding** — We should be the first consumers of our own SDK; a Python
+  dashboard would mean catching SDK ergonomics issues only when external developers hit them.
+- **Contributor accessibility** — Next/TypeScript is the most widely adopted frontend stack. To
+  attract contributions (bug fixes, visualizations, accessibility, localization), lowering the
+  barrier matters. The ecosystem (shadcn/ui, React Flow, Tailwind, etc.) lets us move fast and
+  benefit from community momentum.
+- **Scoped v0** — A static Next.js app with the leaderboard and basic PG detail pages is achievable
+  in the timeframe without over-engineering. The interactive graph explorer can be deferred to v1
+  with a table-first approach initially.
 
-**Pros**:
+### Ownership
 
-- Extremely fast iteration (live reload, Python code for UI/logic).
-- Built-in components for tables, charts (Altair/Plotly), search, caching.
-- Graph viz via st.graphviz or pyvis integration.
-- Hosting simplicity (Streamlit Community Cloud free tier or self-host).
-- Low maintenance — aligns with Python backend team skills.
-
-**Cons**:
-
-- Limited custom UI flexibility (harder for complex interactive graph dragging/zooming).
-- Mobile experience good but not pixel-perfect.
-- Less "app-like" feel compared to full JS frameworks.
-
-### Option 2: Dash
-
-**Description**: Use Dash for interactive data apps with Plotly charts and Cytoscape.js for graph
-visualization.
-
-**Pros**:
-
-- Superior interactive graphing (Cytoscape component native).
-- Rich callbacks for dynamic filtering/search.
-- Strong data table components (Dash DataTable with sorting/pagination).
-- Deployable via same Python ecosystem (Gunicorn, Docker).
-- Good for metric-heavy dashboards (built-in Plotly for trends/heatmaps).
-
-**Cons**:
-
-- Steeper learning curve than Streamlit for layout.
-- Performance overhead for very large graphs (client-side rendering).
-- Licensing nuance (Dash Enterprise paid; open-source core sufficient for v0).
-
-### Option 3: Custom Build with React / Next.js
-
-**Description**: Full custom frontend using Next.js (SSR/SSG), Tailwind CSS, and specialized
-libraries (Vis.js, React-Flow, or Cytoscape.js for graphs; TanStack Table for leaderboards).
-
-**Pros**:
-
-- Maximum flexibility and polish (custom animations, advanced graph interactions, PWA potential).
-- Best performance for large interactive graphs (WebGL options like sigma.js).
-- Modern app feel, excellent mobile/responsive support.
-- Static generation possible for landing/leaderboard (fast CDN hosting via Vercel/Netlify).
-- Decouples frontend skills (JS/TS community contributions easier).
-- Fully open-source.
-
-**Cons**:
-
-- Highest initial development time/effort.
-- More complex deployment (unless we force a static build).
-- Risk of over-engineering early features.
+[KoxyG](https://github.com/KoxyG) has taken ownership: build with **Next.js or Vite**, with team coordination to finalize and
+confirm the features to include. See [GitHub Issue #3](https://github.com/scf-public-goods-maintenance/scf-public-goods-maintenance.github.io/issues/3).
 
 ## Open Questions
 
-- Prioritize speed-to-launch (Streamlit/Dash) vs. long-term polish (custom React)?
-- Graph viz library choice (Cytoscape.js common across options)?
-- Hosting strategy (single container vs. separate frontend/backend)?
-- Analytics/integration needs (e.g., Plausible for usage tracking)?
-- Can we use our own Typescript SDK (API client) with each of the options?
-- Host on xlm.sh?
 
-<!-- QUESTION FOR LEAD: Include mockup descriptions or Mermaid UI flow here? Which option leans
-strongest for v0 timeline? -->
-
-<!-- FUTURE SELF: Prototype one-pager for each option post-backend selection to compare real UX. -->
+- Analytics/integration (e.g. Plausible for usage tracking).
+- Include mockup descriptions or Mermaid UI flow in this doc?
