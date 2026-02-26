@@ -67,8 +67,8 @@ dogfooding our OpenAPI-generated TypeScript SDK.
 
 ### Rationale
 
-- **TypeScript SDK dogfooding** — We should be the first consumers of our own SDK; a Python
-  dashboard would mean catching SDK ergonomics issues only when external developers hit them.
+- **TypeScript SDK dogfooding** — We should be the first consumers of our own SDK; a Python dashboard
+  would mean catching SDK ergonomics issues only when external developers hit them.
 - **Contributor accessibility** — Next/TypeScript is the most widely adopted frontend stack. To
   attract contributions (bug fixes, visualizations, accessibility, localization), lowering the
   barrier matters. The ecosystem (shadcn/ui, React Flow, Tailwind, etc.) lets us move fast and
@@ -79,11 +79,11 @@ dogfooding our OpenAPI-generated TypeScript SDK.
 
 ### Ownership
 
-[KoxyG](https://github.com/KoxyG) has taken ownership: build with **Next.js or Vite**, with team coordination to finalize and
-confirm the features to include. See [GitHub Issue #3](https://github.com/scf-public-goods-maintenance/scf-public-goods-maintenance.github.io/issues/3).
+[KoxyG](https://github.com/KoxyG) has taken ownership: build with **Next.js or Vite**, with team
+coordination to finalize and confirm the features to include. See
+[GitHub Issue #3](https://github.com/scf-public-goods-maintenance/scf-public-goods-maintenance.github.io/issues/3).
 
 ## Open Questions
-
 
 - Analytics/integration (e.g. Plausible for usage tracking).
 - Include mockup descriptions or Mermaid UI flow in this doc?
