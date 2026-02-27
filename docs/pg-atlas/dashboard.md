@@ -61,33 +61,38 @@ The dashboard should be public, zero-auth (read-only), mobile-responsive, and fo
 
 ## Technology Decision
 
-**Decided (Issue #3):** **Option C — React** (Next.js or Vite). The dashboard will be a custom
-TypeScript frontend, consuming the RESTful FastAPI backend exclusively (no direct DB access) and
-dogfooding our OpenAPI-generated TypeScript SDK.
+**Decided (Issue #3):** **Vite with TypeScript** (React). The dashboard will be a custom TypeScript
+frontend, consuming the RESTful FastAPI backend exclusively (no direct DB access) and dogfooding our
+OpenAPI-generated TypeScript SDK.
 
 ### Rationale
 
 - **TypeScript SDK dogfooding** — We should be the first consumers of our own SDK; a Python dashboard
   would mean catching SDK ergonomics issues only when external developers hit them.
-- **Contributor accessibility** — TypeScript with React is the most widely adopted frontend stack. To
-  attract contributions (bug fixes, visualizations, accessibility, localization), lowering the
-  barrier matters. The ecosystem (shadcn/ui, React Flow, Tailwind, etc.) lets us move fast and
-  benefit from community momentum.
-- **Scoped v0** — A static build Next.js or Vite-based app with the leaderboard and basic PG detail
-  pages is achievable in the timeframe without over-engineering, with a table-first approach
-  initially. Only the interactive full-graph explorer can be deferred to v1. The "drill into a
-  specific PG's dependency graph" user story is absolutely essential for v0.
+- **Contributor accessibility** — Vite with TypeScript is a widely adopted frontend stack. To attract
+  contributions (bug fixes, visualizations, accessibility, localization), lowering the barrier
+  matters. The ecosystem (shadcn/ui, React Flow, Tailwind, etc.) lets us move fast and benefit from
+  community momentum.
+- **Build tool choice** — Vite is the better choice for this client-side app: superior development
+  speed, simplicity, and smaller production bundles.
+- **Scoped v0** — A static Vite app with the leaderboard and basic PG detail pages, including a
+  **sub-graph explorer on PG detail pages** so voters and maintainers get a transparent breakdown of
+  derived metrics (criticality, score). The **full-graph** explorer can be deferred to v1; it is not
+  essential for the Q2 PG Award.
 
 ### Ownership
 
-[KoxyG](https://github.com/KoxyG) has taken ownership: build with **Next.js or Vite**, with team
-coordination to finalize and confirm the features to include. See
+[KoxyG](https://github.com/KoxyG) has taken ownership: build with **Vite with TypeScript**.
 [GitHub Issue #3](https://github.com/scf-public-goods-maintenance/scf-public-goods-maintenance.github.io/issues/3).
 
 ## Open Questions
 
-- Graph viz library choice (Cytoscape.js or Sigma.js)?
-  - needs to support interactive (incremental) loading of additional vertices and edges.
+- **Sub-graph explorer on PG detail pages:** In scope for v0 (essential for the voter user story:
+  "drill into a specific PG's dependency graph and score breakdown to inform my NQG-weighted vote").
+  [@aolieman](https://github.com/aolieman) and [@jaygut](https://github.com/jaygut) to be involved in
+  detailing the specs.
+- Graph viz library choice (Cytoscape.js or Sigma.js)? Needs to support interactive (incremental)
+  loading of additional vertices and edges.
 - Analytics/integration (e.g. Plausible for usage tracking).
 - Host on xlm.sh? What are its limitations compared to other static site hosting options?
 
