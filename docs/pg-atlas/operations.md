@@ -37,7 +37,7 @@ Security: HTTPS enforced, rate limiting, no public writes.
 - Hosted PostgreSQL.
 - FastAPI container on DigitalOcean App Platform (managed PaaS, auto-deploys from GitHub).
 - Periodic workers: App Platform background workers or separate Celery container.
-- Dashboard: Static build (Next.js) on App Platform static site or separate.
+- Dashboard: Static build on App Platform static site or separate.
 
 **Pros**:
 
