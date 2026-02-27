@@ -61,9 +61,9 @@ The dashboard should be public, zero-auth (read-only), mobile-responsive, and fo
 
 ## Technology Decision
 
-**Decided (Issue #3):** **Vite with TypeScript** (React). The dashboard will be a custom TypeScript
-frontend, consuming the RESTful FastAPI backend exclusively (no direct DB access) and dogfooding our
-OpenAPI-generated TypeScript SDK.
+**Decided (Issue #3):** **Vite with TypeScript** (`react-ts` template). The dashboard will be a
+custom TypeScript frontend, consuming the RESTful FastAPI backend exclusively (no direct DB access)
+and dogfooding our OpenAPI-generated TypeScript SDK.
 
 ### Rationale
 
@@ -82,7 +82,7 @@ OpenAPI-generated TypeScript SDK.
 
 ### Ownership
 
-[KoxyG](https://github.com/KoxyG) has taken ownership: build with **Vite with TypeScript**.
+[KoxyG](https://github.com/KoxyG) has taken ownership: build with **Vite's `react-ts` template**.
 [GitHub Issue #3](https://github.com/scf-public-goods-maintenance/scf-public-goods-maintenance.github.io/issues/3).
 
 ## Open Questions
