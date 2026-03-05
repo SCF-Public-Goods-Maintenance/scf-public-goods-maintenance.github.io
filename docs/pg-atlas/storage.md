@@ -102,13 +102,14 @@ primarily from OpenGrants.
 
 - `canonical_id` (unique key: DAOIP-5 URI, e.g. `daoip-5:stellar:project:stellarcarbon`).
 - `display_name`.
-- `type` (enum: `pg_root`, `scf_project`).
+- `type` (enum: `public-good`, `scf-project`).
 - `activity_status` (enum: `live`, `in-dev`, `discontinued`, `non-responsive`).
 - `git_org_url` (str: GitHub/GitLab organization URL, for discovery and linking).
 - `pony_factor` (int: materialized, aggregated across all project repos).
 - `criticality_score` (int: materialized, sum of all project repo criticality scores).
 - `adoption_score` (float: materialized, composite of repo-level adoption signals).
-- `metadata` (JSONB: anything we want to show but not traverse/query).
+- `metadata` (JSONB: anything we want to show but not traverse/query). In Python the attribute is
+  `project_metadata` to avoid the SQLAlchemy `metadata` name reservation.
 - `updated_at` (timestamp).
 
 #### `Repo`
@@ -120,7 +121,8 @@ Represents a single git repository or published package within the ecosystem.
 - `canonical_id` (unique key: `ecosystem:package` or `github:org/repo`).
 - `display_name`.
 - `project_id` (foreign key → `Project`; enforces 1-to-many).
-- `latest_version` (str: git hash/tag or published version).
+- `latest_version` (str: git hash/tag or published version; **required**). SBOM ingestion should
+  always supply this; it is the canonical version identifier for graph snapshot diffs.
 - `latest_commit_date` (timestamp: from git log, used for activity triangulation).
 - `repo_url` (str: the ingestion source for git contributor stats).
 - `visibility` (enum: `public`, `private`)
@@ -130,7 +132,8 @@ Represents a single git repository or published package within the ecosystem.
 - `adoption_downloads` (int: registry downloads last 30 days, from npm/crates/PyPI).
 - `adoption_stars` (int: GitHub stars).
 - `adoption_forks` (int: GitHub forks).
-- `metadata` (JSONB, including code license from dependent SBOMs or GitHub API).
+- `metadata` (JSONB, including code license from dependent SBOMs or GitHub API). In Python the
+  attribute is `repo_metadata` to avoid the SQLAlchemy `metadata` name reservation.
 - `updated_at` (timestamp).
 
 #### `ExternalRepo`
@@ -145,7 +148,7 @@ interesting targets for blast radius analysis.
 
 - `canonical_id` (unique key: `ecosystem:package`, e.g. `npm:express`).
 - `display_name`.
-- `latest_version` (str: from registry crawl).
+- `latest_version` (str: from registry crawl; **required**).
 - `repo_url` (str: future extension point, nice to have).
 - `criticality_score` (int: materialized, transitive active dependent count for this repo).
 - `releases` (JSONB array: `[{"version": "...", "release_date": "..."}]`).
@@ -155,7 +158,8 @@ interesting targets for blast radius analysis.
 
 **Columns** (vertex properties):
 
-- `email_hash` (for reconciliation across repos).
+- `email_hash` (SHA-256 digest of the normalized author email, stored as 32-byte BYTEA / 64-char hex
+  string via `HexBinary`; used for reconciliation across repos).
 - `name` (commit author).
 
 ### Edge Types
@@ -163,20 +167,21 @@ interesting targets for blast radius analysis.
 #### `depends_on`
 
 - Directed: dependent repo → dependency repo (pointing "toward roots").
-- Source vertex: `Repo`.
-- Target vertex: `Repo` or `ExternalRepo`.
+- Source vertex: `Repo` or `ExternalRepo` (any `RepoVertex`).
+- Target vertex: `Repo` or `ExternalRepo` (any `RepoVertex`).
+- Stored in the `depends_on` table with **integer foreign keys** to `repo_vertices.id`, which
+  provides full referential integrity while allowing a single FK column to reference either subtype.
 - Properties:
   - `version_range` (str).
-  - `confidence` (enum: `verified_sbom`, `inferred_shadow`).
+  - `confidence` (enum: `verified-sbom`, `inferred-shadow`).
 
 #### `contributed_to`
 
 - Directed: `Contributor` → `Repo`.
 - Properties:
   - `number_of_commits` (int: from `git shortlog -sne`).
-  - `current_lines` (int: from `git blame`; undecided for v0).
-  - `first_commit_date` (timestamp).
-  - `last_commit_date` (timestamp).
+  - `first_commit_date` (timestamptz, UTC; **required**).
+  - `last_commit_date` (timestamptz, UTC; **required**).
 
 ### Activity Status Update Logic
 
@@ -205,7 +210,34 @@ all sources (survey, OpenGrants, git logs).
 
 ### Raw Artifacts
 
-- File storage (separate git repo or lightweight bucket/IPFS) with vertex references.
+Raw SBOM files are stored outside the relational database to avoid bloating the main schema:
+
+- **Local development**: Written to a configurable filesystem path (`ARTIFACT_STORE_PATH`, default
+  `./artifact_store`). Files are written atomically (write-to-temp, rename).
+- **Production**: Stored on [Storacha](https://storacha.network/) (w3up), a content-addressed
+  IPFS-backed store. The CID returned by Storacha is recorded in `sbom_submissions.artifact_path`.
+- **Referencing**: `sbom_submissions.artifact_path` holds the storage-backend-specific path (relative
+  filesystem path in dev; `storacha://<cid>` in prod). This is intentionally opaque — the API never
+  exposes raw artifact bytes.
+- **Content integrity**: `sbom_submissions.sbom_content_hash` stores the SHA-256 of the raw bytes as
+  32 BYTEA (mapped to a hex string in Python via the `HexBinary` custom TypeDecorator). This enables
+  deduplication and tamper detection independently of the storage backend.
+
+### SBOM Submission Audit Table
+
+Every ingest attempt is recorded in `sbom_submissions`:
+
+| Column              | Type                | Notes                                     |
+| ------------------- | ------------------- | ----------------------------------------- |
+| `id`                | serial PK           |                                           |
+| `repository_claim`  | varchar(256)        | `repository` field from the OIDC JWT      |
+| `actor_claim`       | varchar(128)        | `actor` field from the OIDC JWT           |
+| `sbom_content_hash` | bytea (hex in code) | SHA-256 of raw SBOM bytes                 |
+| `artifact_path`     | varchar(1024)       | Path in artifact store; set on submission |
+| `status`            | enum                | `pending` → `processed` or `failed`       |
+| `error_detail`      | varchar(4096)       | Error message on failure                  |
+| `submitted_at`      | timestamptz         | Server-default `now()`                    |
+| `processed_at`      | timestamptz         | Null until processing completes           |
 
 <!-- TODO: Add Mermaid ERD or gdotv.com diagram of property graph schema. -->
 
@@ -223,16 +255,42 @@ that work in SQL but create awkward graph structures.
 - The `Repo.project_id` foreign key enforces the 1-to-many Project→Repo relationship. During graph
   construction, this is either joined to attach project metadata to repo nodes, or used to build a
   `part_of` edge in the NetworkX graph.
-- `ExternalRepo` is a separate table — these nodes participate in `depends_on` edges but carry no
-  project-level data.
-- Use SQLAlchemy models with clear vertex semantics.
+
+**`RepoVertex` Joined Table Inheritance (JTI)**:
+
+Both `Repo` and `ExternalRepo` inherit from a common `RepoVertex` base class backed by the
+`repo_vertices` table. This table holds the shared identity columns (`id`, `canonical_id`,
+`vertex_type` discriminator). Concrete subtypes store their own columns in `repos` and
+`external_repos` tables, joined by primary key.
+
+The motivation: edge tables (`depends_on`) carry a single FK column pointing to `repo_vertices.id`,
+which gives full referential integrity — a constraint on `in_vertex_id`/`out_vertex_id` correctly
+enforces that both endpoints must be known vertices, regardless of subtype. This is exactly the
+property-graph "vertex registry" pattern.
+
+```txt
+repo_vertices (id PK, canonical_id, vertex_type)
+     │ ← FK
+repos (id FK ref repo_vertices.id, display_name, project_id FK, visibility, ...)
+external_repos (id FK ref repo_vertices.id, display_name, ...)
+depends_on (in_vertex_id FK ref repo_vertices.id, out_vertex_id FK ref repo_vertices.id, ...)
+```
 
 **Edge types** (e.g., `depends_on`, `contributed_to`):
 
-- Start with `in_vertex` and `out_vertex` columns (many-to-many relationship).
+- Use **integer FK columns** (`in_vertex_id`, `out_vertex_id`) referencing `repo_vertices.id` rather
+  than string identifiers. This provides referential integrity and enables efficient JOINs.
 - Additional columns store literal data (edge properties).
-- Avoid foreign keys to/from other tables; prefer JSONB for multi-valued edge properties if needed.
-- Use SQLAlchemy association tables or explicit edge models.
+- Multi-valued edge properties use JSONB if needed.
+- SQLAlchemy association tables or explicit edge models.
+
+**Implementation conventions**:
+
+- All timestamps are `DateTime(timezone=True)` (UTC everywhere — no localized datetimes in the
+  schema). Python code uses UTC-aware `datetime.datetime` objects.
+- `sbom_submissions.sbom_content_hash` is stored as 32-byte BYTEA via a `HexBinary` `TypeDecorator`
+  that transparently converts between 64-char hex strings in Python code and compact binary storage
+  in PostgreSQL.
 
 This approach lets us hand analysis off to NetworkX early, rather than doing traversals in PostgreSQL
 to construct the graph. We can use existing glue like `nx.from_pandas_edgelist()` or build minimal
@@ -262,7 +320,7 @@ mitigations:
 4. **Bulk operation on edges**:
    - Delete old `depends_on` edges from this repo (if re-ingesting).
    - Insert new `depends_on` edges from SBOM dep list.
-   - Mark confidence as `verified_sbom`.
+   - Mark confidence as `verified-sbom`.
 5. **Graph invalidation**: Either reload full graph into NetworkX (cheap at this scale) or implement
    incremental graph update (add/remove edges in existing NetworkX instance).
 6. **Async recomputation**: Trigger background job to recompute criticality scores for affected repos
@@ -293,7 +351,7 @@ triangulation):
 
 1. Fetch updated metadata from npm, crates.io, PyPI, etc.
 2. **Bulk upsert**: Insert new discovered repos into `Repo` (if within-ecosystem) or `ExternalRepo`.
-3. Mark `depends_on` confidence as `inferred_shadow`.
+3. Mark `depends_on` confidence as `inferred-shadow`.
 4. Full graph reload recommended (or use delta if performance becomes an issue).
 
 ### NetworkX Integration Points
@@ -307,30 +365,45 @@ SQLAlchemy in our implementation.
 import networkx as nx
 import pandas as pd
 
-# Load repo-level edges (includes edges to ExternalRepo targets)
+# Load repo-level edges; JOIN repo_vertices to resolve canonical_id strings
+# (in_vertex_id/out_vertex_id are integer FKs to repo_vertices.id)
 edges_df = pd.read_sql(
-    "SELECT in_vertex, out_vertex, version_range, confidence FROM depends_on", conn
+    """
+    SELECT
+        rv_in.canonical_id  AS in_vertex,
+        rv_out.canonical_id AS out_vertex,
+        d.version_range,
+        d.confidence
+    FROM depends_on d
+    JOIN repo_vertices rv_in  ON rv_in.id  = d.in_vertex_id
+    JOIN repo_vertices rv_out ON rv_out.id = d.out_vertex_id
+    """,
+    conn,
 )
 repos_df = pd.read_sql(
-    "SELECT canonical_id, project_id, activity_status, latest_commit_date, "
-    "pony_factor, adoption_downloads, adoption_stars FROM repos", conn
+    "SELECT rv.canonical_id, r.project_id, r.latest_commit_date, "
+    "r.pony_factor, r.adoption_downloads, r.adoption_stars "
+    "FROM repos r JOIN repo_vertices rv ON rv.id = r.id",
+    conn,
 )
 external_df = pd.read_sql(
-    "SELECT canonical_id, display_name FROM external_repos", conn
+    "SELECT rv.canonical_id, er.display_name "
+    "FROM external_repos er JOIN repo_vertices rv ON rv.id = er.id",
+    conn,
 )
 
 # Build directed graph at repo resolution
 G = nx.from_pandas_edgelist(
     edges_df,
-    source='in_vertex',
-    target='out_vertex',
-    edge_attr=['version_range', 'confidence'],
-    create_using=nx.DiGraph
+    source="in_vertex",
+    target="out_vertex",
+    edge_attr=["version_range", "confidence"],
+    create_using=nx.DiGraph,
 )
 
 # Attach node attributes for repos and external repos
-nx.set_node_attributes(G, repos_df.set_index('canonical_id').to_dict('index'))
-nx.set_node_attributes(G, external_df.set_index('canonical_id').to_dict('index'))
+nx.set_node_attributes(G, repos_df.set_index("canonical_id").to_dict("index"))
+nx.set_node_attributes(G, external_df.set_index("canonical_id").to_dict("index"))
 ```
 
 **Project-level graph** (derived, for dashboard visualization):
@@ -379,9 +452,15 @@ conn.execute("""
 ### Deployment Considerations
 
 - **Hosted PostgreSQL**: DigitalOcean Managed Database, AWS RDS, or various free tier options for
-  early testing.
+  early testing. **PostgreSQL 18+**: role names starting with `pg_` are disallowed for superusers —
+  use `atlas` (not `pg_atlas`) as the database user.
+- **Docker Compose (local dev)**: Use `postgres:18` image; mount the data volume at
+  `/var/lib/postgresql` (not `/var/lib/postgresql/data` — the path convention changed in PG 18).
 - **Connection pooling**: Use SQLAlchemy with asyncpg for FastAPI async support.
-- **Migrations**: Alembic for schema versioning.
+- **Migrations**: Alembic for schema versioning (`pg_atlas/migrations/`). The initial migration
+  (`versions/20260302_1440_d10e2f635f77_initial_schema.py`) creates all 8 tables and 6 PostgreSQL
+  enum types. The `downgrade()` function explicitly drops enum types — Alembic does not do this
+  automatically when dropping tables.
 - **Backups**: Daily automated snapshots via provider, plus periodic `pg_dump` to git repo or S3 for
   auditability.
 
@@ -396,3 +475,5 @@ conn.execute("""
   analysis needs?
 - For Repo `canonical_id`, should we use SBOM-style (SPDX-format) identifiers `.name` and
   `.packages[].externalRefs[].referenceLocator`, where applicable?
+- Production artifact storage: Storacha (w3up) is the target — which CID format do we store in
+  `sbom_submissions.artifact_path`, and what client library do we use?

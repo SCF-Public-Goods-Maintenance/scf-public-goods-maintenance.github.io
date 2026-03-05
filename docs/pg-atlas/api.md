@@ -58,7 +58,8 @@ RESTful principles for predictability and ease of consumption.
 ### Ecosystem Projects
 
 - `GET /projects` — List projects with pagination and filters.
-  - Query params: `type=pg_root`, `activity_status=live`, `search=keyword`, `limit=50`, `offset=0`.
+  - Query params: `type=public-good`, `activity_status=live`, `search=keyword`, `limit=50`,
+    `offset=0`.
   - Response: Paginated list with basic fields (canonical_id, display_name, type, activity_status,
     git_org_url, criticality_score, pony_factor, adoption_score).
 
@@ -90,7 +91,7 @@ RESTful principles for predictability and ease of consumption.
   - Query: `active=true`, `within_ecosystem=true`.
 
 - `GET /repos/{canonical_id}/blast-radius` — Transitive within-ecosystem dependents. Only available
-  for repos belonging to `type=pg_root` projects, 404 otherwise.
+  for repos belonging to `type=public-good` projects, 404 otherwise.
 
 - `GET /projects/{canonical_id}/dependents` — Project-level dependents (derived from repo-level
   edges, collapsed to distinct dependent projects).

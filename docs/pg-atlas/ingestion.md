@@ -77,7 +77,7 @@ and the public leaderboard create social accountability.
 - Upsert the submitting `Repo` vertex. If its parent `Project` doesn't exist, create it or flag for
   manual triage.
 - Create/update `depends_on` edges **from the submitting repo** to each dependency (`Repo` or
-  `ExternalRepo`). Mark confidence as `verified_sbom`.
+  `ExternalRepo`). Mark confidence as `verified-sbom`.
 - Flag conflicts with reference graph (e.g., missing declared deps) for manual review.
 
 **Incentives & Enforcement (v0)**:
@@ -138,7 +138,7 @@ metadata, starting from curated root nodes.
    within-ecosystem only).
 1. For each discovered package: create a `Repo` vertex (if within-ecosystem) or `ExternalRepo` vertex
    (if external). Normalize package names to `canonical_id` format (`ecosystem:package`).
-1. Create `depends_on` edges. Mark confidence as `inferred_shadow`.
+1. Create `depends_on` edges. Mark confidence as `inferred-shadow`.
 1. Run periodically (weekly for v0) or on triggers (new SCF project approval).
 
 **Boundaries**:
