@@ -28,87 +28,49 @@ community-driven project:
 
 Security: HTTPS enforced, rate limiting, no public writes.
 
-## Deployment Options
+## Deployment
 
-### Option 1: DigitalOcean App Platform
+### DigitalOcean App Platform
 
 **Description**:
 
-- Hosted PostgreSQL.
-- FastAPI container on DigitalOcean App Platform (managed PaaS, auto-deploys from GitHub).
-- Periodic workers: App Platform background workers or separate Celery container.
-- Dashboard: Static build (Next.js) on App Platform static site or separate.
+- Hosted PostgreSQL with backups and horizontal scaling options.
+- FastAPI container: managed PaaS, auto-deploys from GitHub push to `main`.
+- Heavier tasks can be offloaded to worker containers.
+- Dashboard: Static build on App Platform static site or separate.
 
 **Pros**:
 
-- App Platform excels at push-to-deploy with zero-config scaling/health checks.
-- Unified billing/dashboard.
+- App Platform excels at push-to-deploy with scaling and health checks.
+- Infrastructure is provisioned through a version controlled `app.yml` App Spec.
+- Unified billing and dashboard.
 - Good logging (through add-ons) and monitoring.
 
 **Cons**:
 
-- Workers less elegant (cron vs. managed queues).
-- Not GitHub-native for all parts.
+- Worker containers can be wasteful.
 
-### Option 2: GitHub-Maximal
+### Research: Stellar-Native Frontend (xlm.sh)
 
-**Description**:
+The elevator pitch:
 
-- API + DB in container self-hosted on low-cost + low-carbon VPS (Hetzner/Linode).
-- Periodic jobs exclusively in GitHub Actions Workflows (scheduled cron syntax).
-- Dashboard: Static site on GitHub Pages.
-- Ingestion webhooks via GitHub App or Actions dispatch.
+> Unlike traditional websites hosted by trusted third parties, dWebsites are distributed across
+> independently operated nodes, enhancing security, privacy, and resistance to censorship.
 
-**Pros**:
+**Components**:
 
-- Maximizes GitHub dependency (already required) — unified auth, secrets, logs.
-- Actions schedules reliable and free for public repos.
-- Pages free/fast for static frontend.
-- Zero additional vendors for core ops.
+- [Soroban Domains](https://www.sorobandomains.org/) — already used for Tansu.
+- [IPFS](https://ipfs.tech/) — content-addressed, distributed storage for hosting immutable static
+  assets with widespread peer-to-peer distribution.
+- [IPNS](https://docs.ipfs.tech/concepts/ipns/) — mutable naming layer for IPFS that provides stable,
+  updatable pointers to the latest frontend release or changing content.
+- [xlm.sh](https://xlm.sh/) — uses a wildcard DNS record to bridge Soroban Domains and IPFS/IPNS.
 
-**Cons**:
-
-- Limited runtime for long jobs (Actions timeouts).
-- Less managed scaling for API.
-
-### Option 3: Mixed with Stellar-Native Frontend (xlm.sh)
-
-**Description**:
-
-- Backend/API/DB on DigitalOcean App Platform or Fly.io (global edge).
-- Periodic jobs via provider schedulers or GitHub Actions.
-- Dashboard frontend: Static build hosted on xlm.sh (Stellar-native decentralized/static hosting via
-  Soroban or IPFS gateway).
-
-**Pros**:
-
-- XLM.sh!
-- Combines managed backend reliability with Stellar-native visibility.
-
-**Cons**:
+**Risks**:
 
 - xlm.sh limitations unknown.
 - Potential latency vs. traditional CDNs.
 - Split hosting increases complexity slightly.
-
-### Option 4: Fly.io Full-Stack
-
-**Description**:
-
-- Entire backend (API + DB container) on Fly.io machines (single region or multi for redundancy).
-- Workers via Fly's background tasks or cron-like.
-- Dashboard on Fly static or integrated.
-
-**Pros**:
-
-- Global low-latency deployment.
-- Push-to-deploy simple.
-- Free tier generous; scales vertically easily.
-
-**Cons**:
-
-- Less familiar in Stellar community vs. DigitalOcean.
-- DB persistence requires volume attachments.
 
 ## Auxiliary Services
 
@@ -124,19 +86,28 @@ activity status batch updates) from the FastAPI request cycle.
 
 **Components**:
 
-- Celery as task queue/worker framework.
-- Redis or RabbitMQ as message broker and result backend (lightweight, in-memory).
+- [Procrastinate](https://procrastinate.readthedocs.io/) as task queue/worker framework, using
+  PostgreSQL as both broker and result backend (no separate service needed — reuses the existing
+  hosted DB).
+- `PsycopgConnector` (psycopg3) for the Procrastinate connection; the FastAPI app continues to use
+  `asyncpg` via SQLAlchemy — both drivers access the same PostgreSQL instance.
 
-**Deployment options**:
+**Deployment**:
 
-- **Self-hosted on main instance** (Droplet/Fly machine): Run Redis container + Celery worker(s) via
-  Docker Compose/supervisor. Low cost, full control.
-- **Managed**: Redis Cloud (free tier sufficient) or DigitalOcean Managed Redis; Celery workers on
-  App Platform background tasks or same host.
+- **Workers run in GitHub Actions** (weekly `schedule` + manual `workflow_dispatch`). This provides
+  free compute for public repos, built-in run history/logs, and elevated GitHub API rate limits.
+- The worker invokes `run_worker_async(wait=False, concurrency=N)` per queue so that it exits once
+  the queue is drained — required for GitHub Actions to complete rather than hang.
+- Queues are processed sequentially: `opengrants` first (ensures `Repo` vertices exist), then
+  `package-deps`.
+- Procrastinate's schema tables (`procrastinate_jobs`, etc.) are provisioned via an Alembic migration
+  using the "multiple bases" pattern; `entrypoint.sh` applies it automatically on every deploy.
 
-**Pros of managed**: Auto-scaling, backups, no persistence worries.
+**Pros**: Zero additional infrastructure cost, unified PostgreSQL dependency, reliable scheduling
+with full audit trail in GitHub Actions UI.
 
-**Cons**: Additional vendor/cost (~$10–20/month).
+**Cons**: Maximum 6-hour runtime per Actions job; not suitable for very long-running crawls without
+sharding.
 
 ### Error Monitoring & Performance Tracing
 
@@ -157,13 +128,14 @@ transparency.
 
 **Caching**:
 
-- Redis (shared with Celery) for API endpoint caching (leaderboards, node details).
-- Cloudflare CDN/proxy.
+- Client-side through headers.
+- Cloudflare CDN/proxy for most API responses.
+- For exports: Git Large File Storage (could get costly on GitHub)?
 
 **Logging**:
 
-- Structured JSON logs to stdout; provider capture (DigitalOcean (Betterstack or Papertrail add-on)
-  or Fly logs).
+- Structured JSON logs to stdout; provider capture (DigitalOcean has Betterstack or Papertrail
+  add-ons).
 
 **Monitoring & Alerts**:
 
@@ -172,23 +144,15 @@ transparency.
 
 **Backups**:
 
-- Database dumps (Postgres pg_dump) to S3-compatible bucket or repo artifacts.
-- Automated via cron/GitHub Actions.
+- Database dumps (Postgres pg_dump) managed or repo artifacts.
+- Automated via DigitalOcean or GitHub Actions.
 
 <!-- FUTURE SELF: Integrate Sentry performance tracing once API endpoints stabilized. -->
 
 ## Open Questions
 
-- Budget ceiling and preferred vendor (DigitalOcean familiarity vs. cheaper alternatives)?
-- Periodic job runtime needs (e.g., full recompute duration estimate)?
-- xlm.sh feasibility for interactive dashboard (client-side graph rendering size/limits)?
+- Static build feasibility for interactive dashboard (client-side graph rendering size/limits)?
 - Any advantages to have billing in USDC through e.g. Rozo.ai or
   [Flashback](https://www.flashback.tech/)?
-- Celery beat scheduler location (same worker or separate for reliability)?
 - Acceptable cost threshold for managed auxiliaries?
 - Alert channels (Discord webhook, email)?
-
-<!-- FUTURE SELF: Benchmark job runtimes once prototype ready; test Actions schedule reliability for
-crawls. -->
-
-<!-- QUESTION FOR LEAD: Prioritize cost vs. managed features? Any veto on specific providers? -->

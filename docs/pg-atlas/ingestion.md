@@ -12,9 +12,9 @@ The ingestion layer is responsible for collecting and normalizing data that feed
 graph and contributor statistics. For v0, ingestion focuses on three primary streams:
 
 1. **SBOM submissions** – explicit dependency declarations from project repos (verification layer).
-2. **Reference graph bootstrapping** – automated crawling of public package registries and OpenGrants
+1. **Reference graph bootstrapping** – automated crawling of public package registries and OpenGrants
    to build an initial graph from known Stellar/Soroban PG roots.
-3. **Git contributor logs** – for pony factor calculation (separate but parallel ingestion).
+1. **Git contributor logs** – for pony factor calculation (separate but parallel ingestion).
 
 All ingestion writes at **repo resolution**. `Project` vertices are primarily sourced from
 OpenGrants; `Repo` vertices are created/updated by SBOM ingestion and registry crawls. Dependencies
@@ -51,8 +51,8 @@ only caller-side requirement is `id-token: write` in the workflow's `permissions
 The API verifies the token by:
 
 1. Fetching GitHub's public JWKS from `https://token.actions.githubusercontent.com/.well-known/jwks`.
-2. Verifying the RS256 signature and standard claims (`iss`, `exp`, `aud`).
-3. Extracting the `repository` claim (`owner/repo`) to establish which repo submitted the SBOM, and
+1. Verifying the RS256 signature and standard claims (`iss`, `exp`, `aud`).
+1. Extracting the `repository` claim (`owner/repo`) to establish which repo submitted the SBOM, and
    recording the `actor` (triggering user) for audit purposes.
 
 Both GitHub-hosted and self-hosted runners are supported. The OIDC token in both cases is signed by
@@ -77,7 +77,7 @@ and the public leaderboard create social accountability.
 - Upsert the submitting `Repo` vertex. If its parent `Project` doesn't exist, create it or flag for
   manual triage.
 - Create/update `depends_on` edges **from the submitting repo** to each dependency (`Repo` or
-  `ExternalRepo`). Mark confidence as `verified_sbom`.
+  `ExternalRepo`). Mark confidence as `verified-sbom`.
 - Flag conflicts with reference graph (e.g., missing declared deps) for manual review.
 
 **Incentives & Enforcement (v0)**:
@@ -116,37 +116,59 @@ metadata, starting from curated root nodes.
 
 - [OpenGrants](https://opengrants.daostar.org/system/scf) — primary source for `Project` vertices and
   their metadata (name, status, organization URL).
-- npm registry API
-- crates.io API
-- PyPI JSON API
-- Go proxy API
-- Optional: deps.dev for cross-ecosystem metadata
+- [deps.dev](https://deps.dev/) gRPC API — cross-ecosystem dependency resolution for PyPI, npm,
+  Cargo, Go, Maven, NuGet, and RubyGems packages.
+- GitHub API — repository enumeration for organizations, release/tag discovery.
 
-<!-- FUTURE SELF: research Open Source Observer architecture and features -->
+**Architecture**: [Procrastinate](https://procrastinate.readthedocs.io/) task queue backed by the
+same hosted PostgreSQL instance (no separate broker), with workers running in a weekly GitHub Actions
+workflow. This provides free compute, built-in run history/logs, and higher GitHub API rate limits
+via `GITHUB_TOKEN`.
+
+**Task hierarchy**:
+
+```txt
+sync_opengrants  [opengrants queue]
+  └─ process_project  [opengrants queue]
+       └─ crawl_github_repo  [opengrants queue]
+            └─ crawl_package_deps  [package-deps queue]
+```
+
+Workers run each queue sequentially so that all `Repo` vertices exist before the dependency crawl
+begins.
 
 **Process**:
 
-1. **Bootstrap Project vertices from OpenGrants**: Load SCF-awarded projects as `Project` rows.
-   Populate `activity_status` from SCF Impact Survey data when available; default to `non-responsive`
-   for projects with no survey response (see
-   [Activity Status Update Logic](storage.md#activity-status-update-logic)).
-1. **Discover Repos**: From each project's `git_org_url`, enumerate repositories and create `Repo`
-   vertices linked to the parent `Project` via `project_id` foreign key.
-1. Maintain a curated seed list of known Stellar/Soroban public goods (e.g., `soroban-sdk`,
-   `stellar-js-sdk`, `stellar-sdk` on PyPI, common Soroban contracts/libs).
-1. Crawl reverse dependencies from registries (who imports these roots) up to 2–3 hops (for
-   within-ecosystem only).
-1. For each discovered package: create a `Repo` vertex (if within-ecosystem) or `ExternalRepo` vertex
-   (if external). Normalize package names to `canonical_id` format (`ecosystem:package`).
-1. Create `depends_on` edges. Mark confidence as `inferred_shadow`.
-1. Run periodically (weekly for v0) or on triggers (new SCF project approval).
+1. **Bootstrap Project vertices from OpenGrants**: `sync_opengrants` fetches all SCF grant pools and
+   their applications. Each application is mapped to an `ScfProject` containing the project ID,
+   display name, GitHub URL (from `io.scf.code` extension field), activity status, and metadata.
+   - A manual `project-git-mapping.yml` supplements projects that lack an `io.scf.code` field (early
+     rounds).
+   - Deduplication is by project ID; the latest round's data wins.
+   - Populate `activity_status` from SCF Impact Survey data when available; default to
+     `non-responsive` for pre-existing projects with no survey response (see
+     [Activity Status Update Logic](storage.md#activity-status-update-logic)).
+   - Pre-survey data: we use tranche completion as a proxy (incomplete → `in-dev`, complete →
+     `live`).
+1. **Process each Project**: `process_project` fetches deps.dev project metadata (stars, forks,
+   scorecard) via `GetProjectBatch`, determines `project_type` (`public-good` if packages are
+   detected, `scf-project` otherwise), upserts the `Project` vertex, and discovers repos.
+   - For organization URLs (`github.com/org`): enumerates all repos in the org.
+   - For single-repo URLs (`github.com/owner/repo`): uses that repo directly.
+1. **Crawl each repo**: `crawl_github_repo` detects packages published by the repo (via deps.dev
+   `GetProjectBatch`), fetches release/version history, upserts the `Repo` vertex (with
+   `pkg:github/owner/repo` canonical ID), and defers `crawl_package_deps` for each detected package.
+1. **Crawl dependencies**: `crawl_package_deps` calls deps.dev `GetPackage` (default version) then
+   `GetRequirements` to enumerate direct dependencies. For each dependency:
+   - If linked to a known `Project` → upsert as `Repo`, create `depends_on` edge
+     (`confidence = inferred_shadow`), and recurse.
+   - Otherwise → upsert as `ExternalRepo`, create edge, no recursion.
 
 **Boundaries**:
 
-- Only include projects with clear Stellar/Soroban relevance.
-- Respect registry rate limits; cache aggressively.
-
-<!-- FUTURE SELF: Document seed list maintenance process (PR-based curation in repo). -->
+- Only include projects with clear Stellar/Soroban relevance — rooted in OpenGrants SCF data.
+- Procrastinate `queueing_lock` prevents duplicate task execution per project/package.
+- Respects registry rate limits; OpenGrants client retries on 429/5xx with exponential backoff.
 
 ## Git Contributor Logs
 
@@ -170,7 +192,7 @@ Cloned repos may be LRU-cached to avoid re-cloning on every refresh.
 
 **Open Questions**:
 
-- Time window for pony factor (12 months vs. all history)?
+- Time window for pony factor (12/24 months vs. all history)?
 - Weight recent commits higher?
 
 ## Validation & Reconciliation
@@ -183,9 +205,14 @@ Cloned repos may be LRU-cached to avoid re-cloning on every refresh.
 
 ## Implementation Notes (v0)
 
-- Use FastAPI endpoint for webhook ingestion.
-- Background tasks (Celery or similar) for crawling and git parsing.
-- Store raw ingested artifacts (SBOM files, crawl snapshots) in repo or S3/IPFS for auditability.
+- Use FastAPI endpoint for SBOM webhook ingestion (`POST /ingest/sbom`, OIDC auth, SPDX 2.3 parsing,
+  202 Accepted). Read-only list/detail endpoints: `GET /ingest/sbom`, `GET /ingest/sbom/{id}`.
+- [Procrastinate](https://procrastinate.readthedocs.io/) task queue (PostgreSQL-backed) with GitHub
+  Actions workers for reference graph bootstrapping and future periodic crawl jobs.
+- deps.dev gRPC client (auto-generated via `betterproto2`) for cross-ecosystem dependency resolution.
+- Store raw ingested artifacts (SBOM files, git log output) in `artifact_store/` for auditability.
+  We're targeting [Storacha](https://storacha.network/) as our decentralized artifact storage layer
+  for the production Atlas.
 - All writes target `Repo`, `ExternalRepo`, `Contributor`, and edge tables. `Project` vertices are
   bootstrapped from OpenGrants and updated via survey/OpenGrants pipelines (see
   [Incremental Updates](storage.md#incremental-updates) in Storage).

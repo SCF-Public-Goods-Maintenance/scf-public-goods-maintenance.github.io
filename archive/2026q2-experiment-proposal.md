@@ -397,3 +397,7 @@ complete an initial data quality pass before the Q2 voting round opens.
 **Budget**: $3,000
 
 #### Tranche 3 Completion Date: April 12
+
+### Addendum
+
+1. **A3 + A4**: we're using SPDX-format SBOMs rather than CycloneDX.

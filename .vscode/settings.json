@@ -6,6 +6,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "markdown.validate.enabled": true,
+  "markdown.updateLinksOnFileMove.enabled": "prompt",
   "prettier.printWidth": 101,
   "prettier.proseWrap": "always",
 }
