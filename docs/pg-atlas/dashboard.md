@@ -148,13 +148,15 @@ The dashboard should be public, zero-auth (read-only), mobile-responsive, and fo
     activity_status, pony_factor) and pushes filter/sort state into global app state.
 - **`ProjectDetailView`**
   - Purpose: Detail page for a single project/PG.
-  - Scope: Fetches project row (`projects`), associated repos (`repos`), and dependency subgraph
-    (`repo_vertices`, `depends_on`), and composes sections for metrics, dependencies, and
+  - Scope: Fetches project row (`projects`), associated repos (`repos`), dependency subgraph
+    (`repo_vertices`, `depends_on`), and contributor data (`contributors`, `contributed_to`) for
+    the project's repos; composes sections for metrics, dependencies, contributors, and
     role-specific actions.
 - **`RepoDetailView` (optional)**
   - Purpose: Detail panel for a single repo.
-  - Scope: Fetches repo row (`repos`) and its neighborhood in the graph (`depends_on`) and shows
-    adoption and risk signals.
+  - Scope: Fetches repo row (`repos`), its neighborhood in the graph (`depends_on`), and
+    contributors for this repo (`contributors` via `contributed_to`); shows adoption, risk
+    signals, and contributor list.
 - **`GraphExplorer`**
   - Purpose: Encapsulate the interactive graph visualization.
   - Scope: Renders a filtered subgraph using the chosen graph library and syncs selection/hover state
@@ -171,6 +173,8 @@ The dashboard should be public, zero-auth (read-only), mobile-responsive, and fo
     - GitHub link from `projects.git_org_url` (clickable).
     - Awarded / funded indicator (from `projects.metadata` or backend; see below).
     - Aggregated repo metrics (e.g. stars/forks/downloads from `repos` and `external_repos`).
+    - Optional: contributor count or recent-activity indicator from `contributed_to` (e.g.
+      `number_of_commits`, `last_commit_date`) aggregated across the project's repos.
   - Interactions:
     - Click row → navigate to `ProjectDetailView`.
     - Click GitHub link → open project's GitHub org/repo in a new tab.
@@ -197,6 +201,17 @@ The dashboard should be public, zero-auth (read-only), mobile-responsive, and fo
     - `sbom_submissions` rows for repos in the project (status, error_detail, submitted_at).
   - Interactions:
     - Links or buttons to (future) SBOM upload flow or to view submission logs.
+- **Contributors panel**
+  - Data:
+    - From `contributors`: `id`, `name` (display only; `email_hash` is not shown for privacy).
+    - From `contributed_to` (joined by `contributor_id`, `repo_id`; filter by project's repos or
+      single repo): `number_of_commits`, `first_commit_date`, `last_commit_date` per
+      contributor–repo pair.
+  - UI: List or table of contributors for the project (or for a single repo in `RepoDetailView`),
+    with commit counts and first/last commit dates; optionally sort by `number_of_commits` or
+    `last_commit_date`.
+  - Interactions:
+    - Expand per-repo breakdown for a contributor when the view is project-scoped.
 
 ### Project and repo display fields (SCF round, category, GitHub, awarded)
 
