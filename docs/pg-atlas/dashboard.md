@@ -43,8 +43,8 @@ As a **general community member or observer**:
 - **Regular viewers (public)**: No authentication. Read-only access to leaderboard, PG detail pages,
   graph explorer, and basic filters.
 - **SCF voters/Pilots**: Authenticated with a connected wallet (PG Award/SCF identity derived from
-  the wallet). In addition to public views, can access voting/review tools (e.g., shortlists,
-  review notes) and any reviewer-only risk metrics.
+  the wallet). In addition to public views, can access voting/review tools (e.g., shortlists, review
+  notes) and any reviewer-only risk metrics.
 - **PG maintainers**: Authenticated with a connected wallet that is linked to the repos/PGs they
   control. In addition to public views, can see maintainer-focused panels (SBOM submission
   status/errors, data quality issues, suggested actions) for their own PGs.
@@ -100,14 +100,14 @@ The dashboard should be public, zero-auth (read-only), mobile-responsive, and fo
       metrics like criticality and pony factor are derived.
     - A **role teaser section** with one-sentence summaries for voters, maintainers, project teams,
       and general viewers, each linking into the relevant dashboard view.
-    - A simple **footer** with links to documentation pages (API, ingestion, storage, operations),
-      a clearly labeled "Contribute on GitHub" link to the pg-atlas frontend/backend repositories,
-      and governance/privacy notes.
+    - A simple **footer** with links to documentation pages (API, ingestion, storage, operations), a
+      clearly labeled "Contribute on GitHub" link to the pg-atlas frontend/backend repositories, and
+      governance/privacy notes.
 - **Dashboard / leaderboard page**
   - Central table of public goods/projects with filters, sorts, and risk/health badges.
   - **Base surface** (visible to all authenticated roles once the wallet is connected): leaderboard
-    table, global filters (e.g. project type, activity status, basic risk flags), and navigation
-    into project detail pages and graph views.
+    table, global filters (e.g. project type, activity status, basic risk flags), and navigation into
+    project detail pages and graph views.
   - **Voter-only sections**: when the connected wallet resolves to a voter/pilot role, show
     additional UI such as "For voters" panels (shortlists, review notes, reviewer-only risk
     annotations) that are completely hidden for other roles.
@@ -123,7 +123,8 @@ The dashboard should be public, zero-auth (read-only), mobile-responsive, and fo
     role-specific panels (e.g. maintainer actions, voter tools).
 - **Repo detail page (optional v0.5+)**
   - **Purpose**: Lets users inspect a single repository (e.g. a package or library) as a node in the
-    dependency graph—its metadata, adoption signals, and how others depend on it or what it depends on.
+    dependency graph—its metadata, adoption signals, and how others depend on it or what it depends
+    on.
   - **Used for**: Voters checking a specific repo’s health before a decision; maintainers seeing
     their repo’s dependents and SBOM status; project teams verifying a dependency’s criticality and
     freshness before adopting it.
@@ -203,26 +204,22 @@ The dashboard should be public, zero-auth (read-only), mobile-responsive, and fo
 The dashboard should surface the following so voters and observers can see SCF context and reach
 code:
 
-- **SCF round(s)**  
-  Stored in `projects.metadata.scf_submissions` as a list of objects with `round` and `title`. The
-  UI can show the latest round, a "Rounds" badge, or a short list (e.g. "Round 39, 40"). Filtering
-  the leaderboard by round is desirable (e.g. "Show only Round 40 projects").
+- **SCF round(s)** Stored in `projects.metadata.scf_submissions` as a list of objects with `round`
+  and `title`. The UI can show the latest round, a "Rounds" badge, or a short list (e.g. "Round 39,
+  40"). Filtering the leaderboard by round is desirable (e.g. "Show only Round 40 projects").
 
-- **SCF category**  
-  Stored in `projects.metadata.scf_category`. Display as a label or tag on the leaderboard row and
-  on the project detail page; optionally allow filter by category.
+- **SCF category** Stored in `projects.metadata.scf_category`. Display as a label or tag on the
+  leaderboard row and on the project detail page; optionally allow filter by category.
 
-- **Link to GitHub**  
-  From `projects.git_org_url` (org or primary repo URL). Shown as a clickable "GitHub" link on the
-  leaderboard and project detail. On the project detail page, per-repo links can use `repos.repo_url`
-  for each repo in the project.
+- **Link to GitHub** From `projects.git_org_url` (org or primary repo URL). Shown as a clickable
+  "GitHub" link on the leaderboard and project detail. On the project detail page, per-repo links can
+  use `repos.repo_url` for each repo in the project.
 
-- **Awarded / funded status**  
-  Not yet a dedicated column. Today it can be derived from `projects.metadata.scf_tranche_completion`
-  (e.g. tranche completion indicates funding received), or the backend can expose an explicit
-  `awarded` (or similar) field in the API (sourced from OpenGrants or a future ingest). The dashboard
-  should show a clear "Awarded" / "Funded" (or "Not awarded") indicator on the leaderboard and
-  project detail once the API provides it.
+- **Awarded / funded status** Not yet a dedicated column. Today it can be derived from
+  `projects.metadata.scf_tranche_completion` (e.g. tranche completion indicates funding received), or
+  the backend can expose an explicit `awarded` (or similar) field in the API (sourced from OpenGrants
+  or a future ingest). The dashboard should show a clear "Awarded" / "Funded" (or "Not awarded")
+  indicator on the leaderboard and project detail once the API provides it.
 
 ## Technology Decision
 
