@@ -200,8 +200,7 @@ The dashboard should be public, zero-auth (read-only), mobile-responsive, and fo
 
 ### Project and repo display fields (SCF round, category, GitHub, awarded)
 
-The dashboard would surface the following so voters and observers can see SCF context and reach
-code:
+The dashboard would surface the following so voters and observers can see SCF context and reach code:
 
 - **SCF round(s)** Stored in `projects.metadata.scf_submissions` as a list of objects with `round`
   and `title`. The UI can show the latest round, a "Rounds" badge, or a short list (e.g. "Round 39,
@@ -253,8 +252,8 @@ and dogfooding our OpenAPI-generated TypeScript SDK.
   [@aolieman](https://github.com/aolieman) and [@jaygut](https://github.com/jaygut) to be involved in
   detailing the specs.
 - **Graph viz library**: Not yet decided. Research is ongoing; the chosen library must support
-  interactive (incremental) loading of additional vertices and edges. This doc will be updated
-  once a library is selected.
+  interactive (incremental) loading of additional vertices and edges. This doc will be updated once a
+  library is selected.
 - Analytics/integration (e.g. Plausible for usage tracking).
 - Host on xlm.sh? What are its limitations compared to other static site hosting options?
 
