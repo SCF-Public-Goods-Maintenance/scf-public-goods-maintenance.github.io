@@ -149,14 +149,14 @@ The dashboard should be public, zero-auth (read-only), mobile-responsive, and fo
 - **`ProjectDetailView`**
   - Purpose: Detail page for a single project/PG.
   - Scope: Fetches project row (`projects`), associated repos (`repos`), dependency subgraph
-    (`repo_vertices`, `depends_on`), and contributor data (`contributors`, `contributed_to`) for
-    the project's repos; composes sections for metrics, dependencies, contributors, and
-    role-specific actions.
+    (`repo_vertices`, `depends_on`), and contributor data (`contributors`, `contributed_to`) for the
+    project's repos; composes sections for metrics, dependencies, contributors, and role-specific
+    actions.
 - **`RepoDetailView` (optional)**
   - Purpose: Detail panel for a single repo.
-  - Scope: Fetches repo row (`repos`), its neighborhood in the graph (`depends_on`), and
-    contributors for this repo (`contributors` via `contributed_to`); shows adoption, risk
-    signals, and contributor list.
+  - Scope: Fetches repo row (`repos`), its neighborhood in the graph (`depends_on`), and contributors
+    for this repo (`contributors` via `contributed_to`); shows adoption, risk signals, and
+    contributor list.
 - **`GraphExplorer`**
   - Purpose: Encapsulate the interactive graph visualization.
   - Scope: Renders a filtered subgraph using the chosen graph library and syncs selection/hover state
@@ -205,8 +205,8 @@ The dashboard should be public, zero-auth (read-only), mobile-responsive, and fo
   - Data:
     - From `contributors`: `id`, `name` (display only; `email_hash` is not shown for privacy).
     - From `contributed_to` (joined by `contributor_id`, `repo_id`; filter by project's repos or
-      single repo): `number_of_commits`, `first_commit_date`, `last_commit_date` per
-      contributor–repo pair.
+      single repo): `number_of_commits`, `first_commit_date`, `last_commit_date` per contributor–repo
+      pair.
   - UI: List or table of contributors for the project (or for a single repo in `RepoDetailView`),
     with commit counts and first/last commit dates; optionally sort by `number_of_commits` or
     `last_commit_date`.
