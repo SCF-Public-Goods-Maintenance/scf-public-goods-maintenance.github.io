@@ -49,8 +49,7 @@ As a **general community member or observer**:
   control. In addition to public views, can see maintainer-focused panels (SBOM submission
   status/errors, data quality issues, suggested actions) for their own PGs.
 - **Project teams (SCF Build applicants)**: Authenticated with a connected wallet that identifies
-  their team/project. Can access a \"my project\" view that highlights their project's dependencies
-  and the health/criticality of those dependencies, on top of the public dashboard views.
+  their team/project. Can access a \"my project\" view that highlights their project's dependencies.
 
 Authentication flow (high level):
 
@@ -201,7 +200,7 @@ The dashboard should be public, zero-auth (read-only), mobile-responsive, and fo
 
 ### Project and repo display fields (SCF round, category, GitHub, awarded)
 
-The dashboard should surface the following so voters and observers can see SCF context and reach
+The dashboard would surface the following so voters and observers can see SCF context and reach
 code:
 
 - **SCF round(s)** Stored in `projects.metadata.scf_submissions` as a list of objects with `round`
@@ -253,8 +252,9 @@ and dogfooding our OpenAPI-generated TypeScript SDK.
   "drill into a specific PG's dependency graph and score breakdown to inform my NQG-weighted vote").
   [@aolieman](https://github.com/aolieman) and [@jaygut](https://github.com/jaygut) to be involved in
   detailing the specs.
-- Graph viz library choice (Cytoscape.js or Sigma.js)? Needs to support interactive (incremental)
-  loading of additional vertices and edges.
+- **Graph viz library**: Not yet decided. Research is ongoing; the chosen library must support
+  interactive (incremental) loading of additional vertices and edges. This doc will be updated
+  once a library is selected.
 - Analytics/integration (e.g. Plausible for usage tracking).
 - Host on xlm.sh? What are its limitations compared to other static site hosting options?
 
