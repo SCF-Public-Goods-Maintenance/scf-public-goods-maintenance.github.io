@@ -19,9 +19,7 @@ As an **SCF Pilot (Tansu round participant)**:
 
 - I want a searchable leaderboard of PGs ranked by metrics (criticality, risk flags) so I can quickly
   evaluate proposals with objective context.
-- I want to open a specific PG's dependency graph and score details so I can make a better
-  NQG-weighted vote.
-
+- I want to open a specific PG's dependency graph and score details so I can make a data-driven decision when casting my vote.
 As a **dependent project team (SCF Build applicant)**:
 
 - I want to explore the PG landscape to discover reusable tools and see their reliability scores
@@ -39,14 +37,18 @@ As a **general community member or observer**:
 ## Desired UX Overview
 
 The dashboard should be public, zero-auth (read-only), mobile-responsive, and focused on
-**transparency and explorability**. Core flows:
+transparency and explorability. Core flows:
 
 - Dashboard landing page: High-level ecosystem summary (total active nodes, dependency coverage %,
   risk heatmap, top 10 critical PGs).
-- **PG Award Round pages**: Per-round overview of proposals (each linked to a Project), with
+- PG Award Round pages: Per-round overview of proposals (each linked to a Project), with
   filters/sort (criticality, pony factor, adoption, active status) and risk flags (e.g., red for
   `pony_factor == 1`) where data exists; landing links current and past rounds.
-- **Contributor pages**: Deep view of maintainer/contributor records for self-service data review and
+  - Risk signaling would be progressive and educational (not alarmist): avoid marking most projects
+    as severe risk by default when `pony_factor == 1` is common in the current ecosystem baseline.
+  - Would position this page as a critical lens for PG maintenance funding decisions and continuous
+    improvement, while keeping overall ecosystem-health messaging balanced.
+- Contributor pages: Deep view of maintainer/contributor records for self-service data review and
   voter diligence.
 - PG detail pages: Score breakdown, timeline trends (if extended), direct dependents list,
   interactive dependency subgraph visualization.
@@ -69,12 +71,17 @@ The dashboard should be public, zero-auth (read-only), mobile-responsive, and fo
 This section breaks the dashboard UI into three layers: pages, components, and concrete elements. Use
 it as a map from high-level user-facing screens down to the specific data fields and interactions.
 
+
 ### Page Types (All Navigation Levels)
+
+- Access model:
+  - Landing page is public.
+  - Dashboard pages are public and accessible without wallet connection.
 
 - **Dashboard landing page**
   - Public entry point to the dashboard experience, with:
     - A **dashboard overview header** (title, selected round or global scope, last data refresh time,
-      and quick actions such as connect wallet, open current round page, and open contributor
+      and quick actions such as open current round page, open contributor
       search).
     - A **headline metrics strip** with ecosystem and builder-activity totals (e.g. total projects,
       repos, public goods, % with recent activity, active contributors in 30/90 days, recent commit
@@ -84,32 +91,35 @@ it as a map from high-level user-facing screens down to the specific data fields
     - An **all rounds index** (table or list) linking to current and historical round pages.
     - A **data transparency panel** summarizing major data sources and processing notes, with links
       to docs and inline examples of canonical vs computed/aggregated labels used in the UI.
+    - A **Tansu boundary note** clarifying that voting happens on Tansu: PG Atlas v0 does not embed
+      Tansu, does not show voting outcomes, and uses cross-links only (proposal list + deep links to
+      Tansu, with return links back to PG Atlas project details).
 - **PG Award Round page**
   - A rich overview of all **proposals** (each linked to **Project**) in a specific PG Award
     round—sortable/filterable tables, proposal summaries, and paths into project detail.
-  - The **current round** should be **surfaced on the dashboard landing page**, which should also
-    provide a list or **table of links** to **all current and past** round pages.
-  - **Round ↔ proposal+project** mappings would be maintained as **YAML or JSON config** files in the
-    frontend repo (build-time or client-loaded).
-  - **Base surface** (once the wallet is connected where required): round-scoped tables, global
-    filters (e.g. project type, activity status, basic risk flags), and navigation into project
-    detail pages and graph views.
+  - Voting itself happens on Tansu (out of scope for this dashboard); this page supports review and
+    due diligence only.
+  - The current round should be surfaced on the dashboard landing page, which should also
+    provide a list or table of links to all current and past round pages.
+  - Round ↔ proposal+project mappings would be maintained as YAML or JSON config files in the
+    frontend repo (build-time).
+  - What everyone has access to: public round tables, simple filters
+    (like project type, activity status, and risk flags), plus links to project details
+    and graph views.
 - **Contributor page**
   - A rich overview of **all PG Atlas data** tied to **`contributors` rows**: identity linkage,
     contributed repos/projects, commit stats, dates, and any derived or displayed fields.
-  - **Contributors and maintainers** use it to see what we store about them, and what is **missing or
-    incorrect** (so they can request corrections or improved ingestion).
-  - **Voters** use the same page to learn more about a PG maintainer’s **track record**, **current
-    workload**, and **recent git activity** when evaluating proposals.
+  - Contributors and maintainers use it to see what we store about them, and what is missing or
+    incorrect (so they can request corrections or improved ingestion).
+  - Voters use the same page to learn more about a PG maintainer’s track record, current
+    workload, and recent git activity when evaluating proposals.
 - **Project detail page**
   - Deep-dive view for a single project/PG: metrics, associated repos, and dependency subgraph.
 - **Repo detail page**
   - **Purpose**: Lets users inspect a single repository (e.g. a package or library) as a node in the
     dependency graph—its metadata, adoption signals, and how others depend on it or what it depends
     on.
-  - **Used for**: Voters checking a specific repo’s health before a decision; maintainers seeing
-    their repo’s dependents and SBOM status; project teams verifying a dependency’s criticality and
-    freshness before adopting it.
+  - **Used for**: Voters checking a specific repo’s health/activity before a decision.
   - **Content**: Focused view on one repo: metadata, adoption metrics (stars, forks, downloads from
     `repos` / `external_repos`), and incoming/outgoing edges in the graph (`depends_on`).
 - **Graph explorer page (v1+)**
@@ -127,8 +137,8 @@ state live.
     and data transparency panel; provides entry points into round and contributor views.
 - **`DashboardLayout`**
   - Purpose: Shared application shell for dashboard pages.
-  - Scope: Handles wallet/session state, global navigation, and common UI chrome across **Dashboard
-    Landing**, **PG Award Round**, **Contributor**, and detail views.
+  - Scope: Handles session/auth state, global navigation, and common UI chrome across Dashboard
+    Landing, PG Award Round, Contributor, and detail views.
 - **`AwardRoundPage` (or `RoundOverview`)**
   - Purpose: Per-round proposal list/overview for a single PG Award round.
   - Scope: Loads round config (YAML/JSON) for proposal⇄project mapping; fetches project metrics from
@@ -138,7 +148,7 @@ state live.
     related API fields).
   - Scope: Surfaces stored fields, gaps, and recent activity for self-review and voter diligence.
 - **`ProjectsLeaderboard`**
-  - Purpose: Reusable **project table** (filters/sort, risk badges)—may power round pages, landing
+  - Purpose: Reusable project table (filters/sort, risk badges)—may power round pages, landing
     snippets, or global exploration depending on product scope.
   - Scope: Fetches aggregated metrics per project from the API (criticality, adoption_score,
     activity_status, pony_factor) and pushes filter/sort state into global app state.
@@ -189,8 +199,8 @@ state live.
     - Tooltips explaining each metric.
     - Link to GitHub (from `projects.git_org_url`); optional per-repo links from `repos.repo_url`.
     - Links to underlying repos or graph nodes.
-    - Show a visible **data-origin tag** next to each rendered metric/field so users can distinguish
-      **canonical** values vs **computed/aggregated** values at a glance.
+    - Show a visible data-origin tag next to each rendered metric/field so users can distinguish
+      canonical values vs computed/aggregated values at a glance.
     - Expose source labels in the same tag or tooltip (e.g. `Canonical - SCF (NQG)`,
       `Canonical - OpenGrants`, `Computed - PG Atlas`, `Aggregated - PG Atlas`).
 - **Dependency subgraph panel**
@@ -251,11 +261,14 @@ project detail views so voters and observers can see SCF context and reach code 
   "GitHub" link on the leaderboard and project detail. On the project detail page, per-repo links can
   use `repos.repo_url` for each repo in the project.
 
+
 - **Awarded / funded status** Not yet a dedicated column. Today it can be derived from
   `projects.metadata.scf_tranche_completion` (e.g. tranche completion indicates funding received), or
   the backend can expose an explicit `awarded` (or similar) field in the API (sourced from OpenGrants
   or a future ingest). The dashboard should show a clear "Awarded" / "Funded" (or "Not awarded")
   indicator on the leaderboard and project detail once the API provides it.
+  - v0 API contract note: expose a dedicated `awarded_status` field on project responses to avoid
+    ambiguous frontend inference.
 
 ## Technology Decision
 
