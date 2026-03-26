@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # TODO: test whether only members with write permissions can reopen after accepted/rejected
       - name: Remove labels (clear previous state)
         id: remove-label
         uses: issue-ops/labeler@v4

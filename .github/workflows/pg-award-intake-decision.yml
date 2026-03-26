@@ -1,0 +1,182 @@
+name: PG Award Intake - Quorum Check
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  quorum-check:
+    # run only on comments for non-PR issues that are currently in-review
+    if: |
+      contains(github.event.issue.labels.*.name, 'pg-intake:in-review') &&
+      github.event.issue.pull_request == null
+    runs-on: ubuntu-latest
+    steps:
+      - name: Look for .quorum-check command
+        id: command
+        uses: github/command@v2
+        with:
+          command: .quorum-check
+          status: ${{ job.status }}
+          allowed_contexts: issue
+          # require write permission or higher
+          permissions: write,admin
+          allowlist: SCF-Public-Goods-Maintenance/pilot
+          allowlist_pat: ${{ secrets.READ_ORG_MEMBERS_PAT }}
+          skip_ci: "true"
+          skip_reviews: "true"
+          reaction: eyes
+
+      - name: Evaluate pilot reactions and record decision
+        if: steps.command.outputs.continue == 'true'
+        uses: actions/github-script@v8
+        env:
+          READ_ORG_MEMBERS_PAT: ${{ secrets.READ_ORG_MEMBERS_PAT }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            // ── Guard ─────────────────────────────────────────────────────────────
+            const pat = process.env.READ_ORG_MEMBERS_PAT;
+            if (!pat) {
+              core.setFailed('READ_ORG_MEMBERS_PAT secret is not configured');
+              return;
+            }
+
+            const { owner, repo } = context.repo;
+            const issueNumber     = context.issue.number;
+            const PILOT_TEAM_SLUG = 'pilot';
+            const GH_API_VERSION  = '2026-03-10';
+
+            // ── Helper: authenticated fetch with the PAT ──────────────────────────
+            // Used for org-scoped endpoints that GITHUB_TOKEN cannot access.
+            async function ghFetch(url) {
+              const res = await fetch(url, {
+                headers: {
+                  Authorization:           `Bearer ${pat}`,
+                  Accept:                  'application/vnd.github+json',
+                  'X-GitHub-Api-Version':  GH_API_VERSION,
+                },
+              });
+              if (!res.ok) {
+                throw new Error(`GitHub API error ${res.status} for: ${url}`);
+              }
+              return res;
+            }
+
+            // ── 1. Load Pilot members and issue reactions in parallel ─────────────
+            //
+            // We fetch the full Pilot team member list upfront (one request per page)
+            // rather than one per-user membership check per reactor. For a team of
+            // 10s to 100s of members this is significantly faster and simpler to follow.
+            //
+            // Pilot members use the PAT (org-scoped, "Members: Read").
+            // Reactions use GITHUB_TOKEN (issues: write).
+
+            async function loadPilotMembers() {
+              const members = new Set();
+              let url = `https://api.github.com/orgs/${owner}/teams/${PILOT_TEAM_SLUG}/members?per_page=100`;
+              while (url) {
+                const res  = await ghFetch(url);
+                const page = await res.json();
+                for (const member of page) {
+                  members.add(member.login);
+                }
+                // Follow RFC 5988 Link header for subsequent pages, if any.
+                const link = res.headers.get('link') ?? '';
+                const next = link.match(/<([^>]+)>;\s*rel="next"/);
+                url = next ? next[1] : null;
+              }
+              return members;
+            }
+
+            async function loadReactions() {
+              return github.paginate(
+                github.rest.reactions.listForIssue,
+                { owner, repo, issue_number: issueNumber, per_page: 100 }
+              );
+            }
+
+            // Both fetches are independent — run concurrently.
+            const [pilotMembers, allReactions] = await Promise.all([
+              loadPilotMembers(),
+              loadReactions(),
+            ]);
+
+            // ── 2. Count pilot ups and downs ──────────────────────────────────────
+            //
+            // The API guarantees each user can post at most one reaction of each
+            // type on an issue. We deduplicate into Sets anyway as a safeguard.
+            const upSet   = new Set();
+            const downSet = new Set();
+            for (const reaction of allReactions) {
+              const login = reaction.user?.login;
+              if (!login || !pilotMembers.has(login)) continue;
+              if (reaction.content === '+1')      upSet.add(login);
+              else if (reaction.content === '-1') downSet.add(login);
+            }
+
+            const pilotUps   = [...upSet];
+            const pilotDowns = [...downSet];
+            const ups        = pilotUps.length;
+            const downs      = pilotDowns.length;
+            const threshold  = 3 + 2 * downs;
+            const accepted   = ups >= threshold;
+
+            core.info(
+              `Pilot :+1: ${ups}  Pilot :-1: ${downs}  threshold: ${threshold}  accepted: ${accepted}`
+            );
+
+            // ── 3. Ensure outcome labels exist, then swap labels on the issue ─────
+            async function ensureLabel(name, color, description) {
+              try {
+                await github.rest.issues.createLabel({ owner, repo, name, color, description });
+              } catch (e) {
+                if (e.status !== 422) throw e; // 422 = label already exists; safe to ignore
+              }
+            }
+            await Promise.all([
+              ensureLabel('pg-intake:accepted', '0e8a16', 'Pilot quorum accepted this intake'),
+              ensureLabel('pg-intake:rejected', 'd93f0b', 'Pilot quorum rejected this intake'),
+            ]);
+
+            const LABELS_TO_CLEAR = ['pg-intake:in-review', 'pg-intake:accepted', 'pg-intake:rejected'];
+            for (const label of LABELS_TO_CLEAR) {
+              try {
+                await github.rest.issues.removeLabel({
+                  owner, repo, issue_number: issueNumber, name: label,
+                });
+              } catch (_) { /* 404 = label not currently applied — expected */ }
+            }
+            await github.rest.issues.addLabels({
+              owner, repo, issue_number: issueNumber,
+              labels: [accepted ? 'pg-intake:accepted' : 'pg-intake:rejected'],
+            });
+
+            // ── 4. Post result comment ────────────────────────────────────────────
+            // Mentions ensure that voting Pilots are notified via GitHub.
+            const icon    = accepted ? ':zap:' : ':card_file_box:';
+            const verdict = accepted ? '**Accepted**' : '**Rejected**';
+            const upList   = pilotUps.map(l   => `@${l}`).join(', ') || '_none_';
+            const downList = pilotDowns.map(l => `@${l}`).join(', ') || '_none_';
+            const body = [
+              `${icon} ${verdict} — ${ups} pilot ups, ${downs} pilot downs (threshold: ${threshold})`,
+              ``,
+              `:+1: ${upList}`,
+              `:-1: ${downList}`,
+            ].join('\n');
+            await github.rest.issues.createComment({ owner, repo, issue_number: issueNumber, body });
+
+            // ── 5. Close and lock the issue ───────────────────────────────────────
+            await github.rest.issues.update({
+              owner, repo, issue_number: issueNumber,
+              state:        'closed',
+              state_reason: 'completed',
+            });
+            await github.rest.issues.lock({
+              owner, repo, issue_number: issueNumber,
+              lock_reason: 'resolved',
+            });
