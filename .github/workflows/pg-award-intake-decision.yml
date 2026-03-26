@@ -119,12 +119,29 @@ jobs:
               else if (reaction.content === '-1') downSet.add(login);
             }
 
-            const pilotUps   = [...upSet];
-            const pilotDowns = [...downSet];
-            const ups        = pilotUps.length;
-            const downs      = pilotDowns.length;
-            const threshold  = 3 + 2 * downs;
-            const accepted   = ups >= threshold;
+            const pilotUps    = [...upSet];
+            const pilotDowns  = [...downSet];
+            const ups         = pilotUps.length;
+            const downs       = pilotDowns.length;
+            const totalVoters = ups + downs;
+
+            // Minimum pilot votes (ups + downs) required before any outcome can be
+            // finalized. Adjust once participation-rate data from several quarters
+            // of this (now new) intake process is available.
+            const MIN_VOTERS = 3;
+
+            if (totalVoters < MIN_VOTERS) {
+              const needed = MIN_VOTERS - totalVoters;
+              await github.rest.issues.createComment({
+                owner, repo, issue_number: issueNumber,
+                body: `:hourglass: Not enough pilot votes to finalize yet — ${totalVoters} of ${MIN_VOTERS} minimum votes cast (${needed} more needed).`,
+              });
+              core.info(`Quorum check deferred: ${totalVoters}/${MIN_VOTERS} pilot votes cast.`);
+              return;
+            }
+
+            const threshold = MIN_VOTERS + 2 * downs;
+            const accepted  = ups >= threshold;
 
             core.info(
               `Pilot :+1: ${ups}  Pilot :-1: ${downs}  threshold: ${threshold}  accepted: ${accepted}`
