@@ -1,17 +1,17 @@
 name: SCF Public Goods Award - Proposal Form
-description: Submit your project for consideration for the SCF Public Goods Award
+description: Submit your pre-approved project for consideration for the SCF Public Goods Award
 title: "PG Award Proposal: "
 labels: ["pg-award-proposal"]
 body:
   - type: markdown
     attributes:
       value: |
-        # SCF Public Goods Award: Submission Form
+        # SCF Public Goods Award: New Proposal Form
 
         Thank you for your interest in the SCF Public Goods Award.
 
         **Important note on eligibility**:
-        If this project was voted on in a previous Public Goods Award round, you are eligible to create a proposal. Otherwise you must have filled an intake form and have been approved to make a proposal.
+        If this project was voted on in a previous Public Goods Award round, you are eligible to create a proposal. Otherwise you must have filled an intake form and have been approved to make a proposal. Ineligible use of this form is frowned upon and is publicly visible.
 
         _UX limitation:_ any links in this form will open in your current browser tab by default. You risk losing progress. It's always a good idea to draft your answers in a separate file, or copy them there as a backup.
 
@@ -35,25 +35,87 @@ body:
     validations:
       required: true
 
-  - type: dropdown
-    id: pg-history
-    attributes:
-      label: Your history with the PG Award
-      description: Is this your first time submitting to the SCF Public Goods Award?
-      multiple: false
-      options:
-        - "First time submitting a proposal for the Public Goods Award"
-        - "First time submitting to this Award but I've received SDF Infrastructure Grants before."
-        - "Submitted before to the Public Goods Award"
-    validations:
-      required: true
-
   - type: input
     id: pg-award-intake
     attributes:
       label: PG intake form
-      description: Link to the intake form of the project
+      description:
+        Link to the intake form of the project. If you have previously submitted through Airtable,
+        please write "soft-launch".
       placeholder: https://scf-public-goods-maintenance.github.io
+    validations:
+      required: true
+
+  - type: input
+    id: release-date
+    attributes:
+      label: When was your project first released?
+      description: Month and year is sufficient
+      placeholder: e.g. March 2024
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Project Category
+      description:
+        Take a look at the [Public Good
+        Categories](https://scf-public-goods-maintenance.github.io/public-goods-award/#public-good-categories)
+        to learn more.
+      multiple: false
+      options:
+        - Other
+        - SDKs
+        - Data Support
+        - Wallet Support
+        - Developer Experience
+        - Ecosystem Visibility
+        - Infrastructure Monitoring
+        - Governance Tools
+        - Security & Auditing Tools
+        - Compliance & Identity Tooling
+    validations:
+      required: true
+
+  - type: textarea
+    id: project-description
+    attributes:
+      label: Project Description
+      description: Detailed description of what your project does and its impact.
+    validations:
+      required: true
+
+  - type: input
+    id: website
+    attributes:
+      label: Website
+      description: Product website or documentation site (different than Git URL).
+      placeholder: https://yourproject.com
+    validations:
+      required: true
+
+  - type: input
+    id: git-repo
+    attributes:
+      label: Public Git Repository
+      description: E.g. GitHub org or repo URL, whichever best fits the scope of your project.
+      placeholder: https://github.com/owner/repo
+    validations:
+      required: true
+
+  - type: textarea
+    id: team-experience
+    attributes:
+      label: Describe your team members and your team's experience with the Stellar ecosystem
+      description:
+        Include for each member their GitHub profile, Discord handle, and LinkedIn profile if
+        available. For FOSS projects, your "team" includes maintainers and recurring contributors
+        (not drive-by contributors).
+      placeholder:
+        Write a paragraph about each member, and mention previous SCF participation, ecosystem
+        contributions, projects built on Stellar, and overall FOSS maintainer track record (in any
+        software ecosystem).
     validations:
       required: true
 
@@ -62,7 +124,8 @@ body:
     attributes:
       label: What's your project's retroactive impact over the last three months?
       description:
-        For new and renewal proposals. Be specific, and include usage stats, ecosystem integrations, etc.
+        For new and renewal proposals. Be specific, and include usage stats, ecosystem integrations,
+        etc.
     validations:
       required: true
 
@@ -71,7 +134,8 @@ body:
     attributes:
       label: Please list your deliverables of the last three months including proof of completion.
       description:
-        If this is your first time applying for the SCF Public Goods Award and you haven't received an Infrastructure Grant before, enter "N/A"
+        If this is your first time applying for the SCF Public Goods Award and you haven't received
+        an Infrastructure Grant before, enter "N/A"
     validations:
       required: true
 
@@ -80,28 +144,46 @@ body:
     attributes:
       label: What's are your project's goals for impact for the upcoming three months?
       description:
-        How will this benefit the Stellar ecosystem? Be specific, and include evidence of continued usage, relevance, and ecosystem demand, etc.
+        How will this benefit the Stellar ecosystem? Be specific, and include evidence of continued
+        usage, relevance, and ecosystem demand, etc.
     validations:
       required: true
 
   - type: textarea
     id: pg-proposal-deliverable
     attributes:
-      label: Please list your deliverables you're aiming to create in the next three months and explain their ecosystem value.
+      label:
+        Please list the deliverables you aim to create in the next three months and explain their
+        ecosystem value.
       description:
-        Make your deliverables SMART (Specific, Measurable, Achievable, Relevant, and Time-bound) with reasonable and justifiable budget allocations that will bring significant ecosystem value.
+        Make your deliverables SMART (Specific, Measurable, Achievable, Relevant, and Time-bound)
+        with reasonable and justifiable budget allocations that will bring significant ecosystem
+        value.
     validations:
       required: true
 
   - type: input
-    id: budget
+    id: budget-ask
     attributes:
       label: Budget Requested
-      description: Max. $50,000 in XLM. Budget needs to be reasonable based on retroactive impact and planned deliverables for the next three months.
-      placeholder:
-        $[...] in XLM
+      description:
+        Max. $50,000 in XLM. Budget needs to be reasonable based on retroactive impact and planned
+        deliverables for the next three months.
+      placeholder: $[...] in XLM
     validations:
       required: true
+
+  - type: checkboxes
+    id: legal-acknowledgements
+    attributes:
+      label: Legal Acknowledgements
+      description:
+        By submitting this proposal, you agree to the [Legal
+        Acknowledgements](https://stellar.gitbook.io/scf-handbook/supporting-programs/public-goods-award/legal-acknowledgements)
+        provided by SDF.
+      options:
+        - label: As the project representative, I agree to the Legal Acknowledgements.
+          required: true
 
   - type: markdown
     attributes:
