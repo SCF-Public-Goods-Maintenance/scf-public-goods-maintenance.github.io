@@ -11,14 +11,14 @@ budget: "$1,000 in XLM"
 
 _A test project to verify the proposal automation pipeline works correctly._
 
-|                      |                                                                                                  |
-| -------------------- | ------------------------------------------------------------------------------------------------ |
-| **Category**         | Developer Experience                                                                             |
-| **Website**          | https://example.com                                                                              |
-| **Repository**       | https://github.com/example/test-project                                                          |
-| **First Released**   | January 2025                                                                                     |
-| **Intake**           | https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/22 |
-| **Budget Requested** | $1,000 in XLM                                                                                    |
+|                      |                                                                                                    |
+| -------------------- | -------------------------------------------------------------------------------------------------- |
+| **Category**         | Developer Experience                                                                               |
+| **Website**          | <https://example.com>                                                                              |
+| **Repository**       | <https://github.com/example/test-project>                                                          |
+| **First Released**   | January 2025                                                                                       |
+| **Intake**           | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/22> |
+| **Budget Requested** | $1,000 in XLM                                                                                      |
 
 ## Project Description
 
@@ -44,6 +44,10 @@ N/A - This is a test submission.
 ## Proposed Impact
 
 Validate that the proposal automation pipeline is working correctly end-to-end.
+
+Adding a paragraph that I expect to sync into the PR body.
+
+Except, I'm also making changes to another file which should be caught by validation.
 
 ## Proposed Deliverables
 
