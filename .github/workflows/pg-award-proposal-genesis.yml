@@ -1,0 +1,175 @@
+name: PG Award Proposal - Genesis
+
+on:
+  issues:
+    types: [opened, edited, reopened]
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  genesis:
+    if: contains(github.event.issue.labels.*.name, 'pg-award-proposal')
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── Re-entry guard ────────────────────────────────────────────────────
+      # If the issue already spawned a PR, skip everything and leave a comment.
+      - name: Check for existing PR
+        id: reentry
+        if: contains(github.event.issue.labels.*.name, 'pg-proposal:pr-created')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue comment ${{ github.event.issue.number }} \
+            -R ${{ github.repository }} \
+            --body "⚠️ A proposal PR was already created from this issue. Please edit the project page on the PR branch instead."
+          echo "skip=true" >> "$GITHUB_OUTPUT"
+
+      - name: Abort if PR already exists
+        if: steps.reentry.outputs.skip == 'true'
+        run: |
+          echo "::notice::Skipping — PR already created for this issue."
+          exit 0
+
+      # ── Parse & validate ──────────────────────────────────────────────────
+      - name: Checkout repo
+        if: steps.reentry.outputs.skip != 'true'
+        uses: actions/checkout@v4
+
+      - name: Parse proposal form
+        if: steps.reentry.outputs.skip != 'true'
+        id: parse
+        uses: issue-ops/parser@v5
+        with:
+          body: ${{ github.event.issue.body }}
+          issue-form-template: pg-award-proposal-form.yml
+
+      - name: Validate proposal form
+        if: steps.reentry.outputs.skip != 'true'
+        id: validate
+        uses: issue-ops/validator@v4
+        with:
+          issue-form-template: pg-award-proposal-form.yml
+          parsed-issue-body: ${{ steps.parse.outputs.json }}
+          add-comment: true
+
+      - name: Label on validation failure
+        if: steps.reentry.outputs.skip != 'true' && steps.validate.outputs.result != 'success'
+        uses: issue-ops/labeler@v4
+        with:
+          action: add
+          create: true
+          issue_number: ${{ github.event.issue.number }}
+          labels: |
+            issueops:validation-error
+
+      - name: Abort on validation failure
+        if: steps.reentry.outputs.skip != 'true' && steps.validate.outputs.result != 'success'
+        run: |
+          echo "::error::Proposal form validation failed. A comment has been posted on the issue."
+          exit 1
+
+      # ── Clear validation-error label on success ───────────────────────────
+      - name: Remove validation-error label
+        if: steps.reentry.outputs.skip != 'true'
+        uses: issue-ops/labeler@v4
+        with:
+          action: remove
+          issue_number: ${{ github.event.issue.number }}
+          labels: |
+            issueops:validation-error
+
+      # ── Render project page ───────────────────────────────────────────────
+      - name: Render project page from parsed form
+        if: steps.reentry.outputs.skip != 'true'
+        id: render
+        env:
+          PARSED_JSON: ${{ steps.parse.outputs.json }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+        run: python .github/scripts/render_proposal.py
+
+      # ── Create branch, commit, push ───────────────────────────────────────
+      - name: Determine branch name
+        if: steps.reentry.outputs.skip != 'true'
+        id: branch
+        run: |
+          SLUG="${{ steps.render.outputs.slug }}"
+          BRANCH="proposals/${SLUG}"
+          if git ls-remote --heads origin "$BRANCH" | grep -q .; then
+            BRANCH="proposals/${SLUG}-${{ github.event.issue.number }}"
+          fi
+          echo "name=${BRANCH}" >> "$GITHUB_OUTPUT"
+
+      - name: Commit and push project page
+        if: steps.reentry.outputs.skip != 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "${{ steps.branch.outputs.name }}"
+          git add "${{ steps.render.outputs.file_path }}"
+          git commit -m "Add project page: ${{ steps.render.outputs.project_title }}"
+          git push origin "${{ steps.branch.outputs.name }}"
+
+      # ── Create PR ─────────────────────────────────────────────────────────
+      - name: Create Pull Request
+        if: steps.reentry.outputs.skip != 'true'
+        id: pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_URL=$(gh pr create \
+            --base main \
+            --head "${{ steps.branch.outputs.name }}" \
+            --title "PG Award Proposal: ${{ steps.render.outputs.project_title }}" \
+            --body-file "${{ steps.render.outputs.file_path }}" \
+            --label "pg-award-proposal")
+          echo "url=${PR_URL}" >> "$GITHUB_OUTPUT"
+
+      # ── Close issue with link to PR ───────────────────────────────────────
+      - name: Close issue and link to PR
+        if: steps.reentry.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue close ${{ github.event.issue.number }} \
+            -R ${{ github.repository }} \
+            --comment "⚡ Your proposal PR has been created: ${{ steps.pr.outputs.url }}
+
+          **Next steps:**
+          1. Edit your project page directly on the PR branch during the Discussion & Revisions phase.
+          2. Use the GitHub web editor (pencil icon) or clone locally.
+          3. Every commit to the project page auto-updates the PR description.
+
+          See [Proposer Instructions](https://scf-public-goods-maintenance.github.io/pg-award/proposer-instructions/) for the full process."
+
+      # ── Label issue as PR-created ─────────────────────────────────────────
+      - name: Add pr-created label
+        if: steps.reentry.outputs.skip != 'true'
+        uses: issue-ops/labeler@v4
+        with:
+          action: add
+          create: true
+          issue_number: ${{ github.event.issue.number }}
+          labels: |
+            pg-proposal:pr-created
+
+      # ── Step summary ──────────────────────────────────────────────────────
+      - name: Write step summary
+        if: steps.reentry.outputs.skip != 'true'
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<EOF
+          ## Proposal Genesis
+
+          | | |
+          | --- | --- |
+          | **Issue** | #${{ github.event.issue.number }} |
+          | **Project** | ${{ steps.render.outputs.project_title }} |
+          | **Slug** | \`${{ steps.render.outputs.slug }}\` |
+          | **File** | \`${{ steps.render.outputs.file_path }}\` |
+          | **Branch** | \`${{ steps.branch.outputs.name }}\` |
+          | **PR** | ${{ steps.pr.outputs.url }} |
+          EOF

@@ -1,0 +1,89 @@
+name: PG Award Proposal - Sync PR Body
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - "docs/projects/**.md"
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Find changed project files
+        id: files
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          CHANGED=$(gh pr diff ${{ github.event.pull_request.number }} \
+            -R ${{ github.repository }} \
+            --name-only \
+            | grep '^docs/projects/.*\.md$' \
+            | grep -v '/index\.md$' \
+            || true)
+
+          COUNT=$(echo "$CHANGED" | grep -c . || true)
+          echo "count=${COUNT}" >> "$GITHUB_OUTPUT"
+
+          if [[ "$COUNT" -eq 1 ]]; then
+            echo "path=${CHANGED}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Skip if no project files changed
+        if: steps.files.outputs.count == '0'
+        run: echo "::notice::No project page changes detected — skipping sync."
+
+      - name: Fail if multiple project files changed
+        if: steps.files.outputs.count > 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr comment ${{ github.event.pull_request.number }} \
+            -R ${{ github.repository }} \
+            --body "⚠️ This PR modifies multiple project pages. Please only modify one project page per PR so the proposal can be synced correctly."
+          exit 1
+
+      - name: Strip front matter and sync PR body
+        if: steps.files.outputs.count == '1'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          FILE="${{ steps.files.outputs.path }}"
+          MAX_CHARS=64000
+
+          # Strip YAML front matter (first --- to second --- inclusive)
+          BODY=$(sed '1{/^---$/!q}; 1,/^---$/d' "$FILE")
+
+          BODY_LEN=${#BODY}
+          TRUNCATED="false"
+
+          if [[ "$BODY_LEN" -gt "$MAX_CHARS" ]]; then
+            BODY="${BODY:0:$MAX_CHARS}"
+            BODY+=$'\n\n---\n⚠️ This proposal has been truncated due to length. View the full proposal in the [Files changed](../pull/'"$PR_NUMBER"'/files) tab.'
+            TRUNCATED="true"
+          fi
+
+          echo "$BODY" | gh pr edit "$PR_NUMBER" \
+            -R ${{ github.repository }} \
+            --body-file -
+
+          # Step summary
+          cat >> "$GITHUB_STEP_SUMMARY" <<EOF
+          ## Proposal Sync
+
+          | | |
+          | --- | --- |
+          | **PR** | #${PR_NUMBER} |
+          | **File** | \`${FILE}\` |
+          | **Content length** | ${BODY_LEN} chars |
+          | **Truncated** | ${TRUNCATED} |
+          EOF
