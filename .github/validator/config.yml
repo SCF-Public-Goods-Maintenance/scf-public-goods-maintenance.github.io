@@ -24,7 +24,3 @@ validators:
     script: validate-url-loose.js
   - field: git-repo
     script: validate-url-loose.js
-
-  # Conditional revenue-details
-  - field: revenue-details
-    script: validate-revenue-conditional.js

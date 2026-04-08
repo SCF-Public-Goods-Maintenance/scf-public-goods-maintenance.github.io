@@ -54,7 +54,7 @@ jobs:
         with:
           issue-form-template: pg-award-proposal-form.yml
           parsed-issue-body: ${{ steps.parse.outputs.json }}
-          add-comment: true
+          add-comment: false
 
       - name: Label on validation failure
         if: steps.reentry.outputs.skip != 'true' && steps.validate.outputs.result != 'success'
@@ -66,10 +66,21 @@ jobs:
           labels: |
             issueops:validation-error
 
+      - name: Post validation failure comment
+        if: steps.reentry.outputs.skip != 'true' && steps.validate.outputs.result != 'success'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMENT_ERRORS: ${{ steps.validate.outputs.errors }}
+        run: |
+          python .github/scripts/render_validation_failure.py | \
+            gh issue comment "${{ github.event.issue.number }}" \
+              -R "${{ github.repository }}" \
+              --body-file -
+
       - name: Abort on validation failure
         if: steps.reentry.outputs.skip != 'true' && steps.validate.outputs.result != 'success'
         run: |
-          echo "::error::Proposal form validation failed. A comment has been posted on the issue."
+          echo "::error::Proposal form validation failed. See the issue comment for details."
           exit 1
 
       # ── Clear validation-error label on success ───────────────────────────
