@@ -9,8 +9,8 @@ budget: "$35,000"
 
 # soropg
 
-_SoroPG is a beautiful open-source, browser-based Soroban IDE that lets developers write, test, run security
-checks, deploy, and interact with Stellar smart contracts with zero local setup._
+_SoroPG is a beautiful open-source, browser-based Soroban IDE that lets developers write, test, run
+security checks, deploy, and interact with Stellar smart contracts with zero local setup._
 
 |                      |                                                                                                    |
 | -------------------- | -------------------------------------------------------------------------------------------------- |
