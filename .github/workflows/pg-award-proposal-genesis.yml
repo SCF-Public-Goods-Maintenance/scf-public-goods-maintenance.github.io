@@ -37,7 +37,7 @@ jobs:
       # ── Parse & validate ──────────────────────────────────────────────────
       - name: Checkout repo
         if: steps.reentry.outputs.skip != 'true'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Parse proposal form
         if: steps.reentry.outputs.skip != 'true'
@@ -109,7 +109,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -b "${{ steps.branch.outputs.name }}"
+          git switch -c "${{ steps.branch.outputs.name }}" origin/main
           git add "${{ steps.render.outputs.file_path }}"
           git commit -m "Add project page: ${{ steps.render.outputs.project_title }}"
           git push origin "${{ steps.branch.outputs.name }}"

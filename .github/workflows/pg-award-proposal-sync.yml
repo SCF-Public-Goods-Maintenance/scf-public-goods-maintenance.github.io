@@ -7,7 +7,7 @@ on:
       - "docs/projects/**.md"
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
 
 jobs:
@@ -16,7 +16,38 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+
+      - name: Automatic Rebase and Linearize
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REBASE_MSG: |
+            🤖 **Automated Housekeeping:** I detected merge commits in this branch. To keep our history linear, I have automatically rebased your changes onto `main`.
+
+            ⚠️ **Note for CLI users:** If you are working locally, please run `git pull --rebase` before your next push to sync your local history.
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          MERGES=$(git rev-list --merges origin/main..HEAD)
+
+          if [ -n "$MERGES" ]; then
+            echo "Merge commits detected. Converting to rebase..."
+
+            # Pipe the env var directly to gh to avoid shell escaping issues
+            echo "$REBASE_MSG" | gh pr comment "$PR_NUMBER" --body-file -
+
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:${{ github.head_ref }} --force-with-lease
+          else
+            echo "History is already linear."
+          fi
 
       - name: Find changed files
         id: files
