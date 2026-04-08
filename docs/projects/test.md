@@ -6,17 +6,18 @@ proposer: ankeliu
 category: "SDKs"
 budget: "500000 <-- 👀 FOR A TEST????"
 ---
+
 # Test
 
 _test_
 
-| | |
-| --- | --- |
-| **Category** | SDKs |
-| **Website** | <https://stellar.org> |
-| **Repository** | <https://stellar.org> |
-| **First Released** | 2026 |
-| **Intake** | <test> |
+|                      |                              |
+| -------------------- | ---------------------------- |
+| **Category**         | SDKs                         |
+| **Website**          | <https://stellar.org>        |
+| **Repository**       | <https://stellar.org>        |
+| **First Released**   | 2026                         |
+| **Intake**           | <test>                       |
 | **Budget Requested** | 500000 <-- 👀 FOR A TEST???? |
 
 ## Project Description
@@ -46,4 +47,3 @@ teest
 ## Legal Acknowledgements
 
 - [x] As the project representative, I agree to the Legal Acknowledgements.
-
