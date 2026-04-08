@@ -17,7 +17,7 @@ _Anke proposes to do a lot of testing. This is commendable._
 | **Website**          | <https://stellar.org>        |
 | **Repository**       | <https://stellar.org>        |
 | **First Released**   | 2026                         |
-| **Intake**           | <test>                       |
+| **Intake**           | skipped intake               |
 | **Budget Requested** | 500000 <-- 👀 FOR A TEST???? |
 
 ## Project Description
