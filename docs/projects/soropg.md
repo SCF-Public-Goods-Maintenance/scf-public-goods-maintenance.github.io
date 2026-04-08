@@ -23,7 +23,7 @@ checks, deploy, and interact with Stellar smart contracts with zero local setup.
 
 ## Project Description
 
-SoroPG is an open-source web IDE for Soroban development that removes local setup barriers for
+SoroPG is a beautiful open-source web IDE for Soroban development that removes local setup barriers for
 Stellar builders.
 
 It provides the only zero-setup Stellar workflow where developers can create, test, security-check,
