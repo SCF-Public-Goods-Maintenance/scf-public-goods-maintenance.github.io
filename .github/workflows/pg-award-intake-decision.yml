@@ -30,6 +30,7 @@ jobs:
           skip_ci: "true"
           skip_reviews: "true"
           reaction: eyes
+          skip_completing: "true"
 
       - name: Evaluate pilot reactions and record decision
         if: steps.command.outputs.continue == 'true'

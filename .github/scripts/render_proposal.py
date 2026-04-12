@@ -13,6 +13,7 @@ Outputs (to $GITHUB_OUTPUT):
   slug, file_path, project_title
 """
 
+import enum
 import json
 import os
 import re
@@ -23,6 +24,16 @@ import textwrap
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
+MD_ENABLE_MD036 = "<!-- markdownlint-enable MD036 -->"
+MD_DISABLE_MD036 = "<!-- markdownlint-disable MD036 -->"
+MD_ENABLE_MD034 = "<!-- markdownlint-enable MD034 -->"
+MD_DISABLE_MD034 = "<!-- markdownlint-disable MD034 -->"
+
+
+class MarkdownLinterFlag(enum.Enum):
+    MD036 = "MD036/no-emphasis-as-header"  # allow # Header\n_Emphasis_ as title
+    MD034 = "MD034/no-bare-urls"  # allow bare URLs in project description, etc.
 
 
 def slugify(name: str, max_len: int = 64) -> str:
@@ -63,6 +74,16 @@ def write_github_output(pairs: dict[str, str]):
         # Local testing: print to stderr
         for k, v in pairs.items():
             print(f"  {k}={v}", file=sys.stderr)
+
+
+def wrap_with_md_lint(content: str, lint_flag: MarkdownLinterFlag) -> str:
+    match lint_flag:
+        case MarkdownLinterFlag.MD036:
+            return f"{MD_DISABLE_MD036}\n{content}\n{MD_ENABLE_MD036}"
+        case MarkdownLinterFlag.MD034:
+            return f"{MD_DISABLE_MD034}\n{content}\n{MD_ENABLE_MD034}"
+        case _:
+            return content
 
 
 # ---------------------------------------------------------------------------
@@ -124,7 +145,7 @@ def main():
 
     body_parts = [
         f"# {project_name}\n",
-        f"_{one_sentence}_\n",
+        wrap_with_md_lint(f"_{one_sentence}_", MarkdownLinterFlag.MD036),
         "| | |",
         "| --- | --- |",
         f"| **Category** | {category} |",
@@ -135,22 +156,22 @@ def main():
         f"| **Budget Requested** | {budget_ask} |",
         "",
         "## Project Description\n",
-        description,
+        wrap_with_md_lint(description, MarkdownLinterFlag.MD034),
         "",
         "## Team & Experience\n",
-        team_experience,
+        wrap_with_md_lint(team_experience, MarkdownLinterFlag.MD034),
         "",
         "## Retroactive Impact\n",
-        retro_impact,
+        wrap_with_md_lint(retro_impact, MarkdownLinterFlag.MD034),
         "",
         "## Past Deliverables\n",
-        retro_deliverable,
+        wrap_with_md_lint(retro_deliverable, MarkdownLinterFlag.MD034),
         "",
         "## Proposed Impact\n",
-        proposal_impact,
+        wrap_with_md_lint(proposal_impact, MarkdownLinterFlag.MD034),
         "",
         "## Proposed Deliverables\n",
-        proposal_deliverable,
+        wrap_with_md_lint(proposal_deliverable, MarkdownLinterFlag.MD034),
         "",
         "## Legal Acknowledgements\n",
         legal,
