@@ -110,17 +110,26 @@ jobs:
           NORMALIZED_TITLE="$(printf '%s' "${PROPOSAL_TITLE}" | sed 's/^PG Award Proposal: //')"
           NORMALIZED_TITLE="$(printf '%s' "${NORMALIZED_TITLE}" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
 
+          OUTCOMES_FILE="${RUNNER_TEMP}/outcomes.json"
+          cat > "${OUTCOMES_FILE}" <<'EOF'
+          {"approved":{"description":"Fund the proposal"},"rejected":{"description":"Do not fund the proposal"},"cancelled":{"description":"Undecided outcome"}}
+          EOF
+
           FILEBASE_RESPONSE="$(
             curl --silent --show-error --fail \
               -X POST \
               -H "Authorization: Bearer ${FILEBASE_IPFS_API_KEY}" \
-              "https://rpc.filebase.io/api/v0/add" \
-              -F "file=@${PROPOSAL_FILE};type=text/markdown"
+              "https://rpc.filebase.io/api/v0/add?wrap-with-directory=true" \
+              -F "file=@${PROPOSAL_FILE};filename=proposal.md;type=text/markdown" \
+              -F "file=@${OUTCOMES_FILE};filename=outcomes.json;type=application/json"
           )"
 
           CID="$(printf '%s\n' "${FILEBASE_RESPONSE}" | jq -r '.Hash // .Cid // empty' | tail -n 1)"
           curl --silent --show-error --fail --location \
-            "https://ipfs.filebase.io/ipfs/${CID}" \
+            "https://ipfs.filebase.io/ipfs/${CID}/proposal.md" \
+            --output /dev/null
+          curl --silent --show-error --fail --location \
+            "https://ipfs.filebase.io/ipfs/${CID}/outcomes.json" \
             --output /dev/null
           VOTING_ENDS_AT="$(( $(date +%s) + 7 * 24 * 3600 ))"
 
