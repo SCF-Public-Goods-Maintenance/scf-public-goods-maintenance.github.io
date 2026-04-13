@@ -1,4 +1,4 @@
-name: PG Award Proposal - On-Chain Submission
+name: PG Award Proposal - Tansu
 
 on:
   pull_request:
@@ -32,7 +32,6 @@ jobs:
       STELLAR_RPC_URL: ${{ vars.STELLAR_RPC_URL }}
       TANSU_CONTRACT_ID: ${{ vars.TANSU_CONTRACT_ID }}
       TANSU_PROJECT_KEY: ${{ vars.TANSU_PROJECT_KEY }}
-      XDG_CONFIG_HOME: ${{ runner.temp }}/xdg-config
     steps:
       - name: Resolve proposal metadata
         id: meta
@@ -140,6 +139,8 @@ jobs:
       - name: Configure Stellar CLI
         if: steps.meta.outputs.eligible == 'true'
         run: |
+          echo "XDG_CONFIG_HOME=${RUNNER_TEMP}/xdg-config" >> "${GITHUB_ENV}"
+          export XDG_CONFIG_HOME="${RUNNER_TEMP}/xdg-config"
           mkdir -p "${XDG_CONFIG_HOME}"
           stellar network add \
             --rpc-url "${STELLAR_RPC_URL}" \
