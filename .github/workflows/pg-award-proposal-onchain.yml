@@ -22,6 +22,7 @@ jobs:
   submit:
     if: github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    environment: proposal-tansu
     env:
       FILEBASE_IPFS_API_KEY: ${{ secrets.FILEBASE_IPFS_API_KEY }}
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -158,7 +159,6 @@ jobs:
             --id "${TANSU_CONTRACT_ID}" \
             --source-account ci-submitter \
             --network "${STELLAR_NETWORK_NAME}" \
-            --send=yes \
             -- \
             create_proposal \
             --proposer ci-submitter \
