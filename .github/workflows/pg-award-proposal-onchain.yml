@@ -146,7 +146,7 @@ jobs:
             --rpc-url "${STELLAR_RPC_URL}" \
             --network-passphrase "${STELLAR_NETWORK_PASSPHRASE}" \
             "${STELLAR_NETWORK_NAME}"
-          stellar keys add ci-submitter --secret-key "${STELLAR_SOURCE_SECRET}"
+          printf '%s\n' "${STELLAR_SOURCE_SECRET}" | stellar keys add ci-submitter
 
       - name: Submit proposal to Tansu
         if: steps.meta.outputs.eligible == 'true'
