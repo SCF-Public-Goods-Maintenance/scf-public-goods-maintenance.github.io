@@ -25,12 +25,11 @@ jobs:
     environment: proposal-tansu
     env:
       FILEBASE_IPFS_API_KEY: ${{ secrets.FILEBASE_IPFS_API_KEY }}
-      STELLAR_SECRET_KEY: ${{ secrets.STELLAR_SECRET_KEY }}
+      STELLAR_SOURCE_SECRET: ${{ secrets.STELLAR_SOURCE_SECRET }}
+      STELLAR_NETWORK_PASSPHRASE: ${{ secrets.STELLAR_NETWORK_PASSPHRASE }}
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       STELLAR_NETWORK_NAME: ${{ vars.STELLAR_NETWORK_NAME || 'testnet' }}
-      STELLAR_NETWORK_PASSPHRASE: ${{ secrets.STELLAR_NETWORK_PASSPHRASE }}
       STELLAR_RPC_URL: ${{ vars.STELLAR_RPC_URL }}
-      
       TANSU_CONTRACT_ID: ${{ vars.TANSU_CONTRACT_ID }}
       TANSU_PROJECT_KEY: ${{ vars.TANSU_PROJECT_KEY }}
       XDG_CONFIG_HOME: ${{ runner.temp }}/xdg-config
@@ -143,7 +142,7 @@ jobs:
             --rpc-url "${STELLAR_RPC_URL}" \
             --network-passphrase "${STELLAR_NETWORK_PASSPHRASE}" \
             "${{ steps.config.outputs.network_name }}"
-          stellar keys add ci-submitter --secret-key "${STELLAR_SECRET_KEY}"
+          stellar keys add ci-submitter --secret-key "${STELLAR_SOURCE_SECRET}"
 
       - name: Submit proposal to Tansu
         if: steps.meta.outputs.eligible == 'true'
