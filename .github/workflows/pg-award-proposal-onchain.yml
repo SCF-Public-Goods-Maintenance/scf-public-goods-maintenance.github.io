@@ -120,6 +120,9 @@ jobs:
           )"
 
           CID="$(printf '%s\n' "${FILEBASE_RESPONSE}" | jq -r '.Hash // .Cid // empty' | tail -n 1)"
+          curl --silent --show-error --fail --location \
+            "https://ipfs.filebase.io/ipfs/${CID}" \
+            --output /dev/null
           VOTING_ENDS_AT="$(( $(date +%s) + 7 * 24 * 3600 ))"
 
           {
@@ -141,7 +144,7 @@ jobs:
           stellar network add \
             --rpc-url "${STELLAR_RPC_URL}" \
             --network-passphrase "${STELLAR_NETWORK_PASSPHRASE}" \
-            "${{ steps.config.outputs.network_name }}"
+            "${STELLAR_NETWORK_NAME}"
           stellar keys add ci-submitter --secret-key "${STELLAR_SOURCE_SECRET}"
 
       - name: Submit proposal to Tansu
