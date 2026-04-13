@@ -4,7 +4,7 @@ parent: Public Good Projects
 proposal_issue: 58
 proposer: SurfingBowser
 category: "Developer Experience"
-budget: "48,000"
+budget: "50,000"
 ---
 
 # Soroban Security Portal
