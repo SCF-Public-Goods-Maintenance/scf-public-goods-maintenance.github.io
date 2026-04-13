@@ -18,10 +18,10 @@ _.NET Stellar SDK that supports API backends with Horizon and Soroban._
 |                      |                                                  |
 | -------------------- | ------------------------------------------------ |
 | **Category**         | SDKs                                             |
-| **Website**          | <https://github.com/Beans-BV/dotnet-stellar-sdk> |
+| **Website**          | <https://beans-bv.github.io/dotnet-stellar-sdk/> |
 | **Repository**       | <https://github.com/Beans-BV/dotnet-stellar-sdk> |
 | **First Released**   | April 2018                                       |
-| **Intake**           | <soft-launch>                                    |
+| **Intake**           | soft-launch                                      |
 | **Budget Requested** | $15,000                                          |
 
 ## Project Description
@@ -31,6 +31,33 @@ _.NET Stellar SDK that supports API backends with Horizon and Soroban._
 The .NET Stellar SDK (`stellar-dotnet-sdk`) is the official community-maintained SDK for building on
 Stellar using C# and .NET. Originally ported from the official Java SDK and expanded by Beans BV, it
 serves .NET developers building backends, APIs, anchors, and Soroban-enabled applications on Stellar.
+
+**Current capabilities (v15.0.0):**
+
+- **Horizon API:** 100% endpoint coverage (50/50 endpoints), including streaming via SSE for 22
+  endpoints
+- **Stellar RPC:** 100% method coverage (12/12 methods) for Soroban smart contract interactions
+- **Soroban:** Full smart contract support — deploy, invoke, extend TTL, event processing, fee-bumped
+  transactions
+- **SEPs:** 5 Stellar Ecosystem Proposals implemented (SEP-1, 6, 9, 10, 24), enabling anchor
+  discovery, web authentication, KYC fields, and deposit/withdrawal flows
+- **Retry policies:** Configurable retry with exponential backoff and jitter for both Horizon and
+  Stellar RPC clients via Polly
+- **186 unit test files** with property-based testing (FsCheck), mocking (FakeItEasy, Moq), and BDD
+  (SpecFlow)
+- **Comprehensive examples** for both Horizon and Soroban, including real-world contract invocation
+  patterns
+
+The SDK is published as two NuGet packages (`stellar-dotnet-sdk` and `stellar-dotnet-sdk-xdr`) and is
+used by .NET developers building production Stellar integrations. XDR types are auto-generated from
+the official Stellar XDR definitions via `xdrgen`, ensuring protocol fidelity.
+
+**Ecosystem relevance:**
+
+.NET is the one of the most popular programming language ecosystem globally and the primary backend
+technology for enterprises in financial services, government, and healthcare. The Stellar .NET SDK
+enables these developers to integrate with Stellar without maintaining forks or custom
+implementations.
 
 <!-- markdownlint-enable MD034 -->
 
@@ -128,7 +155,7 @@ coverage transparency for all implemented SEPs.
 
 <!-- markdownlint-disable MD034 -->
 
-## Deliverable 1 — Protocol 26 "Yardstick" Support
+### Deliverable 1 — Protocol 26 "Yardstick" Support
 
 - **Specific:** Update XDR schemas from stellar-xdr v26.0, regenerate C# types via `xdrgen`, update
   Stellar RPC response models (`getLatestLedger` gains `ledgerCloseTime`, `headerXdr`,
@@ -145,7 +172,7 @@ coverage transparency for all implemented SEPs.
   update, existing .NET Stellar integrations break.
 - **Time-bound:** Complete before April 16 (Testnet) and May 6 (Mainnet).
 
-## Deliverable 2 — Integration Test Suite
+### Deliverable 2 — Integration Test Suite
 
 - **Specific:** Build an integration test project running against Stellar Testnet with a CI workflow
   that runs on release tags only. Tests self-provision via Friendbot and are resilient to Testnet
@@ -195,12 +222,12 @@ coverage transparency for all implemented SEPs.
 - **Time-bound:** Priority 1 complete by end of the 3-month period. Priority 2 items that don't fit
   move to Q3.
 
-## Deliverable 3 — Multi-Platform Preparation: Multi-Target + .NET Modernization
+### Deliverable 3 — Multi-Platform Preparation: Multi-Target + .NET Modernization
 
 This deliverable is the prework for Q3's full MAUI validation and Wallet SDK development. It has two
 parts:
 
-**Part A — Multi-target NuGet package: net10.0 + net8.0 + netstandard2.1**
+#### Part A — Multi-target NuGet package: net10.0 + net8.0 + netstandard2.1
 
 Retarget both `StellarDotnetSdk` and `StellarDotnetSdk.Xdr` to `net10.0;net8.0;netstandard2.1`. This
 requires: abstracting the crypto layer (NSec.Cryptography targets net8.0+ only; netstandard2.1 uses
@@ -208,7 +235,7 @@ Sodium.Core as alternative), adding compiler polyfills for netstandard2.1, addin
 NuGet package reference, and conditional compilation for 4 `DateOnly` usages, 11 `ThrowIfNull` calls,
 and 20 `ThrowIfNullOrEmpty` calls.
 
-**Part B — Adopt modern .NET 7–10 APIs**
+#### Part B — Adopt modern .NET 7–10 APIs
 
 The SDK codebase hasn't been updated to use runtime improvements available since .NET 7. As part of
 the multi-target effort, we adopt high-value .NET improvements that enhance reliability, performance,
@@ -239,7 +266,7 @@ and multi-platform readiness:
   preparing the codebase for multi-platform deployment.
 - **Time-bound:** Complete by end of the 3-month period.
 
-## Deliverable 4 — SEP-45 Implementation + SEP Compatibility Matrices
+### Deliverable 4 — SEP-45 Implementation + SEP Compatibility Matrices
 
 - **Specific:** Implement SEP-45 (Stellar Web Authentication with Contract Accounts) and create
   per-SEP compatibility matrices for all implemented SEPs (1, 6, 9, 10, 24, and the new 45). SEP-45
@@ -254,7 +281,7 @@ and multi-platform readiness:
   (19 matrices) SDKs.
 - **Time-bound:** Complete by end of the 3-month period.
 
-## Deliverable 5 — Release & Verification
+### Deliverable 5 — Release & Verification
 
 - **Specific:** Add or adjust tests for new and changed surfaces, update parity matrices, and ship
   releases.
@@ -262,7 +289,7 @@ and multi-platform readiness:
   NuGet.
 - **Time-bound:** Completed within the 3-month period.
 
-## Non-deliverable 1 — Developer Support & Maintenance Responsiveness
+### Non-deliverable 1 — Developer Support & Maintenance Responsiveness
 
 - **Specific:** Triage and respond to SDK-related GitHub issues, feature requests, and Discord
   inquiries.
@@ -273,7 +300,7 @@ and multi-platform readiness:
 
 Note: If issue volume or support demand is low, unused capacity will be reallocated to Deliverable 2.
 
-## Non-deliverable 2 — Small Capacity Buffer
+### Non-deliverable 2 — Small Capacity Buffer
 
 Absorbs unexpected complexity from any deliverable, including unforeseen upstream changes. If unused,
 reallocated to Deliverable 2 (Priority 2 integration tests).
