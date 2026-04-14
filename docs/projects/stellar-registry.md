@@ -172,14 +172,14 @@ the entire Soroban developer community.
 
 <!-- markdownlint-disable MD034 -->
 
-**D1: Mainnet Deploy of Stellar Registry (theahaco/scaffold-stellar#433)**
+## D1: Mainnet Deploy of Stellar Registry (theahaco/scaffold-stellar#433)
 
 Deploy the Registry smart contract to Stellar mainnet and confirm it is publicly accessible via
 `stellar registry` CLI and `rgstry.xyz`.
 
 Measure: the contract is deployed & the CLI points to it.
 
-**D2: `import_contract!` Macro (theahaco/scaffold-stellar#419)**
+## D2: `import_contract!` Macro (theahaco/scaffold-stellar#419)
 
 Publish a working `import_contract!` macro in the `stellar-registry` crate that allows cross-contract
 client instantiation with a single line of Rust.
@@ -187,7 +187,7 @@ client instantiation with a single line of Rust.
 Measure: the macro is available in a released crate version, documented with at least one working
 example, and covered by integration tests.
 
-**D3: Flagged Contract Enforcement at Build Time (theahaco/scaffold-stellar#452)**
+## D3: Flagged Contract Enforcement at Build Time (theahaco/scaffold-stellar#452)
 
 Extend `import_contract!` and `import_contract_client!` to emit a compile-time error when the
 referenced Wasm or Contract is flagged in the Registry.
@@ -195,7 +195,7 @@ referenced Wasm or Contract is flagged in the Registry.
 Measure: a test exists that demonstrates a flagged contract causes a build failure, and the behavior
 is documented.
 
-**D4: Server-Side Search, Pagination & Sorting on rgstry.xyz (theahaco/scaffold-stellar#454)**
+## D4: Server-Side Search, Pagination & Sorting on rgstry.xyz (theahaco/scaffold-stellar#454)
 
 Replace the current client-side full-data-fetch approach with API-backed search, pagination, and
 sorting on `rgstry.xyz`.
@@ -203,7 +203,7 @@ sorting on `rgstry.xyz`.
 Measure: the explorer handles at least 1,000 published Wasms/Contracts without degraded load time,
 search returns results server-side, and pages load incrementally.
 
-**D5: rgstry.xyz UI Enhancements (theahaco/scaffold-stellar#453)**
+## D5: rgstry.xyz UI Enhancements (theahaco/scaffold-stellar#453)
 
 Ship three specific improvements to the Registry web explorer:
 
@@ -214,14 +214,14 @@ Ship three specific improvements to the Registry web explorer:
 Measure: all three features are live on the production `rgstry.xyz` site and manually verified
 against at least one mainnet contract.
 
-**D6: Verified Build Integration with Stellar Expert (theahaco/scaffold-stellar#455)**
+## D6: Verified Build Integration with Stellar Expert (theahaco/scaffold-stellar#455)
 
 Display verified build status from Stellar Expert's API on Registry Wasm and Contract detail pages.
 
 Measure: the verified build badge or indicator is visible on at least one Wasm detail page with a
 known verified contract, and the integration is live in production on `rgstry.xyz`.
 
-**D7: Registry Documentation & Education (theahaco/scaffold-stellar#426)**
+## D7: Registry Documentation & Education (theahaco/scaffold-stellar#426)
 
 Publish complete Registry documentation and videos covering:
 
