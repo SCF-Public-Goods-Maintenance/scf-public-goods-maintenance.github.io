@@ -135,9 +135,9 @@ they continue to build out their dependency graph on top of OpenGrants data.
 
 <!-- markdownlint-disable MD034 -->
 
-I. Ongoing hosting and maintenance of OpenGrants infra and SCF funding data II. Operational support
-for the PG Atlas team, and any other new dependencies III. Engagement with the Stellar community on
-utilizing OpenGrants data infra, if requested
+1. Ongoing hosting and maintenance of OpenGrants infra and SCF funding data
+2. Operational support for the PG Atlas team, and any other new dependencies
+3. Engagement with the Stellar community on utilizing OpenGrants data infra, if requested
 
 <!-- markdownlint-enable MD034 -->
 
