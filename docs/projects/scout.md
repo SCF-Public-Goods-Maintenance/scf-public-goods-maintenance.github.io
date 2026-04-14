@@ -37,7 +37,7 @@ Scout has several detectors built for Rust and specific for Soroban, Ink! and Su
 information.
 
 During 2025 and 2026, we started experimenting with AI for vulnerability detection through Proof of
-Concepts (see https://github.com/CoinFabrik/scout-audit-aisee and
+Concepts (see <https://github.com/CoinFabrik/scout-audit-ai> and
 https://github.com/CoinFabrik/scout-agent).
 
 Our current work with AI is focused on creating an open-source AI product for vulnerability
