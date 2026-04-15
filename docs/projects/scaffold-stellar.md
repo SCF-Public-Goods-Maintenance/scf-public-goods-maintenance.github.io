@@ -18,7 +18,7 @@ by Stellar Registry; and a customizable, modern frontend._
 | **Website**          | <https://scaffoldstellar.org/>                  |
 | **Repository**       | <https://github.com/theahaco/scaffold-stellar/> |
 | **First Released**   | May 2025                                        |
-| **Intake**           | <soft-launch>                                   |
+| **Intake**           | soft-launch                                   |
 | **Budget Requested** | 50000                                           |
 
 ## Project Description
@@ -33,7 +33,7 @@ and a modern customizable frontend.
 Scaffold Stellar is built and maintained by **The Aha Company** (formerly Aha Labs), a team of 10+
 senior engineers deeply embedded in the Stellar ecosystem.
 
-## Early Soroban origin:
+## Early Soroban origin
 
 In 2022 (before Soroban had a name) SDF already had a clear ambition: launch their upcoming smart
 contract platform with a “batteries-included” developer experience. The gap was execution capacity:
@@ -42,7 +42,7 @@ that promise real. Tyler van der Hoeven went to major blockchain conferences to 
 and identified **The Aha Company** as the team with the right combination of product mindset and deep
 technical ability to “install the batteries.”
 
-## Foundational Stellar developer workflows we designed and shipped:
+## Foundational Stellar developer workflows we designed and shipped
 
 We envisioned, architected, and implemented several of the workflows that have become core to Soroban
 development on Stellar, including:
@@ -54,7 +54,7 @@ development on Stellar, including:
   **stellar-sdk-js**, which helps application developers interact with contracts more safely and
   predictably.
 
-## Why we were selected for Scaffold Stellar and our SCF track record:
+## Why we were selected for Scaffold Stellar and our SCF track record
 
 In early 2025, SDF searched for a team that could bring a ScaffoldETH-like end-to-end experience to
 Stellar. They selected us based on:
@@ -70,7 +70,7 @@ Scaffold Stellar is a direct continuation of that work: turning the hard-won Dev
 (DevX) knowledge from core tooling into a “front door” experience that helps developers go from idea
 to proof-of-concept quickly, with strong defaults and a convention-over-configuration approach.
 
-## Ongoing maintenance and production-grade integration experience:
+## Ongoing maintenance and production-grade integration experience
 
 Since then, we have remained engaged with SDF to support and maintain key tooling (most recently
 improving Stellar CLI handling of **hardware-based keys**) and we continue to operate as an
@@ -78,7 +78,7 @@ integration partner on production deployments. Notably, we **architected and dev
 Générale’s EURCV** on Stellar (now live), bringing a rigorous, real-world perspective to developer
 tooling and reliability requirements.
 
-## Deep community participation and ecosystem leadership:
+## Deep community participation and ecosystem leadership
 
 Our team includes well-known ecosystem contributors. Several members hold key community roles (e.g.,
 **SCF Pilot**, **category delegates**) and actively build their own SCF projects (e.g., **Moonlight,
@@ -87,7 +87,7 @@ developer support at hackathons and conferences, and invest heavily in community
 education. We show up consistently at major events and actively communicate about Stellar, both its
 strengths and the practical realities builders need to know.
 
-## Cross-ecosystem perspective (DevX benchmarking):
+## Cross-ecosystem perspective (DevX benchmarking)
 
 Beyond Stellar, The Aha Company is also an integration partner in other ecosystems (e.g., **Filecoin,
 XRPL, Cardano, Canton, Starknet**). This gives us a unique ability to benchmark developer experience
