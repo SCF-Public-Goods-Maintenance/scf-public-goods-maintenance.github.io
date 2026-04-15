@@ -18,7 +18,7 @@ by Stellar Registry; and a customizable, modern frontend._
 | **Website**          | <https://scaffoldstellar.org/>                  |
 | **Repository**       | <https://github.com/theahaco/scaffold-stellar/> |
 | **First Released**   | May 2025                                        |
-| **Intake**           | soft-launch                                   |
+| **Intake**           | soft-launch                                     |
 | **Budget Requested** | 50000                                           |
 
 ## Project Description
