@@ -119,13 +119,13 @@ flowchart TD
     %% VOTING PATH (Semantic: Follows D&R End)
     DiscRev --> |"D&R phase ends"| Finalized["Proposal finalized\n(D&R window closed)"]
 
-    Finalized --> TansuVote["Proposal submitted to\nTansu for on-chain vote"]
+    Finalized --> TansuVote["Proposal PR merged\nand automatically submitted to\nTansu for on-chain vote"]
     TansuVote --> PilotsVote["SCF Pilots vote\n(NQG-weighted, ~3 days)"]
     PilotsVote --> VoteOutcome{"Approved?"}
 
     %% FINAL OUTCOMES
     VoteOutcome --> |"Yes"| Compliance["Handoff to SDF for\ncompliance check"]
-    VoteOutcome --> |"No"| Rejected["Proposal not awarded\n(PR is not merged)"]
+    VoteOutcome --> |"No"| Rejected["Proposal not awarded"]
 
     Compliance --> ComplianceOutcome{"SDF compliance\npassed?"}
 
