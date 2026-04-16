@@ -193,7 +193,7 @@ See `oz-` prefixed Wasms here: https://testnet.rgstry.xyz/wasms
 > - Define and implement an extension interface that allows third parties to integrate services
 >   without forking core Scaffold.
 > - Measure: extension API spec + developer docs + at least 2 reference extensions.
-> - Issue:[ https://github.com/theahaco/scaffold-stellar/issues/160](https://github.com/theahaco/scaffold-stellar/issues/160)
+> - Issue: [https://github.com/theahaco/scaffold-stellar/issues/160](https://github.com/theahaco/scaffold-stellar/issues/160)
 > - Ecosystem value: turns Scaffold Stellar into a distribution surface for other public goods and
 >   ecosystem tooling.
 
@@ -205,7 +205,7 @@ D8. Wallet integration expansion via wallet kit
 > - Support additional wallets in the default scaffolded apps through wallet kit integration and
 >   configuration templates.
 > - Measure: additional wallet support shipped + documented setup + example project(s).
-> - Issue:[ https://github.com/theahaco/scaffold-stellar-frontend/issues/93](https://github.com/theahaco/scaffold-stellar-frontend/issues/93)
+> - Issue: [https://github.com/theahaco/scaffold-stellar-frontend/issues/93](https://github.com/theahaco/scaffold-stellar-frontend/issues/93)
 > - Ecosystem value: reduces onboarding friction and enables broader end-user compatibility for new
 >   dApps.
 
@@ -231,7 +231,7 @@ https://github.com/theahaco/scaffold-stellar/issues/164
 
 > - Improve the first-run experience and reduce time-to-first-success for new builders.
 > - Measure: new UX shipped + updated onboarding steps + reduced “setup steps” documented.
-> - Issue:[ https://github.com/theahaco/scaffold-stellar-frontend/issues/136](https://github.com/theahaco/scaffold-stellar-frontend/issues/136)
+> - Issue: [https://github.com/theahaco/scaffold-stellar-frontend/issues/136](https://github.com/theahaco/scaffold-stellar-frontend/issues/136)
 > - Ecosystem value: faster onboarding and improved conversion for first-time Stellar developers.
 
 Shipped in https://github.com/theahaco/scaffold-stellar-frontend/pull/158
@@ -241,7 +241,7 @@ Shipped in https://github.com/theahaco/scaffold-stellar-frontend/pull/158
 > - Enable importing contracts from existing Soroban contract sources to accelerate development and
 >   reuse.
 > - Measure: working import workflow + docs + example.
-> - Issue:[ https://github.com/theahaco/scaffold-stellar/issues/151](https://github.com/theahaco/scaffold-stellar/issues/151)
+> - Issue: [https://github.com/theahaco/scaffold-stellar/issues/151](https://github.com/theahaco/scaffold-stellar/issues/151)
 > - Ecosystem value: reinforces reuse and reduces redundant contract development.
 
 Shipped in https://github.com/theahaco/scaffold-stellar/pull/327
@@ -251,7 +251,7 @@ Shipped in https://github.com/theahaco/scaffold-stellar/pull/327
 > - Allow developers to clear scaffold artifacts in the dev environment to reduce friction and avoid
 >   state-related confusion.
 > - Measure: command shipped + tests + docs.
-> - Issue:[ https://github.com/theahaco/scaffold-stellar/issues/259](https://github.com/theahaco/scaffold-stellar/issues/259)
+> - Issue: [https://github.com/theahaco/scaffold-stellar/issues/259](https://github.com/theahaco/scaffold-stellar/issues/259)
 > - Ecosystem value: improves productivity and reduces support burden.
 
 The command was shipped here: https://github.com/theahaco/scaffold-stellar/pull/352
