@@ -18,7 +18,7 @@ RPC, with implementations of several Stellar Ecosystem Proposals._
 | **Website**          | <https://stellar-sdk.readthedocs.io> |
 | **Repository**       | <https://github.com/StellarCN/py-stellar-base> |
 | **First Released**   | October 2016                                   |
-| **Intake**           | <soft-launch>                                  |
+| **Intake**           | soft-launch                                    |
 | **Budget Requested** | 15000                                          |
 
 ## Project Description
