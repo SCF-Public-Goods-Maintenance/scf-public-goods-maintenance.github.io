@@ -9,7 +9,7 @@ budget: "50000"
 
 # StellarChain
 
-_Explore the Stellar blockchain - transactions, accounts, contracts, ledgers, and operations_
+_Explore the Stellar blockchain - transactions, accounts, contracts, ledgers, and operations._
 
 |                      |                                      |
 | -------------------- | ------------------------------------ |
@@ -17,7 +17,7 @@ _Explore the Stellar blockchain - transactions, accounts, contracts, ledgers, an
 | **Website**          | <https://stellarchain.io>            |
 | **Repository**       | <https://github.com/stellarchain/v4> |
 | **First Released**   | March 2024                           |
-| **Intake**           | <soft-launch>                        |
+| **Intake**           | soft-launch                          |
 | **Budget Requested** | 50000                                |
 
 ## Project Description
