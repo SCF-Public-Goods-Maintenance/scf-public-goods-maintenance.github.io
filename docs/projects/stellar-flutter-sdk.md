@@ -19,7 +19,7 @@ across iOS, Android, and web._
 | **Website**          | <https://github.com/Soneso/stellar_flutter_sdk> |
 | **Repository**       | <https://github.com/Soneso/stellar_flutter_sdk> |
 | **First Released**   | June 2020                                       |
-| **Intake**           | <soft-launch>                                   |
+| **Intake**           | soft-launch                                     |
 | **Budget Requested** | 18000                                           |
 
 ## Project Description
@@ -76,7 +76,7 @@ https://soneso.github.io/soneso-sdk-stats/).
 
 ## Past Deliverables
 
-## 1. Continuous Maintenance and Improvement
+### 1. Continuous Maintenance and Improvement
 
 Description from last quarter: Regular SDK updates addressing horizon, rpc, protocol updates (e.g.
 p25), bug fixes, feature requests (e.g. full web support), code modernization, unit test coverage
@@ -152,7 +152,7 @@ releases, 0 open issues, median first response 2.1h, median time to close 5.6h, 
 pub.dev 14,345 downloads (52 weeks), 86 dependent repos + 5 dependent packages. Live dashboard:
 https://soneso.github.io/soneso-sdk-stats/
 
-## 2. SEP-53 Support
+### 2. SEP-53 Support
 
 Description from last quarter: SEP-53 standardizes message signing functionality across Stellar
 wallets, libraries, and services, preventing ecosystem fragmentation and ensuring interoperability.
@@ -171,7 +171,7 @@ Adds signMessage() and verifyMessage() on KeyPair with Uint8List and String over
 cover all spec test vectors (ASCII, Japanese, binary), encoding round-trips, failure cases, and edge
 cases. Cross-SDK compatible with the Java, Python, iOS, and PHP SDKs.
 
-## 3. XDR Classes Generator
+### 3. XDR Classes Generator
 
 Description from last quarter: Currently the SDK has approximatively 400 manually written XDR classes
 used to encode and decode XDR objects. Extensions or updates in the XDR structure need to be
@@ -211,7 +211,7 @@ OpenZeppelin smart accounts using passkeys and biometric authentication across i
 
 ## Proposed Deliverables
 
-## 1. Continuous Maintenance and Improvement
+### 1. Continuous Maintenance and Improvement
 
 Regular SDK updates addressing Horizon, Soroban RPC, and protocol updates (including Protocol 26),
 bug fixes, feature requests, and documentation updates. Maintain existing SEP implementations and
@@ -220,7 +220,7 @@ up to date.
 
 Proof: Release notes on GitHub, updated compatibility matrices, soneso-sdk-stats dashboard.
 
-## 2. OpenZeppelin Smart Account Support
+### 2. OpenZeppelin Smart Account Support
 
 Implement support for the OpenZeppelin smart account contracts on Soroban, covering:
 
