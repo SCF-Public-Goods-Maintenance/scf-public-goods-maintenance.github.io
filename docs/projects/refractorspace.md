@@ -9,7 +9,7 @@ budget: "20,000"
 
 # RefractorSpace
 
-Pending transactions storage and multisig aggregator for Stellar Network
+_Pending transactions storage and multisig aggregator for Stellar Network_
 
 |                      |                                                                                                    |
 | -------------------- | -------------------------------------------------------------------------------------------------- |
