@@ -9,7 +9,7 @@ budget: "20000"
 
 # Hyperledger Solang
 
-_Solang is a Solidity compiler for Stellar_
+_Solang is a Solidity compiler for Stellar._
 
 |                      |                                                                                                    |
 | -------------------- | -------------------------------------------------------------------------------------------------- |
@@ -24,7 +24,7 @@ _Solang is a Solidity compiler for Stellar_
 
 Solang is a Solidity compiler for Stellar which lives under
 [LFDT](https://www.lfdecentralizedtrust.org/). We aim to have the following impact on Stellar
-ecosystem:
+ecosystem.
 
 ### Long-term impact
 
@@ -96,7 +96,7 @@ of writing this, will update this PR once it supports the latest version)
 The main goal of trying to include Solang in the PG awards is to _**bring it to production**_. Our
 goals for the next quarter are:
 
-### Codebase maintenance:
+### Codebase maintenance
 
 - A current issue of the codebase is the entangled target logic in
   [`codegen`](https://github.com/hyperledger-solang/solang/tree/main/src/codegen). As Solang supports
@@ -113,7 +113,7 @@ goals for the next quarter are:
   in this quarter.
 - More useful error reporting in Solang Playground.
 
-### Feature Completion:
+### Feature Completion
 
 - Support the remaining [Soroban-examples](https://github.com/stellar/soroban-examples)
 
