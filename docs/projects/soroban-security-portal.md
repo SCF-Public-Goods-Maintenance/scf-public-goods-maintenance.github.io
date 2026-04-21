@@ -19,7 +19,7 @@ code in an organized fashion._
 | **Repository**       | <https://github.com/inferara/soroban-security-portal>                                              |
 | **First Released**   | July 2025 (website) September 2025 (all milestones)                                                |
 | **Intake**           | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/22> |
-| **Budget Requested** | 48,000                                                                                             |
+| **Budget Requested** | 50,000                                                                                             |
 
 ## Project Description
 
