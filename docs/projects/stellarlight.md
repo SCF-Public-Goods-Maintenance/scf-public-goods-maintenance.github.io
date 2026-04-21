@@ -22,7 +22,7 @@ dev activity, builder tools, and more across stellar in a single platform._
 | **Website**          | <https://stellarlight.xyz>                     |
 | **Repository**       | <https://github.com/alexanderkoh/stellarlight> |
 | **First Released**   | Jan 2026 - soft launch                         |
-| **Intake**           | <soft-launch>                                  |
+| **Intake**           | soft-launch                                    |
 | **Budget Requested** | $30,000                                        |
 
 ## Project Description
@@ -222,7 +222,7 @@ funded projects are still actively building. the data tells the story.
 
 <!-- markdownlint-disable MD034 -->
 
-public launch and analytics — month 1
+1. public launch and analytics — month 1
 
 full public launch of stellarlight.xyz with launch announcement, community outreach, and onboarding
 documentation. implement site analytics to track visitors, search queries, project page views,
