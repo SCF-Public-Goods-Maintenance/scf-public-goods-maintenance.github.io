@@ -18,7 +18,7 @@ high-level Soroban smart contract support, and implements 18 Stellar Ecosystem P
 | **Website**          | <https://github.com/Soneso/stellar-ios-mac-sdk> |
 | **Repository**       | <https://github.com/Soneso/stellar-ios-mac-sdk> |
 | **First Released**   | March 2018                                      |
-| **Intake**           | <soft-launch>                                   |
+| **Intake**           | soft-launch                                     |
 | **Budget Requested** | 18000                                           |
 
 ## Project Description
@@ -75,7 +75,7 @@ https://soneso.github.io/soneso-sdk-stats/).
 
 ## Past Deliverables
 
-## 1. Continuous Maintenance and Improvement
+### 1. Continuous Maintenance and Improvement
 
 Description from last quarter: Regular SDK updates addressing horizon, rpc, protocol updates (e.g.
 p25), bug fixes, feature requests, code modernization, unit test coverage improvement, and
@@ -145,7 +145,7 @@ list), and issue/PR response times with closure stats. Metrics (as of April 10, 
 forks, 140 releases, 0 open issues, median time to close 21.1h, 100% response rate. Live dashboard:
 https://soneso.github.io/soneso-sdk-stats/
 
-## 2. SEP-53 Support
+### 2. SEP-53 Support
 
 Description from last quarter: SEP-53 standardizes message signing functionality across Stellar
 wallets, libraries, and services, preventing ecosystem fragmentation and ensuring interoperability.
@@ -163,7 +163,7 @@ Adds signMessage() and verifyMessage() on KeyPair with String and [UInt8] overlo
 all spec test vectors (ASCII, Japanese, binary), encoding round-trips, failure cases, and edge cases.
 Cross-SDK compatible with the Java, Python, Flutter, and PHP SDKs.
 
-## 3. XDR Classes Generator
+### 3. XDR Classes Generator
 
 Description from last quarter: Currently the SDK has hundreds of manually written XDR
 classes/structs/enums used to encode and decode XDR objects. Extensions or updates in the XDR
@@ -209,7 +209,7 @@ and is planned for the PHP SDK (Q2 2026).
 
 ## Proposed Deliverables
 
-## 1. Continuous Maintenance and Improvement
+### 1. Continuous Maintenance and Improvement
 
 Regular SDK updates addressing Horizon, Soroban RPC, and protocol updates (including Protocol 26),
 bug fixes, feature requests, and documentation updates. Maintain existing SEP implementations and
@@ -218,7 +218,7 @@ up to date.
 
 Proof: Release notes on GitHub, updated compatibility matrices, soneso-sdk-stats dashboard.
 
-## 2. SEP-11 TxRep Rewrite
+### 2. SEP-11 TxRep Rewrite
 
 Replace the monolithic hand-written TxRep implementation with generated toTxRep()/fromTxRep() methods
 on XDR types, reducing TxRep.swift to a thin facade. This mirrors the approach already completed in
@@ -226,7 +226,7 @@ the Flutter and PHP SDKs.
 
 Proof: Release on GitHub, PR with implementation, updated test suite.
 
-## 3. OpenZeppelin Smart Account Support
+### 3. OpenZeppelin Smart Account Support
 
 Implement support for the OpenZeppelin smart account contracts on Soroban, covering:
 
@@ -245,7 +245,7 @@ Implement support for the OpenZeppelin smart account contracts on Soroban, cover
 
 Proof: Release on GitHub, PR with implementation, demo app, documentation, test suite.
 
-## Budget justification:
+## Budget justification
 
 The budget increase from $15,000 to $18,000 reflects the addition of OpenZeppelin Smart Account
 support, which is a major new feature involving platform-native WebAuthn integration, a demo
