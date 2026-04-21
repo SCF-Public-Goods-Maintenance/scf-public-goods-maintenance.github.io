@@ -198,3 +198,33 @@ Month 3 – AI Agent POC Iteration 2
 ## Legal Acknowledgements
 
 - [x] As the project representative, I agree to the Legal Acknowledgements.
+
+## Reviewers comments
+
+```
+@AshFrancis says:
+
+~31 detectors (with 3 more in this proposal) is pretty good coverage for generic issues.
+[CF] Agree. Thanks.
+
+I like the AI work, personally I would also like to see an MCP server that exposes primitives to the users own agents (so they dont have to configure API keys and can use their existing claude/codex/etc. licenses. Though perhaps you've explored this and decided against it for good reasons.
+[CF] Thanks a lot for the suggestion. It’s a great feature for driving adoption. Right now, our priority is to iterate on the core first: improving precision, adding more vulnerability categories, and reducing latency and token consumption. We’ll keep the MCP server idea in mind to be considered later as the product matures.
+
+Honestly with recent news on AI based attacks, tooling like this is pretty essential and the bare minimum a project should be doing (combined with audits!)
+[CF] Agree. We believe that providing a bundle of Scout and Scout-Agent tools to the community is a good way to respond to these AI-based attacks.
+
+I ran scout on one of my earlier soroban side projects and it did find a mild bug (pagination overflow) alongside some false positives, so that was good to see.
+[CF] Glad to hear that.
+
+It would be good to see some kind of positive feedback loop with projects utilizing tools like this, then being audited, with additional audit findings being plugged back into this.
+[CF] We are working with SCF to raise awareness around security and provide hands-on support to projects.
+```
+
+```
+@oceans404 says:
+I like the direction. One distribution thought: Scaffold Stellar has already shipped both their extension system and a reporter extension — framed by Aha as "a distribution surface for other public goods and ecosystem tooling." Scout feels like a natural fit there: a detector extension running during stellar scaffold build, with findings surfaced through the reporter.
+
+This could be a cool default pipeline for Soroban builders using Scaffold. Could you have a chat with the Aha team about this?
+
+[CF] Hi @oceans404, for sure !!
+```
