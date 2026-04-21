@@ -18,7 +18,7 @@ devices._
 | **Website**          | <https://gist.github.com/overcat/ca6e3da0d3602a928c2eef6e054f853a> |
 | **Repository**       | <https://gist.github.com/overcat/ca6e3da0d3602a928c2eef6e054f853a> |
 | **First Released**   | July 2021                                                          |
-| **Intake**           | <soft-launch>                                                      |
+| **Intake**           | soft-launch                                                        |
 | **Budget Requested** | 12000                                                              |
 
 ## Project Description
