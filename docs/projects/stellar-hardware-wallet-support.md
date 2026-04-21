@@ -60,7 +60,7 @@ with the latest SDK versions and added community-requested token support.
 
 ## Past Deliverables
 
-## 1. Ledger App Optimization and Size Reduction
+### 1. Ledger App Optimization and Size Reduction
 
 Description from last quarter:
 
@@ -78,7 +78,7 @@ passes developed in coordination with the Ledger team. The changes are staged on
 branch and will be bundled with the next production update, combined with a security audit to avoid
 the cost of a standalone audit cycle.
 
-## 2. Full Stellar Token Support in Trezor Suite Mobile
+### 2. Full Stellar Token Support in Trezor Suite Mobile
 
 Description from last quarter:
 
@@ -96,7 +96,7 @@ Trezor team, enabling mobile users to securely send, receive, and manage non-XLM
 directly from their Trezor devices. This completes feature parity between Trezor Suite Desktop and
 Mobile for Stellar users.
 
-## 3. Soroban Support Design for Trezor
+### 3. Soroban Support Design for Trezor
 
 Description from last quarter:
 
@@ -112,7 +112,7 @@ Collaborated with the Trezor team to complete a Figma design for Soroban smart c
 Trezor wallet. This design work lays the foundation for future Soroban transaction signing on Trezor
 devices and represents the first step toward hardware-secured Soroban interactions.
 
-## 4. Ongoing Ledger App Maintenance
+### 4. Ongoing Ledger App Maintenance
 
 Description from last quarter:
 
@@ -139,7 +139,7 @@ observed to inform next steps.
 
 ## Proposed Deliverables
 
-## 1. Ongoing Maintenance
+### 1. Ongoing Maintenance
 
 Regular upkeep of the Stellar Ledger app and Trezor integrations in coordination with the Ledger and
 Trezor teams: responding to community issues and pull requests, keeping SDK and firmware dependencies
@@ -147,7 +147,7 @@ current, and ensuring Stellar assets and protocol features remain fully supporte
 
 Proof: Release tags on GitHub, updated changelogs, etc.
 
-## 2. Stellar WalletConnect Support in Trezor Suite
+### 2. Stellar WalletConnect Support in Trezor Suite
 
 Add WalletConnect support for Stellar in Trezor Suite, enabling users to connect their Trezor
 hardware wallets to Stellar dApps directly from the suite. This brings hardware-level signing
@@ -156,7 +156,7 @@ ecosystem.
 
 Proof: Release changelog.
 
-## 3. Soroban Support for Trezor
+### 3. Soroban Support for Trezor
 
 Implement Soroban transaction signing support for Trezor in collaboration with the Trezor team. This
 work follows prior design and discussion with the Trezor team. Due to current firmware team
