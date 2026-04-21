@@ -54,7 +54,8 @@ Active developers of the Refractor service:
 Over the last 3 months our service processed more than 100 multisig transactions. It is actively used
 by Aquarius DAO, Reflector DAO, YieldBlox DAO, Stratum, and other services.
 
-Here is, for example, a pending Aquarius DAO distribution [tx](https://refractor.space/tx/643a50a64293a5d6a54c0b539a226cf7fdaf58ef32d68e0e9b7c3908a62926a5).
+Here is, for example, a pending Aquarius DAO distribution
+[tx](https://refractor.space/tx/643a50a64293a5d6a54c0b539a226cf7fdaf58ef32d68e0e9b7c3908a62926a5).
 
 ## Past Deliverables
 
