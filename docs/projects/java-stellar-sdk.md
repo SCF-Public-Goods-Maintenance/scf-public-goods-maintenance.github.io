@@ -18,7 +18,7 @@ RPC, with Android support and implementations of several Stellar Ecosystem Propo
 | **Website**          | <https://github.com/lightsail-network/java-stellar-sdk> |
 | **Repository**       | <https://github.com/lightsail-network/java-stellar-sdk> |
 | **First Released**   | November 2015                                           |
-| **Intake**           | <soft-launch>                                           |
+| **Intake**           | soft-launch                                             |
 | **Budget Requested** | 15000                                                   |
 
 ## Project Description
