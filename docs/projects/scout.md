@@ -11,7 +11,7 @@ budget: "33000"
 
 <!-- markdownlint-disable MD036 -->
 
-_Scout is an extensible open source vulnerability analyzer built for Soroban_
+_Scout is an extensible open source vulnerability analyzer built for Soroban._
 
 <!-- markdownlint-enable MD036 -->
 
@@ -21,7 +21,7 @@ _Scout is an extensible open source vulnerability analyzer built for Soroban_
 | **Website**          | <https://www.coinfabrik.com/products/scout/> |
 | **Repository**       | <https://github.com/CoinFabrik/scout-audit>  |
 | **First Released**   | 30 June 2023                                 |
-| **Intake**           | <soft-launch>                                |
+| **Intake**           | soft-launch                                  |
 | **Budget Requested** | 33000                                        |
 
 ## Project Description
