@@ -77,8 +77,8 @@ logically equivalent Solidity:
 - [Liquidity Pool](https://github.com/hyperledger-solang/solang/tree/main/examples/soroban/liquidity_pool)
 - [Timelock](https://github.com/hyperledger-solang/solang/tree/main/examples/soroban/timelock)
 
-The proof of completion is basically copying the contract, compiling it via Solang, and calling it as you
-would with the Stellar CLI or the JS SDK.
+The proof of completion is basically copying the contract, compiling it via Solang, and calling it as
+you would with the Stellar CLI or the JS SDK.
 
 Alternatively, they can be tested in the playground https://solang.io/. (Not up to date at the time
 of writing this, will update this PR once it supports the latest version)
@@ -93,11 +93,16 @@ of writing this, will update this PR once it supports the latest version)
 
 ## Proposed Deliverables
 
-The main goal of trying to include Solang in the PG awards is to _**bring it to production**_. Bringing Solang to production involves covering all Solidity features and then auditing the codebase.
-To know how much Solidity is already covered, and how much work is left, a fuzzer that compares the behavior of Solidity contracts on `solc`+`ethereum` vs `solang` + `Stellar` is needed. This will give us an idea of what work is left besides supporting the [Soroban-examples](https://github.com/stellar/soroban-examples).
+The main goal of trying to include Solang in the PG awards is to _**bring it to production**_.
+Bringing Solang to production involves covering all Solidity features and then auditing the codebase.
+To know how much Solidity is already covered, and how much work is left, a fuzzer that compares the
+behavior of Solidity contracts on `solc`+`ethereum` vs `solang` + `Stellar` is needed. This will give
+us an idea of what work is left besides supporting the
+[Soroban-examples](https://github.com/stellar/soroban-examples).
 
-This quarter/PG-proposal is focused on completing the remaining work on the Soroban examples, and starting work on the fuzzer. Future proposals are expected to focus on completing the work the fuzzer outputs, and then auditing the codebase.
-
+This quarter/PG-proposal is focused on completing the remaining work on the Soroban examples, and
+starting work on the fuzzer. Future proposals are expected to focus on completing the work the fuzzer
+outputs, and then auditing the codebase.
 
 Our specific goals for the next quarter are:
 
