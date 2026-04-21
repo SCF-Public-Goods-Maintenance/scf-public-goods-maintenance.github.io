@@ -88,15 +88,14 @@ Maintain and scale SoroPG to support the growing demand.
 
 ### Academy
 
-Build a learning platform with lessons for developers new to Stellar. I've started
-working towards this by implementing workspaces in the repo. This allows you to pull in complete code
-bases such as from [Stellar's Soroban Examples](https://github.com/stellar/soroban-examples/) repo.
+Build a learning platform with lessons for developers new to Stellar. I've started working towards
+this by implementing workspaces in the repo. This allows you to pull in complete code bases such as
+from [Stellar's Soroban Examples](https://github.com/stellar/soroban-examples/) repo.
 
 ### Documentation
 
-Neglected to date but important for technical reference. I know how it works but
-it might be useful for others to know as well or at least have a place to find out and dig into the
-nuts and bolts.
+Neglected to date but important for technical reference. I know how it works but it might be useful
+for others to know as well or at least have a place to find out and dig into the nuts and bolts.
 
 ### General
 
