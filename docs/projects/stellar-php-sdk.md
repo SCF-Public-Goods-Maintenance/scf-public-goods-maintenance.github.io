@@ -18,7 +18,7 @@ Soroban smart contract support, and implements 19 Stellar Ecosystem Proposals (S
 | **Website**          | <https://github.com/Soneso/stellar-php-sdk> |
 | **Repository**       | <https://github.com/Soneso/stellar-php-sdk> |
 | **First Released**   | May 2022                                    |
-| **Intake**           | <soft-launch>                               |
+| **Intake**           | soft-launch                                 |
 | **Budget Requested** | 15000                                       |
 
 ## Project Description
@@ -206,7 +206,7 @@ errors when the XDR spec changes.
 
 ## Proposed Deliverables
 
-## 1. Continuous Maintenance and Improvement
+### 1. Continuous Maintenance and Improvement
 
 Regular SDK updates addressing Horizon, Soroban RPC, and protocol updates (including Protocol 26 when
 released), bug fixes, feature requests, and documentation updates. Maintain existing SEP
@@ -216,7 +216,7 @@ dashboard, and SBOM workflow up to date. Improve unit test coverage toward 90%.
 Proof: Release notes on GitHub, updated compatibility matrices, soneso-sdk-stats dashboard, Codecov
 coverage.
 
-## 2. SEP-11 TxRep Rewrite
+### 2. SEP-11 TxRep Rewrite
 
 Replace the monolithic hand-written TxRep implementation with generated toTxRep()/fromTxRep() methods
 on XDR types, reducing TxRep.php to a thin facade. This mirrors the approach already completed in the
@@ -224,7 +224,7 @@ Flutter SDK.
 
 Proof: Release on GitHub, PR with implementation, updated test suite.
 
-## 3. SEP-51 (XDR-JSON) Support
+### 3. SEP-51 (XDR-JSON) Support
 
 Implement SEP-51 bi-directional conversion between XDR and JSON for all XDR types. Extend the
 existing XDR code generator to produce toJson()/fromJson() methods. Handle Stellar-specific types
