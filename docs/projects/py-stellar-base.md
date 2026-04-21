@@ -50,7 +50,7 @@ implemented and validated against the Rust Stellar CLI. `to_map` was updated to 
 
 ## Past Deliverables
 
-## 1. Ongoing SDK Maintenance
+### 1. Ongoing SDK Maintenance
 
 Description from last quarter:
 
@@ -68,7 +68,7 @@ across the codebase, fixing response-size-based DoS vectors in federation and TO
 decoding stack overflow vulnerabilities, and multiple input validation issues. Further XDR generator
 security fixes are included in the pending release.
 
-## 2. Add Support for SEP-51
+### 2. Add Support for SEP-51
 
 Description from last quarter:
 
@@ -90,7 +90,7 @@ SEP-51 support was added to the XDR generator, so all generated XDR types automa
 `to_xdr_json()` / `from_xdr_json()` methods. Output was cross-validated against the Rust Stellar CLI
 as a reference implementation.
 
-## 3. xdrgen Migration and Refactoring
+### 3. xdrgen Migration and Refactoring
 
 Description from last quarter:
 
@@ -113,7 +113,7 @@ added to CI so any unintended output changes are caught automatically on future 
 During the refactoring, several latent security issues in the generated XDR encoding/decoding code
 were identified and fixed.
 
-## 4. Improve the scval Build Feature
+### 4. Improve the scval Build Feature
 
 Description from last quarter:
 
@@ -139,7 +139,7 @@ responding to community issues and pull requests, keeping dependencies and CI/CD
 
 ## Proposed Deliverables
 
-## 1. Continuous Maintenance and Improvement
+### 1. Continuous Maintenance and Improvement
 
 Regular SDK updates addressing Horizon, Soroban RPC, and protocol changes (including Protocol 26),
 bug fixes, feature requests, and documentation updates. Keep CI/CD pipelines, SBOM workflow, and
@@ -147,7 +147,7 @@ dependency updates current.
 
 Proof: Release notes on GitHub, updated CHANGELOG, passing CI on main.
 
-## 2. SEP-46, SEP-47, and SEP-48 Support
+### 2. SEP-46, SEP-47, and SEP-48 Support
 
 Add support for SEP-46 (Contract Meta), SEP-47 (Contract Interface Discovery), and SEP-48 (Contract
 Interface Specification). These three SEPs form the foundation for smart contract self-description:
@@ -159,7 +159,7 @@ systems that need to understand contract interfaces.
 
 Proof: Release on GitHub, PRs with implementation and tests, documentation.
 
-## 3. AI Coding Agent Skill
+### 3. AI Coding Agent Skill
 
 Publish an AI coding agent skill for py-stellar-base following the agentskills.io open standard,
 compatible with Claude Code, Codex CLI, Cursor, Gemini CLI, and others. The skill provides
