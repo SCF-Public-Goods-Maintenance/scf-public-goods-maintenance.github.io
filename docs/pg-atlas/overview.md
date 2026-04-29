@@ -36,22 +36,77 @@ community voting in the Tansu-based Public Goods DAO pilot.
 If under-delivered: We remain stuck with quarterly manual reviews, noisy signals, and persistent pony
 factor risks — stalling the 2026 outcomes (coverage/reliability, risk reduction, signal quality).
 
-## v0 Success Criteria
+## Current System Snapshot
 
-Target: Usable by April 12, 2026
+PG Atlas is **operational and supporting the SCF Public Goods Award process**. The system has evolved
+from initial bootstrapping to a production service that provides transparent metrics for funding
+decisions.
 
-1. **Bootstrap a meaningful graph**: ≥100 Project nodes (with their child Repos) and basic
-   `depends_on` edges from shadow registry crawling + initial SBOM submissions.
-2. **Core metrics live**: Transitive active dependent count (criticality proxy), pony factor scoring,
-   basic adoption signals (downloads/stars) — computed at repo level, aggregated to project level.
-3. **Public dashboard operational**: Readable dependency visualization, searchable PG leaderboards,
-   risk flags (e.g., pony factor = 1 highlighted).
-4. **API functional**: At least read-only endpoints for projects, repos, criticality scores, and
-   graph exports to support first Tansu round context.
-5. **Community feedback loop**: Initial data displayed publicly, with clear issue templates for
-   corrections/additions.
+**Live now**:
 
-## Scope Boundaries (v0)
+- **Dependency graph**: 8,721 nodes across 611 projects, built from SBOM submissions and automated
+  registry crawling (npm, crates.io, PyPI, pub.dev, Packagist)
+- **Metrics pipeline**: Criticality scores (transitive active dependent count), pony factor
+  (contributor concentration risk), and adoption scores (downloads + stars + forks) materialized and
+  updated automatically
+- **Public REST API**: [api.pgatlas.xyz/docs](https://api.pgatlas.xyz/docs) — rate-limited, sortable,
+  filterable endpoints for projects, repos, scores, and graph exports
+- **Public dashboard**: [pgatlas.xyz](https://pgatlas.xyz) — searchable leaderboards, project detail
+  pages with score breakdowns and dependency visualization
+- **Scheduled operations**: Weekly bootstrap (full ecosystem refresh), periodic git log processing
+  (dormancy-based), hourly SBOM queue processing
+- **On-chain governance integration**: Soulbound SCF Pilot credentials with NQG-weighted voting in
+  Tansu, visible at [scf.pgatlas.xyz](https://scf.pgatlas.xyz)
+- **Community feedback**: Active via Discord #verified-panel and Office Hours
+
+Explore the
+[backend changelog](https://github.com/SCF-Public-Goods-Maintenance/pg-atlas-backend/blob/main/CHANGELOG.md)
+for detailed release history, or check current
+[workflow runs](https://github.com/SCF-Public-Goods-Maintenance/pg-atlas-backend/actions) for
+operational status.
+
+## What's Next
+
+The initial operational system establishes a foundation for ongoing improvements. Near-term focus
+areas include:
+
+**Data quality enhancements**:
+
+- Refining project-to-repo mapping accuracy across the ecosystem
+- Improving fork handling (ignoring inactive forks while preserving important within-ecosystem forks)
+- Experimenting with dependency and contributor graph clustering to better detect project and
+  ecosystem boundaries
+
+**Operational hardening**:
+
+- Enhanced error tracking and alerting (Sentry integration)
+- Additional observability beyond current workflow logs and automated summaries
+- Continued refinement of metric coverage for projects without published packages
+
+These priorities are preliminary, pending the Q2 award round retrospective. The full roadmap will be
+shaped by community feedback and observed usage patterns. Open issues in the
+[backend](https://github.com/SCF-Public-Goods-Maintenance/pg-atlas-backend/issues) and
+[frontend](https://github.com/SCF-Public-Goods-Maintenance/pg-atlas-frontend/issues) repositories
+track specific enhancements.
+
+## Architecture Overview
+
+```mermaid
+flowchart LR
+    A[SBOM Submissions] --> D[Graph Database]
+    B[Registry Bootstrap] --> D
+    C[Git Log Pipeline] --> D
+    D --> E[Metrics Engine]
+    E --> F[REST API]
+    F --> G[Dashboard]
+    F --> H[Tansu Voting Context]
+```
+
+The system operates through three parallel ingestion streams that feed a unified dependency graph
+stored in PostgreSQL. Metrics are materialized through scheduled batch jobs and event-driven updates,
+then exposed via a public API that serves both the dashboard and Tansu governance integration.
+
+## Core Architecture Principles
 
 **In scope**:
 
@@ -73,36 +128,45 @@ Target: Usable by April 12, 2026
   all computed at repo level, aggregated to project level. PG Score composite formula deferred.
 - Decoupled backend: PostgreSQL + NetworkX (decided in
   [issue #2](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/2)).
-- FastAPI layer with OpenAPI docs (TypeScript SDK generated from spec).
-- Public dashboard (technology under discussion in
-  [issue #3](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/3)).
+- FastAPI layer with OpenAPI docs and
+  [TypeScript SDK](https://github.com/SCF-Public-Goods-Maintenance/pg-atlas-ts-sdk) generated from
+  spec.
+- Public dashboard built with React, consuming the REST API.
 
-**Out of scope for v0** (explicitly deferred):
+For API stability and versioning strategy, see the
+[API versioning documentation](https://github.com/SCF-Public-Goods-Maintenance/pg-atlas-backend/blob/main/pg_atlas/routers/api-versioning.md)
+in the backend repository.
 
-- On-chain telemetry (Soroban contract/RPC call volume) — no unified activity metrics yet.
+**Deferred for future versions**:
+
 - Versioned package modeling (blast radius per release).
 - Native property graph DB deployment — PostgreSQL + NetworkX is the v0 choice; graph DB options
   documented in [Graph Scaling](graph-scaling.md) for future evaluation.
-- Automated on-chain Metric Gate integration with Tansu.
 - Advanced Sybil-resistant usage signals.
+- Dependency edges based on cross-contract calls (e.g. Stellar Registry integration) and HTTP API
+  dependencies (e.g. which repos pull data from Stellar Expert?).
+- Unified on-chain metrics that would answer e.g. which public goods enable protocol _ABC_ to manage
+  _X_ TVL for _Y_ MAU?
 - PG Score composite weighting formula (deferred until experience from first rounds).
+- Implementation of the "Metric Gate" that can be incorporated into Public Goods Award governance.
 
-<!-- FUTURE SELF: Revisit out-of-scope list post-v0 launch; prioritize on-chain usage once Soroban
-tooling matures -->
+## Design Decisions and Trade-offs
 
-## Open Questions
+**PostgreSQL + NetworkX over native graph databases**: The current scale (8,721 nodes, ~100K edges)
+fits comfortably in memory, allowing sub-second metric materialization. This choice prioritized rapid
+development and operational simplicity over theoretical graph query performance. Migration paths to
+property graph databases are documented in [Graph Scaling](graph-scaling.md) if scale requirements
+change significantly.
 
-- How aggressively should we mandate SBOM submission (e.g., testnet tranche gate vs. soft incentive)?
-- Should criticality scoring include weighted dependents (e.g., production apps > samples) in v0.1?
+**Shadow graph bootstrapping**: Automated registry crawling reduces the burden on project teams while
+building initial coverage. SBOM submissions provide verification and fill gaps where registry
+metadata is incomplete. This hybrid approach balances completeness with maintainer convenience.
 
-<!-- QUESTION FOR LEAD: Do we want to include a high-level diagram here (Mermaid flowchart of data
-pipeline)? If yes, provide description and I'll add in next iteration. -->
+**Repo-level ingestion, project-level funding**: All dependency data flows in at repository
+granularity (matching how packages and SBOMs are structured), but funding decisions and public
+visibility operate at the project level. This separation acknowledges that projects often span
+multiple repositories while preserving accurate dependency tracking.
 
-## Assumptions & Risks
-
-- Ecosystem scale remains small enough for in-memory NetworkX OLAP through 2026.
-- SBOM uptake can be bootstrapped sufficiently via shadow graph + early incentives.
-- Project → Repo mapping can be established from OpenGrants + GitHub org URLs with reasonable
-  completeness.
-- Risk: Low initial data quality
-  - mitigate with transparent flagging ("incomplete graph" warnings) and manual curation path.
+**Rate-limited public API**: The API is fully public (no authentication for reads) to maximize
+transparency, with rate limiting (100 requests/minute per IP) to prevent abuse. Ingest endpoints use
+GitHub OIDC authentication to verify submission provenance. See [Security](security.md) for details

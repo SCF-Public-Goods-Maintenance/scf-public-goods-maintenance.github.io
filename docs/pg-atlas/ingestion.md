@@ -8,29 +8,57 @@ nav_order: 2
 
 ## Overview
 
-The ingestion layer is responsible for collecting and normalizing data that feeds the dependency
-graph and contributor statistics. For v0, ingestion focuses on three primary streams:
+The ingestion layer collects and normalizes data from three parallel streams that feed the dependency
+graph and contributor statistics:
 
-1. **SBOM submissions** – explicit dependency declarations from project repos (verification layer).
-1. **Reference graph bootstrapping** – automated crawling of public package registries and OpenGrants
-   to build an initial graph from known Stellar/Soroban PG roots.
-1. **Git contributor logs** – for pony factor calculation (separate but parallel ingestion).
+1. **SBOM submissions** — explicit dependency declarations from project repositories via GitHub
+   Actions
+2. **Reference graph bootstrapping** — automated crawling of package registries and OpenGrants to
+   build baseline coverage
+3. **Git contributor logs** — commit history analysis for pony factor calculation
 
-All ingestion writes at **repo resolution**. `Project` vertices are primarily sourced from
-OpenGrants; `Repo` vertices are created/updated by SBOM ingestion and registry crawls. Dependencies
-outside the Stellar ecosystem are stored as `ExternalRepo` vertices — tracked for blast radius
-analysis only, with no project-level data maintained.
+All three streams are operational and run through dedicated processing workflows. Ingestion writes
+occur at **repo resolution**, with `Project` vertices sourced primarily from OpenGrants and `Repo`
+vertices created or updated by SBOM submissions and registry crawls.
 
-The goal is rapid bootstrapping of a meaningful graph while encouraging accurate, ongoing SBOM
-contributions. All ingestion pipelines must be idempotent, validate inputs, and handle incremental
-updates without full reprocessing.
+```mermaid
+flowchart TD
+    A[SBOM Submission] --> D{SBOM Queue}
+    B[Bootstrap Scheduler] --> E{Bootstrap Pipeline}
+    C[Gitlog Scheduler] --> F{Gitlog Queue}
+
+    D --> G[Validate SPDX]
+    G --> H[Persist Artifact]
+    H --> I[Update Graph]
+    I --> J[Trigger Criticality Recompute]
+
+    E --> K[OpenGrants Crawl]
+    E --> L[Registry Crawl]
+    K --> M[Graph Database]
+    L --> M
+    E --> N[Materialize Metrics]
+    M --> N
+
+    F --> O[Clone/Pull Repos]
+    O --> P[Parse Git Logs]
+    P --> Q[Update Contributors]
+    Q --> R[Materialize Pony Factor]
+```
+
+The system handles incremental updates (SBOM submissions and targeted git log refreshes) alongside
+periodic full refreshes (weekly bootstrap). All pipelines are idempotent when source data has not
+changed, and validate inputs before persisting changes.
 
 ## SBOM Ingestion
 
-**Source**: GitHub Action workflow run by project teams on PR/merge to main (or tagged releases).
-Each SBOM submission is associated with a specific **Repo**, not a project directly.
+SBOM (Software Bill of Materials) ingestion provides the verification layer for dependency
+declarations. Stellar ecosystem builders submit SPDX 2.3 documents via a GitHub Action, which are
+processed through a dedicated queue workflow.
 
-**Workflow**:
+**Current status**: Operational with
+[hourly batch processing](https://github.com/SCF-Public-Goods-Maintenance/pg-atlas-backend/actions/workflows/sbom-queue.yml).
+
+**How it works**:
 
 - Teams add a
   [lightweight GitHub Action](https://github.com/SCF-Public-Goods-Maintenance/pg-atlas-sbom-action)
@@ -38,7 +66,7 @@ Each SBOM submission is associated with a specific **Repo**, not a project direc
   [GitHub Dependency Graph API](https://docs.github.com/en/rest/dependency-graph/sboms) and submits
   it to the PG Atlas ingestion endpoint, authenticated via a GitHub OIDC token. Supports both public
   and private repos.
-- Optional: allow non-GitHub SBOM submissions which are signed with a project key for provenance
+- Roadmap item: allow non-GitHub SBOM submissions which are signed with a project key for provenance
   (deferred for v0).
 
 **Authentication**:
@@ -62,23 +90,29 @@ GitHub's OIDC provider and contains a `runner_environment` claim (`github-hosted
 guarantees that the submission originated from a workflow running in the context of `owner/repo`,
 authorized by a GitHub user with write access. It does **not** independently verify the _content_ of
 the submitted SBOM: a workflow author controls the workflow YAML and could in principle modify the
-payload before submission. The principal mitigations are: (1) the reference graph cross-check (A8)
-flags declared dependencies that diverge from the inferred graph; (2) all submissions are logged with
-the `repository` and `actor` claims, making falsification an attributable act; (3) community review
-and the public leaderboard create social accountability.
+payload before submission. The principal mitigations are: (1) the reference graph cross-check flags
+declared dependencies that diverge from the inferred graph; (2) all submissions are logged with the
+`repository` and `actor` claims, making falsification an attributable act; (3) community review and
+the public dataset create social accountability.
 
-**Processing**:
+**Processing**: The
+[SBOM queue workflow](https://github.com/SCF-Public-Goods-Maintenance/pg-atlas-backend/blob/main/.github/workflows/sbom-queue.yml)
+runs hourly to process new submissions:
 
-- Validate SPDX 2.3 format and schema.
-- Extract dependencies (package name + version range).
-- Map each dependency to a `Repo` (if within-ecosystem) or `ExternalRepo` (if external). Normalize
-  ecosystem-specific names (e.g., `soroban-sdk` across crates/npm) to match `canonical_id` format
-  (`ecosystem:package`).
-- Upsert the submitting `Repo` vertex. If its parent `Project` doesn't exist, create it or flag for
-  manual triage.
-- Create/update `depends_on` edges **from the submitting repo** to each dependency (`Repo` or
-  `ExternalRepo`). Mark confidence as `verified-sbom`.
-- Flag conflicts with reference graph (e.g., missing declared deps) for manual review.
+- Validate SPDX 2.3 format and schema
+- Extract dependencies with support for nested SPDX package relationships (added to handle complex
+  dependency structures)
+- Persist the canonical SPDX artifact to Filebase S3 with IPFS CID recorded in the database for
+  auditability
+- Map dependencies to `Repo` (within-ecosystem) or `ExternalRepo` (outside) vertices using
+  `canonical_id` normalization
+- Upsert the submitting `Repo` vertex and create/update `depends_on` edges with
+  `confidence = verified-sbom`
+- Apply repo-scoped queueing lock to prevent concurrent processing of the same repository
+- **Automatically trigger criticality score recomputation** for the updated dependency graph
+
+The workflow uses semantic deduplication to avoid reprocessing identical SBOMs, even if submitted
+multiple times
 
 **Incentives & Enforcement (v0)**:
 
@@ -97,125 +131,138 @@ jobs:
       id-token: write # for OIDC authentication to PG Atlas
     steps:
       - uses: SCF-Public-Goods-Maintenance/pg-atlas-sbom-action@<full-commit-hash>
+        with:
+          # Optional: override API endpoint (defaults to https://api.pgatlas.xyz)
+          api-url: https://api.pgatlas.xyz
+          # Optional: override submission path (defaults to /ingest/sbom)
+          submission-path: /ingest/sbom
+          # Optional: test without submitting (defaults to false)
+          dry-run: false
 ```
 
-The `api-url` input defaults to the production PG Atlas endpoint and does not need to be set. The
-calling repo must have the GitHub dependency graph enabled.
+The `api-url` input defaults to `https://api.pgatlas.xyz` and typically does not need to be
+overridden except for testing against staging environments. The `dry-run` option allows testing the
+SBOM fetch and OIDC token generation without actually submitting to the API. The calling repository
+must have the GitHub dependency graph enabled.
 
-**Open Questions**:
+**Roadmap items**:
 
-- Mandatory vs. optional for v0? (Risk: low uptake → sparse graph; mitigation: strong reference graph
-  bootstrapping).
+- Flag conflicts with reference graph (e.g. large discrepancies) for manual review.
 
 ## Reference Graph Bootstrapping
 
-**Purpose**: Address low initial SBOM uptake by proactively building a "reference graph" from public
-metadata, starting from curated root nodes.
+The bootstrap pipeline builds baseline graph coverage by crawling public package registries and
+OpenGrants data. This addresses the cold-start problem and provides a reference graph for validating
+SBOM submissions.
 
-**Sources**:
+**Current status**: Operational with
+[weekly automated runs](https://github.com/SCF-Public-Goods-Maintenance/pg-atlas-backend/actions/workflows/bootstrap.yml).
+
+**Data sources**:
 
 - [OpenGrants](https://opengrants.daostar.org/system/scf) — primary source for `Project` vertices and
   their metadata (name, status, organization URL).
-- [deps.dev](https://deps.dev/) gRPC API — cross-ecosystem dependency resolution for PyPI, npm,
-  Cargo, Go, Maven, NuGet, and RubyGems packages.
-- GitHub API — repository enumeration for organizations, release/tag discovery.
+- GitHub API — repository enumeration, release/tag discovery
+- [deps.dev](https://deps.dev/) gRPC API — cross-ecosystem dependency resolution (PyPI, npm, Cargo,
+  Go, Maven, NuGet, RubyGems)
+- Package registries — download counts and (best-effort) dependents from npm, crates.io, PyPI,
+  pub.dev, and Packagist.
 
-**Architecture**: [Procrastinate](https://procrastinate.readthedocs.io/) task queue backed by the
-same hosted PostgreSQL instance (no separate broker), with workers running in a weekly GitHub Actions
-workflow. This provides free compute, built-in run history/logs, and higher GitHub API rate limits
-via `GITHUB_TOKEN`.
+**Pipeline topology**:
 
-**Task hierarchy**:
+The bootstrap workflow orchestrates four job stages with strategic parallelization:
 
-```txt
-sync_opengrants  [opengrants queue]
-  └─ process_project  [opengrants queue]
-       └─ crawl_github_repo  [opengrants queue]
-            └─ crawl_package_deps  [package-deps queue]
-```
+1. **OpenGrants crawl** (`opengrants` queue) — Fetch all SCF projects from OpenGrants API, enrich
+   each with GitHub repository metadata (stars, forks) and deps.dev package discovery, then crawl
+   individual repositories to detect published packages and fetch release histories
+2. **deps.dev dependency resolution** (`package-deps` queue) — For packages in deps.dev-supported
+   ecosystems (PyPI, npm, Cargo, Maven, Go, RubyGems, NuGet), enumerate direct dependencies and build
+   the within-ecosystem dependency graph
+3. **Registry crawl** (`registry-crawl` queue) — For packages in ecosystems not fully covered by
+   deps.dev (Dart/pub.dev, PHP/Packagist), collect download counts and adoption signals directly from
+   package registries
+4. **Metrics materialization** — Compute criticality scores and adoption scores for the updated graph
 
-Workers run each queue sequentially so that all `Repo` vertices exist before the dependency crawl
-begins.
+The workflow produces a
+[job summary](https://github.com/SCF-Public-Goods-Maintenance/pg-atlas-backend/actions/workflows/bootstrap.yml)
+with statistics on nodes processed, edges created, and metrics computed.
 
-**Process**:
+**OpenGrants crawl details**:
 
-1. **Bootstrap Project vertices from OpenGrants**: `sync_opengrants` fetches all SCF grant pools and
-   their applications. Each application is mapped to an `ScfProject` containing the project ID,
-   display name, GitHub URL (from `io.scf.code` extension field), activity status, and metadata.
-   - A manual `project-git-mapping.yml` supplements projects that lack an `io.scf.code` field (early
-     rounds).
-   - Deduplication is by project ID; the latest round's data wins.
-   - Populate `activity_status` from SCF Impact Survey data when available; default to
-     `non-responsive` for pre-existing projects with no survey response (see
-     [Activity Status Update Logic](storage.md#activity-status-update-logic)).
-   - Pre-survey data: we use tranche completion as a proxy (incomplete → `in-dev`, complete →
-     `live`).
-1. **Process each Project**: `process_project` fetches deps.dev project metadata (stars, forks,
-   scorecard) via `GetProjectBatch`, determines `project_type` (`public-good` if packages are
-   detected, `scf-project` otherwise), upserts the `Project` vertex, and discovers repos.
-   - For organization URLs (`github.com/org`): enumerates all repos in the org.
-   - For single-repo URLs (`github.com/owner/repo`): uses that repo directly.
-1. **Crawl each repo**: `crawl_github_repo` detects packages published by the repo (via deps.dev
-   `GetProjectBatch`), fetches release/version history, upserts the `Repo` vertex (with
-   `pkg:github/owner/repo` canonical ID), and defers `crawl_package_deps` for each detected package.
-1. **Crawl dependencies**: `crawl_package_deps` calls deps.dev `GetPackage` (default version) then
-   `GetRequirements` to enumerate direct dependencies. For each dependency:
-   - If linked to a known `Project` → upsert as `Repo`, create `depends_on` edge
-     (`confidence = inferred_shadow`), and recurse.
-   - Otherwise → upsert as `ExternalRepo`, create edge, no recursion.
+- `sync_opengrants` fetches all SCF grant pools and applications from the OpenGrants API, creating
+  `ScfProject` objects with metadata (project ID, display name, GitHub URL from `io.scf.code` field,
+  activity status, category)
+- A manual `project-git-mapping.yml` supplements projects lacking an `io.scf.code` field (early
+  rounds)
+- For each project, `process_project` queries the GitHub API for repository metadata (stars, forks)
+  and calls deps.dev's `get_project_batch` to fetch project-level metadata, then `populate_packages`
+  to discover which packages are published from the repository
+- `crawl_github_repo` processes each discovered repository, fetching release histories from deps.dev
+  for known packages or falling back to manifest detection for uncovered ecosystems, then queues
+  downstream dependency and registry crawl tasks
+- Activity status is populated from SCF Impact Survey data when available; projects without survey
+  responses default to `non-responsive` (see
+  [Activity Status Update Logic](storage.md#activity-status-update-logic))
+- Pre-survey data uses tranche completion as a proxy: incomplete → `in-dev`, complete → `live`
 
-**Boundaries**:
+**Registry crawlers**:
 
-- Only include projects with clear Stellar/Soroban relevance — rooted in OpenGrants SCF data.
-- Procrastinate `queueing_lock` prevents duplicate task execution per project/package.
-- Respects registry rate limits; OpenGrants client retries on 429/5xx with exponential backoff.
+Five package ecosystem crawlers are currently operational, collecting adoption signals:
+
+- **npm** — JavaScript/TypeScript packages
+- **crates.io** — Rust packages
+- **PyPI** — Python packages
+- **pub.dev** — Dart/Flutter packages
+- **Packagist** — PHP packages
+
+Each crawler fetches the latest 30-day download counts for packages that are published from source
+repositories. This data is stored in `repo_metadata` as `adoption_downloads_by_purl`, materialized as
+the repo's total download count, and used for project-level adoption score computation.
+
+Some crawlers support the fetching of a package's dependent packages. Most package registries make a
+dependents list available through their web UI, but lack this functionality in their API.
+
+Coverage is proportional to PURL-linked registry packages — projects without published packages in
+these registries will not have download count data and inferred dependents.
 
 ## Git Contributor Logs
 
-**Source**: Direct git clone of target repositories (triggered on SBOM ingestion or manual curation).
-Cloned repos may be LRU-cached to avoid re-cloning on every refresh.
+Git log parsing extracts commit history to compute pony factor (contributor concentration risk) and
+identify active contributors. This pipeline uses dormancy-based scheduling to prioritize repositories
+that haven't been refreshed recently.
+
+**Current status**: Operational with
+[periodic automated runs](https://github.com/SCF-Public-Goods-Maintenance/pg-atlas-backend/actions/workflows/gitlog-queue.yml)
+(every three days).
 
 **Process**:
 
-- Parse `git log --format='%aN' | sort | uniq -c | sort -nr` (or equivalent) over the last 12–24
-  months.
-- Reuse patterns from
-  [Scientific Python devstats](https://devstats.scientific-python.org/_generated/scipy/).
-- Create/update `Contributor` vertices and `contributed_to` edges pointing to the **Repo** (not
-  Project). Edge properties include `number_of_commits`, `first_commit_date`, `last_commit_date`.
-- Store computed pony factor on `Repo.pony_factor` (number of contributors responsible for ≥50% of
-  commits). Aggregate to `Project.pony_factor` by computing pony factor over the union of unique
-  contributors across all project repos (deduplicated by `Contributor.email_hash`).
-- Update `Repo.latest_commit_date` from git log — feeds into activity status triangulation (see
-  [Activity Status Update Logic](storage.md#activity-status-update-logic)).
-- Update on triggers (new release tag, quarterly refresh).
+- The scheduler queues repositories based on dormancy — repositories with recent commits _or_ stale
+  commit data (no git log refresh in the last N days) are prioritized
+- For each repository, the system clones or pulls the latest commits.
+- Parses commit logs to extract contributor email addresses (hashed for privacy) and commit counts
+  over a rolling time window (typically 12-24 months)
+- Filters out bot accounts using heuristics (e.g., `[bot]` suffix, common CI/CD email patterns like
+  `dependabot@users.noreply.github.com`)
+- Creates or updates `Contributor` vertices and `contributed_to` edges with commit counts, first/last
+  commit dates
+- Computes and materializes pony factor (minimum contributors responsible for ≥50% of commits) at
+  both repo and project levels
+- Updates `Repo.latest_commit_date` to feed activity status triangulation (see
+  [Activity Status Update Logic](storage.md#activity-status-update-logic))
 
-**Open Questions**:
+The dormancy-based approach minimizes redundant processing for repositories that change infrequently
+while ensuring active repositories stay current.
 
-- Time window for pony factor (12/24 months vs. all history)?
-- Weight recent commits higher?
+## Automatic Metric Updates
 
-## Validation & Reconciliation
+Ingestion events trigger cascading metric recomputation to keep scores current:
 
-- On SBOM ingest: Compare declared deps against reference graph → flag discrepancies for review.
-- Deduplication: Canonical node IDs (`ecosystem:package` for repos, DAOIP-5 URIs for projects).
-- Ecosystem boundary: Determine whether each dependency is within-ecosystem (`Repo`) or external
-  (`ExternalRepo`). Criteria TBD — initial heuristic: presence in curated seed list or OpenGrants.
-- Error handling: Queue failed ingests for manual triage; notify team (via GitHub issue or Sentry?).
+- **SBOM submission** → Criticality score recomputation (queued via Procrastinate after graph update)
+- **Bootstrap completion** → Full graph criticality and adoption score materialization
+- **Git log processing** → Pony factor recomputation for updated repositories
 
-## Implementation Notes (v0)
-
-- Use FastAPI endpoint for SBOM webhook ingestion (`POST /ingest/sbom`, OIDC auth, SPDX 2.3 parsing,
-  202 Accepted). Read-only list/detail endpoints: `GET /ingest/sbom`, `GET /ingest/sbom/{id}`.
-- [Procrastinate](https://procrastinate.readthedocs.io/) task queue (PostgreSQL-backed) with GitHub
-  Actions workers for reference graph bootstrapping and future periodic crawl jobs.
-- deps.dev gRPC client (auto-generated via `betterproto2`) for cross-ecosystem dependency resolution.
-- Store raw ingested artifacts (SBOM files, git log output) in `artifact_store/` for auditability.
-  We're targeting [Storacha](https://storacha.network/) as our decentralized artifact storage layer
-  for the production Atlas.
-- All writes target `Repo`, `ExternalRepo`, `Contributor`, and edge tables. `Project` vertices are
-  bootstrapped from OpenGrants and updated via survey/OpenGrants pipelines (see
-  [Incremental Updates](storage.md#incremental-updates) in Storage).
-
-<!-- QUESTION FOR LEAD: Do we want a diagram here (Mermaid of ingestion flows: SBOM → API →
-Validation → Graph Update vs. Reference Crawl → Periodic Job)? -->
+This event-driven approach ensures that scores reflect the latest graph state without requiring
+manual intervention. The
+[bootstrap workflow summary](https://github.com/SCF-Public-Goods-Maintenance/pg-atlas-backend/actions/workflows/bootstrap.yml)
+provides real-time visibility into metric computation performance.

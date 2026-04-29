@@ -8,27 +8,27 @@ nav_order: 3
 
 ## Overview
 
-The storage layer persists the dependency graph, node/edge metadata, versioning information,
-contributor statistics, and raw ingested artifacts. For v0, we require a single-machine deployment
-with minimal DevOps overhead, supporting efficient per-project incremental updates (e.g., new SBOM
-ingestion triggering edge/node changes) and occasional batch updates (e.g., SCF Impact Survey or
-milestone status changes flipping many activity flags).
+The storage layer persists the dependency graph, node/edge metadata, contributor statistics, and raw
+ingested artifacts. The system uses PostgreSQL as the primary database with NetworkX for graph
+analytics, supporting both incremental updates (SBOM submissions, git log refreshes) and periodic
+batch operations (weekly bootstrap, metric materialization).
 
-**Primary goals**:
+**Current architecture**:
 
-- Incremental updates from ingestion (fast writes for single-project SBOMs).
-- Batch efficiency for activity flag recalculations.
-- Version labeling: full versioning for published packages (PG roots/upstream), latest git hash/tag
-  for leaf projects.
-- Visibility into outside-ecosystem dependencies of within-ecosystem PGs.
-- Separate pony factor data (git contributor logs).
-- Auditability via retained raw SBOMs/crawl snapshots.
+- **PostgreSQL 18** — Hosted on DigitalOcean Managed Database with automated snapshots and
+  point-in-time recovery
+- **Graph data model** — Designed as a property graph with tables for vertices (`projects`, `repos`,
+  `external_repos`, `contributors`) and edges (`depends_on`, `contributed_to`)
+- **NetworkX integration** — Graph analytics (criticality BFS, metric materialization) performed
+  in-memory on the loaded graph
+- **Artifact storage** — Raw SBOM and gitlog extract files stored on Filebase S3 with IPFS CIDs
+  recorded in the database for content-addressable auditability
+- **Migration management** — Alembic migrations tracked in the
+  [backend repository](https://github.com/SCF-Public-Goods-Maintenance/pg-atlas-backend/tree/main/pg_atlas/migrations)
 
-**Scale target**: 5–10k nodes, 50–100k edges — comfortably single-machine.
-
-**Decision status**: We'll build v0 on PostgreSQL, with graph analytics handed off to NetworkX. See
-the evaluated choices and our decision process in
-[issue #2](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/2).
+The architecture prioritizes operational simplicity and rapid iteration while maintaining a clear
+migration path to native graph databases if scale requirements change significantly (see
+[Graph Scaling](graph-scaling.md)).
 
 ### Why PostgreSQL + NetworkX?
 
@@ -37,13 +37,13 @@ The working group chose PostgreSQL + NetworkX for v0 based on:
 1. **Team expertise**: Everyone knows PostgreSQL. The team has direct connections to NetworkX
    maintainers (Scientific Python ecosystem).
 2. **Speed to ship**: FastAPI + SQLAlchemy + PostgreSQL is a well-trodden path. We can have a working
-   prototype in days, not weeks — critical for the April 12 deadline.
+   prototype in days, not weeks — critical for the Q2 v0 deadline.
 3. **Scale appropriateness**: At 5–10K nodes and 50–100K edges, the entire graph fits in memory.
-   NetworkX loads this in milliseconds and runs BFS/DFS in microseconds. We're at a scale where
-   developer velocity matters more than graph DB optimizations.
-4. **Operational simplicity**: PostgreSQL is a single process with `pg_dump` backups. No JVM, no
-   Gremlin Server, no schema management through separate console. This aligns with our <$100/month
-   target and no dedicated DevOps constraint.
+   Fetching full tables from the DB takes longer than representing them in NetworkX. We're at a scale
+   where developer velocity matters more than graph DB optimizations.
+4. **Operational simplicity**: PostgreSQL is a single process with simple backups. No JVM, no Gremlin
+   Server, no schema management through separate console. This aligns with our <$100/month target and
+   no dedicated DevOps constraint.
 5. **Natural home for tabular data**: Pony factor stats, contributor logs, SBOM metadata, audit
    trails, API rate-limit state — all naturally live in PostgreSQL tables.
 6. **Migration path preserved**: If we outgrow in-memory NetworkX, we can export to TinkerPop with a
@@ -63,10 +63,127 @@ The working group chose PostgreSQL + NetworkX for v0 based on:
 
 ## Data Model
 
-The schema is designed to map naturally to property graphs, facilitating network analytics hand-off
-to NetworkX, and enabling [future scaling](graph-scaling.md) to a native graph DB. This schema is
-minimal and likely incomplete; it'll be expanded based on downstream use-cases, and eventually
-performance-oriented benchmark experiments.
+The schema is implemented as a property graph using PostgreSQL tables, designed for efficient
+NetworkX integration and future portability to native graph databases. The following ERD shows the
+core entities (excluding Procrastinate task queue tables):
+
+```mermaid
+---
+title: PG Atlas Database Tables
+config:
+  elk:
+    considerModelOrder: PREFER_EDGES
+---
+erDiagram
+    direction LR
+
+    contributed_to }o--|| contributors : "contributor"
+    projects ||--o{ repos : "owns (1:many)"
+    repos ||--|| repo_vertices : "inherits from"
+    depends_on }o--|| repo_vertices : "in_vertex"
+    depends_on }o--|| repo_vertices : "out_vertex"
+    external_repos ||--|| repo_vertices : "inherits from"
+    contributed_to }o--|| repos : "target repo"
+    sbom_submissions }o--|| repos : "describes"
+    gitlog_artifacts }o--|| repos : "describes"
+
+    projects {
+        int id PK
+        varchar canonical_id UK "DAOIP-5 URI"
+        varchar display_name
+        enum project_type "public-good | scf-project"
+        enum activity_status "live | in-dev | ..."
+        varchar git_owner_url
+        int pony_factor "materialized"
+        int criticality_score "materialized"
+        float adoption_score "materialized"
+        jsonb project_metadata
+        timestamptz updated_at
+    }
+
+    repo_vertices {
+        int id PK
+        varchar canonical_id UK
+        enum vertex_type
+    }
+
+    repos {
+        int id PK, FK "ref repo_vertices.id"
+        int project_id FK "ref projects.id"
+        varchar display_name
+        varchar latest_version
+        timestamptz latest_commit_date
+        varchar repo_url
+        enum visibility "public | private"
+        int pony_factor "materialized"
+        int criticality_score "materialized"
+        int adoption_downloads "materialized"
+        int adoption_stars
+        int adoption_forks
+        jsonb releases
+        jsonb repo_metadata
+        timestamptz updated_at
+    }
+
+    external_repos {
+        int id PK, FK "ref repo_vertices.id"
+        varchar display_name
+        varchar latest_version
+        varchar repo_url
+        int criticality_score "materialized"
+        jsonb releases
+        timestamptz updated_at
+    }
+
+    depends_on {
+        int in_vertex_id FK "ref repo_vertices.id"
+        int out_vertex_id FK "ref repo_vertices.id"
+        varchar version_range
+        enum confidence "verified-sbom | inferred-shadow"
+    }
+
+    contributors {
+        int id PK
+        bytea email_hash "SHA-256"
+        varchar name
+    }
+
+    contributed_to {
+        int contributor_id FK
+        int repo_id FK
+        int number_of_commits
+        timestamptz first_commit_date
+        timestamptz last_commit_date
+    }
+
+    sbom_submissions {
+        int id PK
+        varchar repository_claim "from OIDC JWT"
+        varchar actor_claim "from OIDC JWT"
+        bytea sbom_content_hash "SHA-256"
+        varchar artifact_path "IPFS CID"
+        enum status "pending | processed | failed"
+        varchar error_detail
+        timestamptz submitted_at
+        timestamptz processed_at
+    }
+
+    gitlog_artifacts {
+        int id PK
+        int repo_id FK
+        int since_months "log timespan"
+        int seed_run_ordinal "for scheduling"
+        varchar artifact_path "IPFS CID"
+        bytea gitlog_content_hash "SHA-256"
+        enum status "pending | processed | failed"
+        varchar error_detail
+        timestamptz submitted_at
+        timestamptz processed_at
+    }
+```
+
+The schema enforces referential integrity through foreign keys while maintaining flexibility for
+future graph database migration.
 
 ### Core Modeling Decision: Project vs. Repo
 
@@ -208,20 +325,21 @@ for the next survey cycle to re-classify downward.
 The precise status update logic is not yet finalized — we want to test it once we can load data from
 all sources (survey, OpenGrants, git logs).
 
-### Raw Artifacts
+### Raw Artifacts and Auditability
 
-Raw SBOM files are stored outside the relational database to avoid bloating the main schema:
+Raw SBOM files are stored in Filebase S3 for content-addressable auditability:
 
-- **Local development**: Written to a configurable filesystem path (`ARTIFACT_STORE_PATH`, default
-  `./artifact_store`). Files are written atomically (write-to-temp, rename).
-- **Production**: Stored on [Storacha](https://storacha.network/) (w3up), a content-addressed
-  IPFS-backed store. The CID returned by Storacha is recorded in `sbom_submissions.artifact_path`.
-- **Referencing**: `sbom_submissions.artifact_path` holds the storage-backend-specific path (relative
-  filesystem path in dev; `storacha://<cid>` in prod). This is intentionally opaque — the API never
-  exposes raw artifact bytes.
-- **Content integrity**: `sbom_submissions.sbom_content_hash` stores the SHA-256 of the raw bytes as
-  32 BYTEA (mapped to a hex string in Python via the `HexBinary` custom TypeDecorator). This enables
-  deduplication and tamper detection independently of the storage backend.
+- **Filebase S3** — IPFS-backed object storage providing content integrity through CIDs
+- **Local development** — Files written to `ARTIFACT_STORE_PATH` (default `./artifact_store`) for
+  testing
+- **CID recording** — IPFS CID returned by Filebase is stored in `sbom_submissions.artifact_path`
+- **Content hashing** — `sbom_submissions.sbom_content_hash` contains SHA-256 of raw SBOM bytes
+  (32-byte BYTEA, mapped to hex string via `HexBinary` TypeDecorator)
+- **Deduplication** — Identical SBOMs (by content hash) are not reprocessed even if submitted
+  multiple times
+
+The API never exposes raw artifact bytes directly — all SBOM data is accessed through the normalized
+graph representation.
 
 ### SBOM Submission Audit Table
 
@@ -240,8 +358,6 @@ Every ingest attempt is recorded in `sbom_submissions`:
 | `processed_at`      | timestamptz         | Null until processing completes           |
 
 <!-- TODO: Add Mermaid ERD or gdotv.com diagram of property graph schema. -->
-
-## PostgreSQL Backend
 
 We enforce data modeling discipline to ensure clean handoff between PostgreSQL storage and NetworkX
 analysis. The key principle: **model everything as a property graph in tables**, avoiding patterns
@@ -308,172 +424,15 @@ mitigations:
 - **Index Fragmentation on UUIDs** → Use sequential integers as primary keys; UUIDs as secondary
   identifiers if needed.
 
-### Incremental Updates
-
-**Single SBOM ingestion** (the most common write operation):
-
-1. Validate SBOM schema and extract dependencies.
-2. **Upsert repo vertex**: Insert `Repo` if new, update `latest_version`/`updated_at` if existing. If
-   the repo's parent `Project` doesn't exist, create it or flag for manual triage.
-3. **Upsert dependency targets**: For each dependency in the SBOM, upsert into `Repo` or
-   `ExternalRepo` depending on whether it's within-ecosystem.
-4. **Bulk operation on edges**:
-   - Delete old `depends_on` edges from this repo (if re-ingesting).
-   - Insert new `depends_on` edges from SBOM dep list.
-   - Mark confidence as `verified-sbom`.
-5. **Graph invalidation**: Either reload full graph into NetworkX (cheap at this scale) or implement
-   incremental graph update (add/remove edges in existing NetworkX instance).
-6. **Async recomputation**: Trigger background job to recompute criticality scores for affected repos
-   (this repo's upstream ancestors), then aggregate to project level.
-
-**Batch activity status updates** (yearly on SCF Impact Survey release, plus higher-frequency
-triangulation):
-
-1. Load survey results → set `activity_status` on `Project` rows.
-2. Load all projects from OpenGrants → mark `non-responsive` where no survey response exists.
-3. Load OpenGrants completion percentages → apply status upgrade rules (see Activity Status Update
-   Logic above).
-4. Propagate project status to child repos.
-5. **Graph reload**: Reload entire graph into NetworkX.
-6. **Recompute active subgraph projection**: Re-run BFS from all active leaves.
-7. **Materialize**: Write updated criticality scores to `repos.criticality_score`, then aggregate to
-   `projects.criticality_score`.
-
-**Git log refresh** (periodic, per-repo):
-
-1. Clone (or pull repo if we want to LRU cache), parse `git log` for contributor stats.
-2. Update `Repo.latest_commit_date`.
-3. Check activity status upgrade rules (e.g., `discontinued` → `live` on new commits).
-4. Upsert `Contributor` vertices and `contributed_to` edges.
-5. Recompute `Repo.pony_factor`, then aggregate to `Project.pony_factor`.
-
-**Reference graph sync** (weekly cron job):
-
-1. Fetch updated metadata from npm, crates.io, PyPI, etc.
-2. **Bulk upsert**: Insert new discovered repos into `Repo` (if within-ecosystem) or `ExternalRepo`.
-3. Mark `depends_on` confidence as `inferred-shadow`.
-4. Full graph reload recommended (or use delta if performance becomes an issue).
-
-### NetworkX Integration Points
-
-Code examples are only offered as rough sketches. Where we use raw SQL here, we want to rely on
-SQLAlchemy in our implementation.
-
-**Graph construction** (repo-level — the primary analysis graph):
-
-```python
-import networkx as nx
-import pandas as pd
-
-# Load repo-level edges; JOIN repo_vertices to resolve canonical_id strings
-# (in_vertex_id/out_vertex_id are integer FKs to repo_vertices.id)
-edges_df = pd.read_sql(
-    """
-    SELECT
-        rv_in.canonical_id  AS in_vertex,
-        rv_out.canonical_id AS out_vertex,
-        d.version_range,
-        d.confidence
-    FROM depends_on d
-    JOIN repo_vertices rv_in  ON rv_in.id  = d.in_vertex_id
-    JOIN repo_vertices rv_out ON rv_out.id = d.out_vertex_id
-    """,
-    conn,
-)
-repos_df = pd.read_sql(
-    "SELECT rv.canonical_id, r.project_id, r.latest_commit_date, "
-    "r.pony_factor, r.adoption_downloads, r.adoption_stars "
-    "FROM repos r JOIN repo_vertices rv ON rv.id = r.id",
-    conn,
-)
-external_df = pd.read_sql(
-    "SELECT rv.canonical_id, er.display_name "
-    "FROM external_repos er JOIN repo_vertices rv ON rv.id = er.id",
-    conn,
-)
-
-# Build directed graph at repo resolution
-G = nx.from_pandas_edgelist(
-    edges_df,
-    source="in_vertex",
-    target="out_vertex",
-    edge_attr=["version_range", "confidence"],
-    create_using=nx.DiGraph,
-)
-
-# Attach node attributes for repos and external repos
-nx.set_node_attributes(G, repos_df.set_index("canonical_id").to_dict("index"))
-nx.set_node_attributes(G, external_df.set_index("canonical_id").to_dict("index"))
-```
-
-**Project-level graph** (derived, for dashboard visualization):
-
-```python
-# Build project-level dependency graph by collapsing repo edges
-project_edges = set()
-for u, v in G.edges():
-    u_proj = G.nodes[u].get('project_id')
-    v_proj = G.nodes[v].get('project_id')
-    if u_proj and v_proj and u_proj != v_proj:
-        project_edges.add((u_proj, v_proj))
-
-P = nx.DiGraph()
-P.add_edges_from(project_edges)
-# Attach project-level attributes from projects table
-```
-
-**Active subgraph projection** (see [Metric Computation](metric-computation.md)):
-
-- Filter to `project.activity_status IN ('live', 'in-dev')` repo leaves (in-degree == 0 in dependency
-  direction).
-- BFS/DFS to mark all reachable ancestors.
-- Result is boolean mask or subgraph for criticality scoring.
-
-**Persistence after computation**:
-
-```python
-# Write computed metrics back to repos table
-for node_id, data in G.nodes(data=True):
-    if 'criticality_score' in data:
-        conn.execute(
-            "UPDATE repos SET criticality_score = %s WHERE canonical_id = %s",
-            (data['criticality_score'], node_id)
-        )
-
-# Aggregate to project level
-conn.execute("""
-    UPDATE projects p SET
-        criticality_score = (SELECT SUM(r.criticality_score) FROM repos r WHERE r.project_id = p.id),
-        pony_factor = ...  -- aggregation TBD, see metric-computation.md
-    WHERE p.id IN (SELECT DISTINCT project_id FROM repos WHERE criticality_score IS NOT NULL)
-""")
-```
-
 ### Deployment Considerations
 
-- **Hosted PostgreSQL**: DigitalOcean Managed Database, AWS RDS, or various free tier options for
-  early testing. **PostgreSQL 18+**: role names starting with `pg_` are disallowed for superusers —
-  use `atlas` (not `pg_atlas`) as the database user.
-- **Docker Compose (local dev)**: Use `postgres:18` image; mount the data volume at
-  `/var/lib/postgresql` (not `/var/lib/postgresql/data` — the path convention changed in PG 18).
-- **Connection pooling**: Use SQLAlchemy with asyncpg for FastAPI async support.
-- **Migrations**: Alembic for schema versioning (`pg_atlas/migrations/`). The initial migration
-  (`versions/20260302_1440_d10e2f635f77_initial_schema.py`) creates all 8 tables and 6 PostgreSQL
-  enum types. The `downgrade()` function explicitly drops enum types — Alembic does not do this
-  automatically when dropping tables.
-- **Backups**: Daily automated snapshots via provider, plus periodic `pg_dump` to git repo or S3 for
-  auditability.
+The database runs on **DigitalOcean Managed PostgreSQL** with automated operational features:
 
-## Open Questions
+- **Automated snapshots** — Daily backups with configurable retention
+- **Point-in-time recovery (PITR)** — Restore to any point within the retention window
+- **Connection pooling** — Managed by PG Atlas and Procrastinate
 
-- How much historical data do we want to store for time-axis charts? (snapshot tables? temporal
-  columns?)
-- Should `ExternalRepo` gain adoption signals (downloads/stars) for richer blast radius context?
-- Project-level pony factor aggregation method: sum of unique contributors across all repos, or
-  weighted by repo criticality?
-- Do we need a `part_of` edge in NetworkX, or is the `project_id` foreign key sufficient for all
-  analysis needs?
-- For Repo `canonical_id`, should we use SBOM-style (SPDX-format) identifiers `.name` and
-  `.packages[].externalRefs[].referenceLocator`, where applicable?
-- Production artifact storage: Storacha (w3up) is the target — which CID format do we store in
-  `sbom_submissions.artifact_path`, and what client library do we use?
+The backend uses SQLAlchemy with `asyncpg` for async FastAPI support. Schema migrations are managed
+with Alembic in
+[`pg_atlas/migrations/`](https://github.com/SCF-Public-Goods-Maintenance/pg-atlas-backend/tree/main/pg_atlas/migrations).
+The initial migration creates all core tables and PostgreSQL enum types.
