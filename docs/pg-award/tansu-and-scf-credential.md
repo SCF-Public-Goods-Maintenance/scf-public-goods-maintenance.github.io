@@ -35,7 +35,8 @@ SCF Pilots vote using their reputation scores for sybil resistance and proportio
 
 1. Neural Quorum Governance (NQG) scores calculated and stored in
    [stellar-community-fund-contracts](https://github.com/stellar/stellar-community-fund-contracts)
-2. Each Pilot's can cast a vote on Tansu. They can adjust their voting power which is capped based on their individual NQG scores
+2. Each Pilot's can cast a vote on Tansu. They can adjust their voting power which is capped based on
+   their individual NQG scores
 3. Votes are recorded on-chain as Pedersen commitments
 4. Votes execute on-chain without ever revealing individual votes
 
@@ -95,14 +96,14 @@ The credential contract architecture enables future expansions:
 
 The Tansu + credential architecture addresses key governance challenges:
 
-| Pain Point                  | How Addressed                                                               |
-| --------------------------- | --------------------------------------------------------------------------- |
-| Voting UX friction          | Single-address anonymous voting (no multi-wallet workarounds)               |
-| Identity verification       | Soulbound credentials provide on-chain Pilot verification                   |
-| Reputation opacity          | Dynamic NFTs surface NQG scores transparently                               |
-| Cross-tool friction         | SEP-50 compatibility enables wallet integration and ecosystem-wide trust    |
-| Limited programmatic access | On-chain credentials replace Discord API dependencies                       |
-| Vote manipulation risk      | NQG weighting + soulbound identity prevents sybil attacks                   |
+| Pain Point                  | How Addressed                                                            |
+| --------------------------- | ------------------------------------------------------------------------ |
+| Voting UX friction          | Single-address anonymous voting (no multi-wallet workarounds)            |
+| Identity verification       | Soulbound credentials provide on-chain Pilot verification                |
+| Reputation opacity          | Dynamic NFTs surface NQG scores transparently                            |
+| Cross-tool friction         | SEP-50 compatibility enables wallet integration and ecosystem-wide trust |
+| Limited programmatic access | On-chain credentials replace Discord API dependencies                    |
+| Vote manipulation risk      | NQG weighting + soulbound identity prevents sybil attacks                |
 
 ## Future Enhancements
 
