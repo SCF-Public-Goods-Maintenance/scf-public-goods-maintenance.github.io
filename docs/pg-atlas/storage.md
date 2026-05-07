@@ -325,45 +325,58 @@ for the next survey cycle to re-classify downward.
 The precise status update logic is not yet finalized — we want to test it once we can load data from
 all sources (survey, OpenGrants, git logs).
 
-### Raw Artifacts and Auditability
-
-Raw SBOM files are stored in Filebase S3 for content-addressable auditability:
-
-- **Filebase S3** — IPFS-backed object storage providing content integrity through CIDs
-- **Local development** — Files written to `ARTIFACT_STORE_PATH` (default `./artifact_store`) for
-  testing
-- **CID recording** — IPFS CID returned by Filebase is stored in `sbom_submissions.artifact_path`
-- **Content hashing** — `sbom_submissions.sbom_content_hash` contains SHA-256 of raw SBOM bytes
-  (32-byte BYTEA, mapped to hex string via `HexBinary` TypeDecorator)
-- **Deduplication** — Identical SBOMs (by content hash) are not reprocessed even if submitted
-  multiple times
-
-The API never exposes raw artifact bytes directly — all SBOM data is accessed through the normalized
-graph representation.
-
 ### SBOM Submission Audit Table
 
-Every ingest attempt is recorded in `sbom_submissions`:
+Every SBOM ingest attempt is recorded in `sbom_submissions`:
 
-| Column              | Type                | Notes                                     |
-| ------------------- | ------------------- | ----------------------------------------- |
-| `id`                | serial PK           |                                           |
-| `repository_claim`  | varchar(256)        | `repository` field from the OIDC JWT      |
-| `actor_claim`       | varchar(128)        | `actor` field from the OIDC JWT           |
-| `sbom_content_hash` | bytea (hex in code) | SHA-256 of raw SBOM bytes                 |
-| `artifact_path`     | varchar(1024)       | Path in artifact store; set on submission |
-| `status`            | enum                | `pending` → `processed` or `failed`       |
-| `error_detail`      | varchar(4096)       | Error message on failure                  |
-| `submitted_at`      | timestamptz         | Server-default `now()`                    |
-| `processed_at`      | timestamptz         | Null until processing completes           |
+| Column              | Type                | Notes                                |
+| ------------------- | ------------------- | ------------------------------------ |
+| `id`                | serial PK           |                                      |
+| `repository_claim`  | varchar(256)        | `repository` field from the OIDC JWT |
+| `actor_claim`       | varchar(128)        | `actor` field from the OIDC JWT      |
+| `sbom_content_hash` | bytea (hex in code) | SHA-256 of raw SBOM bytes            |
+| `artifact_path`     | varchar(1024)       | IPFS CID in artifact store           |
+| `status`            | enum                | `pending` → `processed` or `failed`  |
+| `error_detail`      | varchar(4096)       | Error message on failure             |
+| `submitted_at`      | timestamptz         | Server-default `now()`               |
+| `processed_at`      | timestamptz         | Null until processing completes      |
 
-<!-- TODO: Add Mermaid ERD or gdotv.com diagram of property graph schema. -->
+**Deduplication**: Identical SBOMs (by content hash) are acknowledged but not reprocessed if already
+successfully processed for the given repository.
+
+**Artifact retrieval**: The API never exposes raw SBOM bytes directly via graph endpoints. Audit
+endpoints (`/ingest/sbom/{submission_id}`) can retrieve the full artifact for inspection.
+
+### Git Log Audit Table
+
+Every git log processing attempt is recorded in `gitlog_artifacts`:
+
+| Column                | Type                | Notes                                                 |
+| --------------------- | ------------------- | ----------------------------------------------------- |
+| `id`                  | serial PK           |                                                       |
+| `repo_id`             | int FK              | References `repos.id`                                 |
+| `since_months`        | int                 | Log timespan (e.g., 12 for 12-month history)          |
+| `seed_run_ordinal`    | int                 | For dormancy-based scheduling (higher = more dormant) |
+| `artifact_path`       | varchar(1024)       | IPFS CID in artifact store                            |
+| `gitlog_content_hash` | bytea (hex in code) | SHA-256 of raw git log bytes                          |
+| `status`              | enum                | `pending` → `processed` or `failed`                   |
+| `error_detail`        | varchar(4096)       | Error message on failure                              |
+| `submitted_at`        | timestamptz         | When the log extraction was queued                    |
+| `processed_at`        | timestamptz         | Null until processing completes                       |
+
+**Scheduling context**: `seed_run_ordinal` tracks dormancy for the gitlog queue scheduler —
+repositories with lower ordinals (stale data) are prioritized for refresh.
+
+**Artifact retrieval**: The `/gitlog/{artifact_id}` endpoint can retrieve the full raw git log for
+inspection.
+
+## Schema Design Patterns
 
 We enforce data modeling discipline to ensure clean handoff between PostgreSQL storage and NetworkX
 analysis. The key principle: **model everything as a property graph in tables**, avoiding patterns
 that work in SQL but create awkward graph structures.
 
-### Schema Design Patterns
+### Graph Modeling Patterns
 
 **Vertex types** (e.g., `Project`, `Repo`, `ExternalRepo`, `Contributor`):
 

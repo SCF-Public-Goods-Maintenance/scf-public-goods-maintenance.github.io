@@ -8,73 +8,160 @@ nav_order: 8
 
 ## Overview
 
-PG Atlas handles public ecosystem data (dependency graphs, metrics, pony factor from git logs) with
-no personal user data in v0 (read-only API/dashboard, no accounts/logins). Security and privacy
-design emphasizes defense-in-depth, minimalism, and transparency to protect ecosystem integrity and
-community trust.
+PG Atlas operates with a public-first security model: all data (dependency graphs, metrics,
+contributor statistics) is publicly accessible by design. Security measures focus on protecting
+system integrity, preventing abuse, and maintaining contributor privacy where applicable.
+
+**Current status**: Operational with GitHub OIDC authentication for write endpoints, IP-based rate
+limiting for all endpoints, and privacy-preserving contributor data handling.
 
 **Core principles**:
 
-- **Privacy-first**: No tracking of individual users; avoid cookies/session storage.
-- **Personal data minimization**: Collect zero PII; git logs processed only for aggregate contributor
-  stats (no email exposure).
-- **Auditability for maintainers**: Multiple community maintainers access backend — all actions
-  logged immutably.
-- **CIA triad alignment**:
-  - Confidentiality (public data only, but protect ingest sources)
-  - Integrity (verified inputs, reproducible metrics)
-  - Availability (resilient hosting, DoS mitigation)
+- **Public data by design** — All ecosystem metrics and dependency graphs are publicly readable
+- **Write authentication** — SBOM ingestion authenticated via GitHub OIDC tokens
+- **Contributor privacy** — Git log email addresses are SHA-256 hashed before storage
+- **Rate limiting** — Per-IP throttling prevents API abuse
+- **Input validation** — SPDX 2.3 schema validation prevents malformed submissions
+- **Auditability** — All SBOM submissions logged with provenance metadata, and git log extracts are
+  logged before we parse them
 
-**Threat model (v0)**:
+## Authentication & Authorization
 
-- Primary risks:
-  - API abuse/DoS
-  - ingestion tampering (fake SBOMs)
-  - maintainer compromise
-- Low risk: Data exfiltration (all public anyway).
+### Read Access
 
-## Confidentiality
+All read endpoints (`/contributors`, `/metadata`,`/projects`, `/repos`) are public and require no
+authentication. This aligns with the transparency goals of the SCF Public Goods Maintenance Working
+Group.
 
-- **Data classification**: All stored/computed data public by design (open-source manifests, git
-  logs, metrics).
-- **Ingest protection**: SBOM webhooks validate GitHub signatures (if Action-signed) or repo
-  provenance; shadow crawls from trusted registries only.
-- **No secrets exposure**: API keys/secrets in environment variables or provider vaults; never in
-  repo.
-- **Future**: Optional maintainer 2FA/multi-sig for admin actions.
+### Write Access (SBOM Ingestion)
 
-## Integrity
+SBOM submissions to `/ingest/sbom` are authenticated using GitHub OpenID Connect (OIDC) tokens:
 
-- **Input validation**: Strict schema checks on SBOMs (CycloneDX/SPDX validation libraries); reject
-  malformed.
-- **Reproducibility**: Raw artifacts retained; metric computation is deterministic.
-- **Maintainer actions**: Audit log all admin changes insofar this is possible.
-- **Code integrity**: Signed Git commits; dependabot alerts; reproducible builds where possible.
+**Authentication flow**:
 
-**Open practice**: Public issue tracker for reported discrepancies (e.g., wrong edges) — resolved via
-PR.
+1. The [pg-atlas-sbom-action](https://github.com/SCF-Public-Goods-Maintenance/pg-atlas-sbom-action)
+   requests a short-lived OIDC token from GitHub Actions
+2. The token is signed with GitHub's private key (RS256) and includes claims: `repository` and
+   `actor` (GitHub username)
+3. PG Atlas validates the token using GitHub's public JWKS (JSON Web Key Set)
+4. Token validation checks:
+   - Signature matches GitHub's public key
+   - Issuer is `https://token.actions.githubusercontent.com`
+   - Audience matches the configured API URL (prevents token reuse)
+   - Token has not expired
 
-## Availability
+**Error responses**:
 
-- **DoS mitigation**: API rate limiting (token bucket); CDN caching for static/dashboard.
-- **Resilience**: Provider health checks/auto-restart; database backups (daily snapshots).
-- **Incident response**: Health endpoint and error monitoring; rollback via git/deploy history.
-- **Scalability guardrails**: Single-machine limits enforced; alert on resource spikes.
+- `401 Unauthorized` — Missing or malformed `Authorization` header
+- `403 Forbidden` — Invalid signature, expired token, or audience mismatch
+- `422 Unprocessable Content` — Malformed SPDX payload
 
-## Privacy-Specific Measures
+## Rate Limiting
 
-- **Web analytics**: [Plausible](https://plausible.io) — cookie-less, privacy-respecting aggregate
-  stats only (page views, referrers anonymized).
-- **No trackers**: Avoid Google Analytics, Meta pixels, etc.; no client-side fingerprinting.
-- **Dashboard**: Local storage optional for preferences (e.g., dark mode) — no server sync.
-- **Git log handling**: Obfuscate author emails by hashing or ellipsis redaction.
+The API implements in-memory request throttling via `ApiRateLimitMiddleware` using PyrateLimiter at
+the ASGI level:
 
-## Open Questions
+| Endpoint Category | Limit        | Window          |
+| ----------------- | ------------ | --------------- |
+| General endpoints | 100 requests | 1 minute per IP |
+| `/health`         | 600 requests | 1 minute per IP |
+| `/ingest/sbom`    | 600 requests | 1 minute per IP |
 
-- Maintainer access method (SSH keys vs. ~~provider IAM roles~~)?
-- Formal incident response playbook needed for v0 launch?
-- SBOM signature enforcement level (optional vs. required)?
+**Implementation details**:
 
-<!-- FUTURE SELF: Review after first ingestion events — test fake SBOM rejection. -->
+- Requests bucketed by client IP address (resolved via `X-Forwarded-For` header)
+- Exceeded limits return `429 Too Many Requests` with `Retry-After` header
 
-<!-- QUESTION FOR LEAD: Any specific compliance needs (e.g., GDPR minimalism already met)? -->
+## Input Validation & Integrity
+
+### SBOM Validation
+
+All SBOM submissions undergo strict validation:
+
+1. **Format validation** — Must be valid SPDX 2.3 JSON
+2. **Schema validation** — Structure verified against SPDX specification
+3. **Denial of Service protection** — Content hash checked against previously processed submissions
+4. **Provenance tracking** — Repository and actor claims from OIDC token stored in audit records
+
+**Failure handling**:
+
+- Invalid SBOMs return `422 Unprocessable Content` with detailed error messages
+- Failed submissions create audit records with `status='failed'` and `error_detail` for triage
+
+### SQL Injection Protection
+
+SQLAlchemy's parameterized queries provide automatic protection against SQL injection. All database
+interactions use SQLAlchemy ORM or Core expressions with bound parameters.
+
+## Privacy Measures
+
+### Contributor Data
+
+Git log parsing extracts contributor statistics while preserving privacy:
+
+- **Email hashing** — Contributor email addresses are normalized and SHA-256 hashed before storage
+- **Aggregated statistics** — Only commit counts and date ranges are included in contributor details
+- **Bot filtering** — Automated accounts (e.g., `[bot]` suffix, CI/CD patterns) are filtered out
+  during ingestion
+
+### User Tracking
+
+The dashboard and API implement privacy-first analytics:
+
+- **No cookies** — Dashboard does not set tracking cookies
+- **No session storage** — API is stateless; no user sessions tracked
+- **Local preferences only** — Theme/display preferences stored in browser local storage (never
+  synced to server)
+- **No PII collection** — No user registration, accounts, or personal data collected
+
+## Artifact Storage & Auditability
+
+PG Atlas implements a content-addressed artifact storage strategy for durable audit trails. Raw
+submitted SBOMs and git log extracts are persisted to immutable storage with database audit records
+serving as the queryable index.
+
+**Storage architecture**:
+
+- **Filebase S3** — IPFS-backed object storage in production providing cryptographic content
+  integrity
+- **Content Identifier (CID)** — Filebase returns an IPFS CID which becomes the durable reference
+  stored in the database
+- **SHA-256 content hash** — Computed for all artifacts enabling idempotent processing and
+  deduplication
+
+**Audit record pattern**:
+
+Every artifact submission creates a corresponding database row with:
+
+- **Provenance metadata** — OIDC claims (repository, actor) or other source identifiers
+- **Content hash** — SHA-256 digest of raw payload bytes
+- **Artifact path** — CID or storage location for retrieval
+- **Processing status** — `pending`, `processed`, or `failed`
+- **Error details** — Failure messages for triage when applicable
+- **Timestamps** — Submission time and processing completion time
+
+**Benefits**:
+
+1. **Auditability** — Complete provenance trail for every submission with immutable artifacts
+2. **Failure recovery** — Failed submissions retain raw artifacts for manual triage and reprocessing
+3. **Idempotency** — Content-addressed storage ensures identical payloads are stored once, enabling
+   safe retry semantics
+4. **Decoupled lifecycle** — Artifacts are independently retrievable via IPFS gateway, decoupling
+   audit retention from database schema evolution
+5. **Queryable history** — Database index allows filtering by source, status, and timestamp without
+   artifact retrieval
+
+This pattern applies uniformly to SBOM submissions and git log artifacts, with schema details
+documented in [Storage](storage.md).
+
+## Future Enhancements
+
+Near-term security improvements under consideration:
+
+- **Sentry integration** — Automatic error grouping and security event tracking (free tier for OSS)
+- **Enhanced alerting** — Discord webhooks for failed authentication attempts and rate limit breaches
+- **SBOM signature verification** — Cryptographic signing of SBOM submissions beyond OIDC tokens
+- **API key authentication** — Optional API keys that provide elevated rate limits to power users
+
+These enhancements will build on the current foundation while maintaining the public-first security
+model.

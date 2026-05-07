@@ -75,9 +75,13 @@ Existing/returning projects may resubmit directly with impact updates.
 1. **Metric Review**: PG Atlas scores published for context.
 1. **Voting Round**:
    1. Proposals are added to Tansu and link to project pages.
-   1. Tansu-based NQG vote (see [Tansu Modifications](pg-award/tansu-modifications.md)).
+   1. Tansu-based NQG vote (see
+      [Tansu Integration & SCF Credentials](pg-award/tansu-and-scf-credential.md)).
 1. **Award Distribution**: Tranches tied to approval + milestones/SLOs.
 1. **Resubmission**: Quarterly with progress reports.
+
+If you think your project might be eligible, please read the
+[Instructions for Proposers](pg-award/proposer-instructions.md).
 
 ## Public Good Categories
 
@@ -112,4 +116,5 @@ centralized Council references removed and replaced with community processes.)
 
 This page reflects a transition design as of February 2026 — evolving via repo PRs.
 
-_See sub-page: [Tansu Modifications](pg-award/tansu-modifications.md) for Tansu pilot details._
+_See sub-page: [Tansu Integration & SCF Credentials](pg-award/tansu-and-scf-credential.md) for Tansu
+integration details._

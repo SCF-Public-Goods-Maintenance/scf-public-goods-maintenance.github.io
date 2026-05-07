@@ -6,287 +6,228 @@ nav_order: 6
 
 # Dashboard
 
-## User Stories
+## Overview
 
-As a **PG maintainer**:
+The PG Atlas dashboard provides public read-only access to ecosystem metrics, project details, and
+dependency visualizations. The dashboard is live at [pgatlas.xyz](https://pgatlas.xyz), serving SCF
+voters, project maintainers, and community observers with transparent insights into the
+Stellar/Soroban public goods ecosystem.
 
-- I want to see my tool's criticality score, pony factor, and adoption trends so I can understand its
-  ecosystem impact and prioritize maintenance.
-- I want to view direct/transitive dependents (with active filters) to identify who relies on me and
-  reach out for feedback/contributions.
+**Current status**: Operational with eight primary pages (home, projects, repos, contributors,
+rounds, graph, gitlog, about), consuming the REST API at [api.pgatlas.xyz](https://api.pgatlas.xyz).
 
-As an **SCF Pilot (Tansu round participant)**:
+**Architecture**:
 
-- I want a searchable leaderboard of PGs ranked by metrics (criticality, risk flags) so I can quickly
-  evaluate proposals with objective context.
-- I want to open a specific PG's dependency graph and score details so I can make a data-driven
-  decision when casting my vote.
+- **React 19** with **Vite** for fast development and builds
+- **TanStack Router** for type-safe routing and **TanStack Query** for data fetching/caching
+- **Tailwind CSS** for styling with responsive design
+- **@pg-atlas/data-sdk** TypeScript SDK for REST API consumption
+- **Cytoscape.js** for interactive dependency graph visualization
+- **Recharts** for data visualization
+- Deployed on **DigitalOcean App Platform** as a static site
 
-As a **dependent project team (SCF Build applicant)**:
+## Pages
 
-- I want to explore the PG landscape to discover reusable tools and see their reliability scores
-  before integrating.
-- I want to see a ranked list of dependencies by criticality and adoption signals (stars, downloads,
-  forks) so I can quickly spot high-leverage tools to build on.
-- I want to visualize my own project's dependencies to ensure I'm building on healthy infrastructure.
+The dashboard implements the following routes:
 
-As a **general community member or observer**:
+**Dashboard** ([pgatlas.xyz](https://pgatlas.xyz)):
 
-- I want an intuitive overview of ecosystem health (active PG coverage, pony factor distribution, top
-  critical tools) to gauge Stellar/Soroban resilience.
-- I want to search/browse the full graph to understand interconnections and spot risks/gaps.
+- Live ecosystem health metrics (total projects, repos, dependencies)
+- Risk distribution visualization (pony factor, criticality)
+- Top critical projects leaderboard
+- Data transparency panel documenting provenance and processing
 
-## Desired UX Overview
+**Projects** ([pgatlas.xyz/projects](https://pgatlas.xyz/projects)):
 
-The dashboard should be public, zero-auth (read-only), mobile-responsive, and focused on transparency
-and explorability. Core flows:
+- Paginated list of SCF-funded projects with filtering and sorting
+- Manual column filtering and sorting by criticality, pony factor, adoption score
+- Search by project name
+- URL state synchronization for filters and pagination
 
-- Dashboard landing page: High-level ecosystem summary (total active nodes, dependency coverage %,
-  risk heatmap, top 10 critical PGs). The landing links current and past rounds.
-- PG Award Round pages: Per-round overview of proposals (each linked to a Project), with filters/sort
-  (criticality, pony factor, adoption, active status) and risk flags.
-  - Risk signaling will be progressive and educational (never alarmist; PG Atlas is not a security
-    scanner).
-  - This page is positioned as a critical lens for PG maintenance funding decisions and continuous
-    improvement, while keeping overall ecosystem-health messaging balanced.
-- Contributor pages: Deep view of maintainer/contributor records for self-service data review and
-  voter diligence.
-- PG detail pages: Score breakdown, timeline trends (if extended), direct dependents list,
-  interactive dependency subgraph visualization.
-- Graph explorer (later feature, v1+): Interactive full/zoomed view (force-directed or hierarchical
-  layout) with active subgraph highlighting and search/highlight nodes.
+**Project Detail**
+([pgatlas.xyz/projects/:canonical_id](https://pgatlas.xyz/projects/:canonical_id)):
 
-**UX principles**:
+- Detailed metrics panel (criticality score, pony factor, adoption score, active contributors)
+- Associated repositories panel
+- Contributors panel with commit counts
+- **Sub-graph explorer** showing dependency relationships (see below)
+- Dependencies panel with tabular views of dependents and dependencies
 
-- Fast loading (cached metrics, lazy graph rendering).
-- Clear tooltips/explainers for metrics (e.g., "Criticality = number of active projects depending on
-  this").
-- Export options (CSV for tables, PNG/SVG for graphs).
-- Accessibility: Dark/light mode, keyboard navigation, screen-reader labels.
-- No overload: Progressive disclosure (summary → detail → full graph).
+**Repos** ([pgatlas.xyz/repos](https://pgatlas.xyz/repos)):
 
-## UI Structure
+- Paginated list of repositories with filtering and sorting
+- Manual column filtering and sorting by metrics
+- URL state synchronization
 
-This section breaks the dashboard UI into three layers: pages, components, and concrete elements. Use
-it as a map from high-level user-facing screens down to the specific data fields and interactions.
+**Repo Detail** ([pgatlas.xyz/repos/:canonical_id](https://pgatlas.xyz/repos/:canonical_id)):
 
-### Page Types
+- Metrics panel showing repo-level scores
+- Parent project panel (if applicable)
+- Contributors panel
+- **Sub-graph explorer** showing dependency relationships (see below)
+- Dependencies panel
 
-This is a list of pages at all navigation levels. No pages require authentication, and their content
-(before any interaction) is the same for all users. PG Atlas v0 will not have any Stellar wallet
-connection.
+**Contributors** ([pgatlas.xyz/contributors](https://pgatlas.xyz/contributors)):
 
-- **Dashboard landing page**
-  - Public entry point to the dashboard experience, with:
-    - A **dashboard overview header** (title, selected round or global scope, last data refresh time,
-      and quick actions such as open current round page, open contributor search).
-    - A **headline metrics strip** with ecosystem and builder-activity totals (e.g. total projects,
-      repos, public goods, % with recent activity, active contributors in 30/90 days, recent commit
-      volume, and optional data-quality coverage indicators).
-    - A **current round spotlight** showing the active PG Award round with a quick summary and a
-      clear link into the full round page.
-    - An **all rounds index** (table or list) linking to current and historical round pages.
-    - A **data transparency panel** summarizing major data sources and processing notes, with links
-      to docs and inline examples of canonical vs computed/aggregated labels used in the UI.
-- **PG Award Round page**
-  - A rich overview of all projects that have a proposal in a specific PG Award round. Per project,
-    there is a link to its project detail page (canonical), and to the proposal URL on Tansu
-    (round-specific).
-  - For each round, a proposal ↔ project mapping is manually curated as a YAML or JSON file in the
-    frontend repo, which will be rendered as a page at build-time. The order of projects in the
-    mapping determines their order on the page.
-  - The page ends with a Tansu boundary note clarifying that voting happens on Tansu: PG Atlas v0
-    does not embed Tansu and does not show voting outcomes.
-- **Contributor page**
-  - A rich overview of **all PG Atlas data** tied to **`contributors` rows**: identity linkage,
-    contributed repos/projects, commit stats, dates, and any derived or displayed fields.
-  - Contributors and maintainers use it to see what we store about them, and what is missing or
-    incorrect (so they can request corrections or improved ingestion).
-  - Voters use the same page to learn more about a PG maintainer’s track record, current workload,
-    and recent git activity when evaluating proposals.
-- **Project detail page**
-  - Deep-dive view for a single project/PG: metrics, associated repos, and dependency subgraph.
-- **Repo detail page**
-  - **Purpose**: Lets users inspect a single repository (e.g. a package or library) as a node in the
-    dependency graph—its metadata, adoption signals, and how others depend on it or what it depends
-    on.
-  - **Used for**: Voters checking a specific repo’s health/activity before making their decision.
-  - **Content**: Focused view on one repo: metadata, adoption metrics (stars, forks, downloads from
-    `repos` / `external_repos`), and incoming/outgoing edges in the graph (`depends_on`).
-- **Graph explorer page (v1+)**
-  - Full-graph visualization with search, highlighting, and filters for exploring the ecosystem.
+- Paginated list of contributors with search
+- URL state synchronization
 
-### React components
+**Contributor Detail** ([pgatlas.xyz/contributors/:id](https://pgatlas.xyz/contributors/:id)):
 
-These are the primary stateful React containers that compose the dashboard experiences described
-above. Each component maps to a key page or cross-page concern and defines where data fetching and UI
-state live.
+- Total repos and commits across all contributions
+- First and last contribution dates
+- Per-repo contribution breakdown with commit counts
 
-- **`DashboardLandingLayout`** (or `OverviewLayout`)
-  - Purpose: Layout for the dashboard landing/overview page.
-  - Scope: Renders the overview header, headline metrics, current round spotlight, all-rounds index,
-    and data transparency panel; provides entry points into round and contributor views.
-- **`DashboardLayout`**
-  - Purpose: Shared application shell for all pages, which handles navigation and global state.
-- **`AwardRoundPage` (or `RoundOverview`)**
-  - Purpose: Per-round proposal list/overview for a single PG Award round.
-  - Scope: Loads round config (YAML/JSON) for proposal ↔ project mapping; fetches project metrics
-    from the API; drives filters/sorts and navigation to `ProjectDetailView`.
-- **`ContributorDetailView`**
-  - Purpose: Contributor/maintainer overview page backed by `contributors` and `contributed_to` (and
-    related API fields).
-  - Scope: Surfaces stored fields, gaps, and recent activity for self-review and voter diligence.
-- **`ProjectsLeaderboard`**
-  - Purpose: Reusable project table with interactive filters and column sorting.
-  - Scope: Fetches aggregated metrics per project from the API (criticality, adoption_score,
-    activity_status, pony_factor) and pushes filter/sort state into global app state.
-- **`ProjectDetailView`**
-  - Purpose: Detail page for a single project/PG.
-  - Scope: Fetches project row (`projects`), associated repos (`repos`), dependency subgraph
-    (`repo_vertices`, `depends_on`), and contributor data (`contributors`, `contributed_to`) for the
-    project's repos; composes sections for metrics, dependencies, contributors, and role-specific
-    actions.
-- **`RepoDetailView` (optional)**
-  - Purpose: Detail panel for a single repo.
-  - Scope: Fetches repo row (`repos`), its neighborhood in the graph (`depends_on`), and contributors
-    for this repo (`contributors` via `contributed_to`); shows adoption, risk signals, and
-    contributor list.
-- **`GraphExplorer`**
-  - Purpose: Encapsulate the interactive graph visualization.
-  - Scope: Renders a filtered subgraph using the chosen graph library and syncs selection/hover state
-    back to the rest of the dashboard.
+**Rounds** ([pgatlas.xyz/rounds](https://pgatlas.xyz/rounds)):
 
-#### `AwardRoundPage` / `ProjectsLeaderboard` elements
+- List of SCF funding rounds
+- Round-specific project overviews
 
-- **Round-scoped leaderboard row**
-  - Data:
-    - `projects.display_name`, `projects.canonical_id`
-    - `projects.project_type`, `projects.activity_status`
-    - `projects.criticality_score`, `projects.pony_factor`, `projects.adoption_score`
-    - SCF round(s) and SCF category from `projects.metadata` (see below).
-    - GitHub link from `projects.git_org_url` (clickable).
-    - Awarded / funded indicator (from `projects.metadata` or backend; see below).
-    - Aggregated repo metrics (e.g. stars/forks/downloads from `repos` and `external_repos`).
-    - Optional: contributor count or recent-activity indicator from `contributed_to` (e.g.
-      `number_of_commits`, `last_commit_date`) aggregated across the project's repos.
-  - Interactions:
-    - Click row → navigate to `ProjectDetailView`.
-    - Click GitHub link → open project's GitHub org/repo in a new tab.
-    - Click badges (e.g. activity status, SCF round) → apply quick filters.
+**Round Detail** ([pgatlas.xyz/rounds/:round_id](https://pgatlas.xyz/rounds/:round_id)):
 
-#### `ProjectDetailView` elements
+- SCF funding round overview
+- Sortable/filterable project tables
+- Per-project links to detail pages and Tansu proposals
 
-- **Project metrics panel**
-  - Data:
-    - Single `projects` row: `criticality_score`, `pony_factor`, `adoption_score`, `metadata`,
-      `updated_at`.
-    - From `projects.metadata`: SCF round(s), SCF category, GitHub link (`git_org_url`), awarded
-      status; optional `description`, `website`, `x_profile`.
-    - Aggregated counts: number of `repos` and `repo_vertices` associated with the project.
-  - Interactions:
-    - Tooltips explaining each metric.
-    - Link to GitHub (from `projects.git_org_url`); optional per-repo links from `repos.repo_url`.
-    - Links to underlying repos or graph nodes.
-    - Show a visible named data-origin tag/label next to each metric.
-- **Dependency subgraph panel**
-  - Data:
-    - Subset of `repo_vertices` and `depends_on` for the selected project or repo.
-  - Interactions:
-    - Hover node → highlight immediate neighbors and show mini-metric tooltip.
-    - Click node → focus that repo (or open `RepoDetailView` in a side panel).
-- **Contributors panel**
-  - Data:
-    - From `contributors`: `id`, `name` (display only; `email_hash` is not shown for privacy).
-    - From `contributed_to` (joined by `contributor_id`, `repo_id`; filter by project's repos or
-      single repo): `number_of_commits`, `first_commit_date`, `last_commit_date` per contributor-repo
-      pair.
-  - UI: List or table of contributors for the project (or for a single repo in `RepoDetailView`),
-    with commit counts and first/last commit dates; optionally sort by `number_of_commits` or
-    `last_commit_date`.
-  - Interactions:
-    - Expand per-repo breakdown for a contributor when the view is project-scoped.
+**Graph** ([pgatlas.xyz/graph](https://pgatlas.xyz/graph)):
 
-#### `ContributorDetailView` elements
+- Full ecosystem graph visualization (planned)
 
-- **Contributor profile and activity panel**
-  - Data:
-    - `contributors.id`, `contributors.name` (display only; `email_hash` remains hidden by default).
-    - Joined `contributed_to` rows across repos/projects: `number_of_commits`, `first_commit_date`,
-      `last_commit_date`, and repo/project associations via `repo_id`.
-  - Interactions:
-    - Show data-quality flags for missing or stale fields.
-    - Filter by timeframe/project to evaluate current workload and recent activity.
+**Gitlog** ([pgatlas.xyz/gitlog](https://pgatlas.xyz/gitlog)):
 
-#### `AwardRoundPage` / `ProjectDetailView` display fields
+- List of git log processing attempts
+- Filter by repository
+- URL state synchronization
 
-These shared project/repo display fields should be surfaced consistently across round pages and
-project detail views so voters and observers can see SCF context and reach code quickly:
+**Gitlog Artifact Detail**
+([pgatlas.xyz/gitlog/:artifact_id](https://pgatlas.xyz/gitlog/:artifact_id)):
 
-- **Data provenance tags**
-  - Every field shown on round/project pages will include a visible provenance marker:
-    - (SDF ->) `OpenGrants`
-    - `deps.dev`
-    - `GitHub`
-    - `PG Atlas`
-    - ...
-  - This requirement aligns with our transparency principle and should be applied consistently in
-    both table cells and detail panels.
+- Processing attempt details
+- Raw artifact content when available
 
-- **SCF round(s)** Stored in `projects.metadata.scf_submissions` as a list of objects with `round`
-  and `title`. The UI can show the latest round, a "Rounds" badge, or a short list (e.g. "Round 39,
-  40"). Filtering the leaderboard by round is desirable (e.g. "Show only Round 40 projects").
+**About** ([pgatlas.xyz/about](https://pgatlas.xyz/about)):
 
-- **SCF category** Stored in `projects.metadata.scf_category`. Display as a label or tag on the
-  leaderboard row and on the project detail page; optionally allow filter by category.
+- Project information and documentation links
 
-- **Link to GitHub** From `projects.git_org_url` (org or primary repo URL). Shown as a clickable
-  "GitHub" link on the leaderboard and project detail. On the project detail page, per-repo links can
-  use `repos.repo_url` for each repo in the project.
+## Sub-Graph Explorer
 
-- **Awarded / funded status** Not yet a dedicated column. Today it can be derived from
-  `projects.metadata.scf_tranche_completion` (e.g. tranche completion indicates funding received), or
-  the backend can expose an explicit `awarded` (or similar) field in the API (sourced from OpenGrants
-  or a future ingest). The dashboard should show a clear "Awarded" / "Funded" (or "Not awarded")
-  indicator on the leaderboard and project detail once the API provides it.
-  - v0 API contract note: expose a dedicated `awarded_status` field on project responses to avoid
-    ambiguous frontend inference.
+The sub-graph explorer is an interactive dependency graph viewer implemented on both project and repo
+detail pages. It provides incremental, on-demand loading of dependency relationships driven by user
+interaction.
 
-## Technology Decision
+### Implementation
 
-**Decided (Issue #3):** **Vite with TypeScript** (`react-ts` template). The dashboard will be a
-custom TypeScript frontend, consuming the RESTful FastAPI backend exclusively (no direct DB access)
-and dogfooding our OpenAPI-generated TypeScript SDK.
+**Library**: **Cytoscape.js** — A graph theory library for visualization and analysis. The component
+manages the Cytoscape instance imperatively via `useRef`.
 
-### Rationale
+**API Integration**: The explorer calls the following SDK endpoints based on page type and traversal
+direction:
 
-- **TypeScript SDK dogfooding** — We should be the first consumers of our own SDK; a Python dashboard
-  would mean catching SDK ergonomics issues only when external developers hit them.
-- **Contributor accessibility** — Vite with TypeScript is a widely adopted frontend stack. To attract
-  contributions (bug fixes, visualizations, accessibility, localization), lowering the barrier
-  matters. The ecosystem (shadcn/ui, React Flow, Tailwind, etc.) lets us move fast and benefit from
-  community momentum.
-- **Build tool choice** — Vite is the better choice for this client-side app: superior development
-  speed, simplicity, and smaller production bundles.
-- **Scoped v0** — A static Vite app with the leaderboard and basic PG detail pages, including a
-  **sub-graph explorer on PG detail pages** so voters and maintainers get a transparent breakdown of
-  derived metrics (criticality, score). The **full-graph** explorer can be deferred to v1; it is not
-  essential for the Q2 PG Award.
+| Page Type | Direction    | Endpoint                      |
+| --------- | ------------ | ----------------------------- |
+| Project   | Dependents   | `getProjectHasDependents(id)` |
+| Project   | Dependencies | `getProjectDependsOn(id)`     |
+| Repo      | Dependents   | `getRepoHasDependents(id)`    |
+| Repo      | Dependencies | `getRepoDependsOn(id)`        |
 
-### Ownership
+### User Interaction and Lazy Loading
 
-[KoxyG](https://github.com/KoxyG) has taken ownership: build with **Vite's `react-ts` template**.
-[GitHub Issue #3](https://github.com/scf-public-goods-maintenance/scf-public-goods-maintenance.github.io/issues/3).
+The explorer implements incremental graph expansion through user interaction:
 
-## Open Questions
+**Initial Load**:
 
-- **Sub-graph explorer on PG detail pages:** In scope for v0 (essential for the voter user story:
-  "drill into a specific PG's dependency graph and score breakdown to inform my NQG-weighted vote").
-  [@aolieman](https://github.com/aolieman) and [@jaygut](https://github.com/jaygut) to be involved in
-  detailing the specs.
-- **Graph viz library**: Not yet decided. Research is ongoing; the chosen library must support
-  interactive (incremental) loading of additional vertices and edges. This doc will be updated once a
-  library is selected.
-- Analytics/integration (e.g. Plausible for usage tracking).
-- Host on xlm.sh? What are its limitations compared to other static site hosting options?
+1. Cytoscape instance initializes with the central focus node (current project or repo)
+2. Immediate neighbors are loaded in the default "dependents" direction
+3. Initial layout applied using the `cose` (Compound Spring Embedder) algorithm
 
-<!-- QUESTION FOR KoxyG: Include mockup descriptions or Mermaid UI flow here? -->
+**Node Expansion**:
+
+1. User clicks on a neighbor node
+2. `expandNode` function fetches neighbors of the clicked node in the current `TraversalDirection`
+3. New nodes and edges added to the Cytoscape instance
+4. Layout algorithm runs on the newly added nodes and their neighborhood
+
+**Direction Toggle**:
+
+1. User switches between "dependents" (incoming) and "dependencies" (outgoing) via toggle buttons
+2. `handleDirectionChange` triggers `expandNode` for the root node in the new direction
+3. Graph updates to show relationships in the selected direction
+
+**State Management**:
+
+- Nodes that have been expanded in a particular direction are not re-expanded
+- Loading states shown during API calls
+- Visual differentiation for root nodes, expanded nodes, and leaf nodes
+
+### Styling and Visual Cues
+
+The explorer applies distinct styling for different node types:
+
+- **Project nodes** — Distinct color/shape
+- **Repo nodes** — Different styling from projects
+- **External repo nodes** — Differentiated from in-ecosystem repos
+- **Root node** — Highlighted to show focus
+- **Loading indicators** — Visual feedback during API calls
+
+## Technology Stack
+
+**Framework**: React 19 with Vite build tooling provides fast hot module replacement during
+development and optimized production builds.
+
+**Routing & State**: TanStack Router handles type-safe routing with automatic route generation and
+React.lazy() code splitting. TanStack Query manages server state with automatic caching, background
+refetching, and stale data management using Suspense-based data fetching.
+
+**Data Layer**: The
+[@pg-atlas/data-sdk](https://github.com/SCF-Public-Goods-Maintenance/pg-atlas-ts-sdk) TypeScript SDK
+provides type-safe API access with automatic request/response validation. The `apiAdapter` and
+`dashboardService` modules wrap SDK calls with error handling and fallback logic.
+
+**Deployment**: DigitalOcean App Platform hosts the static site with automatic deployment on pushes
+to the `main` branch. The dashboard is served from the Amsterdam region with CDN distribution.
+
+### API Integration Pattern
+
+The dashboard follows a Suspense-based data fetching pattern:
+
+1. Page routes define data requirements via TanStack Query hooks with Suspense
+2. Service layer (`src/lib/services/`) wraps SDK calls with error boundaries
+3. TanStack Query handles caching, deduplication, and background updates
+4. UI components render from cached data with Suspense boundaries for loading states
+
+Example data flow:
+
+```typescript
+// Route-level data requirement with Suspense
+export const Route = createFileRoute("/projects/$canonicalId")({
+  loader: ({ params }) => queryClient.ensureQueryData(projectDetailQueryOptions(params.canonicalId)),
+});
+
+// Component consumes data via Suspense hook
+const ProjectDetail = () => {
+  const { canonicalId } = Route.useParams();
+  const data = useProjectDetailSuspense(canonicalId);
+  // ...render with guaranteed data
+};
+```
+
+## Design Principles
+
+The dashboard prioritizes transparency, accessibility, and explorability:
+
+- **Fast loading** — Cached metrics via TanStack Query, lazy rendering for graphs, code splitting
+- **Clear explanations** — Tooltips and help text for all metrics
+- **Accessibility** — Dark/light mode support, keyboard navigation, screen-reader labels
+- **Progressive disclosure** — Summary views → detail pages → interactive visualizations
+- **Risk signaling** — Educational and balanced (PG Atlas is not a security scanner)
+- **URL state** — Filters, sorts, and pagination synced with browser URL for shareable links
+
+## Future Enhancements
+
+Near-term improvements under consideration:
+
+- **Full-graph explorer** — Ecosystem-wide graph visualization with search and filters (deferred to
+  v1)
+- **Export functionality** — CSV downloads for tables, PNG/SVG exports for visualizations
+- **Enhanced sub-graph features** — Node search, filtering by confidence level, path highlighting
+- **Time-series visualizations** — Historical metric trends on project detail pages

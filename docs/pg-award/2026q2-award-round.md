@@ -72,7 +72,8 @@ decision stack that combines objective data, expert review, and community voice.
 3. **NQG Community Vote (legitimacy)** — Reputation-weighted community vote via
    [Tansu](https://tansu.dev), using NQG scores for sybil resistance and voice credit weighting. This
    is where funding decisions are made. Voters see metric scores, expert reviews, and proposal
-   details to inform their vote. See [Tansu Modifications](tansu-modifications.md)
+   details to inform their vote. See
+   [Tansu Integration & SCF Credentials](tansu-and-scf-credential.md)
 
 The working group's [consensus document](../pg-working-group.md) also envisions a fourth step—a
 programmatic Budget Solve that combines metric, expert, and community signals with configurable

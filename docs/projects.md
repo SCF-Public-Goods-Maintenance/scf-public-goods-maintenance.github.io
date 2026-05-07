@@ -1,7 +1,7 @@
 ---
 title: Public Good Projects
 has_children: true
-nav_order: 5
+nav_order: 3
 ---
 
 # Public Good Projects

@@ -37,7 +37,7 @@ factor analysis, and an interactive dashboard.
 
 Architecture and technical specification:
 
-- [PG Atlas Technical Architecture](pg-atlas.md) _(under active development)_
+- [PG Atlas Technical Architecture](pg-atlas.md)
 
 ## Working Group Consensus & Vision
 

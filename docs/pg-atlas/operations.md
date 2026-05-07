@@ -6,153 +6,115 @@ nav_order: 7
 
 # Operations & Deployment
 
-## Requirements
+## Current Infrastructure
 
-PG Atlas operations must balance simplicity, reliability, and low ongoing maintenance for a
-community-driven project:
+PG Atlas operates on a managed infrastructure stack optimized for simplicity, reliability, and
+minimal maintenance overhead:
 
-- **Push-to-deploy simplicity**: Git push to main should trigger builds/deploys without manual
-  intervention.
-- **Minimal DevOps overhead**: Prefer managed services over raw VMs; avoid complex orchestration
-  (Kubernetes) for v0.
-- **Single-machine capable**: Backend fits on one modest instance.
-- **Reliable periodic jobs**: Shadow crawls, metric recomputes, adoption signal pulls, activity flag
-  batch updates — scheduled (various frequencies) with logging and alerts.
-- **Cost control**: Target <$100/month total; free tiers where possible.
-- **GitHub-centric where feasible**: Repo already unavoidable for code/SBOM ingestion — leverage
-  Actions for jobs.
-- **Resilience & monitoring**: Basic health checks, logs, uptime; easy rollback.
-- **Community accessibility**: Public endpoints, no heavy vendor lock-in.
-- **Frontend hosting**: Static-friendly, fast CDN; at least one Stellar-native or decentralized
-  option.
+**Core services**:
 
-Security: HTTPS enforced, rate limiting, no public writes.
+- **DigitalOcean App Platform** — Auto-deploys FastAPI backend and the frontend static build from
+  GitHub pushes to `main`, handles scaling and health checks
+- **DigitalOcean Managed PostgreSQL** — Database with automated snapshots and point-in-time recovery
+- **GitHub Actions** — Runs scheduled workflows for periodic tasks (bootstrap, SBOM queue, git log
+  processing)
+- **Filebase S3** — IPFS-backed artifact storage for SBOM and git log artifacts
 
-## Deployment
+**Cost profile**: Infrastructure spend around $100/month total, with most compute provided free
+through GitHub Actions for open-source repositories.
 
-### DigitalOcean App Platform
+## Deployment Patterns
 
-**Description**:
+### Backend (FastAPI)
 
-- Hosted PostgreSQL with backups and horizontal scaling options.
-- FastAPI container: managed PaaS, auto-deploys from GitHub push to `main`.
-- Heavier tasks can be offloaded to worker containers.
-- Dashboard: Static build on App Platform static site or separate.
+The FastAPI backend runs on DigitalOcean App Platform with push-to-deploy automation:
 
-**Pros**:
+- Infrastructure defined in version-controlled
+  [`app.yaml`](https://github.com/SCF-Public-Goods-Maintenance/pg-atlas-backend/blob/main/app.yaml)
+  App Spec
+- Auto-deploys from GitHub pushes to `main` branch
+- Readiness and liveness checks on `/health` endpoint with automatic restart on failures
+- Horizontal scaling possible but not needed yet
 
-- App Platform excels at push-to-deploy with scaling and health checks.
-- Infrastructure is provisioned through a version controlled `app.yml` App Spec.
-- Unified billing and dashboard.
-- Good logging (through add-ons) and monitoring.
+**Database**:
 
-**Cons**:
+DigitalOcean Managed PostgreSQL provides operational resilience without manual backup management:
 
-- Worker containers can be wasteful.
+- **Automated snapshots** — Daily backups with continuous write-ahead log archival
+- **Point-in-time recovery (PITR)** — Restore to any timestamp within retention window
+- **Connection pooling** — Managed at the application level, separately for FastAPI and Procrastinate
 
-### Research: Stellar-Native Frontend (xlm.sh)
+This eliminates the need for scheduled `pg_dump` backups while providing superior recovery options.
 
-The elevator pitch:
+### Frontend (React Dashboard)
 
-> Unlike traditional websites hosted by trusted third parties, dWebsites are distributed across
-> independently operated nodes, enhancing security, privacy, and resistance to censorship.
+The React-based dashboard is hosted on DigitalOcean with automatic deployments:
 
-**Components**:
+- Auto-deploys from GitHub pushes to the frontend repository
+- Static site generation with React consuming the REST API
+- Zero-downtime deployments with automatic rollback on build failures
+- CDN distribution for global low-latency access
 
-- [Soroban Domains](https://www.sorobandomains.org/) — already used for Tansu.
-- [IPFS](https://ipfs.tech/) — content-addressed, distributed storage for hosting immutable static
-  assets with widespread peer-to-peer distribution.
-- [IPNS](https://docs.ipfs.tech/concepts/ipns/) — mutable naming layer for IPFS that provides stable,
-  updatable pointers to the latest frontend release or changing content.
-- [xlm.sh](https://xlm.sh/) — uses a wildcard DNS record to bridge Soroban Domains and IPFS/IPNS.
+See [Dashboard](dashboard.md) for detailed UI architecture and features.
 
-**Risks**:
+## Background Task Processing
 
-- xlm.sh limitations unknown.
-- Potential latency vs. traditional CDNs.
-- Split hosting increases complexity slightly.
+All periodic and queued processing runs through GitHub Actions workflows, providing free compute,
+built-in audit trails, and transparent execution history. See [Ingestion](ingestion.md) for the
+purpose and steps executed by these workflows.
 
-## Auxiliary Services
+The system uses [Procrastinate](https://procrastinate.readthedocs.io/) for asynchronous task
+processing:
 
-Auxiliary services support reliable background processing, error monitoring, and operational
-visibility. For v0, we prioritize managed or lightweight options to minimize DevOps burden while
-ensuring periodic jobs (shadow crawls, metric recomputes, adoption pulls) and error handling work
-seamlessly.
+**Architecture**:
 
-### Task Queue & Workers
+- PostgreSQL-backed task queue (no separate broker service required)
+- Workers run in GitHub Actions workflows, not as long-running services
+- `PsycopgConnector` (psycopg3) for Procrastinate; FastAPI continues using `asyncpg` via SQLAlchemy
+- Both drivers access the same DigitalOcean PostgreSQL instance
 
-**Purpose**: Offload long-running tasks (SBOM processing, shadow crawls, full metric recomputes,
-activity status batch updates) from the FastAPI request cycle.
+**Worker execution**:
 
-**Components**:
+- GitHub Actions workers invoke `run_worker_async(wait=False, concurrency=N)` per queue
+- Workers exit once queues are drained (required for Actions to complete rather than hang)
+- Queues are processed sequentially to ensure data consistency
+- Repo-scoped queueing locks prevent concurrent processing of the same repository
 
-- [Procrastinate](https://procrastinate.readthedocs.io/) as task queue/worker framework, using
-  PostgreSQL as both broker and result backend (no separate service needed — reuses the existing
-  hosted DB).
-- `PsycopgConnector` (psycopg3) for the Procrastinate connection; the FastAPI app continues to use
-  `asyncpg` via SQLAlchemy — both drivers access the same PostgreSQL instance.
+**Schema management**:
 
-**Deployment**:
+Procrastinate tables (`procrastinate_jobs`, `procrastinate_events`, etc.) are provisioned via Alembic
+migration using the "multiple bases" pattern. The entrypoint script applies migrations automatically
+on every deploy.
 
-- **Workers run in GitHub Actions** (weekly `schedule` + manual `workflow_dispatch`). This provides
-  free compute for public repos, built-in run history/logs, and elevated GitHub API rate limits.
-- The worker invokes `run_worker_async(wait=False, concurrency=N)` per queue so that it exits once
-  the queue is drained — required for GitHub Actions to complete rather than hang.
-- Queues are processed sequentially: `opengrants` first (ensures `Repo` vertices exist), then
-  `package-deps`.
-- Procrastinate's schema tables (`procrastinate_jobs`, etc.) are provisioned via an Alembic migration
-  using the "multiple bases" pattern; `entrypoint.sh` applies it automatically on every deploy.
+**Benefits**: Zero infrastructure cost for workers, elevated GitHub API rate limits, full audit trail
+in GitHub Actions UI, maximum 6-hour runtime per job (sufficient for current scale).
 
-**Pros**: Zero additional infrastructure cost, unified PostgreSQL dependency, reliable scheduling
-with full audit trail in GitHub Actions UI.
+## Observability
 
-**Cons**: Maximum 6-hour runtime per Actions job; not suitable for very long-running crawls without
-sharding.
+### Logging and Monitoring
 
-### Error Monitoring & Performance Tracing
+Current observability is provided through:
 
-**Purpose**: Capture exceptions, performance bottlenecks (slow API endpoints, long recomputes), and
-breadcrumbs for debugging.
+- **Workflow logs** — GitHub Actions provides detailed execution logs for all scheduled workflows
+- **Job summaries** — Bootstrap workflow generates statistics on graph updates and metric computation
+  performance
+- **Semi-structured logs** — FastAPI outputs logs to stdout, captured by DigitalOcean logging
+- **Health endpoint** — `/health` endpoint monitored by App Platform for automatic restarts
 
-**Options**:
+This combination provides sufficient transparency for current operations. Logs and summaries are
+publicly accessible through the
+[workflow runs page](https://github.com/SCF-Public-Goods-Maintenance/pg-atlas-backend/actions),
+aligning with community transparency goals.
 
-- **Sentry.io SaaS** (open-source plan free for public projects): DSN integration in FastAPI,
-  automatic error grouping, releases tracking.
-- **Self-hosted Sentry**: Possible on Droplet but high overhead (multi-container: Postgres, Redis,
-  workers) — not recommended for v0.
+### Future Enhancements
 
-**Recommendation**: Start with Sentry.io free tier — zero setup beyond SDK, aligns with community
-transparency.
+Near-term operational improvements under consideration:
 
-### Additional Services
+- **Fully structured logs** — Currently we generate and subsequently parse our own logs; this can be
+  streamlined by moving to [structlog](https://www.structlog.org/en/stable/index.html)
+- **Sentry integration** — Automatic error grouping, performance tracing, and release tracking
+- **Enhanced alerting** — Discord webhooks for workflow failures, API endpoint health checks
+- **Metrics dashboard** — Prometheus exporter for request rates, response times, queue depths
 
-**Caching**:
-
-- Client-side through headers.
-- Cloudflare CDN/proxy for most API responses.
-- For exports: Git Large File Storage (could get costly on GitHub)?
-
-**Logging**:
-
-- Structured JSON logs to stdout; provider capture (DigitalOcean has Betterstack or Papertrail
-  add-ons).
-
-**Monitoring & Alerts**:
-
-- Betterstack, UptimeRobot, or Healthchecks.io for `/health` endpoint pings.
-- Provider built-in metrics (DigitalOcean monitoring) or lightweight Prometheus exporter.
-
-**Backups**:
-
-- Database dumps (Postgres pg_dump) managed or repo artifacts.
-- Automated via DigitalOcean or GitHub Actions.
-
-<!-- FUTURE SELF: Integrate Sentry performance tracing once API endpoints stabilized. -->
-
-## Open Questions
-
-- Static build feasibility for interactive dashboard (client-side graph rendering size/limits)?
-- Any advantages to have billing in USDC through e.g. Rozo.ai or
-  [Flashback](https://www.flashback.tech/)?
-- Acceptable cost threshold for managed auxiliaries?
-- Alert channels (Discord webhook, email)?
+These enhancements build on the current foundation without disrupting existing operations. Priorities
+will be determined based on observed reliability patterns and community feedback.

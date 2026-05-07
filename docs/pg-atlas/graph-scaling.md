@@ -6,7 +6,29 @@ nav_order: 10
 
 # Graph Scaling
 
-## Native Property Graph DB Options
+## Current Architecture
+
+PG Atlas operates with PostgreSQL 18 + NetworkX for graph storage and computation:
+
+- **Storage** — PostgreSQL tables
+- **Computation** — NetworkX in-memory graphs for metric calculation projections)
+- **Scale** — Fits comfortably in RAM; full metrics recomputation in under a minute
+
+This hybrid approach balances simplicity (single managed database, familiar SQL) with performance
+(efficient in-memory graph algorithms).
+
+**Scaling characteristics**:
+
+- **Read scaling** — PostgreSQL read replicas for API query distribution
+- **Write scaling** — Single-node PostgreSQL handles current ingestion volume (bootstrap weekly,
+  sbom-queue hourly, gitlog every 3 days)
+- **Computation scaling** — NetworkX loads active subgraph into memory; O(nodes + edges) for
+  traversals
+
+When growth exceeds single-node PostgreSQL capabilities, scaling options include native graph
+databases and distributed systems.
+
+## Native Property Graph Databases
 
 ### JanusGraph (BerkeleyDB backend, single-node)
 
@@ -21,17 +43,15 @@ nav_order: 10
 
 **Cons**:
 
-- Java ecosystem (vs. Python-native tooling).
+- Java ecosystem — communication between JVM and FastAPI/Procrastinate provides friction.
 - Slightly higher memory footprint than pure relational for small graphs.
-- Git log/pony factor data needs separate storage or JSON properties.
 
 ### Sqlg (over PostgreSQL)
 
 **Pros**:
 
 - Gremlin queries on familiar relational backend — no new infrastructure.
-- PostgreSQL excels at mixed workloads: graph edges + tabular pony factor/git logs in separate
-  schemas.
+- PostgreSQL excels at mixed workloads: graph edges + tabular audit records in separate schemas.
 - Excellent batch update performance (SQL SET for activity flags across thousands of rows).
 - Fast incremental writes via standard ORM.
 - Easy audit/export with SQL tools.
@@ -55,26 +75,25 @@ nav_order: 10
 
 - Less mature community/maintenance than JanusGraph.
 - Configuration overhead higher than BerkeleyDB embed.
-- Pony factor/git logs require separate handling or JSON blobs.
 - Scaling path less standardized than JanusGraph.
 
-### SurrealDB (embedded or dedicated single-node)
+## SurrealDB
 
 **Overview**: [SurrealDB](https://surrealdb.com/) is a multi-model database (document, graph,
 relational) with a SQL-like query language (SurrealQL) that supports graph traversals natively.
 Single Rust binary, no JVM, embeddable or client-server.
 
-Introduced by @waldmatias during the v0 storage decision
+Introduced by [@waldmatias](https://github.com/waldmatias) during the v0 storage decision
 ([issue #2](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/2)).
 
 **Pros**:
 
 - **Unified multi-model**: Graph traversals _and_ tabular data in one system. No NetworkX sidecar, no
-  separate tables for pony factor stats — everything in SurrealQL.
+  separate tables for audit records — everything in SurrealQL.
 - **SQL-like syntax**: Potentially lower learning curve than Gremlin for contributors with SQL
   background. Graph traversals use `<->` and `<-` operators in queries.
-- **Single binary deployment**: Aligns perfectly with minimal-DevOps, <$100/month operational
-  constraint. No JVM memory overhead.
+- **Single binary deployment**: Aligns perfectly with minimal-DevOps constraint. No JVM memory
+  overhead.
 - **Rust performance**: Low memory footprint, fast concurrent reads, good write throughput.
 - **Schema flexibility**: Schemaless by default but supports strict schema definitions. Good for
   rapid iteration.
@@ -83,8 +102,8 @@ Introduced by @waldmatias during the v0 storage decision
 
 **Cons**:
 
-- **Zero team experience**: Nobody on the working group has used SurrealDB in production. For a
-  system powering funding decisions, this is a meaningful risk.
+- **Zero team experience**: No PG Atlas contributors have used SurrealDB in production. For a system
+  that factors into funding decisions, this is a meaningful risk.
 - **Project maturity**: Post-v1.0 but younger than PostgreSQL (30+ years) or TinkerPop (10+ years).
   Fewer production war stories, smaller community, less StackOverflow coverage.
 - **Ecosystem tooling**: Python client exists but is less mature than psycopg3 or SQLAlchemy.
@@ -105,43 +124,40 @@ Introduced by @waldmatias during the v0 storage decision
 - As a migration target post-v0 if PostgreSQL + NetworkX hits scaling limits and we want to avoid JVM
   operational overhead.
 
-**Example SurrealQL graph traversal** (for comparison):
+**Decision context**: During the v0 storage discussion, [@waldmatias](https://github.com/waldmatias)
+introduced SurrealDB but recommended Option B (PostgreSQL + NetworkX) for v0, noting that SurrealDB
+remains an interesting option to revisit during scaling discussions. The team agreed this was the
+pragmatic path: ship fast with known tools, reevaluate (TinkerPop vs. SurrealDB vs. PostgreSQL
+extensions) when we hit actual scaling constraints.
 
-```sql
--- Count transitive dependents (criticality)
-SELECT count() FROM depends_on<-project<-depends_on<-project
-WHERE activity_status = 'live' AND id = $project_id;
+## Migration Decision Criteria
 
--- Active subgraph projection (simplified)
-SELECT id, display_name FROM project
-WHERE activity_status = 'live'
-AND in_degree = 0
-RELATE ->depends_on->project;
-```
+Consider migrating from PostgreSQL + NetworkX when:
 
-**Decision context**: During the v0 storage discussion, @waldmatias introduced SurrealDB but
-recommended Option B (PostgreSQL + NetworkX) for v0, noting that SurrealDB remains an interesting
-option to revisit during scaling discussions. The working group agreed this was the pragmatic path:
-ship fast with known tools, reevaluate (TinkerPop vs. SurrealDB vs. PostgreSQL extensions) when we
-hit actual scaling constraints.
+- **Graph size** — Exceeds 100K nodes or in-memory computation time > 5 minutes
+- **Query complexity** — Deep traversals (>5 hops) become performance bottlenecks
+- **Real-time requirements** — Need low-latency transitive queries via API (not pre-computed)
+- **Distributed needs** — Multi-region deployment or horizontal scaling required
 
-## Recommended Path
+**Current assessment** (after Build Award completion): PostgreSQL + NetworkX meets all performance
+requirements. No immediate migration needed.
 
-Assume **JanusGraph + BerkeleyDB** for detailed implementation:
+## Recommended Migration Path
 
-- Best native graph performance for metrics (transitive counts, active subgraph).
-- Per-project updates: Gremlin transactions for edge/vertex changes.
-- Batch activity updates: Scripted Gremlin or bulk load for flag flips.
-- Pony factor: Materialize on repo vertices but store intermediate git contributor stats as an edge
-  type or in a separate data structure.
+When scaling becomes necessary:
 
-## Migration & Extensibility
+1. **JanusGraph + BerkeleyDB** (single-node) — Migrate to TinkerPop/Gremlin for native graph
+   traversals while maintaining single-node simplicity
+2. **JanusGraph + Cassandra/Scylla** (distributed) — Scale horizontally when BerkeleyDB limits
+   reached
+3. **Alternative: SurrealDB** — Consider if multi-model database appeals and team is willing to
+   invest in newer ecosystem
 
-The first 3 options preserve TinkerPop compatibility:
+The first two options preserve TinkerPop compatibility:
 
 - Start with chosen single-node → add distributed backend later if needed.
-- Export path: Gremlin bulk dump or standard serialization. Traversals stay in Gremlin and won't need
-  a major port/rewrite later on.
+- Export path: Gremlin bulk dump or standard serialization.
+- Traversals stay in Gremlin — no major rewrite when scaling
 
 We can investigate adding a TinkerPop-compatible interface to SurrealDB, which would allow us to
 write Gremlin in Python without adding a JVM dependency.

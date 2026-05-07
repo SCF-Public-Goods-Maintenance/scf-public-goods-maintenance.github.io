@@ -8,134 +8,212 @@ nav_order: 5
 
 ## Overview
 
-The API layer exposes PG Atlas data and computed metrics to the public dashboard, Tansu voting
-context, community tools, and third-party integrations. It is implemented with FastAPI, following
-RESTful principles for predictability and ease of consumption.
+The PG Atlas REST API provides public access to dependency graph data, computed metrics, and
+ecosystem insights. The API is live at [api.pgatlas.xyz](https://api.pgatlas.xyz/docs) with
+interactive OpenAPI documentation.
 
-**Key principles**:
+**Design principles**:
 
-- Read-only for v0 (no writes via public API — ingestion handled internally via webhooks/actions).
-- No GraphQL — prevents expensive arbitrary queries that could overload single-machine backend.
-- Resource-oriented endpoints with standard HTTP methods (primarily GET).
-- Pagination, filtering, and sorting where appropriate.
-- Rate limiting and caching to protect resources.
-- Comprehensive OpenAPI specification auto-generated for language-agnostic access.
+- **Read-only public access** — No authentication required for reads (ingestion uses separate
+  OIDC-protected endpoints)
+- **REST architecture** — Resource-oriented endpoints with standard HTTP methods
+- **OpenAPI-first** — Comprehensive specification auto-generated from FastAPI, enabling client
+  generation
+- **Rate-limited** — Per-IP limits prevent abuse while maintaining public accessibility
+- **Server-side operations** — Sorting, filtering, and pagination handled by the backend
+- **TypeScript SDK** — Auto-generated from OpenAPI spec at
+  [pg-atlas-ts-sdk](https://github.com/SCF-Public-Goods-Maintenance/pg-atlas-ts-sdk)
 
-**Goals**:
+For API versioning strategy and stability guarantees, see the
+[API versioning documentation](https://github.com/SCF-Public-Goods-Maintenance/pg-atlas-backend/blob/main/pg_atlas/routers/api-versioning.md).
 
-- Enable transparent community verification of metrics.
-- Provide off-chain context for Tansu rounds without on-chain dependency.
-- Mitigate Python lock-in via OpenAPI docs and multi-language examples (TypeScript, Rust, Go).
-- Support dashboard needs plus broader ecosystem tooling (e.g., custom scorecards, dependency
-  alerts).
+## Operational Endpoints
 
-## Base URL & Formats
+The complete API specification is available at [api.pgatlas.xyz/redoc](https://api.pgatlas.xyz/redoc)
+and [api.pgatlas.xyz/docs](https://api.pgatlas.xyz/docs). The following describes the key endpoints
+as of v0.6.0.
 
-- Base: `/api/v1` (versioned for future stability).
-- Response format: JSON (default); optional CSV for table structures and raw artifacts via Accept
-  header.
-- Error responses: Standard HTTP codes with JSON body `{ "detail": "message" }`, following FastAPI +
-  Pydantic defaults.
+### Health and Metadata
 
-## Authentication & Authorization (v0)
+**`GET /health`**
 
-- Public read-only — no auth required.
-- Future: API keys for higher rate limits or write access (admin ingestion).
+Returns the current readiness status, application version, and component health:
 
-## Rate Limiting
+- `status` — `"live"` or `"ready"`
+- `version` — Application version string
+- `components` — Database connectivity, artifact store type, schema version
 
-- Global: 100 requests/minute per IP (configurable).
-- Burst protection via token bucket.
-- Headers: `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `Retry-After`.
+**`GET /metadata`**
 
-## Core Endpoints (v0)
+Ecosystem-wide summary statistics computed on-the-fly:
 
-### Health & Metadata
+```json
+{
+  "total_projects": 641,
+  "active_projects": 407,
+  "total_repos": 2721,
+  "active_repos_90d": 487,
+  "total_external_repos": 9675,
+  "total_dependency_edges": 26096,
+  "total_contributor_edges": 35407,
+  "active_contributors_30d": 430,
+  "active_contributors_90d": 1231,
+  "last_updated": "2026-05-06T07:03:10Z"
+}
+```
 
-- `GET /health` — Returns `{ "status": "ok", "last_computed": timestamp }`.
-- `GET /metadata` — Ecosystem summary: total nodes/edges, active count, last full recompute.
+### Projects
 
-### Ecosystem Projects
+**`GET /projects`**
 
-- `GET /projects` — List projects with pagination and filters.
-  - Query params: `type=public-good`, `activity_status=live`, `search=keyword`, `limit=50`,
-    `offset=0`.
-  - Response: Paginated list with basic fields (canonical_id, display_name, type, activity_status,
-    git_org_url, criticality_score, pony_factor, adoption_score).
+Paginated list of SCF-funded projects with optional filters and sorting:
 
-- `GET /projects/{canonical_id}` — Detailed project view.
-  - Includes: metadata, activity_status, aggregated metrics (criticality_score, pony_factor,
-    adoption_score), list of child repos with their metrics.
+**Query parameters**:
 
-- `GET /projects/{canonical_id}/repos` — List all repos belonging to this project.
-  - Response: Array of repo objects with per-repo metrics and metadata.
+- `project_type` — Filter by `public-good` or `scf-project`
+- `activity_status` — Filter by `live`, `in-dev`, `discontinued`, or `non-responsive`
+- `search` — Case-insensitive substring match on `display_name` (max 256 chars)
+- `sort` — Comma-separated `field:direction` pairs (e.g., `criticality_score:desc,display_name:asc`)
+- `category` — Filter by exact project category string (max 128 chars)
+- `limit` — Page size (default: 50, max: 200)
+- `offset` — Pagination offset (default: 0)
 
-### Repos
+**Response**: Paginated response with `items`, `total`, `limit`, and `offset`. Each item includes
+`canonical_id`, `display_name`, `project_type`, `activity_status`, `category`, `git_owner_url`,
+`pony_factor`, `criticality_score`, `adoption_score`, and `updated_at`.
 
-- `GET /repos` — List repos with pagination and filters.
-  - Query params: `project_id=...`, `activity_status=live`, `search=keyword`, `limit=50`, `offset=0`.
-  - Response: Paginated list with basic fields (canonical_id, display_name, project_id,
-    activity_status, latest_version, latest_commit_date, criticality_score, pony_factor,
-    adoption_downloads, adoption_stars).
+**`GET /projects/{canonical_id}`**
 
-- `GET /repos/{canonical_id}` — Detailed repo view.
-  - Includes: metadata, adoption signals, direct dependents and dependencies, parent project
-    reference.
+Full project detail including active contributor stats and validated metadata:
 
-### Dependencies
+- Project-level metrics (`pony_factor`, `criticality_score`, `adoption_score`)
+- Active contributor counts (30-day and 90-day windows)
+- Normalized `metadata` object with SCF submissions, description, website, social links, funding data
 
-- `GET /repos/{canonical_id}/dependents` — Direct (active) dependents of this repo.
-  - Query: `active=true`, `within_ecosystem=true`.
+**`GET /projects/{canonical_id}/repos`**
 
-- `GET /repos/{canonical_id}/dependencies` — Direct/upstream dependencies of this repo.
-  - Query: `active=true`, `within_ecosystem=true`.
+Paginated list of repositories belonging to the specified project. Supports `limit` and `offset`
+query parameters. Returns 404 if the project does not exist.
 
-- `GET /repos/{canonical_id}/blast-radius` — Transitive within-ecosystem dependents. Only available
-  for repos belonging to `type=public-good` projects, 404 otherwise.
+**`GET /projects/{canonical_id}/contributors`**
 
-- `GET /projects/{canonical_id}/dependents` — Project-level dependents (derived from repo-level
-  edges, collapsed to distinct dependent projects).
+Paginated contributors aggregated across all repos in the project:
 
-- `GET /projects/{canonical_id}/dependencies` — Project-level dependencies (derived from repo-level
-  edges, collapsed to distinct dependency projects).
+- `search` — Filter by contributor name
+- `limit`, `offset` — Pagination controls
 
-### Metrics & Scores
+Returns `ProjectContributorSummary` with `total_commits_in_project` aggregated across repos.
 
-These are early thoughts. Needs to be revisited after fleshing out use cases.
+**`GET /projects/{canonical_id}/depends-on`**
 
-- `GET /scores` — Leaderboard of PGs sorted by composite or individual metric.
-  - Query: `sort=-criticality_score`, `min_criticality=5`, `level=project` (default) or `level=repo`.
+Collapsed project-level dependencies (outgoing edges). Aggregates repo-level `depends_on` edges: for
+each distinct target project, returns the target project summary and the number of repo-level edges.
+Self-references and edges to external repos are excluded.
 
-- `GET /scores/{canonical_id}` — Full PG Score breakdown (components JSON).
-  - Works for both project and repo canonical IDs.
-  - Project-level: aggregated criticality, pony_factor, adoption_score.
-  - Repo-level: direct criticality, pony_factor, adoption_downloads, adoption_stars, adoption_forks.
+**`GET /projects/{canonical_id}/has-dependents`**
 
-### Bulk Exports
+Collapsed project-level reverse dependencies (incoming edges). Same aggregation as `depends-on` but
+in reverse: which other projects have repos that depend on repos of this project.
 
-- `GET /export/projects` — CSV/JSON dump of all projects with aggregated metrics (cached quarterly).
-- `GET /export/repos` — CSV/JSON dump of all repos with per-repo metrics.
-- `GET /export/graph` — Simplified graph JSON (within-ecosystem repo nodes + edges array, for offline
-  analysis). Optionally `?level=project` for project-level collapsed graph.
+### Repositories
 
-## Caching & Performance
+**`GET /repos`**
 
-- Endpoint-level caching (Redis or in-memory for v0) for expensive reads (e.g., leaderboards).
-- ETag/If-None-Match support for conditional requests.
-- Background recompute does not block reads (serve last-known scores).
+Paginated list of in-ecosystem repos with optional filters and sorting:
 
-## OpenAPI & Client Generation
+**Query parameters**:
 
-- Auto-documented at `/docs` (Swagger UI) and `/redoc`.
-- Provide official Typescript SDK as an example of OpenAPI client generation.
+- `project_id` — Filter to repos belonging to a specific project (integer)
+- `search` — Case-insensitive substring match on `display_name`
+- `sort` — Comma-separated `field:direction` pairs (e.g., `adoption_stars:desc,display_name:asc`)
+- `limit` — Page size (default: 50, max: 200)
+- `offset` — Pagination offset
 
-## Open Questions
+**`GET /repos/{canonical_id}`**
 
-- Additional filters (e.g., by ecosystem, SCF project linkage)?
-- Webhook for metric change notifications (post-v0)?
-- Collect a list of use cases beyond the dashboard/Tansu.
+Full repo detail including:
 
-<!-- FUTURE SELF: Add endpoint for pony factor raw stats once extended git parsing implemented. -->
+- Parent project summary (`parent_project`)
+- Contributors list with commit counts
+- Releases array (PURL, version, release date)
+- Outgoing and incoming dependency edge counts (`outgoing_dep_counts`, `incoming_dep_counts`)
+- Active contributor counts (30-day and 90-day windows)
 
-<!-- INGESTION IMPACT: No public write endpoints in v0 — internal webhook separate from this
-layer. -->
+**`GET /repos/{canonical_id}/contributors`**
+
+Paginated contributors for one repo with commit counts and date spans:
+
+- `search` — Filter by contributor name
+- `limit`, `offset` — Pagination controls
+
+Returns `RepoContributorSummary` with `number_of_commits`, `first_commit_date`, `last_commit_date`.
+
+**`GET /repos/{canonical_id}/depends-on`**
+
+Direct dependencies (outgoing edges) for the repo. Each entry includes:
+
+- `canonical_id`, `display_name`, `vertex_type` (`repo` or `external-repo`)
+- `version_range`, `confidence` (`verified-sbom` or `inferred-shadow`)
+
+**`GET /repos/{canonical_id}/has-dependents`**
+
+Direct dependents (incoming edges) for the repo. Same structure as `depends-on` but in reverse
+direction.
+
+### Contributors
+
+**`GET /contributors`**
+
+Paginated contributor list with optional name filtering:
+
+- `search` — Case-insensitive substring match on contributor name
+- `limit`, `offset` — Pagination controls
+
+Returns `ContributorSummary` with `id`, `name`, `email_hash`.
+
+**`GET /contributors/{contributor_id}`**
+
+Full contributor detail with aggregated statistics and per-repo commit activity:
+
+- `total_repos`, `total_commits` — Aggregated counts
+- `first_contribution`, `last_contribution` — Earliest and latest commit dates
+- `repos` — Array of `ContributionEntry` with repo details, commit counts, and date ranges
+
+### Audit Logs
+
+**`GET /ingest/sbom`**
+
+List SBOM submission records with optional filtering:
+
+- `repository` — Filter by `repository_claim` (exact match)
+- `limit`, `offset` — Pagination controls
+
+Returns paginated `SbomSubmissionResponse` with submission status, content hash, artifact path, and
+timestamps.
+
+**`GET /ingest/sbom/{submission_id}`**
+
+Single SBOM submission detail including raw artifact content (if available). The `raw_artifact` field
+contains the full JSON text or `null` if missing from store.
+
+**`GET /gitlog`**
+
+List gitlog processing attempts with optional repo filter:
+
+- `repo` — Filter by repo `canonical_id` (exact match)
+- `limit`, `offset` — Pagination controls
+
+Returns paginated `GitLogArtifactSummary` with processing status, artifact path, and timestamps.
+
+**`GET /gitlog/{artifact_id}`**
+
+Single gitlog processing attempt detail including raw artifact content (if available).
+
+## Client Libraries and Integration
+
+**TypeScript SDK**: Auto-generated from the OpenAPI specification at
+[pg-atlas-ts-sdk](https://github.com/SCF-Public-Goods-Maintenance/pg-atlas-ts-sdk). The SDK provides
+type-safe access to all endpoints with automatic request/response validation.
+
+**Other languages**: The OpenAPI spec at `/openapi.json` can be used with code generators for Rust,
+Go, Python, and other languages (e.g. with [openapi-generator](https://openapi-generator.tech/)).
