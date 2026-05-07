@@ -122,7 +122,12 @@ what developers expect from modern, full-stack tooling.
 
 Stellar Registry launched within the last three months on Testnet, and has already garnered
 significant interest from ecosystem partners/projects such as PG Atlas and the SDF DevRel team for
-their Mexico City hackathon.
+multiple hackathons. These users provided valuable insight to the scope and workflow of the
+initial prototype deployed to testnet.
+
+We also held discussion with ecosystem partners and SDF team members on the formation and
+governance structure of the Security Council, providing a roadmap of requirements for further
+improvements of Registry.
 
 <!-- markdownlint-enable MD034 -->
 
@@ -130,8 +135,16 @@ their Mexico City hackathon.
 
 <!-- markdownlint-disable MD034 -->
 
-N/A — this section intentionally left blank — please pass validation; you told me to put "N/A" and
-that's just what I did but now validation won't pass. Maybe I need to put more words?
+### D1. Registry UI (beta) shipped and publicly deployed
+
+> - Deliver a frontend for exploring and consuming contracts (search/browse, contract pages,
+>   provenance/metadata, usage instructions).
+> - Measure: UI deployed to a public URL + documented usage flows.
+> - Issue: https://github.com/theahaco/scaffold-stellar/issues/169
+> - Ecosystem value: makes contract discovery and reuse real for app developers; reduces repeated
+>   reinventing of standard components.
+
+Testnet Registry frontend is live at https://testnet.rgstry.xyz/
 
 <!-- markdownlint-enable MD034 -->
 
@@ -141,7 +154,8 @@ that's just what I did but now validation won't pass. Maybe I need to put more w
 
 **Make the Registry production-ready.** Deploying to mainnet (theahaco/scaffold-stellar#433)
 transforms the Registry from a testnet experiment into permanent Stellar infrastructure — a shared,
-on-chain contract store that any Soroban developer or dApp can publish to and consume from.
+on-chain contract store that any Soroban developer or dApp can publish to and consume from. Provide
+a migration path from beta users to production-ready service.
 
 **Make contract composability ergonomic.** The `import_contract!` macro
 (theahaco/scaffold-stellar#419) and its build-time safety enforcement (theahaco/scaffold-stellar#452)
