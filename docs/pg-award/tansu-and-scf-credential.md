@@ -33,11 +33,11 @@ SCF Pilots vote using their reputation scores for sybil resistance and proportio
 
 **Voting mechanism**:
 
-1. Each Pilot's vote is weighted by their NQG (Net Quantified Goodwill) score
-2. NQG scores calculated and stored in
+1. Neural Quorum Governance (NQG) scores calculated and stored in
    [stellar-community-fund-contracts](https://github.com/stellar/stellar-community-fund-contracts)
-3. Tansu reads NQG scores via badge-based voting (configurable weight per badge tier)
-4. Votes execute on-chain with weighted tallying
+2. Each Pilot's can cast a vote on Tansu. They can adjust their voting power which is capped based on their individual NQG scores
+3. Votes are recorded on-chain as Pedersen commitments
+4. Votes execute on-chain without ever revealing individual votes
 
 **Vote privacy**:
 
@@ -66,10 +66,10 @@ The SCF Pilot credential system builds on NQG scores with dynamic NFT representa
 **Credential properties**:
 
 - **Soulbound** — Non-transferable tokens bound to Pilot identities
-- **Dynamic** — NFT metadata updates automatically when NQG scores change
+- **Dynamic** — NFT metadata updates automatically when SCF role and NQG score change
 - **SEP-50 Compatible** — Follows Stellar ecosystem standards for wallet integration (Freighter,
   etc.)
-- **Composable** — Other projects can leverage trust signals (e.g., Soroban Security audit reports)
+- **Composable** — Other projects can leverage trust signals (e.g., Stellar Security Portal)
 
 **Use cases**:
 
@@ -101,7 +101,7 @@ The Tansu + credential architecture addresses key governance challenges:
 | Identity verification       | Soulbound credentials provide on-chain Pilot verification                   |
 | Reputation opacity          | Dynamic NFTs surface NQG scores transparently                               |
 | Cross-tool friction         | SEP-50 compatibility enables wallet integration and ecosystem-wide trust    |
-| Limited programmatic access | On-chain credentials replace Discord API dependencies (e.g., audit reports) |
+| Limited programmatic access | On-chain credentials replace Discord API dependencies                       |
 | Vote manipulation risk      | NQG weighting + soulbound identity prevents sybil attacks                   |
 
 ## Future Enhancements
@@ -119,12 +119,13 @@ Currently, Tansu votes trigger manual award distribution. Future automation poss
 ### Enhanced Credentials
 
 - **Visual Evolution** — Dynamic artwork reflecting status tiers and achievements
-- **Composable Profiles** — Modular metadata (avatar, bio, expertise tags)
 - **Multi-Signature Support** — Team credentials e.g. for working groups of SCF verified members
 
 ### Governance Extensions
 
 - **Delegation** — SCF members delegate voting power while retaining credential
+- **Custom NQG** — Specific NQG score tailored to this grant program
+- **Conflict of interest** — Integrate the conflict of interest feature from Tansu into the workflow
 - **Historical Dashboards** — Transparent analytics of voting patterns and participation rates
 
 The Tansu integration and credential framework provide the foundational infrastructure for
