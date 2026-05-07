@@ -122,12 +122,12 @@ what developers expect from modern, full-stack tooling.
 
 Stellar Registry launched within the last three months on Testnet, and has already garnered
 significant interest from ecosystem partners/projects such as PG Atlas and the SDF DevRel team for
-multiple hackathons. These users provided valuable insight to the scope and workflow of the
-initial prototype deployed to testnet.
+multiple hackathons. These users provided valuable insight to the scope and workflow of the initial
+prototype deployed to testnet.
 
-We also held discussion with ecosystem partners and SDF team members on the formation and
-governance structure of the Security Council, providing a roadmap of requirements for further
-improvements of Registry.
+We also held discussion with ecosystem partners and SDF team members on the formation and governance
+structure of the Security Council, providing a roadmap of requirements for further improvements of
+Registry.
 
 <!-- markdownlint-enable MD034 -->
 
@@ -154,8 +154,8 @@ Testnet Registry frontend is live at https://testnet.rgstry.xyz/
 
 **Make the Registry production-ready.** Deploying to mainnet (theahaco/scaffold-stellar#433)
 transforms the Registry from a testnet experiment into permanent Stellar infrastructure — a shared,
-on-chain contract store that any Soroban developer or dApp can publish to and consume from. Provide
-a migration path from beta users to production-ready service.
+on-chain contract store that any Soroban developer or dApp can publish to and consume from. Provide a
+migration path from beta users to production-ready service.
 
 **Make contract composability ergonomic.** The `import_contract!` macro
 (theahaco/scaffold-stellar#419) and its build-time safety enforcement (theahaco/scaffold-stellar#452)
