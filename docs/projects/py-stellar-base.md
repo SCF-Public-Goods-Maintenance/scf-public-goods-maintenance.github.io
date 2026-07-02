@@ -41,133 +41,145 @@ at https://lightsail.network.
 
 ## Retroactive Impact
 
-In Q1 2026, all planned deliverables were completed. The SDK shipped 1 release (13.2.1) fixing a
-community-reported bug in cursor-based pagination. A dedicated security hardening pass addressed
-multiple XDR decoding vulnerabilities and response-size-based DoS vectors. The XDR code generator was
-migrated from `xdrgen` into the SDK and substantially refactored. SEP-51 (XDR-JSON) support was
-implemented and validated against the Rust Stellar CLI. `to_map` was updated to automatically sort
-`ScMap` keys per Soroban runtime rules.
+In Q2 2026, all three planned deliverables were completed, and protocol work went beyond the plan.
+The SDK shipped three stable releases (14.0.0 through 14.1.1). Support for the smart-contract
+self-description SEPs (SEP-46, SEP-47, SEP-48) and an AI coding agent skill both landed in 14.1.0.
+`stellar_sdk.auth` was redesigned so any account contract can authorize Soroban entries, and the
+generated XDR was advanced from the planned Protocol 26 to Protocol 27, with CAP-71 Soroban
+authorization support implemented in the 15.0.0-beta0 pre-release. Alongside features, the toolchain
+was modernized, migration to ruff, parallelized CI, and network-free test mocks, and dependencies
+kept current.
 
 ## Past Deliverables
 
-### 1. Ongoing SDK Maintenance
-
-Description from last quarter:
-
-> This deliverable covers all necessary improvements to ensure the SDK's long-term viability. It
-> includes resolving defects, implementing new features, refining code quality, and increasing test
-> coverage to guarantee the SDK remains a robust and dependable tool for developers.
-
-Proof of completion:
-
-- Release 13.2.1: https://github.com/StellarCN/py-stellar-base/releases/tag/13.2.1
-- Pending Release: https://github.com/StellarCN/py-stellar-base/blob/main/CHANGELOG.md#pending
-
-One release shipped alongside a dedicated security hardening pass: a comprehensive audit was applied
-across the codebase, fixing response-size-based DoS vectors in federation and TOML fetching, XDR
-decoding stack overflow vulnerabilities, and multiple input validation issues. Further XDR generator
-security fixes are included in the pending release.
-
-### 2. Add Support for SEP-51
-
-Description from last quarter:
-
-> Add support for
-> [SEP-51](https://github.com/stellar/stellar-protocol/blob/master/ecosystem/sep-0051.md), enabling
-> developers to serialize XDR data into JSON. This simplifies integration with web services and
-> tooling, improves developer experience, and promotes consistent behavior across applications in the
-> Stellar ecosystem.
-
-Proof of completion:
-
-- PR #1134: https://github.com/StellarCN/py-stellar-base/pull/1134 — SEP-51 XDR-JSON support added to
-  XDR generator
-- PR #1139: https://github.com/StellarCN/py-stellar-base/pull/1139 — XDR JSON unit tests
-- PR #1140: https://github.com/StellarCN/py-stellar-base/pull/1140 — Test verifying Python XDR-JSON
-  output against Rust Stellar CLI
-
-SEP-51 support was added to the XDR generator, so all generated XDR types automatically gain
-`to_xdr_json()` / `from_xdr_json()` methods. Output was cross-validated against the Rust Stellar CLI
-as a reference implementation.
-
-### 3. xdrgen Migration and Refactoring
-
-Description from last quarter:
-
-> Migrate xdrgen into a dedicated repository and perform necessary refactoring to improve
-> maintainability and long-term sustainability of the SDK's tooling. This will strengthen the build
-> pipeline and make future protocol upgrades easier to support. ref:
-> https://github.com/orgs/stellar/discussions/1738
-
-Proof of completion:
-
-- PR #1113: https://github.com/StellarCN/py-stellar-base/pull/1113 — Migrate Python XDR generator
-  from xdrgen into the SDK
-- PR #1123: https://github.com/StellarCN/py-stellar-base/pull/1123 — XDR generator refactoring
-- PR #1125: https://github.com/StellarCN/py-stellar-base/pull/1125 — XDR generator optimizations
-- PR #1129: https://github.com/StellarCN/py-stellar-base/pull/1129 — XDR generator fixes
-
-The XDR code generator was migrated from the external `xdrgen` tool into the SDK repository and
-substantially refactored, giving full control over the generated Python code. Snapshot tests were
-added to CI so any unintended output changes are caught automatically on future regeneration runs.
-During the refactoring, several latent security issues in the generated XDR encoding/decoding code
-were identified and fixed.
-
-### 4. Improve the scval Build Feature
-
-Description from last quarter:
-
-> Currently, when building a map, we require users to manually sort the keys. Enhance the scval build
-> functionality to automatically sort the keys of the map, thereby simplifying the developer
-> experience and reducing potential sources of errors.
-
-Proof of completion:
-
-- PR #1141: https://github.com/StellarCN/py-stellar-base/pull/1141 — Sort ScMap entries by key in
-  `to_map` per Soroban runtime ordering rules
-
-`to_map` now automatically sorts entries by key, matching the Soroban runtime's requirement that
-`ScMap` keys be in ascending order. This eliminates a class of transaction failures that occurred
-when users provided unsorted maps.
-
-## Proposed Impact
-
-The primary goals for Q2 2026 are: achieve full Protocol 26 compatibility; implement SEP-46, SEP-47,
-and SEP-48 to improve Soroban smart contract tooling interoperability; and publish an AI coding agent
-skill to help developers build on Stellar more effectively. Ongoing maintenance will continue:
-responding to community issues and pull requests, keeping dependencies and CI/CD pipelines current.
-
-## Proposed Deliverables
-
 ### 1. Continuous Maintenance and Improvement
 
-Regular SDK updates addressing Horizon, Soroban RPC, and protocol changes (including Protocol 26),
-bug fixes, feature requests, and documentation updates. Keep CI/CD pipelines, SBOM workflow, and
-dependency updates current.
+Description from last quarter:
 
-Proof: Release notes on GitHub, updated CHANGELOG, passing CI on main.
+> Regular SDK updates addressing Horizon, Soroban RPC, and protocol changes (including Protocol 26),
+> bug fixes, feature requests, and documentation updates. Keep CI/CD pipelines, SBOM workflow, and
+> dependency updates current.
+
+Proof of completion:
+
+- Release 14.0.0: https://github.com/StellarCN/py-stellar-base/releases/tag/14.0.0
+- Release 14.1.0: https://github.com/StellarCN/py-stellar-base/releases/tag/14.1.0
+- Release 14.1.1: https://github.com/StellarCN/py-stellar-base/releases/tag/14.1.1
+- Pre-release 15.0.0-beta0: https://github.com/StellarCN/py-stellar-base/releases/tag/15.0.0-beta0
+
+Some notable PR, not exhaustive:
+
+- PR #1189: https://github.com/StellarCN/py-stellar-base/pull/1189 — feat: add CAP-71 (Protocol 27)
+  Soroban authorization support
+- PR #1199: https://github.com/StellarCN/py-stellar-base/pull/1199 — test: migrate from aioresponses
+  to aiointercept for aiohttp 3.14 support
+- PR #1188: https://github.com/StellarCN/py-stellar-base/pull/1188 — feat: add simulateTransaction
+  authV2 flag
+- PR #1177: https://github.com/StellarCN/py-stellar-base/pull/1177 — Migrate to ruff, PR 2
+- PR #1176: https://github.com/StellarCN/py-stellar-base/pull/1176 — Migrate to ruff, PR 1
+- PR #1172: https://github.com/StellarCN/py-stellar-base/pull/1172 — test: replace real network
+  requests with local httpserver mocks
+- PR #1167: https://github.com/StellarCN/py-stellar-base/pull/1167 — test: use local httpbin fixture
+  in tests
+- PR #1162: https://github.com/StellarCN/py-stellar-base/pull/1162 — feat: improve
+  stellar_sdk.contract.AssembledTransaction authorization lifecycle for contract account
+  authorization
+- PR #1160: https://github.com/StellarCN/py-stellar-base/pull/1160 — feat!: redesign stellar_sdk.auth
+  so any account contract can authorize Soroban entries
+- View all 37 merged PRs (Q2 2026):
+  https://github.com/StellarCN/py-stellar-base/pulls?q=is%3Apr+is%3Amerged+merged%3A2026-04-01..2026-06-30
+
+Three stable releases shipped. The generated XDR was upgraded to Protocol 26 and then to Protocol 27,
+exceeding the planned Protocol 26 target. `stellar_sdk.auth` was redesigned so any account contract
+(default Stellar account, BLS, WebAuthn, threshold, etc.) can authorize Soroban entries, and CAP-71
+Protocol 27 Soroban authorization — including the new address-bound and delegated credential types —
+was implemented across the high-level API. This work currently ships in the 15.0.0-beta0 pre-release
+rather than a stable release: Protocol 27 is not yet broadly available in real-world test
+environments, so the stable 15.0.0 is intentionally held until the implementation can be validated
+against a live Protocol 27 network. The toolchain was also modernized with a migration to ruff,
+parallelized CI, and network-free test mocks, alongside numerous bug fixes and dependency updates.
 
 ### 2. SEP-46, SEP-47, and SEP-48 Support
 
-Add support for SEP-46 (Contract Meta), SEP-47 (Contract Interface Discovery), and SEP-48 (Contract
-Interface Specification). These three SEPs form the foundation for smart contract self-description:
-SEP-46 defines how contracts embed metadata in Wasm custom sections, SEP-47 lets contracts declare
-which SEPs they implement, and SEP-48 provides a rich interface specification including Soroban host
-types, user-defined types, and event schemas. Together they enable the SDK to parse and expose
-contract metadata, which is essential for tooling, auto-generated contract clients, and off-chain
-systems that need to understand contract interfaces.
+Description from last quarter:
 
-Proof: Release on GitHub, PRs with implementation and tests, documentation.
+> Add support for SEP-46 (Contract Meta), SEP-47 (Contract Interface Discovery), and SEP-48 (Contract
+> Interface Specification). These three SEPs form the foundation for smart contract self-description:
+> SEP-46 defines how contracts embed metadata in Wasm custom sections, SEP-47 lets contracts declare
+> which SEPs they implement, and SEP-48 provides a rich interface specification including Soroban
+> host types, user-defined types, and event schemas. Together they enable the SDK to parse and expose
+> contract metadata, which is essential for tooling, auto-generated contract clients, and off-chain
+> systems that need to understand contract interfaces.
+
+Proof of completion:
+
+- Release 14.1.0: https://github.com/StellarCN/py-stellar-base/releases/tag/14.1.0
+
+Introspection APIs for SEP-46 (contract metadata), SEP-47 (contract interface discovery), and SEP-48
+(contract interface specification) were added and shipped in 14.1.0, including `ContractMeta`,
+`ContractSpec`, `ContractInfo`, and `SorobanServer[Async].get_contract_*` helpers that parse a
+Soroban contract's Wasm and expose its self-described metadata. This gives tooling and off-chain
+systems a standard way to understand contract interfaces.
 
 ### 3. AI Coding Agent Skill
 
-Publish an AI coding agent skill for py-stellar-base following the agentskills.io open standard,
-compatible with Claude Code, Codex CLI, Cursor, Gemini CLI, and others. The skill provides
-token-efficient documentation and best practices for AI-assisted development with the SDK, lowering
-the barrier for developers using AI tools to build on Stellar.
+Description from last quarter:
 
-Proof: Skill available in the SDK repository, compatible with Claude Code, Codex CLI, Cursor, Gemini
-CLI, and others.
+> Publish an AI coding agent skill for py-stellar-base following the agentskills.io open standard,
+> compatible with Claude Code, Codex CLI, Cursor, Gemini CLI, and others. The skill provides
+> token-efficient documentation and best practices for AI-assisted development with the SDK, lowering
+> the barrier for developers using AI tools to build on Stellar.
+
+Proof of completion:
+
+- Skill marketplace listing:
+  https://skillsmp.com/creators/stellarcn/py-stellar-base/skills-py-stellar-base — published
+  py-stellar-base agent skill
+
+An Agent Skills-compatible `stellar-sdk` skill was published — both in the SDK repository and to the
+skill marketplace — with Claude Code plugin marketplace metadata and topic references covering
+transactions, Horizon, Soroban, XDR/SCVal, async workflows, SEP integrations, security, and
+troubleshooting. It gives AI coding assistants token-efficient, accurate guidance for building on
+Stellar with the SDK, lowering the barrier for developers using AI tools.
+
+## Proposed Impact
+
+The primary goal for Q3 2026 is to ship py-stellar-base 15.0.0 as a stable release with full Protocol
+27 support, giving the ecosystem's large Python user base a supported path to the new protocol.
+CAP-71 Soroban authorization is already implemented in the 15.0.0 beta; the stable release is held
+until Protocol 27 is available on live test networks for end-to-end validation (issue #1187). Ongoing
+maintenance continues in parallel.
+
+## Proposed Deliverables
+
+### 1. Release py-stellar-base 15.0.0 with Full Protocol 27 Support
+
+Finalize the 15.0.0 beta into a stable release with complete Protocol 27 support, including CAP-71
+Soroban authorization (`ADDRESS_V2` and delegated `ADDRESS_WITH_DELEGATES` credentials). The
+implementation is already done in beta; the remaining work, validating against a live Protocol 27
+network, auth examples and a migration guide for the breaking auth changes, and the stable release to
+PyPI.
+
+Proof: Stable 15.0.0 release on GitHub and PyPI, auth examples and migration notes, passing CI on
+main.
+
+### 2. Continuous Maintenance and Improvement
+
+Beyond routine upkeep, responding to community issues and pull requests, tracking Horizon and Soroban
+RPC changes, and keeping CI/CD, the SBOM workflow, and dependencies current, we want to be candid
+about our intent for Q3: rather than adding new features, we plan to slow down and look inward. We
+will audit the codebase for accumulated technical debt, refactor rough edges, and optimize code that
+has grown organically across many releases, so the SDK stays maintainable and dependable for the long
+term.
+
+This is a deliberate decision to consolidate, not to coast. For this SDK, "maintenance" has
+consistently produced meaningful improvements well beyond what we formally plan, Q2 is the clearest
+example, where full Protocol 27 support, the `stellar_sdk.auth` redesign, and a toolchain
+modernization all shipped under this same deliverable. We expect Q3 to be no different: as we dig
+into the code, concrete fixes and refinements will follow.
+
+Proof: Release notes on GitHub, updated CHANGELOG, refactoring and optimization PRs, passing CI on
+main.
 
 ## Legal Acknowledgements
 
