@@ -9,8 +9,7 @@ budget: "15000"
 
 # stellar-php-sdk
 
-_The Stellar SDK for PHP, providing transaction building, Horizon and Soroban RPC access, high-level
-Soroban smart contract support, and implements 19 Stellar Ecosystem Proposals (SEPs)._
+_The Stellar SDK for PHP, providing transaction building, Horizon and Soroban RPC access, high-level Soroban smart contract support, and implements 19 Stellar Ecosystem Proposals (SEPs)._
 
 |                      |                                             |
 | -------------------- | ------------------------------------------- |
@@ -23,214 +22,124 @@ Soroban smart contract support, and implements 19 Stellar Ecosystem Proposals (S
 
 ## Project Description
 
-The Stellar PHP SDK is a PHP library for building Stellar applications on web servers and backend
-systems. It provides transaction building, account management, Horizon API access, Soroban RPC
-support, high-level Soroban smart contract support, and implements 19 Stellar Ecosystem Proposals
-(SEPs). The SDK is listed on the official Stellar developer documentation and is used by projects
-including StellarChain.io, cNGN Stablecoin, PHP Anchor SDK, and others.
+The Stellar PHP SDK is a PHP library for building Stellar applications on web servers and backend systems. It provides transaction building, account management, Horizon API access, Soroban RPC support, high-level Soroban smart contract support, and implements 19 Stellar Ecosystem Proposals (SEPs). The SDK is listed on the official Stellar developer documentation and is used by projects including StellarChain.io, cNGN Stablecoin, PHP Anchor SDK, and others.
 
 ## Team & Experience
 
-My name is Christian (GitHub: christian-rogobete, Discord: soneso, LinkedIn:
-https://www.linkedin.com/in/rogobete/) and I am the main developer and maintainer of the Stellar PHP
-SDK. I have a master's degree in computer science and a master's degree in logistics and have been
-working in the IT field since the mid-1990s as a developer, software architect, project manager, and
-in other roles.
+My name is Christian (GitHub: [christian-rogobete](https://github.com/christian-rogobete), Discord: `soneso`, LinkedIn: [Christian Rogobete](https://www.linkedin.com/in/rogobete/)) and I am the main developer and maintainer of several Stellar Client SDKs.
 
-I began contributing to the Stellar network in 2017, specializing primarily in the development and
-maintenance of Stellar SDKs. I developed the iOS Stellar SDK (which won the Stellar Build Challenge
-in 2018), the Flutter Stellar SDK, the PHP Stellar SDK, and the Kotlin Multiplatform Stellar SDK.
+I began contributing to the Stellar network in 2017, specializing primarily in the development and maintenance of Stellar SDKs. I developed the iOS Stellar SDK, the Flutter Stellar SDK, the PHP Stellar SDK, and the Kotlin Multiplatform Stellar SDK. See: https://developers.stellar.org/docs/tools/sdks/client-sdks
 
 I currently work full-time on my Stellar SDK projects.
 
-Previous SCF participation: Multiple SCF Build Awards (Flutter Wallet SDK, Swift Wallet SDK, KMP
-Stellar SDK, and others), SCF Public Goods Award since Q3 2025 (Batch 1) for iOS, Flutter, and PHP
-SDKs. Member of the SCF Public Goods Maintenance working group.
+Previous SCF participation: Multiple SCF Build Awards ([Flutter & Swift Wallet SDKs](https://developers.stellar.org/docs/build/apps/wallet/overview), KMP Stellar SDK, and others), SCF Public Goods Award since Q3 2025 (Batch 1) for iOS, Flutter, and PHP SDKs.
 
 ## Retroactive Impact
 
-In Q1 2026, the PHP SDK shipped 5 releases (1.9.1 through 1.9.5). The SDK is used by projects
-including StellarChain.io, cNGN Stablecoin, PHP Anchor SDK, and others. Stats (as of April 10, 2026):
-41 stars, 20 forks, 80 releases, Packagist 48,733 total downloads (1,495/month), 32 dependent GitHub
-repos, 0 open issues at end of quarter. Median time to close: 10.6h, 100% response rate.
+In Q2 2026 the PHP SDK shipped four releases — 1.9.6, 1.9.7, 1.9.8, and 1.10.0. The SDK is used by projects including StellarChain.io, the cNGN Stablecoin, and the PHP Anchor SDK. At the close of the quarter: 41 stars, 20 forks, 84 total releases, 0 open issues, Packagist downloads of approximately 54,300 total and 2,211/month (up from 1,495/month at Q1 close), 32 dependent repositories and 2 dependent packages, a median first-response time of 3.5 hours, a median time-to-close of 20.8 hours, and a 100% response rate.
 
-Unit test coverage was extended and tracking was set up, currently at 85.9%, with a new CI pipeline
-and Codecov integration (80% project, 70% patch thresholds). Security hardening was applied across
-all SDK modules. Bugs found during testing and maintenance were fixed. Protocol 25 support was added.
+Protocol 26 was tracked by updating the Horizon and RPC compatibility matrices to v26.0.0. Unit test coverage moved from 85.9% to 92.74%, exceeding the committed "toward 90%" goal. CI was hardened with PHPStan static analysis and a composer audit dependency gate, GitHub Actions stay pinned to commit SHAs with least-privilege permissions, and the third-party crypto shim was removed in favor of native ext-sodium.
 
-SEP-53 message signing was implemented, cross-SDK compatible with the Java, Python, iOS, and Flutter
-SDKs. A new XDR code generator replaces hand-written types with machine-generated code from Stellar's
-canonical .x files, adding new types and round-trip tests. The generator also discovered and fixed
-pre-existing encoding bugs in the hand-written code. A daily upstream XDR change detection workflow
-auto-creates issues when the spec changes.
+The SDK delivered SEP-51 (XDR-JSON) bi-directional conversion, and added Protocol 27 (CAP-0071) support. That work also fixed prior silent data loss in credential round-tripping, fixed an auth-callback signature-expiration bug, bounded decode recursion against a maliciously nested delegate tree, and shipped an end-to-end delegated-auth test.
 
-An AI coding agent skill was published for AI-assisted development tools. The SDK documentation was
-fully rewritten with tested code examples.
+The SEP-11 TxRep rewrite was shipped in 1.9.6 and reduced TxRep.php from 3,515 lines to a 505-line facade, with serialization generated onto 144 XDR classes.
 
-SBOM submission to PG Atlas was added and runs on every push. A new daily statistics collection has
-been implemented and runs via https://github.com/Soneso/soneso-sdk-stats (live dashboard:
-https://soneso.github.io/soneso-sdk-stats/).
+Targeted SEP hardening landed across the quarter: SEP-7 URI signature verification, SEP-10 challenge validation plus error-path tests, federation, SEP-31, and stellar.toml error-path tests, and an injectable Soroban RPC server for SEP-45 contract-account web auth. Documentation for SEP-51 and Protocol 27 was added, and the per-SEP compatibility matrices were regenerated with current timestamps and target versions.
+
+The SBOM workflow to PG Atlas continues to run on every push to main, and the [soneso-sdk-stats](https://soneso.github.io/soneso-sdk-stats/) dashboard continues daily collection of Packagist downloads, dependents, clones, stars, and responsiveness metrics for the SDK.
 
 ## Past Deliverables
 
-### 1. Continuous Maintenance and Improvement Deliverable
-
-Description from last quarter: Regular SDK updates addressing horizon, rpc, protocol updates (e.g.
-p25), bug fixes, feature requests, code modernization, unit test coverage improvement, and
-documentation enhancements to ensure long-term sustainability. This includes a new documentation for
-AI Coding Agents, a so called "skill", providing token efficient documentation and best practices
-when using the SDK. Furthermore it includes setting up a configuration for unit test coverage
-tracking and adding to CI/CD pipeline.
-
-Proof of completion:
-
-- Release 1.9.1: https://github.com/Soneso/stellar-php-sdk/releases/tag/1.9.1
-- Release 1.9.2: https://github.com/Soneso/stellar-php-sdk/releases/tag/1.9.2
-- Release 1.9.3: https://github.com/Soneso/stellar-php-sdk/releases/tag/1.9.3
-- Release 1.9.4: https://github.com/Soneso/stellar-php-sdk/releases/tag/1.9.4
-- Release 1.9.5: https://github.com/Soneso/stellar-php-sdk/releases/tag/1.9.5
-
-Protocol support: Added Protocol 25 RPC response fields (v1.9.1). Updated XDR definitions to latest
-upstream (v1.9.5).
-
-Test coverage and CI/CD: Unit test coverage was extended and tracking was set up, currently at 85.9%.
-Added GitHub Actions CI with Codecov integration.
-
-- PR #60: https://github.com/Soneso/stellar-php-sdk/pull/60
-- PR #61: https://github.com/Soneso/stellar-php-sdk/pull/61
-
-Security hardening: Security audit across all source files covering cryptographic hardening, HTTPS
-enforcement, input validation, and PSR-3 logging.
-
-- PR #71: https://github.com/Soneso/stellar-php-sdk/pull/71
-
-Bug fixes: Bugs found during the test coverage extension and security hardening have been fixed.
-
-Documentation: Full documentation rewrite with tested code examples that are validated by the test
-suite. Old URLs preserved as redirect stubs for backward compatibility.
-
-- PR #64: https://github.com/Soneso/stellar-php-sdk/pull/64
-
-AI Coding Agent documentation: Agent Skill following the agentskills.io open standard, compatible
-with Claude Code, Codex CLI, Cursor, Gemini CLI, and others. Also available via the Claude Code
-marketplace.
-
-- PR #70: https://github.com/Soneso/stellar-php-sdk/pull/70
-
-Platform compatibility: Made ext-pcntl optional for Windows.
-
-- PR #68: https://github.com/Soneso/stellar-php-sdk/pull/68
-
-CI/CD hardening: Pinned all GitHub Actions to commit SHAs. Added daily upstream XDR change detection
-workflow. Added Dependabot config for monthly updates. Added least-privilege permissions to tests
-workflow.
-
-Compatibility matrices: Updated for Horizon, RPC, and all SEPs with automated generators
-(tools/matrix-generator/).
-
-- Horizon:
-  https://github.com/Soneso/stellar-php-sdk/blob/main/compatibility/horizon/COMPATIBILITY_MATRIX.md
-- RPC:
-  https://github.com/Soneso/stellar-php-sdk/blob/main/compatibility/rpc/RPC_COMPATIBILITY_MATRIX.md
-- SEPs: https://github.com/Soneso/stellar-php-sdk/tree/main/compatibility/sep
-
-SBOM submission: Added PG Atlas SBOM workflow that triggers on every push to main.
-
-- https://github.com/Soneso/stellar-php-sdk/blob/main/.github/workflows/sbom.yml
-
-Statistics and monitoring: A new repository https://github.com/Soneso/soneso-sdk-stats was created to
-collect daily statistics for the PHP SDK. Data collected: GitHub clones (daily counts and unique
-cloners), meta data (stars, forks, watchers), activity (52-week commit history and full release
-list), issue/PR response times with closure stats, Packagist downloads (total, monthly, daily), and
-GitHub dependents (repos and packages). Metrics (as of April 10, 2026): 41 stars, 20 forks, 80
-releases, 0 open issues, median first response 5.9h, median time to close 10.6h, 100% response rate,
-Packagist 48,733 total downloads (1,495/month), 32 dependent repos. Live dashboard:
-https://soneso.github.io/soneso-sdk-stats/
-
-### 2. SEP-53 Support
-
-Description from last quarter: SEP-53 standardizes message signing functionality across Stellar
-wallets, libraries, and services, preventing ecosystem fragmentation and ensuring interoperability.
-SEP-53 support is also implemented in the Java and Python SDKs.
-
-Proof of completion:
-
-- Release 1.9.2: https://github.com/Soneso/stellar-php-sdk/releases/tag/1.9.2
-- PR #63: https://github.com/Soneso/stellar-php-sdk/pull/63
-- SEP-53 compatibility matrix:
-  https://github.com/Soneso/stellar-php-sdk/blob/main/compatibility/sep/SEP-0053_COMPATIBILITY_MATRIX.md
-- Documentation: https://github.com/Soneso/stellar-php-sdk/blob/main/docs/sep/sep-53.md
-
-Adds signMessage() and verifyMessage() on KeyPair. Unit tests cover all spec test vectors (ASCII,
-Japanese, binary), encoding round-trips, failure cases, and edge cases. Cross-SDK compatible with the
-Java, Python, iOS, and Flutter SDKs.
-
-### 3. XDR Classes Generator
-
-Description from last quarter: Currently the SDK has hundreds of manually written XDR classes used to
-encode and decode XDR objects. Extensions or updates in the XDR structure need to be implemented
-manually at this time, which makes the SDK difficult to maintain. The new XDR class generator will
-improve the maintainability and also add missing XDR classes so that they can immediately be used as
-new features require them.
-
-Proof of completion:
-
-- Release 1.9.5: https://github.com/Soneso/stellar-php-sdk/releases/tag/1.9.5
-- PR #72: https://github.com/Soneso/stellar-php-sdk/pull/72
-- Generator: https://github.com/Soneso/stellar-php-sdk/tree/main/tools/xdr-generator
-- XDR definitions: https://github.com/Soneso/stellar-php-sdk/tree/main/xdr
-- CI workflow:
-  https://github.com/Soneso/stellar-php-sdk/blob/main/.github/workflows/xdr-generator.yml
-
-Ruby-based code generator reads Stellar's canonical .x XDR definition files (from
-https://github.com/stellar/stellar-xdr). Replaces hand-written XDR type definitions with
-auto-generated PHP code and adds new types not previously in the SDK. Round-trip encode/decode unit
-tests cover all generated types. CI snapshot tests verify generated code stays in sync with XDR
-definitions. High-level SDK APIs unchanged. The generator discovered and fixed pre-existing encoding
-bugs in hand-written XDR code. Daily upstream XDR change detection workflow auto-creates GitHub
-issues when the spec changes.
-
-## Proposed Impact
-
-Keep the SDK compatible with Horizon, Soroban RPC, and protocol updates including Protocol 26.
-Maintain existing SEP implementations and update as needed. Fix bugs and respond to issues and
-feature requests.
-
-Implement SEP-51 (XDR-JSON), a standard mapping between Stellar's XDR structures and JSON. This
-enables developers to inspect and manipulate XDR data in a human-readable format, improving debugging
-and tooling integration. The Python SDK already implements this SEP.
-
-Rewrite the SEP-11 TxRep implementation to delegate to code-generated methods, replacing the
-monolithic hand-written serialization. This improves maintainability and reduces the risk of encoding
-errors when the XDR spec changes.
-
-## Proposed Deliverables
-
 ### 1. Continuous Maintenance and Improvement
 
-Regular SDK updates addressing Horizon, Soroban RPC, and protocol updates (including Protocol 26 when
-released), bug fixes, feature requests, and documentation updates. Maintain existing SEP
-implementations and update as needed. Keep compatibility matrices, CI pipelines, statistics
-dashboard, and SBOM workflow up to date. Improve unit test coverage toward 90%.
+Description from last quarter: 
+> Regular SDK updates addressing Horizon, Soroban RPC, and protocol updates (including Protocol 26 when released), bug fixes, feature requests, and documentation updates. Maintain existing SEP implementations and update as needed. Keep compatibility matrices, CI pipelines, statistics dashboard, and SBOM workflow up to date. Improve unit test coverage toward 90%.
 
-Proof: Release notes on GitHub, updated compatibility matrices, soneso-sdk-stats dashboard, Codecov
-coverage.
+Proof of completion:
+
+- Release 1.9.6: https://github.com/Soneso/stellar-php-sdk/releases/tag/1.9.6
+- Release 1.9.7: https://github.com/Soneso/stellar-php-sdk/releases/tag/1.9.7
+- Release 1.9.8: https://github.com/Soneso/stellar-php-sdk/releases/tag/1.9.8
+- Release 1.10.0: https://github.com/Soneso/stellar-php-sdk/releases/tag/1.10.0
+- Protocol 26 tracked: Horizon/RPC matrices updated to v26.0.0 (commit [d202e67](https://github.com/Soneso/stellar-php-sdk/commit/d202e67f8a776c870026bec8c5f276a3bf9150b8))
+- Protocol 27 / CAP-0071 support: [PR #94](https://github.com/Soneso/stellar-php-sdk/pull/94), release [v1.10.0](https://github.com/Soneso/stellar-php-sdk/releases/tag/1.10.0) 
+- CI and security hardening: [PR #92](https://github.com/Soneso/stellar-php-sdk/pull/92) (PHPStan [bc94478](https://github.com/Soneso/stellar-php-sdk/commit/bc9447807f6a74fec910e0c1ba938fc7acf739f8), composer audit gate [9de4e6f](https://github.com/Soneso/stellar-php-sdk/commit/9de4e6f033ca3850155a5f184d6efcdfde8842f4)); native ext-sodium migration [PR #77](https://github.com/Soneso/stellar-php-sdk/pull/77) (commit [988802f](https://github.com/Soneso/stellar-php-sdk/commit/988802f8e25e10a6bf5a2dca55354752a1c63c70))
+- SEP hardening: SEP-7 ([8ad5e5d](https://github.com/Soneso/stellar-php-sdk/commit/8ad5e5d58808e7eaf3c02e34d56c1f5ab2ce7290)), SEP-10 ([da77415](https://github.com/Soneso/stellar-php-sdk/commit/da77415966fad30bfd4df1d67c61a30138fa9baa), [cdf6aaa](https://github.com/Soneso/stellar-php-sdk/commit/cdf6aaa9ae49d18a9b4dd6679aa65e8e29973b7d)), federation/SEP-31/stellar.toml error paths ([f0ff53f](https://github.com/Soneso/stellar-php-sdk/commit/f0ff53faf9b6afbaedf95fedbb222ed4fcd2a8da)), SEP-45 injectable RPC server ([bbe49ca](https://github.com/Soneso/stellar-php-sdk/commit/bbe49cace0127556298669f6f21e2c6cccf42299))
+- Correctness fixes ([v1.9.8](https://github.com/Soneso/stellar-php-sdk/releases/tag/1.9.8), [PR #92](https://github.com/Soneso/stellar-php-sdk/pull/92)): full unsigned 64-bit Memo ids ([af187ce](af187ce)), corrected Asset pool-share type constant ([a6e8f69](https://github.com/Soneso/stellar-php-sdk/commit/a6e8f69b6d90ba23cf95f2cd9b06ba6f964901e4)), CAP-40 signed-payload hint for short payloads ([b91325b](https://github.com/Soneso/stellar-php-sdk/commit/b91325b74048d71e29d8185fc85be3f707dda391)), and 32-byte KeyPair key validation ([0ea3417](https://github.com/Soneso/stellar-php-sdk/commit/0ea3417794a0f4992f8e5d8b4d96c1c431a81bd3))
+- Soroban contract client: injectable SorobanServer on ClientOptions/InstallRequest/DeployRequest ([42bea10](https://github.com/Soneso/stellar-php-sdk/commit/42bea1056712298602b16def0b287b84cdaed67d)), and immediate transaction-status polling with exponential backoff ([ab33e69](https://github.com/Soneso/stellar-php-sdk/commit/ab33e69acf4e5636e978f8a96335192e210dd8a5))
+- Coverage improved from 85.9% to 92.74% (main), exceeding the toward-90% goal, under blocking Codecov thresholds (project 80%, patch 70%); the unit suite now runs fully offline (SorobanClient unit-tested with mocked RPC, live SEP-10 moved to integration). Config: https://github.com/Soneso/stellar-php-sdk/blob/main/codecov.yml
+- Stats dashboard: https://soneso.github.io/soneso-sdk-stats/
+- [Horizon compatibility matrix](https://github.com/Soneso/stellar-php-sdk/blob/main/compatibility/horizon/COMPATIBILITY_MATRIX.md)
+- [RPC compatibility matrix](https://github.com/Soneso/stellar-php-sdk/blob/main/compatibility/rpc/RPC_COMPATIBILITY_MATRIX.md)
+- [SEP compatibility matrices](https://github.com/Soneso/stellar-php-sdk/tree/main/compatibility/sep)
+- AI-agent skill bundle updated alongside each release
+
+Four releases shipped this quarter. Protocol 26 was tracked and Protocol 27 (CAP-0071) delegated Soroban authorization was delivered beyond the committed scope. Line coverage rose from 85.9% to 92.74% under blocking Codecov gates. A security pass added PHPStan static analysis, a composer audit gate, and native ext-sodium, and error-path hardening landed across SEP-7, SEP-10, SEP-31, SEP-45, and federation/stellar.toml loading. Compatibility matrices, the SBOM workflow, and the stats dashboard were kept current.
 
 ### 2. SEP-11 TxRep Rewrite
 
-Replace the monolithic hand-written TxRep implementation with generated toTxRep()/fromTxRep() methods
-on XDR types, reducing TxRep.php to a thin facade. This mirrors the approach already completed in the
-Flutter SDK.
+Description from last quarter: 
+> Replace the monolithic hand-written TxRep implementation with generated toTxRep()/fromTxRep() methods on XDR types, reducing TxRep.php to a thin facade. This mirrors the approach already completed in the Flutter SDK.
 
-Proof: Release on GitHub, PR with implementation, updated test suite.
+Proof of completion:
+
+- Release 1.9.6: https://github.com/Soneso/stellar-php-sdk/releases/tag/1.9.6
+- PR #78: https://github.com/Soneso/stellar-php-sdk/pull/78 (commits ed42875, 459edd6)
+- SEP-11 compatibility matrix: https://github.com/Soneso/stellar-php-sdk/blob/main/compatibility/sep/SEP-0011_COMPATIBILITY_MATRIX.md
+
+TxRep.php was reduced from 3,515 lines to a 505-line facade ("Thin facade over the generated XDR toTxRep/fromTxRep methods"), with serialization generated onto 144 XDR classes.
 
 ### 3. SEP-51 (XDR-JSON) Support
 
-Implement SEP-51 bi-directional conversion between XDR and JSON for all XDR types. Extend the
-existing XDR code generator to produce toJson()/fromJson() methods. Handle Stellar-specific types
-(StrKey encoding for AccountID, ContractID, AssetCode, etc.) per the specification.
+Description from last quarter: 
+> Implement SEP-51 bi-directional conversion between XDR and JSON for all XDR types. Extend the existing XDR code generator to produce toJson()/fromJson() methods. Handle Stellar-specific types (StrKey encoding for AccountID, ContractID, AssetCode, etc.) per the specification.
 
-Proof: Release on GitHub, PR with implementation, documentation, round-trip test suite.
+Proof of completion:
+
+- Release 1.9.7 (JSON encoding on XDR types): https://github.com/Soneso/stellar-php-sdk/releases/tag/1.9.7 ([PR #85](https://github.com/Soneso/stellar-php-sdk/pull/85), commit d5c09ec)
+- Release 1.9.8 (generator round-trip + negative tests): https://github.com/Soneso/stellar-php-sdk/releases/tag/1.9.8 ([PR #90](https://github.com/Soneso/stellar-php-sdk/pull/90), commit 985684b)
+- Generator: https://github.com/Soneso/stellar-php-sdk/tree/main/tools/xdr-generator ; fixtures: https://github.com/Soneso/stellar-php-sdk/tree/main/tools/sep-51-test-fixtures
+- Documentation: https://github.com/Soneso/stellar-php-sdk/blob/main/docs/sep/sep-51.md
+- Compatibility matrix: https://github.com/Soneso/stellar-php-sdk/blob/main/compatibility/sep/SEP-0051_COMPATIBILITY_MATRIX.md
+- Tests: Soneso/StellarSDKTests/Unit/Xdr/Sep51/ (15 files: corpus round-trips, canonical spec examples, hand-written-vs-generated equivalence, negative inputs, union-arm rejection, and more)
+
+SEP-51 bi-directional XDR/JSON conversion is implemented via the extended code generator, with Stellar-specific StrKey handling in XdrAccountIDBase.php and XdrAccountID.php. Verification spans corpus round-trips, canonical spec examples, hand-written-vs-generated equivalence, negative inputs, and union-arm rejection.
+
+## Proposed Impact
+
+Keep the SDK compatible with Horizon, Soroban RPC, and protocol updates including Protocol 27. Maintain existing SEP implementations and update as needed. Fix bugs and respond to issues and feature requests.
+
+Improve the Soroban developer experience by adding a helper that converts a returned smart-contract value (XdrSCVal) to a native PHP value, so contract invocation and simulation results can be consumed directly instead of parsing the raw XDR union by hand. The JS and Python SDKs already provide this.
+
+Update the PHP contract-bindings implementation that Soneso contributed to the community stellar-contract-bindings generator (linked from the Stellar CLI) so it produces code compatible with the current SDK.
+
+Implement SEP-35 (Operation IDs), the standard for the total-order ID of a ledger, transaction, or operation, so backend integrators can compute and parse operation IDs and Horizon paging cursors offline. The Python and Java SDKs already implement this.
+
+## Proposed Deliverables
+
+### Continuous Maintenance and Improvement
+
+Regular SDK updates addressing Horizon, Soroban RPC, and protocol updates (tracking Protocol 27 through its mainnet activation), bug fixes, feature requests, and documentation updates. Maintain existing SEP implementations and update as needed, keep the SEP compatibility matrices current. Hold line coverage at 90% or above (currently 92.74%) under the blocking Codecov thresholds. Keep compatibility matrices, CI pipelines, statistics dashboard, and SBOM workflow up to date.
+
+Proof: Release notes on GitHub, updated compatibility matrices, Codecov coverage report, and the soneso-sdk-stats dashboard.
+
+### Native ScVal Conversion
+
+Add a helper that converts a smart-contract value (XdrSCVal) to a native PHP value, so contract invocation and simulation results can be consumed directly instead of parsing the raw XDR union by hand. This matches the JS and Python SDKs.
+
+Proof: GitHub release, PR with implementation and tests, documentation.
+
+### Contract Bindings Update
+
+Update the PHP contract-bindings implementation that Soneso contributed to the community stellar-contract-bindings generator (linked from the Stellar CLI) so its generated PHP code is compatible with the current SDK.
+
+Proof: pull request to the stellar-contract-bindings repository.
+
+### SEP-35 (Operation IDs)
+
+Implement SEP-35: a TOID utility that packs and unpacks a ledger sequence, transaction order, and operation index into the total-order ID used for operation IDs and Horizon paging cursors, with unit tests and documentation.
+
+Proof: GitHub release, PR with implementation and tests, SEP-35 compatibility matrix, documentation.
 
 ## Legal Acknowledgements
 
