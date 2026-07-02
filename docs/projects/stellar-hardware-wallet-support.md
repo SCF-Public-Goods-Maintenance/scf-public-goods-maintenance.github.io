@@ -4,7 +4,7 @@ parent: Public Good Projects
 proposal_issue: 51
 proposer: overcat
 category: "Wallet Support"
-budget: "12000"
+budget: "15000"
 ---
 
 # Stellar Hardware Wallet Support
@@ -19,7 +19,7 @@ devices._
 | **Repository**       | <https://gist.github.com/overcat/ca6e3da0d3602a928c2eef6e054f853a> |
 | **First Released**   | July 2021                                                          |
 | **Intake**           | soft-launch                                                        |
-| **Budget Requested** | 12000                                                              |
+| **Budget Requested** | 15000                                                              |
 
 ## Project Description
 
@@ -49,121 +49,118 @@ has maintained ongoing bug fixes and updates in collaboration with the Trezor te
 
 ## Retroactive Impact
 
-In Q1 2026, all planned deliverables were completed and additional work was delivered beyond the
-original scope. The Stellar Ledger App binary size was reduced by approximately 15% through
-optimization work now staged on the next-release branch, pending bundling with a future update to
-avoid a standalone security audit cycle. Full Stellar token support was shipped in Trezor Suite
-Mobile v26.2.2, completing mobile feature parity for Trezor users. Working with the Trezor team, a
-Figma design for Soroban transaction support on Trezor was completed, laying the groundwork for
-future smart contract signing. Two minor Ledger app releases (v6.0.2, v6.0.3) kept the app current
-with the latest SDK versions and added community-requested token support.
+In Q2 2026, the planned Stellar WalletConnect deliverable shipped to users in Trezor Suite Mobile
+v26.4.2, letting Trezor owners connect to Stellar dApps and sign with hardware-level security. The
+Stellar transaction confirmation and signing flow on Trezor was improved and released in Trezor
+firmware v2.12.1, alongside several additional Stellar maintenance fixes across Trezor Suite. On the
+Soroban front, the upstream firmware implementation was submitted, and in the final week of the
+quarter the Trezor team added Soroban support to their TODO, putting it on their roadmap for the
+first time. This makes Soroban the highest-priority workstream heading into Q3.
 
 ## Past Deliverables
 
-### 1. Ledger App Optimization and Size Reduction
+### 1. Ongoing Maintenance
 
 Description from last quarter:
 
-> Over the next quarter, I will optimize the Stellar Ledger App with a focus on reducing its binary
-> size (currently ~150 KB). This will improve performance, reliability, and leave more room for
-> future protocol upgrades, ensuring the long-term sustainability of Stellar's hardware wallet
-> support.
+> Regular upkeep of the Stellar Ledger app and Trezor integrations in coordination with the Ledger
+> and Trezor teams: responding to community issues and pull requests, keeping SDK and firmware
+> dependencies current, and ensuring Stellar assets and protocol features remain fully supported.
 
 Proof of completion:
 
-- next-release branch: https://github.com/lightsail-network/app-stellar/tree/next-release
+- Trezor firmware v2.12.1:
+  https://github.com/trezor/trezor-firmware/blob/main/core/CHANGELOG.T3W1.md#fixed — improved Stellar
+  transaction confirmation/signing flow
+- Trezor Suite Stellar fixes:
+  https://github.com/trezor/trezor-suite/pulls?q=is%3Apr+author%3Aovercat+is%3Aclosed — merged
+  Stellar maintenance work across Trezor Suite
 
-The Stellar Ledger App binary size was reduced by approximately 15% through targeted optimization
-passes developed in coordination with the Ledger team. The changes are staged on the next-release
-branch and will be bundled with the next production update, combined with a security audit to avoid
-the cost of a standalone audit cycle.
+The Stellar transaction confirmation and signing flow was refined and shipped in Trezor firmware
+v2.12.1, making on-device review clearer for signers. Alongside it, several Stellar maintenance fixes
+landed in Trezor Suite in coordination with the Trezor team, including Soroban contract token
+resolution, Soroban URL prioritization in fiat services, and improved token icon resolution.
 
-### 2. Full Stellar Token Support in Trezor Suite Mobile
+### 2. Stellar WalletConnect Support in Trezor Suite
 
 Description from last quarter:
 
-> I will extend full Stellar token support to Trezor Suite Mobile, enabling mobile users to securely
-> send, receive, and manage non-XLM assets. This significantly improves everyday usability for
-> mobile-first users and expands Stellar's reach across platforms.
+> Add WalletConnect support for Stellar in Trezor Suite, enabling users to connect their Trezor
+> hardware wallets to Stellar dApps directly from the suite. This brings hardware-level signing
+> security to WalletConnect-based Stellar applications and improves interoperability across the
+> ecosystem.
 
 Proof of completion:
 
-- Trezor Suite Mobile v26.2.2: https://github.com/trezor/trezor-suite/releases/tag/v26.2.2%40mobile —
-  full Stellar token support shipped on mobile
+- Trezor Suite Mobile v26.4.2: https://github.com/trezor/trezor-suite/releases/tag/v26.4.2%40mobile —
+  Stellar WalletConnect support shipped
 
-Full Stellar token support was shipped in Trezor Suite Mobile v26.2.2 in collaboration with the
-Trezor team, enabling mobile users to securely send, receive, and manage non-XLM Stellar assets
-directly from their Trezor devices. This completes feature parity between Trezor Suite Desktop and
-Mobile for Stellar users.
+Stellar WalletConnect support was implemented and released to users in Trezor Suite (Mobile) v26.4.2.
+Trezor owners can now connect their devices to WalletConnect-based Stellar dApps and approve
+transactions with hardware-level security, extending Stellar's reach into the growing WalletConnect
+ecosystem.
 
-### 3. Soroban Support Design for Trezor
+### 3. Soroban Support for Trezor
 
 Description from last quarter:
 
-> This work was not explicitly planned but was completed as additional contribution during the
-> quarter.
+> Implement Soroban transaction signing support for Trezor in collaboration with the Trezor team.
+> This work follows prior design and discussion with the Trezor team. Due to current firmware team
+> priorities, PR merge is not guaranteed within the quarter, but the implementation will be submitted
+> and metrics (review feedback, CI results, community interest) will be tracked to guide future work.
 
 Proof of completion:
 
-- Internal Trezor Figma (not publicly available) — Soroban smart contract interaction design for
-  Trezor wallet
+- Development branch: https://github.com/overcat/trezor-firmware/pull/3 — Soroban
+  `StellarInvokeHostFunctionOp` implementation
 
-Collaborated with the Trezor team to complete a Figma design for Soroban smart contract support in
-Trezor wallet. This design work lays the foundation for future Soroban transaction signing on Trezor
-devices and represents the first step toward hardware-secured Soroban interactions.
-
-### 4. Ongoing Ledger App Maintenance
-
-Description from last quarter:
-
-> Ongoing maintenance ensures the Ledger app remains compatible with the latest SDK versions and
-> continues to support community-requested Stellar assets.
-
-Proof of completion:
-
-- PR #101: https://github.com/LedgerHQ/app-stellar/pull/101 — Add support for SolvBTC and xSolvBTC
-  tokens
-- PR #110: https://github.com/LedgerHQ/app-stellar/pull/110 — Refactor deprecated SDK debug macros
-
-Two minor releases shipped in coordination with the Ledger team. v6.0.2 added support for the SolvBTC
-and xSolvBTC tokens following a community request. v6.0.3 modernized the codebase by replacing
-deprecated Ledger SDK debug macros, ensuring forward compatibility with upcoming SDK versions.
+The Soroban signing implementation (`StellarInvokeHostFunctionOp`) was submitted upstream to
+trezor-firmware. As anticipated in the Q2 plan, it did not merge within the quarter, but in the final
+week of the quarter a key milestone was reached: the Trezor team added Soroban support to their TODO,
+putting it on their roadmap for the first time. Development continues on a dedicated branch, and this
+shift from design discussion to a planned firmware task makes Soroban the top priority for Q3.
 
 ## Proposed Impact
 
-The primary goals for Q2 2026 are: ongoing maintenance of the Ledger and Trezor integrations; add
-WalletConnect support for Stellar in Trezor Suite; and implement Soroban transaction signing support
-for Trezor in collaboration with the Trezor team. The Soroban PR may not be merged within the quarter
-due to current firmware team priorities, but the implementation will be submitted and metrics
-observed to inform next steps.
+The primary goal for Q3 2026 is Soroban. Now that the Trezor team has added Soroban support to their
+roadmap, delivering Soroban transaction signing on Trezor is the highest-priority workstream, working
+alongside the Trezor firmware team to drive the integration forward. In parallel, we will add
+Protocol 27 support to the Stellar Ledger app and its associated SDK/libraries, and continue ongoing
+maintenance of both the Ledger and Trezor integrations. Together these keep Stellar first-class on
+the two most widely used secure-hardware ecosystems as the network evolves.
 
 ## Proposed Deliverables
 
-### 1. Ongoing Maintenance
+### 1. Soroban Support for Trezor
+
+Advance Soroban transaction signing on Trezor in collaboration with the Trezor firmware team,
+building on the `StellarInvokeHostFunctionOp` implementation already submitted upstream. With Soroban
+now on the Trezor team's roadmap, the quarter's focus is integration: iterating on review feedback,
+aligning the on-device confirmation UX, passing CI, and driving the work toward merge. This brings
+hardware-secured Soroban smart contract interactions to Trezor users, a first for the ecosystem.
+Because firmware team priorities can shift, merge within the quarter is not guaranteed, but the
+implementation will be actively driven and review/CI/community-interest metrics tracked to guide next
+steps.
+
+Proof: Development activity and review progress on the Soroban firmware implementation, tracked via
+the development branch and CI results.
+
+### 2. Protocol 27 Support for the Ledger App and SDK
+
+Add Protocol 27 support to the Stellar Ledger app and its associated SDK/integration libraries,
+ensuring transactions built under the upcoming protocol upgrade continue to parse, display, and sign
+correctly on Ledger devices. Keeping hardware signing current with each protocol upgrade prevents
+breakage for security-conscious users and integrators when the network transitions.
+
+Proof: Release/changelog for the Stellar Ledger app and SDK covering Protocol 27 support.
+
+### 3. Ongoing Maintenance
 
 Regular upkeep of the Stellar Ledger app and Trezor integrations in coordination with the Ledger and
 Trezor teams: responding to community issues and pull requests, keeping SDK and firmware dependencies
 current, and ensuring Stellar assets and protocol features remain fully supported.
 
-Proof: Release tags on GitHub, updated changelogs, etc.
-
-### 2. Stellar WalletConnect Support in Trezor Suite
-
-Add WalletConnect support for Stellar in Trezor Suite, enabling users to connect their Trezor
-hardware wallets to Stellar dApps directly from the suite. This brings hardware-level signing
-security to WalletConnect-based Stellar applications and improves interoperability across the
-ecosystem.
-
-Proof: Release changelog.
-
-### 3. Soroban Support for Trezor
-
-Implement Soroban transaction signing support for Trezor in collaboration with the Trezor team. This
-work follows prior design and discussion with the Trezor team. Due to current firmware team
-priorities, PR merge is not guaranteed within the quarter, but the implementation will be submitted
-and metrics (review feedback, CI results, community interest) will be tracked to guide future work.
-
-Proof: PR(s) submitted to trezor-firmware.
+Proof: Release tags and updated changelogs on GitHub.
 
 ## Legal Acknowledgements
 
