@@ -77,7 +77,8 @@ impact to the Stellar ecosystem:
   graph.
 - OpenGrants continued to ensure Stellar’s continued 100% DAOIP-5 compliance rate
 - OpenGrants expanded its ecosystem funding datasets, onboarding and integrating data from both ENS
-and Gitcoin, enabling greater comparative analytic capabilities
+  and Gitcoin, enabling greater comparative analytic capabilities
+
 <!-- markdownlint-enable MD034 -->
 
 ## Past Deliverables
@@ -115,7 +116,8 @@ Updated OpenGrants in accordance with ecosystem participant feedback
   integration
   ([Opengrants <> Stellar Community Fund Pipeline](https://hackmd.io/l9sHEdXZRDmkPFjwCSOO1g))
 - OpenGrants roadmap to prioritize fully automated data ingestion according to feedback received from
-PG Atlas team
+  PG Atlas team
+
 <!-- markdownlint-enable MD034 -->
 
 ## Proposed Impact

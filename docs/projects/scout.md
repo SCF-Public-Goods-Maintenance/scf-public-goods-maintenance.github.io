@@ -141,6 +141,7 @@ As suggested in the SDF review:
 - During Month 1, we engaged with the SDF Security/Audit Bank, presenting detector proposals.
 - We delivered new POC metrics.
 - We ran the POC using an expanded set of contracts.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Proposed Impact
@@ -193,6 +194,7 @@ Month 3 – AI Agent POC Iteration 2
 - Expanded set of contracts for testing.
 - Results and findings document.
 - Roadmap from AI POC to a beta-ready product.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Legal Acknowledgements
