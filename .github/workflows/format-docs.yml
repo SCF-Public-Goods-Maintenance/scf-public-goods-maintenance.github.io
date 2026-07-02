@@ -1,0 +1,47 @@
+name: Format Docs
+
+on:
+  workflow_dispatch: # Manually triggered from the Actions tab
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+
+      - name: Install pre-commit
+        run: pip install pre-commit
+
+      - name: Run formatters on all files
+        run: pre-commit run --all-files || true
+
+      - name: Open a PR with the formatting changes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if git diff --quiet; then
+            echo "::notice::Everything already formatted — nothing to do."
+            exit 0
+          fi
+
+          BRANCH="chore/format-docs-${{ github.run_number }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$BRANCH"
+          git commit -am "Apply pre-commit formatting"
+          git push origin "$BRANCH"
+
+          gh pr create \
+            --base main \
+            --head "$BRANCH" \
+            --title "Apply pre-commit formatting" \
+            --body "Automated full-repo formatting (\`pre-commit run --all-files\`), triggered manually via workflow_dispatch."
