@@ -31,21 +31,23 @@ including LOBSTR, Unstoppable Wallet, and others.
 
 ## Team & Experience
 
-My name is Christian (GitHub: [christian-rogobete](https://github.com/christian-rogobete), Discord:
-`soneso`, LinkedIn: [Christian Rogobete](https://www.linkedin.com/in/rogobete/)) and I am the main
-developer and maintainer of several Stellar Client SDKs.
+My name is Christian, also known as Soneso in the Stellar community, and I am the main developer and
+maintainer of several Stellar Client SDKs.
+
+- GitHub: [christian-rogobete](https://github.com/christian-rogobete)
+- Discord: `soneso`
+- LinkedIn: [Christian Rogobete](https://www.linkedin.com/in/rogobete/)
 
 I began contributing to the Stellar network in 2017, specializing primarily in the development and
 maintenance of Stellar SDKs. I developed the iOS Stellar SDK, the Flutter Stellar SDK, the PHP
-Stellar SDK, and the Kotlin Multiplatform Stellar SDK. See:
-https://developers.stellar.org/docs/tools/sdks/client-sdks
+Stellar SDK, and the Kotlin Multiplatform Stellar SDK. I currently work full-time on my Stellar SDK
+projects.
 
-I currently work full-time on my Stellar SDK projects.
+Previous SCF participation:
 
-Previous SCF participation: Multiple SCF Build Awards
-([Flutter & Swift Wallet SDKs](https://developers.stellar.org/docs/build/apps/wallet/overview), KMP
-Stellar SDK, and others), SCF Public Goods Award since Q3 2025 (Batch 1) for iOS, Flutter, and PHP
-SDKs.
+- Multiple SCF Build Awards, including the KMP Stellar SDK OZ smart account support and wallet SDKs
+  for Dart and Swift
+- SCF Public Goods Award since Q3 2025 (Batch 1) for the iOS, Flutter, and PHP SDKs
 
 ## Retroactive Impact
 
@@ -90,9 +92,8 @@ crashed on an unrecognized kind/status, and recovered the dropped fee descriptio
 CI stays hardened — Actions pinned to commit SHAs, least-privilege permissions, Codecov thresholds, a
 daily upstream XDR change-detection workflow, and monthly Dependabot updates — and compatibility
 matrices were regenerated to Horizon/RPC v27.0.0. SBOM submission to PG Atlas continues on every push
-to master, and daily statistics collection continues via soneso-sdk-stats (dashboard:
-[soneso.github.io/soneso-sdk-stats](https://soneso.github.io/soneso-sdk-stats/)), providing the
-responsiveness metrics above.
+to master, and daily statistics collection continues via soneso-sdk-stats, providing the
+responsiveness metrics above (see: [soneso.github.io/soneso-sdk-stats][statsdash]).
 
 ## Past Deliverables
 
@@ -111,25 +112,18 @@ Proof of completion:
 - Release 3.6.0: https://github.com/Soneso/stellar-ios-mac-sdk/releases/tag/3.6.0
 - Release 3.6.1: https://github.com/Soneso/stellar-ios-mac-sdk/releases/tag/3.6.1
 - Protocol 26 tracked: Horizon v26.0.0 / RPC v26.0.0 matrices (3.4.7)
-- Protocol 27 / CAP-71 support added by
-  ([PR #211](https://github.com/Soneso/stellar-ios-mac-sdk/pull/211)) and release in
-  ([v3.6.0](https://github.com/Soneso/stellar-ios-mac-sdk/releases/tag/3.6.0))
-- Headless connectToContract + RPC-visibility polling for smart accounts:
-  [PR #213](https://github.com/Soneso/stellar-ios-mac-sdk/pull/213)
-  ([v3.6.1](https://github.com/Soneso/stellar-ios-mac-sdk/releases/tag/3.6.1))
-- SEP-10 hardening (reject challenges without finite time bounds):
-  [PR #214](https://github.com/Soneso/stellar-ios-mac-sdk/pull/214)
-  ([v3.6.1](https://github.com/Soneso/stellar-ios-mac-sdk/releases/tag/3.6.1))
+- Protocol 27 / CAP-71 support (v3.6.0): [PR #211][pr211]
+- Headless connectToContract + RPC-visibility polling for smart accounts (v3.6.1): [PR #213][pr213]
+- SEP-10 hardening, reject challenges without finite time bounds (v3.6.1): [PR #214][pr214]
 - SEP-6/SEP-24 anchor-transaction crash fix on unrecognized kind/status, and recovered fee
-  description field: [PR #212](https://github.com/Soneso/stellar-ios-mac-sdk/pull/212)
-  ([v3.6.1](https://github.com/Soneso/stellar-ios-mac-sdk/releases/tag/3.6.1))
+  description field (v3.6.1): [PR #212][pr212]
 - Error-handling guide (docs/error-handling.md) with integration tests covering every documented
-  scenario ([v3.4.7](https://github.com/Soneso/stellar-ios-mac-sdk/releases/tag/3.4.7))
+  scenario (v3.4.7)
 - Dependabot bumps (monthly, pinned SHAs)
 - Stats dashboard: https://soneso.github.io/soneso-sdk-stats/
 - [Horizon compatibility matrix](https://github.com/Soneso/stellar-ios-mac-sdk/blob/master/compatibility/horizon/HORIZON_COMPATIBILITY_MATRIX.md)
-- [RPC matrix](https://github.com/Soneso/stellar-ios-mac-sdk/blob/master/compatibility/rpc/RPC_COMPATIBILITY_MATRIX.md)
-- [SEP matrices](https://github.com/Soneso/stellar-ios-mac-sdk/tree/master/compatibility/sep)
+- [RPC compatibility matrix](https://github.com/Soneso/stellar-ios-mac-sdk/blob/master/compatibility/rpc/RPC_COMPATIBILITY_MATRIX.md)
+- [SEP compatibility matrices](https://github.com/Soneso/stellar-ios-mac-sdk/tree/master/compatibility/sep)
 
 Four releases shipped this quarter. Protocol 26 was tracked and Protocol 27 (CAP-71) was delivered,
 including an end-to-end ADDRESS_WITH_DELEGATES testnet integration test. Release 3.6.1 added a
@@ -149,7 +143,7 @@ Description from last quarter:
 Proof of completion:
 
 - Release 3.4.7: https://github.com/Soneso/stellar-ios-mac-sdk/releases/tag/3.4.7
-- PR 202: https://github.com/Soneso/stellar-ios-mac-sdk/pull/202 (commit 473a8749f)
+- PR 202: https://github.com/Soneso/stellar-ios-mac-sdk/pull/202
 
 TxRep.swift was reduced from 3,596 lines to a 75-line facade, with toTxRep()/fromTxRep() generated on
 the XDR types and the public API unchanged. The rewrite also fixed several SEP-11 conformance issues
@@ -175,9 +169,9 @@ Description from last quarter:
 > - Demo application for iOS and macOS
 > - Documentation: API reference and onboarding guide
 
-Delivered in release [3.5.0](https://github.com/Soneso/stellar-ios-mac-sdk/releases/tag/3.5.0) (PR
-208), with the Protocol 27 ADDRESS_WITH_DELEGATES auth path integrated in 3.6.0. The additional
-wallet-connect scope committed in the PR-42 response was also delivered. Delivery by area:
+Delivered in release [3.5.0][rel350] ([PR #208][pr208]), with the Protocol 27 ADDRESS_WITH_DELEGATES
+auth path integrated in 3.6.0. The additional wallet-connect scope committed in the PR-42 response
+was also delivered. Delivery by area:
 
 #### SDK implementation
 
@@ -203,21 +197,18 @@ Proof of completion:
 
 Proof of completion:
 
-- Smart-account documentation set
-  ([docs/smart-accounts/](https://github.com/Soneso/stellar-ios-mac-sdk/tree/master/docs/smart-accounts)):
-  onboarding guide, API reference, and per-platform WebAuthn guides (iOS, macOS)
+- [Smart-account documentation set][sadocs]: onboarding guide, API reference, and per-platform
+  WebAuthn guides (iOS, macOS)
 
 #### Agent-signer flow in the demo app
 
-Beyond the committed demo, a full agent-signer flow was added to the
-[demo app](https://github.com/Soneso/ios-oz-smartaccount-demo): a standalone reference agent, a
-coordination server, and an approval inbox.
+Beyond the committed demo, a full agent-signer flow was added to the demo app: a standalone reference
+agent, a coordination server, and an approval inbox.
 
 Proof of completion:
 
-- Demo [PR #1](https://github.com/Soneso/ios-oz-smartaccount-demo/pull/1)
-- Documentation: agent-flow runbook (demo repo:
-  [documentation/agent-flow.md](https://github.com/Soneso/ios-oz-smartaccount-demo/blob/main/documentation/agent-flow.md))
+- Demo [PR #1][demopr1]
+- Agent-flow runbook (demo repo): [documentation/agent-flow.md][agflow]
 
 The user delegates scoped authority to the agent, the agent acts within scope, an over-scope call is
 rejected on-chain by the spending-limit policy and surfaced to the user through the coordination
@@ -282,3 +273,14 @@ Proof: pull request to the stellar-contract-bindings repository.
 ## Legal Acknowledgements
 
 - [x] As the project representative, I agree to the Legal Acknowledgements.
+
+[agflow]: https://github.com/Soneso/ios-oz-smartaccount-demo/blob/main/documentation/agent-flow.md
+[demopr1]: https://github.com/Soneso/ios-oz-smartaccount-demo/pull/1
+[pr208]: https://github.com/Soneso/stellar-ios-mac-sdk/pull/208
+[pr211]: https://github.com/Soneso/stellar-ios-mac-sdk/pull/211
+[pr212]: https://github.com/Soneso/stellar-ios-mac-sdk/pull/212
+[pr213]: https://github.com/Soneso/stellar-ios-mac-sdk/pull/213
+[pr214]: https://github.com/Soneso/stellar-ios-mac-sdk/pull/214
+[rel350]: https://github.com/Soneso/stellar-ios-mac-sdk/releases/tag/3.5.0
+[sadocs]: https://github.com/Soneso/stellar-ios-mac-sdk/tree/master/docs/smart-accounts
+[statsdash]: https://soneso.github.io/soneso-sdk-stats/
