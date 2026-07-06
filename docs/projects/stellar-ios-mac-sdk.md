@@ -57,7 +57,7 @@ Codecov and enforced in CI, currently at 91%.
 
 The SEP-11 TxRep rewrite shipped in v3.4.7: the monolithic 3,596-line hand-written TxRep.swift was
 replaced with generated toTxRep() and fromTxRep() methods on the XDR types, reducing TxRep.swift to a
-75-line facade with an unchanged public API. The rewrite also fixed several SEP-11conformance issues,
+75-line facade with an unchanged public API. The rewrite also fixed several SEP-11 conformance issues,
 including pool-share ChangeTrustAsset encoding, unsigned and zero-operation transactions, L-address
 liquidity-pool StrKey decoding, and C-style MEMO_TEXT escaping.
 
@@ -76,7 +76,7 @@ server, and an approval inbox — the flow where a user delegates scoped authori
 agent acts within scope, over-scope calls are rejected on-chain and surfaced to the user for
 approval, and the approved call is re-submitted via the relayer.
 
-Smart account documentation comprises an an onboarding guide, an API reference, and per-platform
+Smart account documentation comprises an onboarding guide, an API reference, and per-platform
 WebAuthn guides for iOS and macOS.
 
 Protocol 26 was tracked (matrices to Horizon/RPC v26.0.0) and Protocol 27 / CAP-71 was delivered in
