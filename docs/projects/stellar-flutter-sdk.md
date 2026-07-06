@@ -103,22 +103,22 @@ Proof of completion:
 - Release 3.2.0: https://github.com/Soneso/stellar_flutter_sdk/releases/tag/3.2.0
 - Release 3.2.1: https://github.com/Soneso/stellar_flutter_sdk/releases/tag/3.2.1
 - Protocol 26 tracked: Horizon v26.0.0 / RPC v26.0.0 matrices, XDR upstream 0a56f5b
-- Protocol 27 / CAP-71 support ([PR #150](https://github.com/Soneso/stellar_flutter_sdk/pull/150),
-  release [v3.2.0](https://github.com/Soneso/stellar_flutter_sdk/releases/tag/3.2.0)); matrices
-  regenerated to Horizon/RPC v27.0.0
-- Headless connectToContract + RPC-visibility polling for smart accounts:
-  [PR #151](https://github.com/Soneso/stellar_flutter_sdk/pull/150)
-  ([v3.2.1](https://github.com/Soneso/stellar_flutter_sdk/releases/tag/3.2.1))
-- SEP-10 hardening (reject challenges without finite time bounds):
-  [PR #152](https://github.com/Soneso/stellar_flutter_sdk/pull/152)
-  ([v3.2.1](https://github.com/Soneso/stellar_flutter_sdk/releases/tag/3.2.1))
-- SEP-11 TxRep MEMO_TEXT escaping fix + coverage:
-  [PR #140](https://github.com/Soneso/stellar_flutter_sdk/pull/140)
+- PR 150: https://github.com/Soneso/stellar_flutter_sdk/pull/150 — Protocol 27 / CAP-71 support
+  (v3.2.0); matrices regenerated to Horizon/RPC v27.0.0
+- PR 151: https://github.com/Soneso/stellar_flutter_sdk/pull/151 — headless connectToContract +
+  RPC-visibility polling for smart accounts (v3.2.1)
+- PR 152: https://github.com/Soneso/stellar_flutter_sdk/pull/152 — SEP-10 hardening, reject
+  challenges without finite time bounds (v3.2.1)
+- PR 140: https://github.com/Soneso/stellar_flutter_sdk/pull/140 — SEP-11 TxRep MEMO_TEXT escaping
+  fix + coverage
 - Dependabot bumps (monthly, pinned SHAs): PRs 141-146
 - Stats dashboard: https://soneso.github.io/soneso-sdk-stats/
-- [Horizon compatibility matrix](https://github.com/Soneso/stellar_flutter_sdk/blob/master/compatibility/horizon/HORIZON_COMPATIBILITY_MATRIX.md)
-- [RPC compatibility matrix](https://github.com/Soneso/stellar_flutter_sdk/blob/master/compatibility/rpc/RPC_COMPATIBILITY_MATRIX.md)
-- [SEP compatibility matrices](https://github.com/Soneso/stellar_flutter_sdk/tree/master/compatibility/sep)
+- Horizon compatibility matrix:
+  https://github.com/Soneso/stellar_flutter_sdk/blob/master/compatibility/horizon/HORIZON_COMPATIBILITY_MATRIX.md
+- RPC compatibility matrix:
+  https://github.com/Soneso/stellar_flutter_sdk/blob/master/compatibility/rpc/RPC_COMPATIBILITY_MATRIX.md
+- SEP compatibility matrices:
+  https://github.com/Soneso/stellar_flutter_sdk/tree/master/compatibility/sep
 
 Three releases shipped this quarter. Protocol 26 was tracked and Protocol 27 (CAP-71) support has
 been added, including an end-to-end ADDRESS_WITH_DELEGATES testnet integration test. Release 3.2.1
@@ -185,9 +185,9 @@ flow.
 
 Proof of completion:
 
-- Smart-account documentation set
-  ([documentation/smart-accounts/](https://github.com/Soneso/stellar_flutter_sdk/tree/master/documentation/smart-accounts)):
-  onboarding guide, API reference, and per-platform WebAuthn guides (iOS, Android, web)
+- Smart-account documentation set:
+  https://github.com/Soneso/stellar_flutter_sdk/tree/master/documentation/smart-accounts — onboarding
+  guide, API reference, and per-platform WebAuthn guides (iOS, Android, web)
 
 #### Agent-signer flow in the demo app
 
@@ -198,11 +198,11 @@ added a full agent-signer flow to the
 
 Proof of completion:
 
-- Demo [PR #1](https://github.com/Soneso/flutter-oz-smartaccount-demo/pull/1)
-- Documentation: agent-flow runbook (demo repo:
-  [documentation/agent-flow.md](https://github.com/Soneso/flutter-oz-smartaccount-demo/blob/main/documentation/agent-flow.md))
-  and a worked delegation example
-  ([documentation/smart-accounts/agent-delegation-demo.md](https://github.com/Soneso/flutter-oz-smartaccount-demo/blob/main/documentation/smart-accounts/agent-delegation-demo.md))
+- Demo PR 1: https://github.com/Soneso/flutter-oz-smartaccount-demo/pull/1
+- Agent-flow runbook (demo repo):
+  https://github.com/Soneso/flutter-oz-smartaccount-demo/blob/main/documentation/agent-flow.md
+- Worked delegation example (demo repo):
+  https://github.com/Soneso/flutter-oz-smartaccount-demo/blob/main/documentation/smart-accounts/agent-delegation-demo.md
 
 The user delegates scoped authority to the agent, the agent acts within scope, an over-scope call is
 rejected on-chain by the spending-limit policy and surfaced to the user through the coordination
