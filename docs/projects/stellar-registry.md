@@ -158,10 +158,9 @@ collaborated with Ethan Frey (Confio) on its technical architecture.
 **The indexer went v1.** The first mainnet-ready pipeline & API (stellar-registry/indexer#5) moved
 data into a versioned schema, added auto-discovery of named subregistries (oz, blend, soroswap,
 defindex), and grew an archive pipeline exposing full per-contract version history
-(stellar-registry/indexer#14), including versions that predate contract's 
-addition to Stellar Registry. June added structured logging with request-id 
-tracing and a trigram index enabling fuzzy server-side search 
-(stellar-registry/indexer#23).
+(stellar-registry/indexer#14), including versions that predate contract's addition to Stellar
+Registry. June added structured logging with request-id tracing and a trigram index enabling fuzzy
+server-side search (stellar-registry/indexer#23).
 
 **rgstry.xyz matured.** The UI gained a testnet/mainnet network switch with per-environment
 Cloudflare Worker deploys, in-UI usage guides for the import macros, README/LICENSE rendering from a
@@ -169,8 +168,8 @@ contract's GitHub repo, contract metadata on detail pages, server-side search, a
 error reporting — 18 merged PRs in the quarter.
 
 **Releases and toolchain.** Crates published: `stellar-registry` v0.0.8–v0.0.10,
-`stellar-registry-cli` v0.0.20/v0.0.21, `stellar-registry-build` v0.0.8. The contracts and CLI both moved to
-soroban-sdk v27 / stellar-cli v27 (stellar-registry/contracts#11, stellar-registry/cli#13). 
+`stellar-registry-cli` v0.0.20/v0.0.21, `stellar-registry-build` v0.0.8. The contracts and CLI both
+moved to soroban-sdk v27 / stellar-cli v27 (stellar-registry/contracts#11, stellar-registry/cli#13).
 
 <!-- markdownlint-enable MD034 -->
 
@@ -206,9 +205,9 @@ Proof of completion:
 **Deployed to mainnet.** The phased deploy pipeline merged and executed at the close of the quarter:
 the registry contract is live on mainnet at its deterministic ID, seeded with verified ecosystem
 contracts, and resolvable via the `stellar registry` CLI (the mainnet ID ships baked into the CLI).
-Remaining for full public accessibility: the mainnet indexer pipeline and pointing [rgstry.xyz](https://rgstry.xyz) at
-mainnet — rolling out this week — plus secure-store/Ledger signing for admin operations
-(stellar-registry/cli#14).
+Remaining for full public accessibility: the mainnet indexer pipeline and pointing
+[rgstry.xyz](https://rgstry.xyz) at mainnet — rolling out this week — plus secure-store/Ledger
+signing for admin operations (stellar-registry/cli#14).
 
 ### D2. `import_contract!` Macro
 
@@ -248,8 +247,8 @@ Proof of progress:
 - https://github.com/stellar-registry/contracts/commit/de06277 — on-chain contract flagging with a
   gas-optimized storage encoding (flag encoded in vec length, so unflagged entries pay zero overhead
   on the hot path), `FlagContract` events, and error types
-- https://github.com/stellar-registry/cli/pull/17 – PR for D2 implements compile-time error mechanics,
-  preventing contracts from building when their source contracts have been flagged.
+- https://github.com/stellar-registry/cli/pull/17 – PR for D2 implements compile-time error
+  mechanics, preventing contracts from building when their source contracts have been flagged.
 
 ### D4. Server-Side Search, Pagination & Sorting on rgstry.xyz
 
@@ -295,11 +294,15 @@ Proof of completion:
   build versions plus source repo)
 - https://github.com/stellar-registry/ui/pull/13 — README.md and LICENSE fetched and rendered from a
   contract's GitHub repo
-- https://github.com/stellar-registry/ui/pull/23 — (open) form for deploying unnamed (unregistered) contract from a Wasm detail page, shipping days into Q3
-- https://github.com/stellar-registry/ui/pull/24 — (open) form for interacting with a deployed contract from its rgstry.xyz detail page, shipping days into Q3
+- https://github.com/stellar-registry/ui/pull/23 — (open) form for deploying unnamed (unregistered)
+  contract from a Wasm detail page, shipping days into Q3
+- https://github.com/stellar-registry/ui/pull/24 — (open) form for interacting with a deployed
+  contract from its rgstry.xyz detail page, shipping days into Q3
 
 **Backend and page richness shipped.** The metadata API (item 2's backend) is live and serving the
-full `contract info meta` fields, and contract pages gained README/LICENSE rendering beyond the proposed scope. Remaining: surfacing the rest of the metadata fields in the UI, the embedded Contract Explorer (item 1), and the deploy button (item 3).
+full `contract info meta` fields, and contract pages gained README/LICENSE rendering beyond the
+proposed scope. Remaining: surfacing the rest of the metadata fields in the UI, the embedded Contract
+Explorer (item 1), and the deploy button (item 3).
 
 ### D6. Verified Build Integration with Stellar Expert
 
@@ -370,7 +373,8 @@ Infrastructure we shipped this quarter that was not in the Q2 deliverables:
 - **Protocol currency**: contracts migrated to soroban-sdk v27 / stellar-cli v27
   (stellar-registry/contracts#11; stellar-registry/cli#13).
 - **Contract version history**: an archive indexer pipeline capturing factory-pattern deploys and
-  exposing full per-contract version history beyond Registry's existence (stellar-registry/indexer#14).
+  exposing full per-contract version history beyond Registry's existence
+  (stellar-registry/indexer#14).
 - **Source verification RFP**: a Contract Source Verification Service RFP submitted to the SCF Build
   Award track, with architecture collaboration from Ethan Frey (Confio).
 
