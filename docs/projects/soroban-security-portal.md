@@ -1,7 +1,7 @@
 # Soroban Security Portal
 
-A Soroban specific knowledge base which lets users access audits, individual vulnerabilities and
-code in an organized fashion.
+A Soroban specific knowledge base which lets users access audits, individual vulnerabilities and code
+in an organized fashion.
 
 |                      |                                                                                                    |
 | -------------------- | -------------------------------------------------------------------------------------------------- |
@@ -10,7 +10,8 @@ code in an organized fashion.
 | **Repository**       | <https://github.com/inferara/soroban-security-portal>                                              |
 | **First Released**   | July 2025 (website) September 2025 (all milestones)                                                |
 | **Intake**           | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/22> |
-| **Budget Requested** | 10,000   
+| **Budget Requested** | 10,000                                                                                             |
+
 ## Project Description
 
 The Portal was created to have a curated knowledge base of audit reports, code & individual
