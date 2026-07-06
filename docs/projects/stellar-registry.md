@@ -120,8 +120,15 @@ what developers expect from modern, full-stack tooling.
 
 <!-- markdownlint-disable MD034 -->
 
-In Q2 2026 the Registry grew from a testnet prototype into a production-shaped system with its own
-organization, on-chain governance, verified builds, and a real data platform behind rgstry.xyz.
+In Q2 2026 the Registry grew from a testnet prototype into production infrastructure — deployed to
+mainnet at the close of the quarter — with its own organization, on-chain governance, verified
+builds, and a real data platform behind rgstry.xyz.
+
+**The Registry is live on mainnet.** The registry contract is deployed to Stellar mainnet at its
+deterministic, salt-derived ID `CDU4M3LDIOUJJ5F3YXKJ4EJEP5VPRPG6N2LJ5HOQIMN7MNGL3NS3EGUY` (baked into
+the CLI) via the phased deploy pipeline (stellar-registry/contracts#14, merged 2026-07-06), seeded
+with verified ecosystem contracts (circle, soroswap, blend, defindex, xlm). The mainnet indexer
+pipeline and the rgstry.xyz mainnet cutover are rolling out this week.
 
 **Registry became standalone infrastructure.** The Registry was split out of the
 theahaco/scaffold-stellar monorepo into its own GitHub organization,
@@ -184,20 +191,24 @@ Description from last quarter:
 >
 > Measure: the contract is deployed & the CLI points to it.
 
-Proof of progress:
+Proof of completion:
 
-- https://github.com/stellar-registry/contracts/pull/14 — phased, dry-run-by-default
-  `deploy_mainnet.sh` plus verified mainnet seed data (circle, soroswap, blend, defindex, xlm), with
-  every contract ID resolved from authoritative sources and confirmed live on Pubnet
+- https://stellar.expert/explorer/public/contract/CDU4M3LDIOUJJ5F3YXKJ4EJEP5VPRPG6N2LJ5HOQIMN7MNGL3NS3EGUY
+  — the registry contract live on mainnet at its deterministic, salt-derived ID
+- https://github.com/stellar-registry/contracts/pull/14 — merged 2026-07-06: phased,
+  dry-run-by-default `deploy_mainnet.sh` plus verified mainnet seed data (circle, soroswap, blend,
+  defindex, xlm), with every contract ID resolved from authoritative sources and confirmed live on
+  Pubnet
 - https://github.com/stellar-registry/indexer/pull/5 — "the first mainnet-ready pipeline & API"
 - https://github.com/stellar-registry/ui/pull/1 — testnet/mainnet network switch and per-environment
   Cloudflare Worker deploys; Mainnet UI scaffolding at stellar.rgstry.xyz
 
-**All launch machinery built and verified.** The phased deploy script with mainnet seed data (every
-contract ID resolved from authoritative sources and confirmed live on Pubnet), the mainnet-ready
-indexer pipeline, and the multi-network UI are all in place. The deploy itself is intentionally gated
-on secure-store/Ledger signing (stellar-registry/cli#14): we will not operate permanent ecosystem
-infrastructure from a raw secret key. Flipping the switch is the first Q3 deliverable.
+**Deployed to mainnet.** The phased deploy pipeline merged and executed at the close of the quarter:
+the registry contract is live on Pubnet at its deterministic ID, seeded with verified ecosystem
+contracts, and resolvable via the `stellar registry` CLI (the mainnet ID ships baked into the CLI).
+Remaining for full public accessibility: the mainnet indexer pipeline and pointing rgstry.xyz at
+mainnet — rolling out this week — plus secure-store/Ledger signing for admin operations
+(stellar-registry/cli#14).
 
 ### D2. `import_contract!` Macro
 
@@ -377,12 +388,11 @@ Infrastructure we shipped this quarter that was not in the Q2 deliverables:
 
 <!-- markdownlint-disable MD034 -->
 
-**Launch on mainnet.** Q2 built every piece of the mainnet machinery: a phased deploy script with
-verified seed data (stellar-registry/contracts#14), a mainnet-ready indexer pipeline, a multi-network
-UI, and — critically — the security posture to do it right: DAO-gated registry governance via Tansu
-and secure-store/Ledger signing (stellar-registry/cli#14) so permanent ecosystem infrastructure is
-never operated from a raw secret key. Q3 turns the key: the Registry contract live on Pubnet,
-governed on-chain, indexed, and browsable at rgstry.xyz.
+**Complete the mainnet launch.** The Registry contract is live on mainnet as of this proposal. Q3
+finishes the public rollout: the mainnet indexer pipeline, rgstry.xyz serving mainnet data with the
+"Coming Soon" banner removed, and secure-store/Ledger signing for admin operations
+(stellar-registry/cli#14) so permanent ecosystem infrastructure is never administered from a raw
+secret key — alongside the Tansu DAO-gated governance already in place.
 
 **Complete the composability story.** Releasing `import_contract!` (stellar-registry/cli#17) lets any
 Soroban developer depend on Registry contracts the way they depend on Rust crates, and the
@@ -405,15 +415,15 @@ the ecosystem its first crates.io-style package experience for on-chain code.
 
 <!-- markdownlint-disable MD034 -->
 
-### D1: Mainnet Launch of Stellar Registry (carried from Q2)
+### D1: Complete the Mainnet Launch (carried from Q2)
 
-Deploy the Registry contract and seed data to mainnet via the phased deploy pipeline
-(stellar-registry/contracts#14), with secure-store/Ledger signing support in the CLI
-(stellar-registry/cli#14) so the deploy and admin operations never expose a raw secret key. Point the
-CLI and rgstry.xyz at the mainnet contract and remove the "Coming Soon" banner.
+With the registry contract live on mainnet, finish the public rollout: run the mainnet indexer
+pipeline, point rgstry.xyz at the mainnet API and remove the "Coming Soon" banner, and land
+secure-store/Ledger signing in the CLI (stellar-registry/cli#14) so admin operations never expose a
+raw secret key.
 
-Proof: the mainnet contract ID published in the docs, visible on Stellar Expert, resolvable via
-`stellar registry` CLI, and browsable at rgstry.xyz.
+Proof: mainnet data live and browsable at rgstry.xyz, the contract visible on Stellar Expert, and
+named contracts resolvable via `stellar registry` CLI.
 
 ### D2: Release `import_contract!` (carried from Q2)
 
