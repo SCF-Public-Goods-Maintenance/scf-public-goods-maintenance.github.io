@@ -57,9 +57,9 @@ Codecov and enforced in CI, currently at 91%.
 
 The SEP-11 TxRep rewrite shipped in v3.4.7: the monolithic 3,596-line hand-written TxRep.swift was
 replaced with generated toTxRep() and fromTxRep() methods on the XDR types, reducing TxRep.swift to a
-75-line facade with an unchanged public API. The rewrite also fixed several SEP-11 conformance issues,
-including pool-share ChangeTrustAsset encoding, unsigned and zero-operation transactions, L-address
-liquidity-pool StrKey decoding, and C-style MEMO_TEXT escaping.
+75-line facade with an unchanged public API. The rewrite also fixed several SEP-11 conformance
+issues, including pool-share ChangeTrustAsset encoding, unsigned and zero-operation transactions,
+L-address liquidity-pool StrKey decoding, and C-style MEMO_TEXT escaping.
 
 OpenZeppelin smart account support shipped in v3.5.0. It uses a two-layer design: a contract-agnostic
 core with an OpenZeppelin layer on top, so third parties can support other smart-account contract
