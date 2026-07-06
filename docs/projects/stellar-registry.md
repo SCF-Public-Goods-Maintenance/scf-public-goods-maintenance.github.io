@@ -204,7 +204,7 @@ Proof of completion:
   Cloudflare Worker deploys; Mainnet UI scaffolding at stellar.rgstry.xyz
 
 **Deployed to mainnet.** The phased deploy pipeline merged and executed at the close of the quarter:
-the registry contract is live on Pubnet at its deterministic ID, seeded with verified ecosystem
+the registry contract is live on mainnet at its deterministic ID, seeded with verified ecosystem
 contracts, and resolvable via the `stellar registry` CLI (the mainnet ID ships baked into the CLI).
 Remaining for full public accessibility: the mainnet indexer pipeline and pointing rgstry.xyz at
 mainnet — rolling out this week — plus secure-store/Ledger signing for admin operations
