@@ -118,7 +118,8 @@ Proof of completion:
   ([bbe49ca](https://github.com/Soneso/stellar-php-sdk/commit/bbe49cace0127556298669f6f21e2c6cccf42299))
 - Correctness fixes ([v1.9.8](https://github.com/Soneso/stellar-php-sdk/releases/tag/1.9.8),
   [PR #92](https://github.com/Soneso/stellar-php-sdk/pull/92)): full unsigned 64-bit Memo ids
-  ([af187ce](https://github.com/Soneso/stellar-php-sdk/commit/af187ce71882fa5434c8a49f3f6a7964cf877111)), corrected Asset pool-share type constant
+  ([af187ce](https://github.com/Soneso/stellar-php-sdk/commit/af187ce71882fa5434c8a49f3f6a7964cf877111)),
+  corrected Asset pool-share type constant
   ([a6e8f69](https://github.com/Soneso/stellar-php-sdk/commit/a6e8f69b6d90ba23cf95f2cd9b06ba6f964901e4)),
   CAP-40 signed-payload hint for short payloads
   ([b91325b](https://github.com/Soneso/stellar-php-sdk/commit/b91325b74048d71e29d8185fc85be3f707dda391)),
