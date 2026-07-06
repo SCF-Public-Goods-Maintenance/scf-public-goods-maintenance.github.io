@@ -1,4 +1,3 @@
-
 # Tansu - Decentralized project governance on Stellar
 
 <!-- markdownlint-disable MD036 -->
@@ -14,7 +13,7 @@ projects._
 | **Repository**       | <https://github.com/Consulting-Manao/tansu>                                                        |
 | **First Released**   | October 2025                                                                                       |
 | **Intake**           | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/88> |
-| **Budget Requested** | 50000                                                                                   |
+| **Budget Requested** | 50000                                                                                              |
 
 ## Project Description
 
