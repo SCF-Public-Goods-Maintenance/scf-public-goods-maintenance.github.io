@@ -32,21 +32,23 @@ applications including Beans App, Stack Wallet, Defindex, Meru, and others.
 
 ## Team & Experience
 
-My name is Christian (GitHub: [christian-rogobete](https://github.com/christian-rogobete), Discord:
-`soneso`, LinkedIn: [Christian Rogobete](https://www.linkedin.com/in/rogobete/)) and I am the main
-developer and maintainer of several Stellar Client SDKs.
+My name is Christian, also known as Soneso in the Stellar community, and I am the main developer and
+maintainer of several Stellar Client SDKs.
+
+- GitHub: [christian-rogobete](https://github.com/christian-rogobete)
+- Discord: `soneso`
+- LinkedIn: [Christian Rogobete](https://www.linkedin.com/in/rogobete/)
 
 I began contributing to the Stellar network in 2017, specializing primarily in the development and
 maintenance of Stellar SDKs. I developed the iOS Stellar SDK, the Flutter Stellar SDK, the PHP
-Stellar SDK, and the Kotlin Multiplatform Stellar SDK. See:
-https://developers.stellar.org/docs/tools/sdks/client-sdks
+Stellar SDK, and the Kotlin Multiplatform Stellar SDK. I currently work full-time on my Stellar SDK
+projects.
 
-I currently work full-time on my Stellar SDK projects.
+Previous SCF participation:
 
-Previous SCF participation: Multiple SCF Build Awards
-([Flutter & Swift Wallet SDKs](https://developers.stellar.org/docs/build/apps/wallet/overview), KMP
-Stellar SDK, and others), SCF Public Goods Award since Q3 2025 (Batch 1) for iOS, Flutter, and PHP
-SDKs.
+- Multiple SCF Build Awards, including the KMP Stellar SDK OZ smart account support and wallet SDKs
+  for Dart and Swift
+- SCF Public Goods Award since Q3 2025 (Batch 1) for the iOS, Flutter, and PHP SDKs
 
 ## Retroactive Impact
 
@@ -82,9 +84,8 @@ rejecting challenges without finite time bounds. A SEP-11 TxRep escaping bug was
 hardened — Actions pinned to commit SHAs, least-privilege permissions, Codecov thresholds, a daily
 upstream XDR change-detection workflow, and monthly Dependabot updates — and compatibility matrices
 were regenerated to Horizon/RPC v27.0.0. SBOM submission to PG Atlas continues on every push to
-master, and daily statistics collection continues via soneso-sdk-stats (dashboard:
-[soneso.github.io/soneso-sdk-stats](https://soneso.github.io/soneso-sdk-stats/)), providing the
-responsiveness and adoption metrics above.
+master, and daily statistics collection continues via soneso-sdk-stats, providing the responsiveness
+and adoption metrics above (see: [soneso.github.io/soneso-sdk-stats][statsdash]).
 
 ## Past Deliverables
 
@@ -103,22 +104,15 @@ Proof of completion:
 - Release 3.2.0: https://github.com/Soneso/stellar_flutter_sdk/releases/tag/3.2.0
 - Release 3.2.1: https://github.com/Soneso/stellar_flutter_sdk/releases/tag/3.2.1
 - Protocol 26 tracked: Horizon v26.0.0 / RPC v26.0.0 matrices, XDR upstream 0a56f5b
-- PR 150: https://github.com/Soneso/stellar_flutter_sdk/pull/150 — Protocol 27 / CAP-71 support
-  (v3.2.0); matrices regenerated to Horizon/RPC v27.0.0
-- PR 151: https://github.com/Soneso/stellar_flutter_sdk/pull/151 — headless connectToContract +
-  RPC-visibility polling for smart accounts (v3.2.1)
-- PR 152: https://github.com/Soneso/stellar_flutter_sdk/pull/152 — SEP-10 hardening, reject
-  challenges without finite time bounds (v3.2.1)
-- PR 140: https://github.com/Soneso/stellar_flutter_sdk/pull/140 — SEP-11 TxRep MEMO_TEXT escaping
-  fix + coverage
+- Protocol 27 / CAP-71 support (v3.2.0): [PR #150][pr150]
+- Headless connectToContract + RPC-visibility polling for smart accounts (v3.2.1): [PR #151][pr151]
+- SEP-10 hardening, reject challenges without finite time bounds (v3.2.1): [PR #152][pr152]
+- SEP-11 TxRep MEMO_TEXT escaping fix + coverage: [PR #140][pr140]
 - Dependabot bumps (monthly, pinned SHAs): PRs 141-146
 - Stats dashboard: https://soneso.github.io/soneso-sdk-stats/
-- Horizon compatibility matrix:
-  https://github.com/Soneso/stellar_flutter_sdk/blob/master/compatibility/horizon/HORIZON_COMPATIBILITY_MATRIX.md
-- RPC compatibility matrix:
-  https://github.com/Soneso/stellar_flutter_sdk/blob/master/compatibility/rpc/RPC_COMPATIBILITY_MATRIX.md
-- SEP compatibility matrices:
-  https://github.com/Soneso/stellar_flutter_sdk/tree/master/compatibility/sep
+- [Horizon compatibility matrix](https://github.com/Soneso/stellar_flutter_sdk/blob/master/compatibility/horizon/HORIZON_COMPATIBILITY_MATRIX.md)
+- [RPC compatibility matrix](https://github.com/Soneso/stellar_flutter_sdk/blob/master/compatibility/rpc/RPC_COMPATIBILITY_MATRIX.md)
+- [SEP compatibility matrices](https://github.com/Soneso/stellar_flutter_sdk/tree/master/compatibility/sep)
 
 Three releases shipped this quarter. Protocol 26 was tracked and Protocol 27 (CAP-71) support has
 been added, including an end-to-end ADDRESS_WITH_DELEGATES testnet integration test. Release 3.2.1
@@ -147,10 +141,8 @@ Description from last quarter:
 > - Cross-platform demo application (iOS, Android, web)
 > - Documentation: API reference and onboarding guide
 
-Delivered in release [3.1.0](https://github.com/Soneso/stellar_flutter_sdk/releases/tag/3.1.0)
-([PR #148](https://github.com/Soneso/stellar_flutter_sdk/pull/148)) and published to pub.dev, with
-the Protocol 27 ADDRESS_WITH_DELEGATES auth path integrated in
-[3.2.0](https://github.com/Soneso/stellar_flutter_sdk/releases/tag/3.2.0).
+Delivered in release [3.1.0][rel310] ([PR #148][pr148]) and published to pub.dev, with the Protocol
+27 ADDRESS_WITH_DELEGATES auth path integrated in [3.2.0][rel320].
 
 Delivery by area:
 
@@ -185,24 +177,19 @@ flow.
 
 Proof of completion:
 
-- Smart-account documentation set:
-  https://github.com/Soneso/stellar_flutter_sdk/tree/master/documentation/smart-accounts — onboarding
-  guide, API reference, and per-platform WebAuthn guides (iOS, Android, web)
+- [Smart-account documentation set][sadocs]: onboarding guide, API reference, and per-platform
+  WebAuthn guides (iOS, Android, web)
 
 #### Agent-signer flow in the demo app
 
-Beyond the committed scope, the
-[PR-44 response](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/pull/44#issuecomment-4274930402)
-added a full agent-signer flow to the
-[demo app](https://github.com/Soneso/flutter-oz-smartaccount-demo).
+Beyond the committed scope, the [PR-44 response][pr44resp] added a full agent-signer flow to the demo
+app.
 
 Proof of completion:
 
-- Demo PR 1: https://github.com/Soneso/flutter-oz-smartaccount-demo/pull/1
-- Agent-flow runbook (demo repo):
-  https://github.com/Soneso/flutter-oz-smartaccount-demo/blob/main/documentation/agent-flow.md
-- Worked delegation example (demo repo):
-  https://github.com/Soneso/flutter-oz-smartaccount-demo/blob/main/documentation/smart-accounts/agent-delegation-demo.md
+- Demo [PR #1][demopr1]
+- Agent-flow runbook (demo repo): [documentation/agent-flow.md][agflow]
+- Worked delegation example (demo repo): [agent-delegation-demo.md][deleg]
 
 The user delegates scoped authority to the agent, the agent acts within scope, an over-scope call is
 rejected on-chain by the spending-limit policy and surfaced to the user through the coordination
@@ -267,3 +254,20 @@ Proof: pull request to the stellar-contract-bindings repository.
 ## Legal Acknowledgements
 
 - [x] As the project representative, I agree to the Legal Acknowledgements.
+
+[agflow]:
+  https://github.com/Soneso/flutter-oz-smartaccount-demo/blob/main/documentation/agent-flow.md
+[deleg]:
+  https://github.com/Soneso/flutter-oz-smartaccount-demo/blob/main/documentation/smart-accounts/agent-delegation-demo.md
+[demopr1]: https://github.com/Soneso/flutter-oz-smartaccount-demo/pull/1
+[pr140]: https://github.com/Soneso/stellar_flutter_sdk/pull/140
+[pr148]: https://github.com/Soneso/stellar_flutter_sdk/pull/148
+[pr150]: https://github.com/Soneso/stellar_flutter_sdk/pull/150
+[pr151]: https://github.com/Soneso/stellar_flutter_sdk/pull/151
+[pr152]: https://github.com/Soneso/stellar_flutter_sdk/pull/152
+[pr44resp]:
+  https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/pull/44#issuecomment-4274930402
+[rel310]: https://github.com/Soneso/stellar_flutter_sdk/releases/tag/3.1.0
+[rel320]: https://github.com/Soneso/stellar_flutter_sdk/releases/tag/3.2.0
+[sadocs]: https://github.com/Soneso/stellar_flutter_sdk/tree/master/documentation/smart-accounts
+[statsdash]: https://soneso.github.io/soneso-sdk-stats/
