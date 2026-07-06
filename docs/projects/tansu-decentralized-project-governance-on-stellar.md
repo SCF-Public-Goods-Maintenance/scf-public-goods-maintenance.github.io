@@ -1,11 +1,3 @@
----
-title: "Tansu - Decentralized project governance on Stellar"
-parent: Public Good Projects
-proposal_issue: 105
-proposer: tupui
-category: "Governance Tools"
-budget: "$50,000 in XLM"
----
 
 # Tansu - Decentralized project governance on Stellar
 
@@ -22,7 +14,7 @@ projects._
 | **Repository**       | <https://github.com/Consulting-Manao/tansu>                                                        |
 | **First Released**   | October 2025                                                                                       |
 | **Intake**           | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/88> |
-| **Budget Requested** | $50,000 in XLM                                                                                     |
+| **Budget Requested** | 50000                                                                                   |
 
 ## Project Description
 
@@ -97,7 +89,7 @@ Aha is fully onboarded as maintainers.
 
 <!-- markdownlint-disable MD034 -->
 
-**P1: Q2 Public Goods Award on Tansu testnet**
+### P1: Q2 Public Goods Award on Tansu testnet
 
 Proof of completion:
 
@@ -110,7 +102,7 @@ First PG Award round with anonymous NQG-weighted pilot voting on testnet; 17 pro
 than $400,000 disbursed. The work was done as part of a
 [SCF Build Award](https://communityfund.stellar.org/project/pg-atlas-dse).
 
-**P2: Governance stack**
+### P2: Governance stack
 
 Proof of completion:
 
@@ -122,7 +114,7 @@ Proof of completion:
 - Anonymous voting, token-weighted ballots, outcome contracts, malicious-proposal flow:
   [governance docs](https://tansu.dev/docs/developers/governance)
 
-**P3: NQG + `scf-membership`**
+### P3: NQG + `scf-membership`
 
 Proof of completion:
 
@@ -130,7 +122,7 @@ Proof of completion:
   [#50](https://github.com/Consulting-Manao/tansu/pull/50)
 - Viewer: https://scf.pgatlas.xyz https://github.com/Consulting-Manao/scf-member-explorer
 
-**P4: Supply chain and evidence**
+### P4: Supply chain and evidence
 
 Proof of completion:
 
@@ -140,7 +132,7 @@ Proof of completion:
   .github/workflows/sbom.yml`
 - Workflows improvements: `.github/workflows`
 
-**P5: Maintainance**
+### P5: Maintainance
 
 Proof of completion:
 
@@ -182,7 +174,7 @@ is funded, coordinate on NQG/Tansu per their [roadmap](https://hackmd.io/@dan13r
 
 <!-- markdownlint-disable MD034 -->
 
-**D1: Public Goods Award**
+### D1: Public Goods Award
 
 Tansu hosts the PG Award program.
 
@@ -199,7 +191,7 @@ Tansu hosts the PG Award program.
 Measure: Q3 vote on testnet; mainnet NFT/NQG populated; mid-grant template shipped; collateral fix
 merged.
 
-**D2: Stellar Registry**
+### D2: Stellar Registry
 
 Registry Security Council vote on Tansu.
 
@@ -213,7 +205,7 @@ Registry Security Council vote on Tansu.
 Measure: Testnet demo: Tansu vote executes a registry action; templates in dApp; name resolution
 works.
 
-**D3: Governance features**
+### D3: Governance features
 
 - **Evidence in dApp:** SBOM/CVE/Attestation on project pages
   [#204](https://github.com/Consulting-Manao/tansu/issues/204)[#196](https://github.com/Consulting-Manao/tansu/issues/196)
@@ -225,7 +217,7 @@ works.
 Measure: Evidence on project pages and management in the dApp itself; Nido support with a transparent
 on-boarding and usage of Tansu; per-project config documented; yes/no approach documented.
 
-**D4: Maintenance, Security and Operations**
+### D4: Maintenance, Security and Operations
 
 - **Result types** across contract, SDK, and dApp;
 - **Storage / TTL:** rent bump and TTL policy for Soroban storage;
