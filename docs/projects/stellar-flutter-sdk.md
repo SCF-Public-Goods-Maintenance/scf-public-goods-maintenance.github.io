@@ -1,3 +1,12 @@
+---
+title: "stellar-flutter-sdk"
+parent: Public Good Projects
+proposal_issue: 43
+proposer: christian-rogobete
+category: "SDKs"
+budget: "15000"
+---
+
 # stellar-flutter-sdk
 
 _The Stellar SDK for Flutter, providing transaction building, Horizon and Soroban RPC access,
