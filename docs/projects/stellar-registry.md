@@ -503,6 +503,25 @@ and Registry gives everyone a way to view and make sense of this information.
 Proof: all SEP-58 fields viewable on rgstry.xyz; verification status of those fields by independent
 Source Verification services also shown in a way that exposes, rather than flattens, disagreement.
 
+### D10: guide Tansu evolution to support Registry needs
+
+Harnessing Tansu for Registry's governance required significant effort and an unsatisfying
+technical workaround (see above discussion of Tansu-DAO-gated registry manager). We will
+collaborate with the Tansu team to guide Tansu's evolution, either obsolescing this workaround or
+sculpting it into a more general and generally-usable shape.
+
+Value to ecosystem: whether for security guarantees as in the case of Registry, or just for open &
+participatory governance of open-source projects, on-chain governance provides a crucial role to any
+blockchain ecosystem. Registry's partnership with Tansu ensures the maturity of this solution for
+all community projects.
+
+Issue: https://github.com/stellar-scaffold/cli/issues/527
+
+Proof: [Registry Tansu Manager
+contract](https://github.com/stellar-registry/contracts/tree/main/contracts/registry-tansu-manager)
+either migrates out of the stellar-registry repository to Tansu, becoming easier to use for all
+ecosystem projects, or becomes altogether unnecessary.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Legal Acknowledgements
