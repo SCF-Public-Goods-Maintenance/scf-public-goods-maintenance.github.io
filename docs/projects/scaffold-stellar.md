@@ -290,8 +290,8 @@ now buys depth and reliability on that wider surface rather than breadth of new 
 - Ecosystem value: Q2 bug investigation showed that a large share of Scaffold support requests are
   environment problems, not Scaffold bugs. Self-serve diagnosis shortens time-to-first-success for
   new builders — especially at hackathons — and reduces maintainer support load across the ecosystem.
-  It also provides value to projects bootstrapped by other means (not Scaffold)
-  that end up with environment and version problems.
+  It also provides value to projects bootstrapped by other means (not Scaffold) that end up with
+  environment and version problems.
 
 ## D2: Complete the `scaffold.yml` configuration migration
 
@@ -369,10 +369,10 @@ now buys depth and reliability on that wider surface rather than breadth of new 
 
 ## D8 (Stretch): At least one ecosystem-contributed UI template
 
-- Work with a specific community partner or host a hackathon to solicit at least one new UI
-  template. This could be a new JS view engine such as Vue, or an existing view engine (React,
-  Svelte) configured differently (such as React with NextJS and different styling opinions).  This
-  will be selectable via `stellar scaffold init`.
+- Work with a specific community partner or host a hackathon to solicit at least one new UI template.
+  This could be a new JS view engine such as Vue, or an existing view engine (React, Svelte)
+  configured differently (such as React with NextJS and different styling opinions). This will be
+  selectable via `stellar scaffold init`.
 - Measure: template shipped with e2e coverage, selectable in `init`, documented.
 - Issue: https://github.com/stellar-scaffold/cli/issues/558
 - Ecosystem value: exercises the multi-template architecture with a third framework and serves as a
