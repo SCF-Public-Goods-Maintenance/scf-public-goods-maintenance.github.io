@@ -522,6 +522,25 @@ Proof:
 either migrates out of the stellar-registry repository to Tansu, becoming easier to use for all
 ecosystem projects, or becomes altogether unnecessary.
 
+### D11: Registry GH Workflow to publish Wasms and upgrade contracts
+
+Wrap the [stellar-expert/soroban-build-workflow](https://github.com/stellar-expert/soroban-build-workflow) and add Registry-specific things:
+
+- build with `stellar scaffold build` instead of `stellar contract build` to ensure inter-contract
+  dependency build order correctness
+- when already-published Wasms are updated with new versions, publish these new versions to Registry
+
+We are intentionally leaving contract upgrades as future work, as this gets into the thorny issue of
+migrations. It is best to leave contract upgrades as a manual task until tooling around migrations
+has matured.
+
+This task requires research into how to securely provision keys that can be stored in a GitHub
+workflow and which do not have risky privilege levels.
+
+Proof: new repository available at, say, `stellar-registry/gh-build-workflow`. Documented and tested
+in production with the Registry wasm itself.
+
+
 <!-- markdownlint-enable MD034 -->
 
 ## Legal Acknowledgements
