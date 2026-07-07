@@ -6,23 +6,27 @@ proposer: salaheldinsoliman
 category: "Developer Experience"
 budget: "$25,000"
 ---
+
 # Hyperledger Solang
 
 <!-- markdownlint-disable MD036 -->
+
 _A Solidity compiler for Stellar_
 <!-- markdownlint-enable MD036 -->
-| | |
-| --- | --- |
-| **Category** | Developer Experience |
-| **Website** | <https://solang.io/> |
-| **Repository** | <https://github.com/hyperledger-solang/solang> |
-| **First Released** | November 2025 |
-| **Intake** | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/24> |
-| **Budget Requested** | $25,000 |
+
+|                      |                                                                                                    |
+| -------------------- | -------------------------------------------------------------------------------------------------- |
+| **Category**         | Developer Experience                                                                               |
+| **Website**          | <https://solang.io/>                                                                               |
+| **Repository**       | <https://github.com/hyperledger-solang/solang>                                                     |
+| **First Released**   | November 2025                                                                                      |
+| **Intake**           | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/24> |
+| **Budget Requested** | $25,000                                                                                            |
 
 ## Project Description
 
 <!-- markdownlint-disable MD034 -->
+
 Solang is a Solidity compiler for Stellar which lives under
 [LFDT](https://www.lfdecentralizedtrust.org/). We aim to have the following impact on Stellar
 ecosystem.
@@ -41,11 +45,13 @@ ecosystem.
 - Produce comparative research between Solang and the Soroban Rust SDK, generating insights about
   where each approach performs best and for which use cases.
 - Gather early feedback on Solang tooling, developer experience, and developer pain points.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Team & Experience
 
 <!-- markdownlint-disable MD034 -->
+
 @salaheldinsoliman: A compiler engineer working on Solang to support the Soroban target.
 
 @mohamedbasuony: A software engineer in the university of Göttingen, with an interest in developer
@@ -60,104 +66,117 @@ engineering.
 ## Retroactive Impact
 
 <!-- markdownlint-disable MD034 -->
-- Since [soft launching Solang and its Playground](https://medium.com/@salaheldin_sameh/announcing-solang-compiler-suite-solidity-support-for-stellars-soroban-1fa82335101b), we've had ~20 monthly active users, from which we are receiving feedback to improve the compiler and its tooling.
 
--  LFDT accepted a Solang Mentorship in it's Mentorship program; we've selected @aryanbaranwal001 who will be working on
-  [comparing Solang to the Stellar Rust SDK](https://github.com/LF-Decentralized-Trust-Mentorships/mentorship-program/issues/74) in terms of behavior, performance and binary size.
+- Since
+  [soft launching Solang and its Playground](https://medium.com/@salaheldin_sameh/announcing-solang-compiler-suite-solidity-support-for-stellars-soroban-1fa82335101b),
+  we've had ~20 monthly active users, from which we are receiving feedback to improve the compiler
+  and its tooling.
+
+- LFDT accepted a Solang Mentorship in it's Mentorship program; we've selected @aryanbaranwal001 who
+  will be working on
+  [comparing Solang to the Stellar Rust SDK](https://github.com/LF-Decentralized-Trust-Mentorships/mentorship-program/issues/74)
+  in terms of behavior, performance and binary size.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Past Deliverables
 
 <!-- markdownlint-disable MD034 -->
+
 The deliverables of Q2 were categorized as follows:
 
 ### Codebase maintenance
 
 - `Deliverable`: A current issue of the codebase is the entangled target logic in
-  [`codegen`](https://github.com/hyperledger-solang/solang/tree/main/src/codegen). As Solang
-  supports multiple compilation targets, some target-specific logic and conditionals are
-  scattered in codegen (Solang's IR emission stage). Detangling here means that each target
-  should have its own implementation of `codegen`, rather than injecting target-specific logic.
-- `Proof of completion`: This
-  [PR](https://github.com/hyperledger-solang/solang/pull/1923) introduces a `TargetCodegen`
-  trait, relocates the Solana / Polkadot / Soroban backends under `src/codegen/targets/`,
-  threads the target through the lowering call graph, and routes target-specific hooks (abi
-  encode/decode, storage arrays, events, builtins, load/store) through the trait. This
-  separates target concerns and detangles target-specific logic in codegen, reducing the amount
-  of code that needs auditing.
+  [`codegen`](https://github.com/hyperledger-solang/solang/tree/main/src/codegen). As Solang supports
+  multiple compilation targets, some target-specific logic and conditionals are scattered in codegen
+  (Solang's IR emission stage). Detangling here means that each target should have its own
+  implementation of `codegen`, rather than injecting target-specific logic.
+- `Proof of completion`: This [PR](https://github.com/hyperledger-solang/solang/pull/1923) introduces
+  a `TargetCodegen` trait, relocates the Solana / Polkadot / Soroban backends under
+  `src/codegen/targets/`, threads the target through the lowering call graph, and routes
+  target-specific hooks (abi encode/decode, storage arrays, events, builtins, load/store) through the
+  trait. This separates target concerns and detangles target-specific logic in codegen, reducing the
+  amount of code that needs auditing.
 
 ### Developer Experience
 
 `Deliverables:`
+
 - Make [Solang docs](https://solang.readthedocs.io/en/v0.3.4/) up to date: clearly state what is
   currently supported and what is not.
 - Improve compiler error reporting: As of now, for the currently unsupported Solidity syntax or
-  Soroban-specific features, Solang most often fails with a vague error message. We aim to fix
-  this in this quarter.
+  Soroban-specific features, Solang most often fails with a vague error message. We aim to fix this
+  in this quarter.
 - More useful error reporting in Solang Playground.
 
 `Proof of Completion:`
+
 - Docs: the Soroban documentation was reorganized to clearly separate supported vs. unsupported
   features and state the current support status:
   [#1883](https://github.com/hyperledger-solang/solang/pull/1883).
-- Compiler error reporting: unsupported Soroban ABI types are now rejected *before* codegen with
-  a clear diagnostic instead of a vague, late failure:
+- Compiler error reporting: unsupported Soroban ABI types are now rejected _before_ codegen with a
+  clear diagnostic instead of a vague, late failure:
   [#1903](https://github.com/hyperledger-solang/solang/pull/1903) (fixes
   [#1897](https://github.com/hyperledger-solang/solang/issues/1897)).
-- Playground error reporting: full Solang compiler diagnostics (warnings, multi-line source
-  spans, and fallback output) are now propagated end-to-end through the Playground compile flow
-  to the UI, instead of being truncated to a single stripped `error:` line:
-  [solang-playground#35](https://github.com/hyperledger-solang/solang-playground/pull/35)
-  (merged to `develop`).
+- Playground error reporting: full Solang compiler diagnostics (warnings, multi-line source spans,
+  and fallback output) are now propagated end-to-end through the Playground compile flow to the UI,
+  instead of being truncated to a single stripped `error:` line:
+  [solang-playground#35](https://github.com/hyperledger-solang/solang-playground/pull/35) (merged to
+  `develop`).
 
 ### Feature Completion
 
 `Deliverable:`
+
 - Support the remaining [Soroban-examples](https://github.com/stellar/soroban-examples).
 
 `Proof of Completion:`
-- The upstream Soroban **`events`** example — previously unsupported (Solang panicked on `emit`
-  for Soroban) — is now compiled and tested, enabled by implementing event emission via the
+
+- The upstream Soroban **`events`** example — previously unsupported (Solang panicked on `emit` for
+  Soroban) — is now compiled and tested, enabled by implementing event emission via the
   `contract_event` host function ([#1893](https://github.com/hyperledger-solang/solang/pull/1893)).
   Covered by
   [`tests/soroban_testcases/events.rs`](https://github.com/hyperledger-solang/solang/blob/v0.3.5/tests/soroban_testcases/events.rs).
 - The new `string` / `bytes` / `bytesN` support
-  ([#1927](https://github.com/hyperledger-solang/solang/pull/1927)) together with struct and
-  vector support now makes several previously-blocked upstream examples expressible in Solidity
-  (tracked in [#1901](https://github.com/hyperledger-solang/solang/issues/1901)) — e.g.
-  `custom_types` (struct-backed values returned from public APIs), `atomic_multiswap`
-  (a `SwapSpec` struct + vectors), `single_offer` (token + cross-contract trading), and
-  `other_custom_types` (structs/enums/vectors/events).
+  ([#1927](https://github.com/hyperledger-solang/solang/pull/1927)) together with struct and vector
+  support now makes several previously-blocked upstream examples expressible in Solidity (tracked in
+  [#1901](https://github.com/hyperledger-solang/solang/issues/1901)) — e.g. `custom_types`
+  (struct-backed values returned from public APIs), `atomic_multiswap` (a `SwapSpec` struct +
+  vectors), `single_offer` (token + cross-contract trading), and `other_custom_types`
+  (structs/enums/vectors/events).
 - A reusable `pause` example was added
-  ([#1907](https://github.com/hyperledger-solang/solang/pull/1907)), with `increment_with_pause`
-  in progress ([#1911](https://github.com/hyperledger-solang/solang/pull/1911)).
+  ([#1907](https://github.com/hyperledger-solang/solang/pull/1907)), with `increment_with_pause` in
+  progress ([#1911](https://github.com/hyperledger-solang/solang/pull/1911)).
 - Coverage continues to expand via in-flight work: dynamic `bytes` in the ABI/codec
   ([#1904](https://github.com/hyperledger-solang/solang/pull/1904)), `bytesN` parameters/returns
   ([#1908](https://github.com/hyperledger-solang/solang/pull/1908)), storage vectors
   ([#1848](https://github.com/hyperledger-solang/solang/pull/1848)), and `sha256`/`keccak256`
   builtins ([#1919](https://github.com/hyperledger-solang/solang/pull/1919)) — which unlock
   bytes-heavy and hash-based examples such as `eth_abi` and `merkle_distribution`.
-- All of the above build on the already-supported set (token, atomic_swap, liquidity_pool,
-  timelock, auth, TTL, cross-contract calls, `print` logging, storage/arrays) and were shipped
-  in Solang **v0.3.5 "Luxor"** ([#1930](https://github.com/hyperledger-solang/solang/pull/1930) ·
+- All of the above build on the already-supported set (token, atomic_swap, liquidity_pool, timelock,
+  auth, TTL, cross-contract calls, `print` logging, storage/arrays) and were shipped in Solang
+  **v0.3.5 "Luxor"** ([#1930](https://github.com/hyperledger-solang/solang/pull/1930) ·
   [crates.io](https://crates.io/crates/solang/0.3.5)).
 
 ### Fuzzer
 
 `Deliverable:`
-- Plan and start a fuzzer that compares a corpus of Solidity contracts' behavior on
-  `solc`+`ethereum` vs `solang`+`Stellar`. At the end of this quarter, the fuzzer should be able
-  to take a corpus of Solidity contracts and report Solang compilation errors.
+
+- Plan and start a fuzzer that compares a corpus of Solidity contracts' behavior on `solc`+`ethereum`
+  vs `solang`+`Stellar`. At the end of this quarter, the fuzzer should be able to take a corpus of
+  Solidity contracts and report Solang compilation errors.
 
 `Proof of Completion:`
+
 - The fuzzing harness [`solang-fuzz`](https://github.com/salaheldinsoliman/fuzzer) — originally
   authored by [@jubnzv](https://github.com/jubnzv)
-  ([jubnzv/solang-fuzz](https://github.com/jubnzv/solang-fuzz), built on their `multifuzz`,
-  `afl-ts` and `tsgen` tooling) — is an AFL++ harness with a `tree-sitter-solidity` mutator that
-  targets Solang's `codegen` and `sema` passes across the Solana, Polkadot and Soroban targets.
-- The fuzzer took a corpus of Solidity contracts and surfaced **25 distinct, reproducible
-  compiler crashes**, each triaged and reported as an issue on Solang by
-  [@jubnzv](https://github.com/jubnzv), some of them are:
+  ([jubnzv/solang-fuzz](https://github.com/jubnzv/solang-fuzz), built on their `multifuzz`, `afl-ts`
+  and `tsgen` tooling) — is an AFL++ harness with a `tree-sitter-solidity` mutator that targets
+  Solang's `codegen` and `sema` passes across the Solana, Polkadot and Soroban targets.
+- The fuzzer took a corpus of Solidity contracts and surfaced **25 distinct, reproducible compiler
+  crashes**, each triaged and reported as an issue on Solang by [@jubnzv](https://github.com/jubnzv),
+  some of them are:
   - sema panics: [#1868](https://github.com/hyperledger-solang/solang/issues/1868),
     [#1869](https://github.com/hyperledger-solang/solang/issues/1869),
   - codegen panics: [#1862](https://github.com/hyperledger-solang/solang/issues/1862),
@@ -167,67 +186,84 @@ The deliverables of Q2 were categorized as follows:
     [#1905](https://github.com/hyperledger-solang/solang/issues/1905),
     [#1910](https://github.com/hyperledger-solang/solang/issues/1910)
   - a const-fold miscompile: [#1926](https://github.com/hyperledger-solang/solang/issues/1926)
+
 <!-- markdownlint-enable MD034 -->
 
 ## Proposed Impact
 
 <!-- markdownlint-disable MD034 -->
-- **Expand Solidity support via fuzzing.** Keep running and improving the [Solang fuzzer](https://github.com/salaheldinsoliman/fuzzer) to harden the compiler and widen Solidity coverage — triaging and fixing the crashes it surfaces. 
 
-- **Announce the new "Luxor" release.** Publish and announce Solang [v0.3.5 "Luxor"](https://github.com/hyperledger-solang/solang/releases/tag/v0.3.5), which adds new Soroban examples (e.g. `events`) and a batch of Solidity/compiler fixes, so the Stellar
-  ecosystem can build on the latest compiler.
+- **Expand Solidity support via fuzzing.** Keep running and improving the
+  [Solang fuzzer](https://github.com/salaheldinsoliman/fuzzer) to harden the compiler and widen
+  Solidity coverage — triaging and fixing the crashes it surfaces.
 
-- **Gather another round of feedback.** Put the new release, the Playground, and the language server in front of users and collect feedback on the compiler and its tooling to prioritize the next round of work.
+- **Announce the new "Luxor" release.** Publish and announce Solang
+  [v0.3.5 "Luxor"](https://github.com/hyperledger-solang/solang/releases/tag/v0.3.5), which adds new
+  Soroban examples (e.g. `events`) and a batch of Solidity/compiler fixes, so the Stellar ecosystem
+  can build on the latest compiler.
 
-- **Complete the LFDT mentorship.** Finish the ongoing [mentorship](https://github.com/LF-Decentralized-Trust-Mentorships/mentorship-program/issues/74), growing an open-source contributor with deep Solang and Soroban knowledge.
+- **Gather another round of feedback.** Put the new release, the Playground, and the language server
+  in front of users and collect feedback on the compiler and its tooling to prioritize the next round
+  of work.
 
-- **Make Stellar easier to onboard via Solang.** Lower the barrier for Solidity/EVM developers to build on Stellar.
+- **Complete the LFDT mentorship.** Finish the ongoing
+  [mentorship](https://github.com/LF-Decentralized-Trust-Mentorships/mentorship-program/issues/74),
+  growing an open-source contributor with deep Solang and Soroban knowledge.
+
+- **Make Stellar easier to onboard via Solang.** Lower the barrier for Solidity/EVM developers to
+  build on Stellar.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Proposed Deliverables
 
 <!-- markdownlint-disable MD034 -->
+
 ## Proposed Deliverables (next three months)
 
 ### 1. Extend Solidity support via fuzzing — harden the compiler
 
 Continue running and improving the [Solang fuzzer](https://github.com/salaheldinsoliman/fuzzer),
-triaging and fixing the compiler crashes it surfaces. Robustness is the gating requirement to bring Solang to production, so fewer compiler crashes directly de-risk deploying Solidity contracts on Soroban.
+triaging and fixing the compiler crashes it surfaces. Robustness is the gating requirement to bring
+Solang to production, so fewer compiler crashes directly de-risk deploying Solidity contracts on
+Soroban.
 
-- **SMART alignment:** specific and measurable — fix ≥ 20 of the ~25 open fuzzer-found crashes
-  (plus any new ones), keep the fuzzer running continuously with triaged issue reports, and extend
-  its coverage (mutators / target passes) to reach different compiler paths; achievable, as the fuzzer
+- **SMART alignment:** specific and measurable — fix ≥ 20 of the ~25 open fuzzer-found crashes (plus
+  any new ones), keep the fuzzer running continuously with triaged issue reports, and extend its
+  coverage (mutators / target passes) to reach different compiler paths; achievable, as the fuzzer
   already exists and a wave of fixes is already in flight (e.g. #1884–#1894, #1915, #1924); relevant
   to bringing Solang to production; and time-bound to the next three months.
 
 ### 2. Differential tester — first working version (via the LFDT mentorship)
 
-Through the [LFDT mentorship](https://github.com/LF-Decentralized-Trust-Mentorships/mentorship-program/issues/74),
+Through the
+[LFDT mentorship](https://github.com/LF-Decentralized-Trust-Mentorships/mentorship-program/issues/74),
 build a differential tester — a separate tool from the fuzzer — that compiles and runs the same
 Solidity contract on `solc`+EVM and `solang`+Soroban and compares observable behavior to surface
-*miscompiles* (semantic divergences), not just crashes. This catches correctness bugs a
-crash-fuzzer cannot, the next level of production-readiness assurance for Solidity on Stellar.
+_miscompiles_ (semantic divergences), not just crashes. This catches correctness bugs a crash-fuzzer
+cannot, the next level of production-readiness assurance for Solidity on Stellar.
 
 - **SMART alignment:** specific and measurable — deliver a first working version that runs a set of
   Solidity contracts through both toolchains and reports behavioral divergences; achievable, as the
-  mentorship is already underway ([#74](https://github.com/LF-Decentralized-Trust-Mentorships/mentorship-program/issues/74));
+  mentorship is already underway
+  ([#74](https://github.com/LF-Decentralized-Trust-Mentorships/mentorship-program/issues/74));
   relevant to compiler correctness for Stellar; and time-bound to the next three months, when the
   mentorship concludes.
 
 ### 3. Grow developer reach and run a structured feedback round
 
-Produce Solidity-on-Stellar developer content — blog posts, a video walkthrough, and a live
-workshop — centered on the new **Luxor (v0.3.5)** release and the Playground, then collect and
-triage feedback. This lowers the onboarding barrier for Solidity/EVM developers to Stellar, grows
-adoption, and creates a prioritized feedback loop that steers future work.
+Produce Solidity-on-Stellar developer content — blog posts, a video walkthrough, and a live workshop
+— centered on the new **Luxor (v0.3.5)** release and the Playground, then collect and triage
+feedback. This lowers the onboarding barrier for Solidity/EVM developers to Stellar, grows adoption,
+and creates a prioritized feedback loop that steers future work.
 
 - **SMART alignment:** specific and measurable — publish ≥ 2 blog posts and ≥ 1 video, run ≥ 1
   workshop/live session, gather feedback from ≥ 25 developers, and convert it into ≥ 15 prioritized
   GitHub issues; achievable given our ~20 monthly active users and prior launch reach; relevant to
   adoption and onboarding; and time-bound to the next three months.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Legal Acknowledgements
 
 - [x] As the project representative, I agree to the Legal Acknowledgements.
-
