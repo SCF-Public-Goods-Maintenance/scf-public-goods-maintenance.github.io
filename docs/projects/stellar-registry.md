@@ -488,11 +488,11 @@ just Aha addresses added and available.
 
 ### D9: Surface emerging Source Verification information
 
-The Registry team submitted a [proposal for the Source Verification
-system RFP](https://communityfund.stellar.org/dashboard/submissions/receWOpMjj7FxAydj). Whether or
-not our team is awarded this contract, Q3 will see the finalization of underlying SEP-58 and the
-launch of independent Source Verification services. Registry is a natural place to surface and
-organize this information and make it useful to the ecosystem.
+The Registry team submitted a
+[proposal for the Source Verification system RFP](https://communityfund.stellar.org/dashboard/submissions/receWOpMjj7FxAydj).
+Whether or not our team is awarded this contract, Q3 will see the finalization of underlying SEP-58
+and the launch of independent Source Verification services. Registry is a natural place to surface
+and organize this information and make it useful to the ecosystem.
 
 Value to ecosystem: As the hub that makes Wasms on Stellar discoverable and reusable, Registry is a
 natural place to surface the Wasm metadata added by SEP-58. Registry is also not _a source
