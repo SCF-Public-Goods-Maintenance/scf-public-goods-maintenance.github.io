@@ -471,6 +471,21 @@ workflow.
 
 Proof: documentation live on the Registry docs site and videos on The Aha Company's YouTube channel.
 
+### D8: Support named G-addresses
+
+Just as Registry today allows giving names to Wasms and Contracts, expand it to also allow giving
+names to G-addresses. These will be displayed in the rgstry.xyz UI, so that the "Deployer" and
+"Admin" fields become human-friendly names.
+
+Value to ecosystem: a central, open, and collaborative system to add human-friendly names to
+G-addresses will allow other Stellar tools such as Stellar.Expert to also show friendly names,
+making the entire ecosystem more usable by existing participants and more welcoming to newcomers.
+
+Issue: https://github.com/stellar-scaffold/cli/issues/421
+
+Proof: code shipped; address system available, documented, and advertised to the community; more
+than just Aha addresses added and available.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Legal Acknowledgements
