@@ -560,11 +560,11 @@ information about full contract history.
 ### D13: Documentation consolidation & redesign; potential migration of rgstry.xyz
 
 Implement new logo and design elements, secured in Q2, across rgstry.xyz site and other Registry
-properties such as GitHub. Organize videos created as part of D7 into landing page and other
-relevant locations throughout rgstry.xyz.
+properties such as GitHub. Organize videos created as part of D7 into landing page and other relevant
+locations throughout rgstry.xyz.
 
-Discuss with ecosystem partners and SDF potential for a new domain for Registry: rgstry.xyz was
-never intended to be permanent. Registry could live under an SDF-owned domain, such as
+Discuss with ecosystem partners and SDF potential for a new domain for Registry: rgstry.xyz was never
+intended to be permanent. Registry could live under an SDF-owned domain, such as
 registry.stellar.org. This, in turn, may require frontend redesign, swapping current subdomain-based
 network specification (`testnet.rgstry.xyz` / `stellar.rgstry.xyz`) for URL-based specification.
 Depending on scope, the actual implementation of any such plan may be a Q4 concern.
