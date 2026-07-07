@@ -51,17 +51,22 @@ Active developers of the Refractor service:
 
 ## Retroactive Impact
 
-Our service is actively used by Aquarius DAO, Reflector DAO, YieldBlox DAO, Stratum, and other services.
-There are 2 new integrations with DeFi services in progress, expected to go live in Q3 2026.
-According to our logs, the service reached the SLA of 99.992% since the beginning of 2026.
+Our service is actively used by Aquarius DAO, Reflector DAO, YieldBlox DAO, Stratum, and other
+services. There are 2 new integrations with DeFi services in progress, expected to go live in
+Q3 2026. According to our logs, the service reached the SLA of 99.992% since the beginning of 2026.
 
 ## Past Deliverables
 
-- We revamped the website home page with a focus on key product features (available here: https://refractor.space)
-- The webiste now highlights various usage scenarios and contains a simple step-by-step explanation of how it works.
-- API infrastructure has been moved to a new dedicated server to provide more room for the database growth.
-- Refractor now supports 6 new extension-based wallets in the signing interface: Bitget, ForDeFi, CactusLink, Hana, Klever, OneKey, Rabet.
-- Server-side aggregator, website, and all dependency libs updated to support the upcoming Stellar protocol upgrade.
+- We revamped the website home page with a focus on key product features (available here:
+  https://refractor.space)
+- The webiste now highlights various usage scenarios and contains a simple step-by-step explanation
+  of how it works.
+- API infrastructure has been moved to a new dedicated server to provide more room for the database
+  growth.
+- Refractor now supports 6 new extension-based wallets in the signing interface: Bitget, ForDeFi,
+  CactusLink, Hana, Klever, OneKey, Rabet.
+- Server-side aggregator, website, and all dependency libs updated to support the upcoming Stellar
+  protocol upgrade.
 
 ## Proposed Impact
 
@@ -78,7 +83,8 @@ backed by by Stellar.
   - CAP-0071-01 (delegated authentication for custom accounts) ($2000)
   - CAP-0071-02 (address-bound Soroban address credentials, `SOROBAN_CREDENTIALS_ADDRESS_V2`) ($2000)
   - Ledger entry sponsorship changes ($1000)
-- Allow adding signatures for `SIGNER_KEY_TYPE_HASH_X` and `SIGNER_KEY_TYPE_ED25519` directly from the interface without wallet invocation ($1000)
+- Allow adding signatures for `SIGNER_KEY_TYPE_HASH_X` and `SIGNER_KEY_TYPE_ED25519` directly from
+  the interface without wallet invocation ($1000)
 - Add ability to sign not only transactions, but also Soroban Auth entries ($6000)
 - Improve signing flow on mobile devices ($2000)
 
