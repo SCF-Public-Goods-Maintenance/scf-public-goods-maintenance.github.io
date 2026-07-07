@@ -12,14 +12,14 @@ budget: "50000"
 _Go from idea to app faster with a custom, pluggable CLI; a multi-framework template system; and a
 customizable, modern frontend._
 
-|                      |                                              |
-| -------------------- | -------------------------------------------- |
-| **Category**         | Developer Experience                         |
-| **Website**          | <https://scaffoldstellar.org/>               |
-| **Repository**       | <https://github.com/stellar-scaffold/cli/>   |
-| **First Released**   | May 2025                                     |
-| **Intake**           | soft-launch                                  |
-| **Budget Requested** | 50000                                        |
+|                      |                                            |
+| -------------------- | ------------------------------------------ |
+| **Category**         | Developer Experience                       |
+| **Website**          | <https://scaffoldstellar.org/>             |
+| **Repository**       | <https://github.com/stellar-scaffold/cli/> |
+| **First Released**   | May 2025                                   |
+| **Intake**           | soft-launch                                |
+| **Budget Requested** | 50000                                      |
 
 ## Project Description
 
@@ -131,10 +131,11 @@ have completed discovery/design with implementation carried into Q3 — several 
 > - Measure: update shipped in frontend
 > - Issue: https://github.com/stellar-scaffold/cli/issues/441
 
-In progress: the upgrade PR is open and under review at https://github.com/stellar-scaffold/ui/pull/241.
-The Template Monorepo restructure (see D3, D8) moved wallet integration into the shared
-`@stellar-scaffold/app-lib` package, so the v2 upgrade now lands once for every framework template
-instead of once per template. Finishing this is committed in Q3 (see Proposed D3).
+In progress: the upgrade PR is open and under review at
+https://github.com/stellar-scaffold/ui/pull/241. The Template Monorepo restructure (see D3, D8) moved
+wallet integration into the shared `@stellar-scaffold/app-lib` package, so the v2 upgrade now lands
+once for every framework template instead of once per template. Finishing this is committed in Q3
+(see Proposed D3).
 
 ### D2: Allow package manager of choice
 
@@ -157,11 +158,12 @@ tracking issue is closed.
 > - Issue: https://github.com/stellar-scaffold/cli/issues/161
 
 **Substantially shipped** via the Template Monorepo effort
-(https://github.com/stellar-scaffold/cli/pull/543 and https://github.com/stellar-scaffold/ui/pull/234):
+(https://github.com/stellar-scaffold/cli/pull/543 and
+https://github.com/stellar-scaffold/ui/pull/234):
 
-- The single React frontend repo became a multi-framework template monorepo
-  (`templates/react`, `templates/svelte`, plus a shared `app-lib` package for wallet, storage, and
-  formatting logic), delivering the official **Svelte template**.
+- The single React frontend repo became a multi-framework template monorepo (`templates/react`,
+  `templates/svelte`, plus a shared `app-lib` package for wallet, storage, and formatting logic),
+  delivering the official **Svelte template**.
 - `stellar scaffold init --template` accepts either an official framework name (e.g. `svelte`) or an
   `org/repo` community template, establishing the "bring your own frontend" path.
 - A new `scaffold.yml` `config:` section lets any template declare where its contracts, TypeScript
@@ -206,7 +208,7 @@ documentation deliverable (Proposed D6).
 
 Not shipped; design discussion in the issue converged on an approach: scheduled CI (cron) jobs that
 test against dependency releases (or HEAD/nightly builds for early warning), structured so that
-projects *built with* Scaffold can inherit the same alerts. Our existing scheduled-update flow for
+projects _built with_ Scaffold can inherit the same alerts. Our existing scheduled-update flow for
 the OpenZeppelin example contracts serves as the prototype. Carried into Q3 as a stretch goal
 (Proposed D9) behind the committed re-architecture work.
 
@@ -319,7 +321,7 @@ now buys depth and reliability on that wider surface rather than breadth of new 
 
 - Publish a self-contained `SKILL.md` at scaffoldstellar.org teaching AI agents Scaffold as a system,
   and ship `AGENTS.md` files in generated projects (with `init` stripping contributor-only content so
-  end users get docs scoped to *their* app).
+  end users get docs scoped to _their_ app).
 - Measure: `SKILL.md` live and fetchable by URL; generated projects include a correct `AGENTS.md`;
   both documented.
 - Issue: https://github.com/stellar-scaffold/cli/issues/394
@@ -330,9 +332,10 @@ now buys depth and reliability on that wider surface rather than breadth of new 
 
 ## D5: Complete BYOFrontend: "no frontend" option + community-template guide
 
-- Finish the remaining scope from Q2's BYOFrontend deliverable: a "no frontend" init option (contracts
-  and clients without a UI layer) and a contribution guide documenting how community members build and
-  publish their own framework templates for `stellar scaffold init --template org/repo`.
+- Finish the remaining scope from Q2's BYOFrontend deliverable: a "no frontend" init option
+  (contracts and clients without a UI layer) and a contribution guide documenting how community
+  members build and publish their own framework templates for
+  `stellar scaffold init --template org/repo`.
 - Measure: no-frontend option shipped and tested; contribution guide published on the docs site; at
   least the existing official templates documented as reference implementations.
 - Issue: https://github.com/stellar-scaffold/cli/issues/161
