@@ -544,11 +544,12 @@ in production with the Registry wasm itself.
 
 ### D12: UI: Expose full contract version history
 
-The Registry API [now exposes full version
-history](https://stellar-registry-testnet.fly.dev/v1/contracts/registry), which notably extends
-into the full history of the blockchain, beyond the launch of the Registry contract itself. This
-information is not yet exposed [in the rgstry.xyz
-UI](https://testnet.rgstry.xyz/contracts/registry). This deliverable addresses that mismatch.
+The Registry API
+[now exposes full version history](https://stellar-registry-testnet.fly.dev/v1/contracts/registry),
+which notably extends into the full history of the blockchain, beyond the launch of the Registry
+contract itself. This information is not yet exposed
+[in the rgstry.xyz UI](https://testnet.rgstry.xyz/contracts/registry). This deliverable addresses
+that mismatch.
 
 Value to ecosystem: making contract upgrades easy to find and analyze aids in troubleshooting and
 full-blockchain comprehensibility.
