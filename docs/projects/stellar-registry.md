@@ -505,20 +505,20 @@ Source Verification services also shown in a way that exposes, rather than flatt
 
 ### D10: guide Tansu evolution to support Registry needs
 
-Harnessing Tansu for Registry's governance required significant effort and an unsatisfying
-technical workaround (see above discussion of Tansu-DAO-gated registry manager). We will
-collaborate with the Tansu team to guide Tansu's evolution, either obsolescing this workaround or
-sculpting it into a more general and generally-usable shape.
+Harnessing Tansu for Registry's governance required significant effort and an unsatisfying technical
+workaround (see above discussion of Tansu-DAO-gated registry manager). We will collaborate with the
+Tansu team to guide Tansu's evolution, either obsolescing this workaround or sculpting it into a more
+general and generally-usable shape.
 
 Value to ecosystem: whether for security guarantees as in the case of Registry, or just for open &
 participatory governance of open-source projects, on-chain governance provides a crucial role to any
-blockchain ecosystem. Registry's partnership with Tansu ensures the maturity of this solution for
-all community projects.
+blockchain ecosystem. Registry's partnership with Tansu ensures the maturity of this solution for all
+community projects.
 
 Issue: https://github.com/stellar-scaffold/cli/issues/527
 
-Proof: [Registry Tansu Manager
-contract](https://github.com/stellar-registry/contracts/tree/main/contracts/registry-tansu-manager)
+Proof:
+[Registry Tansu Manager contract](https://github.com/stellar-registry/contracts/tree/main/contracts/registry-tansu-manager)
 either migrates out of the stellar-registry repository to Tansu, becoming easier to use for all
 ecosystem projects, or becomes altogether unnecessary.
 
