@@ -557,6 +557,24 @@ full-blockchain comprehensibility.
 Proof: Contract detail pages on [rgstry.xyz/contracts](https://testnet.rgstry.xyz/contracts) display
 information about full contract history.
 
+### D13: Documentation consolidation & redesign; potential migration of rgstry.xyz
+
+Implement new logo and design elements, secured in Q2, across rgstry.xyz site and other Registry
+properties such as GitHub. Organize videos created as part of D7 into landing page and other
+relevant locations throughout rgstry.xyz.
+
+Discuss with ecosystem partners and SDF potential for a new domain for Registry: rgstry.xyz was
+never intended to be permanent. Registry could live under an SDF-owned domain, such as
+registry.stellar.org. This, in turn, may require frontend redesign, swapping current subdomain-based
+network specification (`testnet.rgstry.xyz` / `stellar.rgstry.xyz`) for URL-based specification.
+Depending on scope, the actual implementation of any such plan may be a Q4 concern.
+
+Value to ecosystem: consolidates Registry documentation to a single, searchable place, making it
+simple to onboard and make the most of Registry.
+
+Proof: redesigned site live, videos highlighted throughout, and question of domain's permanent home
+settled with decision documented and justified.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Legal Acknowledgements
