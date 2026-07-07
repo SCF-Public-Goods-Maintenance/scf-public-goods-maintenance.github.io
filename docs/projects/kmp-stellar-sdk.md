@@ -29,9 +29,9 @@ transactions, Stellar RPC and Horizon, smart contracts, OpenZeppelin smart accou
 <!-- markdownlint-disable MD034 -->
 
 The Kotlin Multiplatform Stellar SDK lets developers write their Stellar integration once in Kotlin
-and run it across Mobile (Android, iOS), Web (browser), Desktop (JVM, native macOS), and Server (JVM,
-Node.js). It covers XDR encoding and decoding, transaction building and signing, Stellar RPC and
-Horizon, low-level and high-level Soroban smart-contract support (deploy, simulate, invoke,
+and run it across Mobile (Android and iOS), Web (browser), Desktop (JVM, native macOS), and Server
+(JVM, Node.js). It covers XDR encoding and decoding, transaction building and signing, Stellar RPC
+and Horizon, low-level and high-level Soroban smart-contract support (deploy, simulate, invoke,
 auth-entry signing), OpenZeppelin smart account support (WebAuthn passkeys, multi-signer
 authorization, context rules, and policy-based access control), and 17 Stellar Ecosystem Proposals
 (SEPs). It ships two cross-platform demo apps (general-purpose and smart-account) and an AI
@@ -125,16 +125,15 @@ and Python SDKs already provide this.
 
 Add a Kotlin Multiplatform target to the community stellar-contract-bindings generator (implemented
 by overcat and linked from the Stellar CLI), so developers can generate typed Kotlin contract clients
-from a deployed contract's spec, joining the Dart, Swift, and PHP targets that Soneso contributed.
-See:
-[stellar-contract-bindings generator](https://github.com/lightsail-network/stellar-contract-bindings)
+from a deployed contract's spec, joining the Dart, Swift, and PHP targets that Soneso contributed
+(see: [stellar-contract-bindings generator][scbindings]).
 <!-- markdownlint-enable MD034 -->
 
 ## Proposed Deliverables
 
 <!-- markdownlint-disable MD034 -->
 
-**Continuous Maintenance and Improvement**
+### Continuous Maintenance and Improvement
 
 Regular SDK updates addressing Horizon, Soroban RPC, and protocol updates (tracking Protocol 27
 through its mainnet activation), bug fixes, feature requests, and documentation updates. Maintain
@@ -146,14 +145,14 @@ other Soneso SDKs (see: [soneso-sdk-stats dashboard](https://soneso.github.io/so
 Proof: Release notes on GitHub, updated compatibility matrices, Codecov coverage report, and the
 soneso-sdk-stats dashboard.
 
-**SEP-51 (XDR-JSON)**
+### SEP-51 (XDR-JSON)
 
 Implement bi-directional XDR/JSON conversion via the XDR generator, with round-trip unit tests and
 documentation, for cross-SDK parity with the Python and PHP SDKs.
 
 Proof: GitHub release, PR with implementation and tests, SEP-51 compatibility matrix, documentation.
 
-**Native ScVal Conversion**
+### Native ScVal Conversion
 
 Add a helper that converts a smart-contract value (SCValXdr) to a native Kotlin value without
 requiring the contract spec, so contract invocation and simulation results can be consumed directly
@@ -161,7 +160,7 @@ instead of parsing the raw XDR union by hand. This matches the JS and Python SDK
 
 Proof: GitHub release, PR with implementation and tests, documentation.
 
-**Contract Bindings (KMP Target)**
+### Contract Bindings (KMP Target)
 
 Add a Kotlin Multiplatform target to the community stellar-contract-bindings generator (implemented
 by overcat and linked from the Stellar CLI), generating typed Kotlin contract clients backed by the
@@ -177,3 +176,5 @@ the client addition, generated-code tests.
 ## Legal Acknowledgements
 
 - [x] As the project representative, I agree to the Legal Acknowledgements.
+
+[scbindings]: https://github.com/lightsail-network/stellar-contract-bindings
