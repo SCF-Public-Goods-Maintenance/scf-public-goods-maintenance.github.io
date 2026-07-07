@@ -4,7 +4,7 @@ parent: Public Good Projects
 proposal_issue: 38
 proposer: orbitlens
 category: "Governance Tools"
-budget: "20,000"
+budget: "18,000"
 ---
 
 # RefractorSpace
@@ -18,7 +18,7 @@ _Pending transactions storage and multisig aggregator for Stellar Network._
 | **Repository**       | <https://github.com/stellar-expert/refractor>                                                      |
 | **First Released**   | March 2021                                                                                         |
 | **Intake**           | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/26> |
-| **Budget Requested** | 20,000                                                                                             |
+| **Budget Requested** | 18,000                                                                                             |
 
 ## Project Description
 
@@ -51,15 +51,17 @@ Active developers of the Refractor service:
 
 ## Retroactive Impact
 
-Over the last 3 months our service processed more than 100 multisig transactions. It is actively used
-by Aquarius DAO, Reflector DAO, YieldBlox DAO, Stratum, and other services.
-
-Here is, for example, a pending Aquarius DAO distribution
-[tx](https://refractor.space/tx/643a50a64293a5d6a54c0b539a226cf7fdaf58ef32d68e0e9b7c3908a62926a5).
+Our service is actively used by Aquarius DAO, Reflector DAO, YieldBlox DAO, Stratum, and other services.
+There are 2 new integrations with DeFi services in progress, expected to go live in Q3 2026.
+According to our logs, the service reached the SLA of 99.992% since the beginning of 2026.
 
 ## Past Deliverables
 
-N/A
+- We revamped the website home page with a focus on key product features (available here: https://refractor.space)
+- The webiste now highlights various usage scenarios and contains a simple step-by-step explanation of how it works.
+- API infrastructure has been moved to a new dedicated server to provide more room for the database growth.
+- Refractor now supports 6 new extension-based wallets in the signing interface: Bitget, ForDeFi, CactusLink, Hana, Klever, OneKey, Rabet.
+- Server-side aggregator, website, and all dependency libs updated to support the upcoming Stellar protocol upgrade.
 
 ## Proposed Impact
 
@@ -71,15 +73,14 @@ backed by by Stellar.
 
 ## Proposed Deliverables
 
-- Update documentation and highlight various usage scenarios to simplify on-boarding for new projects
-  (2000$)
-- Revamp the website home page, include recently added functionality, emphasize key product features
-  (2500$)
-- Move infrastructure to a new server (500$)
-- Add additional wallets supports on signing interface, improve signing flow on mobile devices
-  (7000$)
-- Update aggregator, website, dependency libs to support the upcoming Stellar protocol upgrade
-  (8000$)
+- Review the automatic signer scheme detection algorithm to fully account for:
+  - Soroban transaction authorization entries ($4000)
+  - CAP-0071-01 (delegated authentication for custom accounts) ($2000)
+  - CAP-0071-02 (address-bound Soroban address credentials, `SOROBAN_CREDENTIALS_ADDRESS_V2`) ($2000)
+  - Ledger entry sponsorship changes ($1000)
+- Allow adding signatures for `SIGNER_KEY_TYPE_HASH_X` and `SIGNER_KEY_TYPE_ED25519` directly from the interface without wallet invocation ($1000)
+- Add ability to sign not only transactions, but also Soroban Auth entries ($6000)
+- Improve signing flow on mobile devices ($2000)
 
 ## Legal Acknowledgements
 
