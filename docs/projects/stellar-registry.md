@@ -536,8 +536,7 @@ We are intentionally leaving contract upgrades as future work, as this gets into
 migrations. It is best to leave contract upgrades as a manual task until tooling around migrations
 has matured.
 
-This task requires research into how to securely provision keys that can be stored in a GitHub
-workflow and which do not have risky privilege levels.
+This task requires research into how to securely provision keys which only have permission to invoke `publish` on the registry and can be stored in a GitHub workflow and which do not have risky privilege levels.
 
 Proof: new repository available at, say, `stellar-registry/gh-build-workflow`. Documented and tested
 in production with the Registry wasm itself.
