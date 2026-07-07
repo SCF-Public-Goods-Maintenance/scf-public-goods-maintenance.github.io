@@ -393,9 +393,11 @@ now buys depth and reliability on that wider surface rather than breadth of new 
 ## D10 (Stretch): Anonymous usage telemetry
 
 - Add basic, anonymous usage telemetry to the CLI (e.g. `scaffold init` counts, deploys per network)
-  so the team can measure real adoption instead of relying on anecdote.
+  so the team can measure real adoption instead of relying on anecdote. Do this in conjunction with
+  indexing already-available on-chain data, and prefer on-chain data as the source when possible.
 - Measure: telemetry system shipped with clear disclosure; adoption metrics available to the team.
-- Issue: https://github.com/stellar-scaffold/cli/issues/448
+- Issues: https://github.com/stellar-scaffold/cli/issues/448,
+  https://github.com/stellar-scaffold/cli/issues/479
 - Ecosystem value: lets us (and SCF) evaluate Scaffold's actual ecosystem impact quantitatively and
   prioritize future work by evidence.
 
