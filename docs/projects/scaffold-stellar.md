@@ -1,5 +1,5 @@
 ---
-title: "Scaffold Stellar"
+title: "Stellar Scaffold"
 parent: Public Good Projects
 proposal_issue: 62
 proposer: chadoh
@@ -7,30 +7,31 @@ category: "Developer Experience"
 budget: "50000"
 ---
 
-# Scaffold Stellar
+# Stellar Scaffold
 
-_Go from idea to app faster with a custom, pluggable CLI; industry-redefining composability powered
-by Stellar Registry; and a customizable, modern frontend._
+_Go from idea to app faster with a custom, pluggable CLI; a multi-framework template system; and a
+customizable, modern frontend._
 
-|                      |                                                 |
-| -------------------- | ----------------------------------------------- |
-| **Category**         | Developer Experience                            |
-| **Website**          | <https://scaffoldstellar.org/>                  |
-| **Repository**       | <https://github.com/theahaco/scaffold-stellar/> |
-| **First Released**   | May 2025                                        |
-| **Intake**           | soft-launch                                     |
-| **Budget Requested** | 50000                                           |
+|                      |                                              |
+| -------------------- | -------------------------------------------- |
+| **Category**         | Developer Experience                         |
+| **Website**          | <https://scaffoldstellar.org/>               |
+| **Repository**       | <https://github.com/stellar-scaffold/cli/>   |
+| **First Released**   | May 2025                                     |
+| **Intake**           | soft-launch                                  |
+| **Budget Requested** | 50000                                        |
 
 ## Project Description
 
-Scaffold Stellar is an open-source developer toolkit for building decentralized applications (dApps)
+Stellar Scaffold is an open-source developer toolkit for building decentralized applications (dApps)
 and smart contracts on the Stellar blockchain. It helps developers go from idea to working full-stack
-dApp faster by providing CLI tools, reusable contract templates, integration with Stellar Registry,
-and a modern customizable frontend.
+dApp faster by providing CLI tools, reusable contract templates, first-class integration with Stellar
+Registry (now incubated out into its own project), and modern, customizable frontend templates for
+multiple JS frameworks.
 
 ## Team & Experience
 
-Scaffold Stellar is built and maintained by **The Aha Company** (formerly Aha Labs), a team of 10+
+Stellar Scaffold is built and maintained by **The Aha Company** (formerly Aha Labs), a team of 10+
 senior engineers deeply embedded in the Stellar ecosystem.
 
 ## Early Soroban origin
@@ -54,7 +55,7 @@ development on Stellar, including:
   **stellar-sdk-js**, which helps application developers interact with contracts more safely and
   predictably.
 
-## Why we were selected for Scaffold Stellar and our SCF track record
+## Why we were selected for Stellar Scaffold and our SCF track record
 
 In early 2025, SDF searched for a team that could bring a ScaffoldETH-like end-to-end experience to
 Stellar. They selected us based on:
@@ -66,7 +67,7 @@ Stellar. They selected us based on:
    - **Loam**:
      [https://communityfund.stellar.org/project/loam-qj5](https://communityfund.stellar.org/project/loam-qj5)
 
-Scaffold Stellar is a direct continuation of that work: turning the hard-won Developer Experience
+Stellar Scaffold is a direct continuation of that work: turning the hard-won Developer Experience
 (DevX) knowledge from core tooling into a “front door” experience that helps developers go from idea
 to proof-of-concept quickly, with strong defaults and a convention-over-configuration approach.
 
@@ -91,288 +92,323 @@ strengths and the practical realities builders need to know.
 
 Beyond Stellar, The Aha Company is also an integration partner in other ecosystems (e.g., **Filecoin,
 XRPL, Cardano, Canton, Starknet**). This gives us a unique ability to benchmark developer experience
-across chains and bring proven patterns back to Stellar—while keeping Scaffold Stellar aligned with
+across chains and bring proven patterns back to Stellar—while keeping Stellar Scaffold aligned with
 what developers expect from modern, full-stack tooling.
 
 ## Retroactive Impact
 
-- Scaffold Stellar is in the "recommended resources" for all Stellar hackathons, and was used heavily
-  (and enjoyed) in the Mexico City hackathon in March. -Shipped Testnet Registry frontend (current
-  URL: https://testnet.rgstry.xyz/) and added relevant Testnet contracts & Wasms to it ahead of
-  Mexico City hackathon, as requested by SDF DevRel
-- Recommended in
-  [the official SKILL](https://github.com/stellar/stellar-dev-skill/blob/main/skill/resources.md).
+- **Stellar Registry graduated into its own project.** What began as a Stellar Scaffold workstream
+  matured enough over the last two quarters to be spun out as an independent public good with its own
+  team, repos, and roadmap. The extraction of the Scaffold CLI into its own focused repository was
+  completed this quarter (https://github.com/stellar-scaffold/cli/pull/535), and Scaffold remains the
+  primary integration surface for publishing and consuming Registry contracts. This is the incubation
+  model working as intended.
+- **Same-cycle Stellar Protocol 27 support.** The CLI, contract templates, and generated projects
+  were upgraded to Protocol 27 (https://github.com/stellar-scaffold/cli/pull/549) and released
+  immediately (2026-06-30), so builders scaffolding new projects were never stuck on an old protocol.
+- **Continuous releases.** Three `stellar-scaffold-cli` releases shipped this quarter (v0.0.22,
+  v0.0.23, v0.0.24) plus supporting crates, with notes:
+  https://github.com/stellar-scaffold/cli/releases
+- **Upstream documentation contributions**, e.g. improving prerequisites on the official Stellar docs
+  (https://github.com/stellar/stellar-docs/pull/2267).
+- Stellar Scaffold remains in the "recommended resources" for Stellar hackathons and is recommended
+  in [the official SKILL](https://github.com/stellar/stellar-dev-skill/blob/main/skill/resources.md).
 
 ## Past Deliverables
 
-## Workstream 1 - Stellar Contract Registry: Launch + Trust + Reproducibility
+**Q2 in summary.** We made Q2 a deliberate re-architecture quarter. Three structural efforts — the
+Registry split, the multi-framework Template Monorepo, and the Protocol 27 upgrade — consumed most of
+the quarter and touched nearly every deliverable below. That investment is what makes the Q3 list
+finishable: wallet integration now lands once in a shared package instead of per-template, community
+templates have a real extension point, and the config-file migration has its first slice shipped. Of
+the eight committed deliverables, one shipped fully, two shipped substantially, and the remainder
+have completed discovery/design with implementation carried into Q3 — several with open PRs already.
 
-### D1. Registry UI (beta) shipped and publicly deployed
+### D1: Support Stellar-Wallets-Kit v2
 
-> - Deliver a frontend for exploring and consuming contracts (search/browse, contract pages,
->   provenance/metadata, usage instructions).
-> - Measure: UI deployed to a public URL + documented usage flows.
-> - Issue: https://github.com/theahaco/scaffold-stellar/issues/169
-> - Ecosystem value: makes contract discovery and reuse real for app developers; reduces repeated
->   reinventing of standard components.
+> - Update to Stellar-Wallets-Kit v2, released v2 in Feb 2025, to streamline Developers' experience
+>   and keep up to date with the latest standards in the ecosystem.
+> - Measure: update shipped in frontend
+> - Issue: https://github.com/stellar-scaffold/cli/issues/441
 
-Testnet Registry frontend is live at https://testnet.rgstry.xyz/
+In progress: the upgrade PR is open and under review at https://github.com/stellar-scaffold/ui/pull/241.
+The Template Monorepo restructure (see D3, D8) moved wallet integration into the shared
+`@stellar-scaffold/app-lib` package, so the v2 upgrade now lands once for every framework template
+instead of once per template. Finishing this is committed in Q3 (see Proposed D3).
 
-### D2. Namespaces + Security Council operationalization
+### D2: Allow package manager of choice
 
-> - Ship namespace support and publish a clear policy/process for trusted namespaces, backed by an
->   active security council.
-> - Measure: namespaces live + published policy + initial set of trusted namespaces created.
-> - Issue: https://github.com/theahaco/scaffold-stellar/issues/22
-> - Ecosystem value: reduces name-squatting/confusion and establishes a trust layer for contract
->   reuse.
+> - Rather than forcing people to use NPM with Scaffold, allow them to pick the JS package manager of
+>   their choosing (yarn, bun, deno, etc)
+> - Measure: feature shipped, tested, & documented
+> - Issue: https://github.com/stellar-scaffold/cli/issues/162
 
-Wasms and contracts can only be deployed to `unverified` namespace by general users; find
-`unverified` Wasms & contracts in the testnet registry with the `unverified/` channel prefix. These
-are tracked by a separate registry contract that is itself registered in the root/main registry with
-the name `unverified` (https://testnet.rgstry.xyz/contracts/unverified). This same sub-registry
-prefixing strategy will be used in mainnet (https://github.com/theahaco/scaffold-stellar/issues/433)
-to create dedicated sub-registries / prefixes for popular ecosystem projects & partners like `oz`,
-`blend`, and `defindex`. While the root / main registry contract is managed by the Registry Security
-Council multisig wallet, these other subregistries will be managed by each ecosystem's own wallet
-(whether or not they use multisig is up to them).
+**Shipped.** Core package-manager-agnostic behavior merged in
+https://github.com/stellar-scaffold/cli/pull/345, with follow-up improvements in
+https://github.com/stellar-scaffold/cli/pull/491, released in `stellar-scaffold-cli` v0.0.24. The
+tracking issue is closed.
 
-### D3. Registry documentation and publishing/consumption flows
+### D3: BYOFrontend
 
-> - Publish comprehensive docs for publishing and consuming contracts via CLI/Rust SDK; include
->   security model and best practices.
-> - Measure: docs live + linked from scaffoldstellar.org + examples runnable end-to-end.
-> - Issue: https://github.com/theahaco/scaffold-stellar/issues/102
-> - Ecosystem value: lowers onboarding friction and makes registry usage self-serve.
+> - Create two new Aha-maintained Scaffold frontend plugins: 1. no frontend, 2. Svelte. In addition,
+>   create documentation for how community members can contribute their own frontend templates for
+>   use with Stellar Scaffold.
+> - Measure: feature shipped, tested, documented.
+> - Issue: https://github.com/stellar-scaffold/cli/issues/161
 
-Registry documentation exists at https://scaffoldstellar.org/docs/registry, which is also linked from
-top navigation bar on https://testnet.rgstry.xyz/. Additionally, the Registry web app also shows how
-to use registered contracts; see https://testnet.rgstry.xyz/contracts/unverified for an example.
+**Substantially shipped** via the Template Monorepo effort
+(https://github.com/stellar-scaffold/cli/pull/543 and https://github.com/stellar-scaffold/ui/pull/234):
 
-### D4. Supply-chain safety design implemented
+- The single React frontend repo became a multi-framework template monorepo
+  (`templates/react`, `templates/svelte`, plus a shared `app-lib` package for wallet, storage, and
+  formatting logic), delivering the official **Svelte template**.
+- `stellar scaffold init --template` accepts either an official framework name (e.g. `svelte`) or an
+  `org/repo` community template, establishing the "bring your own frontend" path.
+- A new `scaffold.yml` `config:` section lets any template declare where its contracts, TypeScript
+  bindings, and contract clients live, so community templates can follow their own framework
+  conventions.
 
-> - Implement mitigations and clear behavior for common supply-chain risks (e.g., name confusion,
->   publisher ambiguity), building on the “supply chain brainstorming” work.
-> - Measure: documented threat model + implemented checks/UX cues + test coverage.
-> - Issue: https://github.com/theahaco/scaffold-stellar/issues/350
-> - Ecosystem value: improves ecosystem security posture as reuse increases.
+Remaining from the original scope — the "no frontend" option and a community-template contribution
+guide — was not delivered in Q2 and is explicitly committed in Q3 (Proposed D5).
 
-"Flagging" behavior agreed upon by SDF project manager (Steph). "Registry as cross-contract proxy"
-functionality implemented in https://github.com/theahaco/scaffold-stellar/pull/461. Additional
-functionality based on contract & wasm flagging to be implemented in Q2,
-https://github.com/theahaco/scaffold-stellar/issues/452, then communicated to ecosystem.
+### D4: SKILL.md to help agentic workflows
 
-### D5. Reset/reseed tooling for testnet & futurenet
+> - Add SKILL.md to Stellar Scaffold repository to facilitate more powerful and accurate AI & agentic
+>   workflows.
+> - Measure: feature shipped, tested, and documented.
+> - Issue: https://github.com/stellar-scaffold/cli/issues/394
 
-> - Provide deterministic redeploy/reseed workflows for well-known contracts and registry state after
->   network resets.
-> - Measure: scripts + runbook + successful internal dry-run demonstration.
-> - Issues: https://github.com/theahaco/scaffold-stellar/issues/330 and
->   https://github.com/theahaco/scaffold-stellar/issues/21
-> - Ecosystem value: removes recurring ecosystem friction; supports all builders, not just Scaffold
->   users.
+Not shipped in Q2; design work completed. The Registry split re-scoped this deliverable: each product
+now needs its own agent-facing doc (Scaffold's `SKILL.md` hosted at scaffoldstellar.org, Registry's
+own alongside its site), and the template monorepo introduced a second need — in-project agent docs
+that `init` carries into generated end-user projects. The re-scoped design is committed in Q3 (see
+Proposed D4).
 
-Implemented in https://github.com/theahaco/registry-indexer/pull/3; to be tested during next Testnet
-reset.
+### D5: Improve Scaffold info on main Stellar docs
 
-### D6. Publish standard OpenZeppelin-based contracts into the registry
+> - Minimize the info on the Stellar Scaffold page on the main Stellar docs in line with other tools
+>   that have their own documentations sites, linking prominently to https://scaffoldstellar.org
+> - Measure: new documentation page shipped to main Stellar docs
+> - Issue: https://github.com/stellar-scaffold/cli/issues/361
 
-> - Deploy and register canonical standard contracts (with provenance metadata) as safe building
->   blocks.
-> - Measure: at least a defined set of standard contracts available with documentation and example
->   usage.
-> - Issue: https://github.com/theahaco/scaffold-stellar/issues/168
-> - Ecosystem value: safer defaults and faster iteration for most new apps.
+Partial: scope was agreed in the issue discussion (minimize the page, link prominently to the
+dedicated docs site), and smaller upstream improvements shipped in the meantime
+(https://github.com/stellar/stellar-docs/pull/2267). The page rework itself carries into the Q3
+documentation deliverable (Proposed D6).
 
-See `oz-` prefixed Wasms here: https://testnet.rgstry.xyz/wasms
+### D6: Monitor releases of ecosystem projects
 
-## Workstream 2 - Scaffold Stellar Extension/Plugin System + Integrations
+> - For Scaffold itself and all projects that are built with it, provide automatic notifications
+>   (perhaps in the form of GitHub issues or pull requests) when complex ecosystem dependencies, such
+>   as Stellar-Wallets-Kit, are updated.
+> - Measure: system in place for notifying Scaffold team of ecosystem project updates
+> - Issue: https://github.com/stellar-scaffold/cli/issues/301
 
-### D7. Extension/Plugin system shipped
+Not shipped; design discussion in the issue converged on an approach: scheduled CI (cron) jobs that
+test against dependency releases (or HEAD/nightly builds for early warning), structured so that
+projects *built with* Scaffold can inherit the same alerts. Our existing scheduled-update flow for
+the OpenZeppelin example contracts serves as the prototype. Carried into Q3 as a stretch goal
+(Proposed D9) behind the committed re-architecture work.
 
-> - Define and implement an extension interface that allows third parties to integrate services
->   without forking core Scaffold.
-> - Measure: extension API spec + developer docs + at least 2 reference extensions.
-> - Issue:
->   [https://github.com/theahaco/scaffold-stellar/issues/160](https://github.com/theahaco/scaffold-stellar/issues/160)
-> - Ecosystem value: turns Scaffold Stellar into a distribution surface for other public goods and
->   ecosystem tooling.
+### D7: Allow building for testnet when localnet unhealthy
 
-Core extension system shipped in https://github.com/theahaco/scaffold-stellar/pull/414; reporter
-extension shipped in https://github.com/theahaco/scaffold-stellar/pull/463.
+> - Scaffold currently requires running a local Stellar network, which it can do automatically, even
+>   when building for a testnet target. We will fix this.
+> - Measure: bug fix shipped
+> - Issue: https://github.com/stellar-scaffold/cli/issues/267
 
-D8. Wallet integration expansion via wallet kit
+Not shipped as a point fix — investigation showed the network-health check is baked into the build
+internals being reworked under D8, and that a point fix would fight the old config model. The durable
+fix lands with the Q3 `scaffold.yml` networks rework (Proposed D2), which decouples target-network
+builds from localnet state; the new `scaffold doctor` command (Proposed D1) then gives users
+self-serve diagnosis of unhealthy localnets instead of a confusing failure.
 
-> - Support additional wallets in the default scaffolded apps through wallet kit integration and
->   configuration templates.
-> - Measure: additional wallet support shipped + documented setup + example project(s).
-> - Issue:
->   [https://github.com/theahaco/scaffold-stellar-frontend/issues/93](https://github.com/theahaco/scaffold-stellar-frontend/issues/93)
-> - Ecosystem value: reduces onboarding friction and enables broader end-user compatibility for new
->   dApps.
+### D8: Re-architect stellar scaffold build internals & update to latest best practices
 
-Support for all wallet modules shipped in
-https://github.com/theahaco/scaffold-stellar-frontend/pull/204.
+> - Various bugs and sub-optimal behavior can be pinned on some early, messy architectural decisions
+>   made in stellar-scaffold-cli, the core of which is now nearly a year old. We will rework this
+>   core logic to improve functionality, fix bugs, and adopt latest best practices.
+> - Measure: features shipped, tested, and documented.
+> - Issues: https://github.com/stellar-scaffold/cli/issues/329,
+>   https://github.com/stellar-scaffold/cli/issues/346,
+>   https://github.com/stellar-scaffold/cli/issues/181
 
-### D9. Indexing services and API integrations as extensions
+**Major structural work shipped:**
 
-> - Provide extensions for popular indexing services and explore integration of commonly requested
->   APIs (e.g., Soroswap API) as optional add-ons.
-> - Measure: at least one indexing extension + one API integration prototype + docs.
-> - Ecosystem value: makes it easy for teams to adopt ecosystem infrastructure from day one.
+- Extracted the Scaffold CLI into its own focused repository as part of the Registry split
+  (https://github.com/stellar-scaffold/cli/pull/535).
+- Rebuilt `init`, `upgrade`, and `clean` around the new template monorepo, factoring `init` into
+  three clean steps — acquire, instantiate, prepare — replacing the original single-repo degit logic
+  (https://github.com/stellar-scaffold/cli/pull/543).
+- Shipped the first slice of the new `scaffold.yml` configuration file (the per-template `config:`
+  section), the replacement for `environments.toml` proposed in issue 181.
+- Upgraded the toolchain to Stellar Protocol 27 (https://github.com/stellar-scaffold/cli/pull/549).
 
-Extensively researched and built with Goldsky to build Stellar Registry UI, and determined this
-offering is both too immature to build as a Scaffold Stellar Extension for now, as well as being too
-much of an edge case for how the extension system ended up working. We now have prior art to use to
-implement a Goldsky extension later, which is being tracked in
-https://github.com/theahaco/scaffold-stellar/issues/164
+The discovery work here defined the remaining schema migration (networks and contract-client config)
+and the `--optimize` passthrough, both committed in Q3 (Proposed D2).
 
-## Workstream 3 - Core DX Improvements
+### Ongoing maintenance, releases, and field feedback loop
 
-### D10. New project page design update
-
-> - Improve the first-run experience and reduce time-to-first-success for new builders.
-> - Measure: new UX shipped + updated onboarding steps + reduced “setup steps” documented.
-> - Issue:
->   [https://github.com/theahaco/scaffold-stellar-frontend/issues/136](https://github.com/theahaco/scaffold-stellar-frontend/issues/136)
-> - Ecosystem value: faster onboarding and improved conversion for first-time Stellar developers.
-
-Shipped in https://github.com/theahaco/scaffold-stellar-frontend/pull/158
-
-### D11. Import existing Soroban contracts into Scaffold projects
-
-> - Enable importing contracts from existing Soroban contract sources to accelerate development and
->   reuse.
-> - Measure: working import workflow + docs + example.
-> - Issue:
->   [https://github.com/theahaco/scaffold-stellar/issues/151](https://github.com/theahaco/scaffold-stellar/issues/151)
-> - Ecosystem value: reinforces reuse and reduces redundant contract development.
-
-Shipped in https://github.com/theahaco/scaffold-stellar/pull/327
-
-### D12. stellar scaffold clean to improve iteration loops
-
-> - Allow developers to clear scaffold artifacts in the dev environment to reduce friction and avoid
->   state-related confusion.
-> - Measure: command shipped + tests + docs.
-> - Issue:
->   [https://github.com/theahaco/scaffold-stellar/issues/259](https://github.com/theahaco/scaffold-stellar/issues/259)
-> - Ecosystem value: improves productivity and reduces support burden.
-
-The command was shipped here: https://github.com/theahaco/scaffold-stellar/pull/352
-
-## Maintenance, Release Management, and Community Support
-
-### D13. Ongoing maintenance, releases, and field feedback loop
-
-> - Keep templates current (including OpenZeppelin updates), ship releases, triage issues/PRs, and
->   collect feedback from builders at upcoming events.
-> - Measure: regular tagged releases + changelogs + public roadmap updates + documented learnings
->   from events.
-
-See all our releases with notes at https://github.com/theahaco/scaffold-stellar/releases
+Regular tagged releases with notes continued throughout the quarter
+(https://github.com/stellar-scaffold/cli/releases), including three `stellar-scaffold-cli` releases,
+OpenZeppelin example-contract updates, and the Protocol 27 upgrade.
 
 ## Proposed Impact
 
-Scaffold Stellar has now launched Stellar Registry as a separate project, highlighting that this is
-not merely a useful tool for learners and first-time Stellar builders. It's the foundation, the hub,
-for much of the activity of the Stellar development community. With its recently-launched extension
-system, Scaffold is poised to become the test ground, the proving site, for a diverse and composable
-ecosystem of plugins, apps, and integrations.
+With Stellar Registry incubated out as its own public good, Stellar Scaffold enters Q3 with a sharper
+scope: the front door of the Stellar ecosystem. The template monorepo shipped in Q2 turns "the
+official React starter" into a multi-framework template system — Svelte is live, and the `org/repo`
+template flag opens the door to community-maintained frontends, letting the ecosystem grow templates
+without growing our payroll. Agent-facing documentation will make Scaffold the most reliable way for
+AI-assisted builders (the majority at recent hackathons) to produce working Stellar dApps. And
+`scaffold doctor` cuts the support burden that environment problems create at every hackathon.
 
-This quarter we will continue to see Scaffold Stellar used as the entrypoint for the Stellar
-ecosystem, both in documentation and at hackathons. The new extension system provides a focal point
-for a themed hackathon of its own; we will advocate with DevRel to realize this. We will also reach
-out to James Bachini to get Scaffold integrated directly into his web IDE, another project in this
-Public Goods cohort.
+We are deliberately committing to a shorter list this quarter than last: the Q2 re-architecture is
+done, and Q3 is about finishing what it unblocked. Every committed deliverable below either has an
+open PR, a shipped first slice, or a completed design from Q2 discovery.
+
+### A note on budget
+
+The Registry split moves that workstream to its own proposal, but it does not shrink this one
+proportionally: the template surface we maintain grew from one framework to a monorepo of shared
+core + multiple templates (each needing e2e coverage, releases, and protocol upgrades), and Scaffold
+remains the integration surface for Registry, wallets, and other ecosystem dependencies. The budget
+now buys depth and reliability on that wider surface rather than breadth of new workstreams.
 
 ## Proposed Deliverables
 
-## D1: Support Stellar-Wallets-Kit v2
+## D1: Create `scaffold doctor` command
 
-- Update to Stellar-Wallets-Kit v2, released v2 in Feb 2025, to streamline Developers' experience and
-  keep up to date with the latest standards in the ecosystem.
-- Measure: update shipped in frontend
-- Issue: https://github.com/theahaco/scaffold-stellar/issues/441
-- Ecosystem value: simplifies Scaffold codebase; keeps apps up-to-date with evolving ecosystem
+- A new command that examines and diagnoses environment problems in the user's project: wrong Rust
+  toolchain, missing dependencies (e.g. Docker), an unhealthy localnet, incorrect `scaffold.yml`
+  values.
+- Measure: command shipped, tested, and documented.
+- Issues: https://github.com/stellar-scaffold/cli/issues/557 (and resolves the failure mode reported
+  in https://github.com/stellar-scaffold/cli/issues/267)
+- Ecosystem value: Q2 bug investigation showed that a large share of Scaffold support requests are
+  environment problems, not Scaffold bugs. Self-serve diagnosis shortens time-to-first-success for
+  new builders — especially at hackathons — and reduces maintainer support load across the ecosystem.
 
-## D2: Allow package manager of choice
+## D2: Complete the `scaffold.yml` configuration migration
 
-- Rather than forcing people to use NPM with Scaffold, allow them to pick the JS package manager of
-  their choosing (yarn, bun, deno, etc)
-- Measure: feature shipped, tested, & documented
-- Issue: https://github.com/theahaco/scaffold-stellar/issues/162
-- Ecosystem value: Scaffold today locks users to npm. This is a reasonable default and a common
-  preference, but the JS ecosystem is fractured, with many people preferring more recent package
-  managers such as yarn, bun, and deno. Supporting these options within Scaffold prevents fracturing
-  the Stellar ecosystem, enabling people to use Scaffold while keeping their preferred JS tooling.
+- Finish the CLI configuration rework begun in Q2: fold network and contract-client configuration
+  into `scaffold.yml` (whose `config:` section shipped with the template monorepo), retire
+  `environments.toml`, and pass through the `--optimize` flag to `stellar contract build`.
+- Measure: new schema shipped, tested, and documented; `environments.toml` deprecated with a
+  migration path; optimize passthrough shipped.
+- Issues: https://github.com/stellar-scaffold/cli/issues/181,
+  https://github.com/stellar-scaffold/cli/issues/329
+- Stretch: specify a contract from a live network as a project dependency
+  (https://github.com/stellar-scaffold/cli/issues/346)
+- Ecosystem value: one obvious, well-named config file instead of a misleadingly-named split; this
+  rework also decouples target-network builds from localnet state (the root cause behind issue 267)
+  and enables per-framework directory conventions for community templates.
 
-## D3: BYOFrontend
+## D3: Ship Stellar-Wallets-Kit v2 through the shared wallet module
 
-- Create two new Aha-maintained Scaffold frontend plugins: 1. no frontend, 2. Svelte. In addition,
-  create documentation for how community members can contribute their own frontend templates for use
-  with Scaffold Stellar.
-- Measure: feature shipped, tested, documented.
-- Issue: https://github.com/theahaco/scaffold-stellar/issues/161
-- Ecosystem value: Like D2, this allows people to use Scaffold Stellar even if they don't prefer its
-  default options of React and Vite, making the entire stack opinionated but also flexible.
+- Land the in-review Wallets-Kit v2 upgrade in the shared `@stellar-scaffold/app-lib` package so all
+  framework templates (React, Svelte, and future Vue) get the upgrade from a single integration
+  point.
+- Measure: upgrade merged and released across all official templates.
+- Issue: https://github.com/stellar-scaffold/cli/issues/441 (implementation:
+  https://github.com/stellar-scaffold/ui/pull/241)
+- Ecosystem value: keeps scaffolded apps current with the latest wallet standards, and validates the
+  shared-app-lib architecture: one wallet integration maintained once, consumed by every template.
 
-## D4: SKILL.md to help agentic workflows
+## D4: Agent-facing docs: hosted `SKILL.md` + in-project `AGENTS.md`
 
-- Add SKILL.md to Scaffold Stellar repository to facilitate more powerful and accurate AI & agentic
-  workflows.
-- Measure: feature shipped, tested, and documented.
-- Issue: https://github.com/theahaco/scaffold-stellar/issues/394
+- Publish a self-contained `SKILL.md` at scaffoldstellar.org teaching AI agents Scaffold as a system,
+  and ship `AGENTS.md` files in generated projects (with `init` stripping contributor-only content so
+  end users get docs scoped to *their* app).
+- Measure: `SKILL.md` live and fetchable by URL; generated projects include a correct `AGENTS.md`;
+  both documented.
+- Issue: https://github.com/stellar-scaffold/cli/issues/394
 - Ecosystem value: many hackathon participants and serious builders prefer to use AI tools in
-  addition to, or rather than, coding by hand. This will make that experience more fool-proof and
-  powerful, preventing AIs from making silly mistakes.
+  addition to, or rather than, coding by hand. Accurate agent-facing docs make that experience
+  fool-proof, preventing AIs from making silly mistakes both when scaffolding a project and when
+  working inside one.
 
-## D5: Improve Scaffold info on main Stellar docs
+## D5: Complete BYOFrontend: "no frontend" option + community-template guide
 
-- Minimize the info on the Scaffold Stellar page on the main Stellar docs in line with other tools
-  that have their own documentations sites, linking prominently to https://scaffoldstellar.org
-- Measure: new documentation page shipped to main Stellar docs
-- Issue: https://github.com/theahaco/scaffold-stellar/issues/361
-- Ecosystem value: consolidate Scaffold documentation to a single place to minimize the amount of
-  stale information and highlight important resources, such as the Scaffold Showcase.
+- Finish the remaining scope from Q2's BYOFrontend deliverable: a "no frontend" init option (contracts
+  and clients without a UI layer) and a contribution guide documenting how community members build and
+  publish their own framework templates for `stellar scaffold init --template org/repo`.
+- Measure: no-frontend option shipped and tested; contribution guide published on the docs site; at
+  least the existing official templates documented as reference implementations.
+- Issue: https://github.com/stellar-scaffold/cli/issues/161
+- Ecosystem value: closes out a Q2 commitment, and shifts template growth to the community — the
+  ecosystem gets more framework options (Vue, Solid, etc.) without every template landing on one
+  team's maintenance budget.
 
-## D6: Monitor releases of ecosystem projects
+## D6: Documentation consolidation & redesign
 
-- For Scaffold itself and all projects that are built with it, provide automatic notifications
-  (perhaps in the form of GitHub issues or pull requests) when complex ecosystem dependencies, such
-  as Stellar-Wallets-Kit, are updated.
-- Measure: system in place for notifying Scaffold team of ecosystem project updates
-- Issue: https://github.com/theahaco/scaffold-stellar/issues/301
-- Ecosystem value: These projects release their own updates, sometimes with breaking changes that
-  could cause Scaffold Stellar to not work at all, or to be out of date with the latest releases of
-  ecosystem projects. Updating the corresponding ecosystem project is not always as simple as
-  "increment version number" (although sometimes it is), since, in Stellar Wallets Kit's example, the
-  tool may be deeply integrated into Scaffold.
+- Redesign the Scaffold docs website (taking inspiration from the new Registry site), update the
+  tutorial to cover the latest Registry publish/deploy integration, complete the domain migration,
+  and minimize the Scaffold page on the main Stellar docs to link prominently to the dedicated site.
+- Measure: redesigned docs site live; tutorial updated; upstream Stellar docs page PR merged.
+- Issues: https://github.com/stellar-scaffold/cli/issues/556,
+  https://github.com/stellar-scaffold/cli/issues/437,
+  https://github.com/stellar-scaffold/cli/issues/361,
+  https://github.com/stellar-scaffold/cli/issues/550
+- Ecosystem value: consolidates Scaffold documentation to a single, current place, minimizing stale
+  information across the ecosystem and keeping the Registry integration path — now a cross-project
+  concern — accurately documented.
 
-## D7: Allow building for testnet when localnet unhealthy
+## D7: Ongoing maintenance & releases
 
-- Scaffold currently requires running a local Stellar network, which it can do automatically, even
-  when building for a testnet target. We will fix this.
-- Measure: bug fix shipped
-- Issue: https://github.com/theahaco/scaffold-stellar/issues/267
-- Ecosystem value: smoothing the rough edges of Scaffold Stellar makes it a more reliable,
-  easy-to-use, mature offering, enabling more confident building.
+- Regular tagged releases with changelogs, protocol upgrades, OpenZeppelin example-contract updates,
+  issue/PR triage, and CI reliability work as the template matrix grows.
+- Measure: regular tagged releases + changelogs + documented learnings from events.
+- Ecosystem value: a "front door" tool must always work with the current protocol and ecosystem
+  libraries; reliability is the feature.
 
-## D8: Re-architect stellar scaffold build internals & update to latest best practices
+## D8 (Stretch): Vue UI template
 
-- Various bugs and sub-optimal behavior can be pinned on some early, messy architectural decisions
-  made in stellar-scaffold-cli, the core of which is now nearly a year old. We will rework this core
-  logic to improve functionality, fix bugs, and adopt latest best practices. Some possible
-  improvements: optimize contracts if stellar-cli built with optimize feature; specify contract from
-  live network; rework entire environments.toml file name & structure.
-- Measure: features shipped, tested, and documented.
-- Issues: https://github.com/theahaco/scaffold-stellar/issues/329,
-  https://github.com/theahaco/scaffold-stellar/issues/346,
-  https://github.com/theahaco/scaffold-stellar/issues/181
-- Ecosystem value: we've learned a lot since originally authoring Scaffold Stellar, and this will
-  enable us to continue to iterate on it quickly over the next year, providing the ecosystem with a
-  central tool that allows builders to quickly integrate various emerging solutions and best
-  practices.
+- Add Vue as a third official frontend template in the template monorepo, selectable via
+  `stellar scaffold init`.
+- Measure: template shipped with e2e coverage, selectable in `init`, documented.
+- Issue: https://github.com/stellar-scaffold/cli/issues/558
+- Ecosystem value: exercises the multi-template architecture with a third framework and serves as a
+  worked example for the community-template guide (D5). Stretch rather than committed: we'd rather
+  demand for Vue prove itself via the community path than pre-commit maintenance of a third official
+  template.
+
+## D9 (Stretch): Monitor releases of ecosystem projects
+
+- Implement the scheduled-CI monitoring approach designed in Q2: automatic notifications (issues or
+  PRs) when complex ecosystem dependencies such as Stellar-Wallets-Kit publish updates, structured so
+  projects built with Scaffold can adopt the same alerts.
+- Measure: system in place for notifying the Scaffold team of ecosystem project updates.
+- Issue: https://github.com/stellar-scaffold/cli/issues/301
+- Ecosystem value: ecosystem dependencies ship breaking changes; catching them early keeps Scaffold —
+  and every project scaffolded from it — working and current.
+
+## D10 (Stretch): Anonymous usage telemetry
+
+- Add basic, anonymous usage telemetry to the CLI (e.g. `scaffold init` counts, deploys per network)
+  so the team can measure real adoption instead of relying on anecdote.
+- Measure: telemetry system shipped with clear disclosure; adoption metrics available to the team.
+- Issue: https://github.com/stellar-scaffold/cli/issues/448
+- Ecosystem value: lets us (and SCF) evaluate Scaffold's actual ecosystem impact quantitatively and
+  prioritize future work by evidence.
+
+## D11 (Stretch): Interactive OpenZeppelin contract wizard
+
+- An interactive CLI mirroring wizard.openzeppelin.com for adding OZ-based contracts to a Scaffold
+  project (building on the draft in https://github.com/stellar-scaffold/cli/pull/391).
+- Measure: feature shipped, tested, and documented.
+- Issue: https://github.com/stellar-scaffold/cli/issues/156
+- Ecosystem value: safe, audited building blocks become the path of least resistance for new
+  contracts.
+
+## D12 (Stretch): Update starter app's Debug page
+
+- Improve the generated app's contract Debug page: clearer results display, additional transaction
+  details, and a persistent block-explorer link.
+- Measure: updated Debug page shipped in templates.
+- Issue: https://github.com/stellar-scaffold/cli/issues/248
+- Ecosystem value: the Debug page is many builders' first contract interaction; better feedback loops
+  mean faster learning.
 
 ## Legal Acknowledgements
 
