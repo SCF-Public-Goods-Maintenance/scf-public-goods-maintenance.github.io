@@ -478,13 +478,13 @@ names to G-addresses. These will be displayed in the rgstry.xyz UI, so that the 
 "Admin" fields become human-friendly names.
 
 Value to ecosystem: a central, open, and collaborative system to add human-friendly names to
-G-addresses will allow other Stellar tools such as Stellar.Expert to also show friendly names,
-making the entire ecosystem more usable by existing participants and more welcoming to newcomers.
+G-addresses will allow other Stellar tools such as Stellar.Expert to also show friendly names, making
+the entire ecosystem more usable by existing participants and more welcoming to newcomers.
 
 Issue: https://github.com/stellar-scaffold/cli/issues/421
 
-Proof: code shipped; address system available, documented, and advertised to the community; more
-than just Aha addresses added and available.
+Proof: code shipped; address system available, documented, and advertised to the community; more than
+just Aha addresses added and available.
 
 <!-- markdownlint-enable MD034 -->
 
