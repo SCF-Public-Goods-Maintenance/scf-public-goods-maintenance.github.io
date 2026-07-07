@@ -486,6 +486,23 @@ Issue: https://github.com/stellar-scaffold/cli/issues/421
 Proof: code shipped; address system available, documented, and advertised to the community; more than
 just Aha addresses added and available.
 
+### D9: Surface emerging Source Verification information
+
+The Registry team submitted a [proposal for the Source Verification
+system RFP](https://communityfund.stellar.org/dashboard/submissions/receWOpMjj7FxAydj). Whether or
+not our team is awarded this contract, Q3 will see the finalization of underlying SEP-58 and the
+launch of independent Source Verification services. Registry is a natural place to surface and
+organize this information and make it useful to the ecosystem.
+
+Value to ecosystem: As the hub that makes Wasms on Stellar discoverable and reusable, Registry is a
+natural place to surface the Wasm metadata added by SEP-58. Registry is also not _a source
+verification service_, but a neutral third party that hosts the information provided by many source
+verification services. A lot of information is being added to the blockchain by this new standard,
+and Registry gives everyone a way to view and make sense of this information.
+
+Proof: all SEP-58 fields viewable on rgstry.xyz; verification status of those fields by independent
+Source Verification services also shown in a way that exposes, rather than flattens, disagreement.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Legal Acknowledgements
