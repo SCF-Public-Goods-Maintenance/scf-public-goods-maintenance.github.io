@@ -578,13 +578,19 @@ settled with decision documented and justified.
 
 ### D14: Extend `import_contract!` macro to support SAC and XLM.
 
- 
-  Currently it is difficult to work with Stellar Asset Contracts, you need to know the asset encoding or provide the contract Id. Furthermore, writing unit tests which use SACs, particularly the native `xlm` asset, are difficult. We have previous work which helped this and is our [guess the number contract](https://github.com/stellar-scaffold/ui/blob/main/contracts/guess-the-number/src/xlm.rs). The other big improvement is for testing on a standalone network. Currently the xlm SAC isn't deployed by default on standalone quickstart image, this work would make this happen lazily on a contract's deployment.
-  
- Value to ecosystem: make it fun and easy for new developers to use and test SAC assets, especially the native.
- 
- Proof: published macro which can detect if a contract is a stellar asset contract and generate the required code to make using and testing the asset easy.
+Currently it is difficult to work with Stellar Asset Contracts, you need to know the asset encoding
+or provide the contract Id. Furthermore, writing unit tests which use SACs, particularly the native
+`xlm` asset, are difficult. We have previous work which helped this and is our
+[guess the number contract](https://github.com/stellar-scaffold/ui/blob/main/contracts/guess-the-number/src/xlm.rs).
+The other big improvement is for testing on a standalone network. Currently the xlm SAC isn't
+deployed by default on standalone quickstart image, this work would make this happen lazily on a
+contract's deployment.
 
+Value to ecosystem: make it fun and easy for new developers to use and test SAC assets, especially
+the native.
+
+Proof: published macro which can detect if a contract is a stellar asset contract and generate the
+required code to make using and testing the asset easy.
 
 <!-- markdownlint-enable MD034 -->
 
