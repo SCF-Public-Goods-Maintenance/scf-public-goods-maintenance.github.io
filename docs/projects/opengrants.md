@@ -4,7 +4,7 @@ parent: Public Good Projects
 proposal_issue: 78
 proposer: sam-mccarthy07
 category: "Other"
-budget: "$15,000"
+budget: "$20,000"
 ---
 
 # OpenGrants
@@ -23,7 +23,7 @@ funding data set, including all completed SCF rounds._
 | **Repository**       | <https://github.com/metagov/opengrants-platform> |
 | **First Released**   | September 2025                                   |
 | **Intake**           | soft-launch                                      |
-| **Budget Requested** | $15,000                                          |
+| **Budget Requested** | $20,000                                          |
 
 ## Project Description
 
@@ -123,6 +123,10 @@ and exposing OpenGrants data programmatically so agents and downstream tools can
 5. **Ongoing hosting, maintenance, and continued support for dependent projects.** Ongoing
    operational support for PG Atlas and any new dependencies that build on OpenGrants data.
 
+6. **A source of truth for the Public Goods Award.** Consolidating fragmented PG Award data which is currently scattered across SDF Airtables, community-maintained mappings, and Tansu on-chain proposals into OpenGrants gives the community its first reliable, comparable record of award history, ready to ingest binding on-chain funding decisions once they exist.
+
+   
+
 <!-- markdownlint-enable MD034 -->
 
 ## Proposed Deliverables
@@ -167,6 +171,10 @@ and exposing OpenGrants data programmatically so agents and downstream tools can
 6. **PG Atlas and dependency support.** Continued operational support for the PG Atlas team and any
    other new dependencies. _Ecosystem value: sustains downstream projects building on OpenGrants
    data._
+
+7. **PG Award data integration.** Reconstruct and integrate a complete, comparable dataset for the SCF Public Goods Award into OpenGrants, consolidating sources that are currently fragmented across SDF Airtables, the community-maintained round mappings, and Tansu on-chain proposals. Delivers the historical and current rounds as a best-effort dataset, with the pipeline structured to ingest binding on-chain funding decisions once they exist (expected 2027).
+
+Ecosystem value: establishes the first reliable source of truth for the Public Goods Award, making award history legible and comparable alongside SCF grant data.
 
 <!-- markdownlint-enable MD034 -->
 
