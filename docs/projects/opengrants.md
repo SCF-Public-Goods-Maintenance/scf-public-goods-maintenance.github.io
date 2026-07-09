@@ -123,9 +123,10 @@ and exposing OpenGrants data programmatically so agents and downstream tools can
 5. **Ongoing hosting, maintenance, and continued support for dependent projects.** Ongoing
    operational support for PG Atlas and any new dependencies that build on OpenGrants data.
 
-6. **A source of truth for the Public Goods Award.** Consolidating fragmented PG Award data which is currently scattered across SDF Airtables, community-maintained mappings, and Tansu on-chain proposals into OpenGrants gives the community its first reliable, comparable record of award history, ready to ingest binding on-chain funding decisions once they exist.
-
-   
+6. **A source of truth for the Public Goods Award.** Consolidating fragmented PG Award data which is
+   currently scattered across SDF Airtables, community-maintained mappings, and Tansu on-chain
+   proposals into OpenGrants gives the community its first reliable, comparable record of award
+   history, ready to ingest binding on-chain funding decisions once they exist.
 
 <!-- markdownlint-enable MD034 -->
 
@@ -172,9 +173,14 @@ and exposing OpenGrants data programmatically so agents and downstream tools can
    other new dependencies. _Ecosystem value: sustains downstream projects building on OpenGrants
    data._
 
-7. **PG Award data integration.** Reconstruct and integrate a complete, comparable dataset for the SCF Public Goods Award into OpenGrants, consolidating sources that are currently fragmented across SDF Airtables, the community-maintained round mappings, and Tansu on-chain proposals. Delivers the historical and current rounds as a best-effort dataset, with the pipeline structured to ingest binding on-chain funding decisions once they exist (expected 2027).
+7. **PG Award data integration.** Reconstruct and integrate a complete, comparable dataset for the
+   SCF Public Goods Award into OpenGrants, consolidating sources that are currently fragmented across
+   SDF Airtables, the community-maintained round mappings, and Tansu on-chain proposals. Delivers the
+   historical and current rounds as a best-effort dataset, with the pipeline structured to ingest
+   binding on-chain funding decisions once they exist (expected 2027).
 
-Ecosystem value: establishes the first reliable source of truth for the Public Goods Award, making award history legible and comparable alongside SCF grant data.
+Ecosystem value: establishes the first reliable source of truth for the Public Goods Award, making
+award history legible and comparable alongside SCF grant data.
 
 <!-- markdownlint-enable MD034 -->
 
