@@ -4,7 +4,7 @@ parent: Public Good Projects
 proposal_issue: 78
 proposer: sam-mccarthy07
 category: "Other"
-budget: "$5,000"
+budget: "$15,000"
 ---
 
 # OpenGrants
@@ -23,7 +23,7 @@ funding data set, including all completed SCF rounds._
 | **Repository**       | <https://github.com/metagov/opengrants-platform> |
 | **First Released**   | September 2025                                   |
 | **Intake**           | soft-launch                                      |
-| **Budget Requested** | $5,000                                           |
+| **Budget Requested** | $15,000                                           |
 
 ## Project Description
 
@@ -64,20 +64,14 @@ infrastructure featuring a gateway API, ecosystem funding dashboard, and SCF gra
 
 <!-- markdownlint-disable MD034 -->
 
-Over the past three months, OpenGrants focused on providing more direct value to the Stellar
-ecosystem and ensuring the continued full integration and visualization of up-to-date SCF funding
-data, while also expanding our coverage across the web3 grant ecosystem. This generated the following
-impact to the Stellar ecosystem:
 
-- OpenGrants participated directly in the SCF 41 governance and community voting process,
-  contributing funding and milestone data analytics that was used by delegates during deliberation
-  and decision making
-- OpenGrants infrastructure used to bootstrap another ecosystem project, PG Atlas. OpenGrants is
-  providing the data on SCF projects that will serve as starting nodes for PG Atlas’s dependency
-  graph.
-- OpenGrants continued to ensure Stellar’s continued 100% DAOIP-5 compliance rate
-- OpenGrants expanded its ecosystem funding datasets, onboarding and integrating data from both ENS
-  and Gitcoin, enabling greater comparative analytic capabilities
+Over the last three months, OpenGrants delivered on its maintenance mandate. We ensured the continued full integration and visualization of up-to-date SCF funding data with zero downtime, while broadening our datasets to enable richer comparative analysis across the Web3 grant landscape.
+
+This generated the following impact for the Stellar ecosystem:
+
+- OpenGrants infrastructure was used to bootstrap another ecosystem project, PG Atlas, providing the SCF project data that serves as the starting nodes for PG Atlas's dependency graph.
+- OpenGrants maintained Stellar's 100% DAOIP-5 compliance rate throughout the period including SCF #43 data.
+- OpenGrants expanded its ecosystem funding datasets, onboarding and integrating data from ENS. enabling greater comparative analytic capabilities.
 
 <!-- markdownlint-enable MD034 -->
 
@@ -85,38 +79,9 @@ impact to the Stellar ecosystem:
 
 <!-- markdownlint-disable MD034 -->
 
-I. Integrate OpenGrants into the governance process for SCF 41
+1. **Ongoing maintenance and iteration of OpenGrants infrastructure — Completed / ongoing.** Integrated new funding data from SCF #43, keeping Stellar in full DAOIP-5 compliance; built real-time integration to SCF funding data; and updated the data pipeline to include an Airtable integration.
 
-Posted OpenGrants SCF 41 Intelligence Report in the SCF 41 – Community Vote Discord channel
-
-- [OpenGrants SCF 41 Intelligence Report](https://docs.google.com/document/d/12g5Sexty8JCJdkX1Nda0jnCs1bo4X8FhQbWWPZVX484/edit?tab=t.0)
-- [Discord post](https://discord.com/channels/897514728459468821/1475598213196288372/1476635762395971888)
-
-Received positive feedback from delegates
-
-- [Example](https://discord.com/channels/897514728459468821/1475598213196288372/1476655104391254128)
-
-II. Built out more robust data sets for comparative analyses
-
-Integrated data from two prominent funding ecosystems, ENS & Gitcoin
-
-- [ENS profile page](https://opengrants.daostar.org/system/ens)
-- [Gitcoin profile page](https://opengrants.daostar.org/system/gitcoin)
-
-III. Ongoing maintenance and iteration of OpenGrants infra
-
-Integrated new funding data from SCF 40 and 41, ensuring that Stellar remained in full compliance
-with DAOIP-5
-
-- [SCF profile page](https://opengrants.daostar.org/system/scf)
-
-Updated OpenGrants in accordance with ecosystem participant feedback
-
-- Built real-time integration to SCF funding data and updated data pipeline to include Airtable
-  integration
-  ([Opengrants <> Stellar Community Fund Pipeline](https://hackmd.io/l9sHEdXZRDmkPFjwCSOO1g))
-- OpenGrants roadmap to prioritize fully automated data ingestion according to feedback received from
-  PG Atlas team
+1. **Support for the PG Atlas team — Completed / ongoing.** Supplied SCF project data as dependency-graph seed nodes and scoped a roadmap toward fully automated data ingestion based on PG Atlas team feedback.
 
 <!-- markdownlint-enable MD034 -->
 
@@ -124,12 +89,18 @@ Updated OpenGrants in accordance with ecosystem participant feedback
 
 <!-- markdownlint-disable MD034 -->
 
-For the next three months, OpenGrants will be in maintenance mode and not developing any new
-integrations or features. We will ensure that OpenGrants continues to provide up-to-date Stellar
-funding data analytics with zero downtime. The primary impact we plan to deliver is ongoing community
-access to structured funding data infrastructure that eliminates data loss and fragmentation and
-enables downstream analysis, tooling, and research. In addition, we will support the PG Atlas team as
-they continue to build out their dependency graph on top of OpenGrants data.
+For the next three months, OpenGrants will remain the reliable, up-to-date source of structured Stellar funding data while making targeted improvements to legibility, automation, and downstream usability. Alongside zero-downtime hosting and continued 100% DAOIP-5 compliance, Q3 focuses on reducing manual overhead in data ingestion, improving how Stellar-specific funding data is surfaced, and exposing OpenGrants data programmatically so agents and downstream tools can consume it directly.
+
+1. **Data-driven SCF governance.** Recurring, per-round Intelligence Reports give delegates and the community consistent funding and milestone analytics at decision time, building directly on the SCF 41 report that informed community voting.
+
+2. **Lower-friction, more reliable data infrastructure.** Polishing the SCF ingestion pipeline toward full automation reduces manual steps and the risk of data gaps, keeping Stellar funding data accurate and current using AI agents for automation.
+
+3. **Programmatic access for downstream tooling.** An MCP server exposes the OpenGrants dataset so agents, researchers, and dependent projects (including PG Atlas) can query funding data directly, strengthening OpenGrants as shared ecosystem infrastructure.
+
+4. **Improved legibility of Stellar funding data.** A dedicated Stellar project view and an About page make OpenGrants easier to understand and navigate for community members, delegates, and reviewers, directly supporting clearer user signal during evaluation.
+
+5. **Ongoing hosting, maintenance, and continued support for dependent projects.** Ongoing operational support for PG Atlas and any new dependencies that build on OpenGrants data.
+
 
 <!-- markdownlint-enable MD034 -->
 
@@ -137,9 +108,31 @@ they continue to build out their dependency graph on top of OpenGrants data.
 
 <!-- markdownlint-disable MD034 -->
 
-1. Ongoing hosting and maintenance of OpenGrants infra and SCF funding data
-2. Operational support for the PG Atlas team, and any other new dependencies
-3. Engagement with the Stellar community on utilizing OpenGrants data infra, if requested
+1. **SCF Intelligence Report.** OpenGrants generates and publishes a funding Intelligence Report to the SCF community for the next round (SCF #45), which includes the following data: funding distribution, category breakdowns, milestone and tranche completion trends, and comparison against prior rounds. Builds on the SCF #41 Intelligence Report that delegates used during community voting, turning a one-off contribution into a repeatable governance input.
+
+   - _Ecosystem value: consistent, data-driven context for delegates and the community during the decision-making and voting process of every SCF round._
+
+2. **Data integration automation.** Polish and harden the ingestion pipeline toward fully automated data ingestion, reducing manual steps (per PG Atlas team feedback). 
+    - *Ecosystem value: more reliable, always-current Stellar funding data with less operational overhead. Setting this base infra enables us to build towards more intelligent data points.*
+
+3. **MCP server for OpenGrants.** Ship an MCP server exposing the OpenGrants dataset so agents and downstream tools can query funding data directly. 
+    - *Ecosystem value: makes OpenGrants data programmatically consumable by agents, researchers, and dependent projects.*
+
+4. **More legible data with greater signal**  
+
+    4.a. **Stellar project view.** A dedicated, improved view surfacing SCF funded project's funding data for easier navigation. 
+    For example: View OpenGrants and its funding history by SCF.
+    - _Ecosystem value: clearer, SCF-specific legibility for community members and reviewers._
+
+    4.b. **About page for OpenGrants.** An About page documenting what OpenGrants is, its data sources, and how to use the infrastructure.
+    - _Ecosystem value: lowers the barrier to understanding and adopting OpenGrants._
+
+5. **Ongoing hosting and maintenance.** Zero-downtime operation of OpenGrants infrastructure and continuous SCF funding data updates, maintaining Stellar's 100% DAOIP-5 compliance rate. 
+
+    *Ecosystem value: uninterrupted community access to structured funding data that eliminates data loss and fragmentation.*
+
+6. **PG Atlas and dependency support.** Continued operational support for the PG Atlas team and any other new dependencies. 
+_Ecosystem value: sustains downstream projects building on OpenGrants data._
 
 <!-- markdownlint-enable MD034 -->
 
