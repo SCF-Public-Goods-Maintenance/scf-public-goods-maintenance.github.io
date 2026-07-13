@@ -4,7 +4,7 @@ parent: Public Good Projects
 proposal_issue: 74
 proposer: theboycoder
 category: "Ecosystem Visibility"
-budget: "$40,000"
+budget: "$50,000"
 ---
 
 # Stellarlight
@@ -24,7 +24,7 @@ tools, and ai agents._
 | **Repository**       | <https://github.com/alexanderkoh/stellarlight> |
 | **First Released**   | Jan 2026                                       |
 | **Intake**           | renewal (2026q3)                               |
-| **Budget Requested** | $40,000                                        |
+| **Budget Requested** | $50,000                                        |
 
 **Repository note:** the codebase currently lives in a private working repo; we're in the process of
 migrating it to a public organization repo this quarter so the full source is openly available.
