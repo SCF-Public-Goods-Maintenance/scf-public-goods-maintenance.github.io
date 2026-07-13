@@ -21,13 +21,17 @@ tools, and ai agents._
 | -------------------- | ---------------------------------------------- |
 | **Category**         | Ecosystem Visibility                           |
 | **Website**          | <https://stellarlight.xyz>                     |
-| **Repository**       | <https://github.com/alexanderkoh/stellarlight> |
+| **Repository**       | <https://github.com/Stellar-Light/stellarlight> |
+| **MCP server**       | <https://github.com/Stellar-Light/scout-mcp>   |
+| **Agent skill**      | <https://github.com/Stellar-Light/stellar-scout> |
 | **First Released**   | Jan 2026                                       |
 | **Intake**           | renewal (2026q3)                               |
 | **Budget Requested** | $50,000                                        |
 
-**Repository note:** the codebase currently lives in a private working repo; we're in the process of
-migrating it to a public organization repo this quarter so the full source is openly available.
+**Repository note:** the codebase has migrated to the Stellar-Light organization; the MCP server and
+agent-skill repos are already public, and the main repo's public flip lands this quarter (full-history
+secrets audit already clean). The packages are live on npm today: `@stellar-light/scout-mcp` and
+`@stellar-light/api-client`.
 
 ## Project Description
 
