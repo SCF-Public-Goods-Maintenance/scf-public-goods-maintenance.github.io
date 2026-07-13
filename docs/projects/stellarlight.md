@@ -317,23 +317,25 @@ every builder, institution, and agent — can rely on.
 **that dependence is no longer a plan — it is externally verifiable today, in raven's own public
 repo.** none of these links are ours; they are the consumer's own code and process:
 
-- raven is live and queries stellar light through a dedicated adapter —
-  verify: https://github.com/kalepail/stellar-raven/blob/main/src/adapters/scout.ts
+- raven is live and queries stellar light through a dedicated adapter — verify:
+  https://github.com/kalepail/stellar-raven/blob/main/src/adapters/scout.ts
 - raven's routing catalog consumes stellar light's machine-routing metadata (the `x-routing`
   extension we shipped for it) as a scored input — verify:
-  https://github.com/kalepail/stellar-raven/commit/baabc06b13ef ("x-routing extension scored as lever 7")
+  https://github.com/kalepail/stellar-raven/commit/baabc06b13ef ("x-routing extension scored as lever
+  7")
 - raven's ci monitors stellar light's live contract and automatically files a drift review on every
   release we ship — verify: https://github.com/kalepail/stellar-raven/issues/21
 - raven's maintainer runs a public, 53-item quality ledger on stellar light — the most-audited data
   service in his program — and his own tooling marks our fixes `fixed-upstream`, most closed within
-  days of filing — verify: https://github.com/kalepail/stellar-raven/tree/main/improvements/stellar-light-scout
+  days of filing — verify:
+  https://github.com/kalepail/stellar-raven/tree/main/improvements/stellar-light-scout
 - on our side, every release is eval-gated before it reaches raven (recall floors, answer-correctness
   golden set, contract-honesty probes), and scf award data itself is verdict-verified weekly against
   communityfund.stellar.org — verify: https://stellarlight.xyz/api/changelog
 
-this two-way loop — his ci reviewing our contract, our evals gating what he consumes — is the
-working model for how agent data layers should hold each other honest, and stellar light is its
-reference implementation. funding this quarter funds the load-bearing half of that loop.
+this two-way loop — his ci reviewing our contract, our evals gating what he consumes — is the working
+model for how agent data layers should hold each other honest, and stellar light is its reference
+implementation. funding this quarter funds the load-bearing half of that loop.
 
 **1. be the data + code layer raven and the ecosystem depend on.** this quarter i already worked
 directly with tyler to make stellar light more consumable by raven — hardening the api and openapi
