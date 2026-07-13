@@ -576,7 +576,7 @@ simple to onboard and make the most of Registry.
 Proof: redesigned site live, videos highlighted throughout, and question of domain's permanent home
 settled with decision documented and justified.
 
-### D14: Extend `import_contract!` macro to support SAC and XLM.
+### D14: Extend `import_contract!` macro to support SAC and XLM
 
 Currently it is difficult to work with Stellar Asset Contracts, you need to know the asset encoding
 or provide the contract Id. Furthermore, writing unit tests which use SACs, particularly the native
