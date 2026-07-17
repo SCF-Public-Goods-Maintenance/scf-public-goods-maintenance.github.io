@@ -1,5 +1,5 @@
 ---
-title: "Soroban Security Portal"
+title: "Stellar Security Portal"
 parent: Public Good Projects
 proposal_issue: 58
 proposer: SurfingBowser
@@ -7,7 +7,7 @@ category: "Developer Experience"
 budget: "10,000"
 ---
 
-# Soroban Security Portal
+# Stellar Security Portal
 
 A Soroban specific knowledge base which lets users access audits, individual vulnerabilities and code
 in an organized fashion.
