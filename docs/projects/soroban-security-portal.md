@@ -136,84 +136,6 @@ Note: this section as initially AI generated but includes manual edits and descr
    read more about the changes on Medium:
    <https://medium.com/@inferara/how-the-soroban-security-portal-is-evolving-5a37cb674217>
 
-## Past Deliverables
-
-### 1. Advanced Vulnerability Classification & Filtering
-
-### Higher-Level Categories
-
-Vulnerabilities are now classified into five distinct categories to clarify their status:
-
-- **Valid:** Confirmed by the protocol team and fixed.
-- **Valid Not Fixed:** Acknowledged but remains unpatched at the time of the report.
-- **Valid Partially Fixed:** Only some aspects of the finding or proposed fix were addressed.
-- **Invalid:** Findings that were ultimately debunked but are included for transparency in the
-  report.
-- **N/A:** Reserved for best practice recommendations that are not direct vulnerabilities.
-
-### Search & Visibility
-
-- A new filter was added to the main vulnerabilities search page to allow users to sort by these
-  categories.
-
----
-
-### 2. Infrastructure & New Detail Pages
-
-Added more depth to the reports and information presented on the portal by implementing dedicated
-detail pages for every entity in the ecosystem. This allows for deep-linking and better
-cross-referencing.
-
-- **New Entities:** Launched dedicated detail pages for **Reports**, **Vulnerabilities**,
-  **Auditors**, **Protocols**, and **Companies**.
-- **Direct Linking:** Every entry (e.g., a specific vulnerability or a protocol's security history)
-  now has a unique URL, enabling users to share direct links to specific data points.
-
----
-
-### 3. User Experience & "Quality of Life" Improvements
-
-Several updates focused on making the portal more robust for contributors and frequent users:
-
-- **Markdown Preview:** Added a vulnerability description preview on the "Add" and "Edit" pages. This
-  allows contributors to verify formatting before submission.
-- **Session Persistence:**
-  - Implemented **localStorage** for user sessions to prevent frequent logouts when opening new
-    browser tabs.
-  - Implemented **sessionStorage** for form data (Issue 45) ensuring that input is not lost if a user
-    accidentally refreshes the page (F5).
-- **Semantic Search Enhancements:** A new unique link button (**⛶**) was added to the vulnerability
-  information panel to quickly copy the entry's URL.
-
----
-
-### 4. Personalization: The Bookmarking System
-
-To help developers track specific security issues, a bookmarking feature was introduced:
-
-- **Functionality:** Logged-in users can bookmark vulnerabilities and reports for future access.
-- **UI Integration:** A golden bookmark icon identifies saved items. A new dropdown menu in the
-  top-right navigation provides quick access to bookmarks.
-- **Profile Integration:** A full list of bookmarks is now manageable via the user's profile page.
-
----
-
-### 5. Technical Refactoring & Bug Fixes
-
-A series of targeted fixes addressed security, flow, and UI consistency:
-
-- **Authentication Refactor (Issue 41):** Overhauled how authentication is handled to prevent
-  unauthenticated users from accessing "Add Report" forms, which previously led to data loss upon the
-  login prompt.
-- **Improved Submission Flow (Issues 42 & 43):** Added clearer requirements and error messages for
-  report submissions. The system now better handles scenarios where a company or auditor involved in
-  a report has not yet been added to the portal's database.
-- **UI Layout Fixes (Issue 40):** Fixed sizing issues with the bookmarks dropdown where content would
-  occasionally overflow its borders.
-- **Backend & Profiles:** Recent work includes extending user profiles with bios, social links, and
-  expertise tags, as well as fixing backend Dependency Injection (DI) issues related to the protocols
-  section.
-
 ## Proposed Impact
 
 We hope that although there are not thousands of daily users, the few that do use it can continue to
@@ -223,7 +145,7 @@ The benefit for Stellar should be quite clear. The more people aware and using t
 from audits and vulnerabilities (with detailed explanations) the better! Having a curated knowledge
 base for auditors, developers, users and curious minds makes people (and bots) smarter.
 
-## Q1 deliverables
+## Previous Deliverables
 
 In this section I will quote the previous deliverable goals and the result of each.
 
