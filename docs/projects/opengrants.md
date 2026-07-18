@@ -78,7 +78,9 @@ This generated the following impact for the Stellar ecosystem:
   supporting cross-ecosystem comparative analysis.
 
 <!-- markdownlint-enable MD034 -->
--------
+
+---
+
 ## Past Deliverables
 
 <!-- markdownlint-disable MD034 -->
