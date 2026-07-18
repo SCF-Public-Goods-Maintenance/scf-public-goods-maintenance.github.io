@@ -64,18 +64,24 @@ infrastructure featuring a gateway API, ecosystem funding dashboard, and SCF gra
 
 <!-- markdownlint-disable MD034 -->
 
-Over the last three months, OpenGrants delivered on its maintenance mandate. We ensured the continued
-full integration and visualization of up-to-date SCF funding data with zero downtime, while
-broadening our datasets to enable richer comparative analysis across the Web3 grant landscape.
+## Retroactive Impact
+
+<!-- markdownlint-disable MD034 -->
+
+During the Q2 grant period, OpenGrants delivered on its maintenance mandate. We kept infrastructure
+live with zero downtime and ingested new SCF round data as it landed, maintaining the datasets and
+integrations built in prior quarters. This was a maintenance grant, and the work reflects that scope.
 
 This generated the following impact for the Stellar ecosystem:
 
-- OpenGrants infrastructure was used to bootstrap another ecosystem project, PG Atlas, providing the
-  SCF project data that serves as the starting nodes for PG Atlas's dependency graph.
-- OpenGrants maintained Stellar's 100% DAOIP-5 compliance rate throughout the period including SCF
-  #43 data.
-- OpenGrants expanded its ecosystem funding datasets, onboarding and integrating data from ENS.
-  enabling greater comparative analytic capabilities.
+- OpenGrants infrastructure remained available with zero downtime as the upstream data source PG
+  Atlas continues to build its dependency graph on.
+- OpenGrants maintained Stellar's 100% DAOIP-5 compliance rate throughout the period, including
+  ingestion of SCF #43 data as it became available.
+- OpenGrants maintained its expanded ecosystem funding datasets, including the ENS integration
+  supporting cross-ecosystem comparative analysis.
+
+<!-- markdownlint-enable MD034 -->
 
 <!-- markdownlint-enable MD034 -->
 
@@ -83,14 +89,14 @@ This generated the following impact for the Stellar ecosystem:
 
 <!-- markdownlint-disable MD034 -->
 
-1. **Ongoing maintenance and iteration of OpenGrants infrastructure — Completed / ongoing.**
-   Integrated new funding data from SCF #43, keeping Stellar in full DAOIP-5 compliance; built
-   real-time integration to SCF funding data; and updated the data pipeline to include an Airtable
-   integration.
+1. **Ongoing hosting and maintenance — Completed.** Maintained OpenGrants infrastructure with zero
+   downtime and ingested SCF #43 funding data during the Q2 period, keeping Stellar in full DAOIP-5
+   compliance. The real-time SCF integration and Airtable pipeline shipped prior to the Q2 grant and
+   were maintained, not newly built, during this period.
 
-1. **Support for the PG Atlas team — Completed / ongoing.** Supplied SCF project data as
-   dependency-graph seed nodes and scoped a roadmap toward fully automated data ingestion based on PG
-   Atlas team feedback.
+1. **Operational support for PG Atlas — Completed.** OpenGrants remained available and responsive as
+   PG Atlas's upstream data source throughout the period. No new integration work was requested
+   during the Q2 window.
 
 <!-- markdownlint-enable MD034 -->
 
