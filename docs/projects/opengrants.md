@@ -64,10 +64,6 @@ infrastructure featuring a gateway API, ecosystem funding dashboard, and SCF gra
 
 <!-- markdownlint-disable MD034 -->
 
-## Retroactive Impact
-
-<!-- markdownlint-disable MD034 -->
-
 During the Q2 grant period, OpenGrants delivered on its maintenance mandate. We kept infrastructure
 live with zero downtime and ingested new SCF round data as it landed, maintaining the datasets and
 integrations built in prior quarters. This was a maintenance grant, and the work reflects that scope.
@@ -82,9 +78,7 @@ This generated the following impact for the Stellar ecosystem:
   supporting cross-ecosystem comparative analysis.
 
 <!-- markdownlint-enable MD034 -->
-
-<!-- markdownlint-enable MD034 -->
-
+-------
 ## Past Deliverables
 
 <!-- markdownlint-disable MD034 -->
