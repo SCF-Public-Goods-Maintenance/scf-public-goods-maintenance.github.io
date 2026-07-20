@@ -12,14 +12,18 @@ budget: "15000"
 _Hardware wallet integration for Stellar, enabling secure transaction signing on Ledger and Trezor
 devices._
 
-|                      |                                                                    |
-| -------------------- | ------------------------------------------------------------------ |
-| **Category**         | Wallet Support                                                     |
-| **Website**          | <https://gist.github.com/overcat/ca6e3da0d3602a928c2eef6e054f853a> |
-| **Repository**       | <https://gist.github.com/overcat/ca6e3da0d3602a928c2eef6e054f853a> |
-| **First Released**   | July 2021                                                          |
-| **Intake**           | soft-launch                                                        |
-| **Budget Requested** | 15000                                                              |
+|                        |                                                  |
+| ---------------------- | ------------------------------------------------ |
+| **Category**           | Wallet Support                                   |
+| **Website**            | <https://lightsail.network>                      |
+| **Ledger Stellar App** | <https://github.com/LedgerHQ/app-stellar>        |
+| **Ledger Live**        | <https://github.com/ledgerhq/ledger-live>        |
+| **Trezor Firmware**    | <https://github.com/trezor/trezor-firmware>      |
+| **Trezor Suite**       | <https://github.com/trezor/trezor-suite>         |
+| **strledger**          | <https://github.com/lightsail-network/strledger> |
+| **First Released**     | July 2021                                        |
+| **Intake**             | soft-launch                                      |
+| **Budget Requested**   | 15000                                            |
 
 ## Project Description
 
