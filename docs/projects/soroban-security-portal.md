@@ -114,7 +114,7 @@ Note: this section as initially AI generated but includes manual edits and descr
    `docs/superpowers/specs/2026-05-27-visitor-analytics-design.md`.
 
 4. **Audit-report ingestion** — background worker fetches PDFs, extracts metadata and
-   vulnerabilities, and creates moderation-queue "agent runs" for review. Commit `394d872` (#187).
+    vulnerabilities, and creates moderation-queue "agent runs" for review. Commit `394d872` (<https://github.com/inferara/soroban-security-portal/pull/187>).
 
    Although this introduces some AI elements I want to stress that I have personally used it for
    making the **process** of adding vulnerability findings to the Portal much more efficient. The
