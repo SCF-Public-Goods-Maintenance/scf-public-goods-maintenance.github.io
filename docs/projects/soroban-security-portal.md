@@ -143,14 +143,6 @@ Note: this section as initially AI generated but includes manual edits and descr
    read more about the changes on Medium:
    <https://medium.com/@inferara/how-the-soroban-security-portal-is-evolving-5a37cb674217>
 
-## Proposed Impact
-
-We hope that although there are not thousands of daily users, the few that do use it can continue to
-rely on quality information to learn and keep Stellar secure.
-
-The benefit for Stellar should be quite clear. The more people aware and using the Portal to learn
-from audits and vulnerabilities (with detailed explanations) the better! Having a curated knowledge
-base for auditors, developers, users and curious minds makes people (and bots) smarter.
 
 ## Previous Deliverables
 
@@ -233,6 +225,15 @@ Done. All additions have been made and we are fully up to date.
 
 Done. <https://github.com/Inferara/soroban-ret>. You can access it from the Dev Tools button on the
 menu.
+
+## Proposed Impact
+
+We hope that although there are not thousands of daily users, the few that do use it can continue to
+rely on quality information to learn and keep Stellar secure.
+
+The benefit for Stellar should be quite clear. The more people aware and using the Portal to learn
+from audits and vulnerabilities (with detailed explanations) the better! Having a curated knowledge
+base for auditors, developers, users and curious minds makes people (and bots) smarter.
 
 ## Proposed Deliverables
 
