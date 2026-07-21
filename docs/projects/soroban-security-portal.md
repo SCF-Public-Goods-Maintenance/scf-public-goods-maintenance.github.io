@@ -143,7 +143,6 @@ Note: this section as initially AI generated but includes manual edits and descr
    read more about the changes on Medium:
    <https://medium.com/@inferara/how-the-soroban-security-portal-is-evolving-5a37cb674217>
 
-
 ## Previous Deliverables
 
 In this section I will quote the previous deliverable goals and the result of each.
