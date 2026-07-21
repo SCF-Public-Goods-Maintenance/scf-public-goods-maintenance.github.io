@@ -186,7 +186,7 @@ We have added many new social features to allow for community engagement:
   history, moderation targets
 - **Real-time notifications**: SignalR hub reply + mention notifications, notification bell,
   `/mentions` inbox.
-- **Social sharing buttons + OpenGraph meta tags**: commit `1925219` (#120). This is an easy way to
+- **Social sharing buttons + OpenGraph meta tags**: commit `1925219` (<https://github.com/inferara/soroban-security-portal/pull/120>). This is an easy way to
   share information on reports or findings with an automated image render which includes details
   like # of findings, severity levels and fix %. Works in discord on x and likely a few other places!
   Please try it out!
