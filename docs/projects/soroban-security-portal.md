@@ -132,7 +132,7 @@ Note: this section as initially AI generated but includes manual edits and descr
    PDF covers. Commit `f06e16d` (<https://github.com/inferara/soroban-security-portal/pull/191>).
 
 8. **Performance work** — report cover compression, faster vulnerabilities/reports pages, caching.
-   Commits `ed0d0f8` (#176), `0b778e2` (#182).
+   Commits `ed0d0f8` (<https://github.com/inferara/soroban-security-portal/pull/176>), `0b778e2` (<https://github.com/inferara/soroban-security-portal/pull/182>).
 
 9. **Navigator Contributions** — We have enabled Navigators to participate in the Portal. You can
    read more about the changes on Medium:
