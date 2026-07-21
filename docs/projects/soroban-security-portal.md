@@ -108,7 +108,7 @@ Note: this section as initially AI generated but includes manual edits and descr
    `docs/superpowers/specs/2026-05-26-comments-discussion-design.md`.
 
 3. **Visitor analytics and public view counts** — As requested every public page now shows "X today ·
-   Y total" views, plus an admin/moderator Statistics dashboard. Commit `6f7c1e5` (#171/#172); design
+   Y total" views, plus an admin/moderator Statistics dashboard. Commit `6f7c1e5` (<https://github.com/inferara/soroban-security-portal/pull/171> / <https://github.com/inferara/soroban-security-portal/pull/172>); design
    spec `docs/superpowers/specs/2026-05-27-visitor-analytics-design.md`.
 
 4. **Audit-report ingestion** — background worker fetches PDFs, extracts metadata and
