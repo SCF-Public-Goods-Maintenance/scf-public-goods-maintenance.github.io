@@ -103,7 +103,7 @@ Note: this section as initially AI generated but includes manual edits and descr
 
 2. **Comments, voting, @mentions and real-time notifications** — full threaded discussion system on
    vulnerabilities and reports, with up/down votes, reputation scoring, edit history, and SignalR +
-   Redis live notifications. Commit `b23bb7b` (#170); design spec
+   Redis live notifications. Commit `b23bb7b` (<https://github.com/inferara/soroban-security-portal/pull/170>); design spec
    `docs/superpowers/specs/2026-05-26-comments-discussion-design.md`.
 
 3. **Visitor analytics and public view counts** — As requested every public page now shows "X today ·
