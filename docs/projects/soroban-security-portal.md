@@ -126,7 +126,7 @@ Note: this section as initially AI generated but includes manual edits and descr
    designs with light & dark mode toggle. Commit `bd1ffd1` (<https://github.com/inferara/soroban-security-portal/pull/173>).
 
 6. **Protocol/auditor 1–5 star ratings** — public star ratings with reviews. Commits `baf49eb`
-   (#169), `896817d` (#81/#178).
+   (#169), `896817d` (<https://github.com/inferara/soroban-security-portal/pull/81> / <https://github.com/inferara/soroban-security-portal/pull/178>).
 
 7. **OpenGraph report-summary cards** — social link previews now render audit stats instead of raw
    PDF covers. Commit `f06e16d` (<https://github.com/inferara/soroban-security-portal/pull/191>).
