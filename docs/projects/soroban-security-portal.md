@@ -108,8 +108,10 @@ Note: this section as initially AI generated but includes manual edits and descr
    `docs/superpowers/specs/2026-05-26-comments-discussion-design.md`.
 
 3. **Visitor analytics and public view counts** — As requested every public page now shows "X today ·
-   Y total" views, plus an admin/moderator Statistics dashboard. Commit `6f7c1e5` (<https://github.com/inferara/soroban-security-portal/pull/171> / <https://github.com/inferara/soroban-security-portal/pull/172>); design
-   spec `docs/superpowers/specs/2026-05-27-visitor-analytics-design.md`.
+   Y total" views, plus an admin/moderator Statistics dashboard. Commit `6f7c1e5`
+   (<https://github.com/inferara/soroban-security-portal/pull/171> /
+   <https://github.com/inferara/soroban-security-portal/pull/172>); design spec
+   `docs/superpowers/specs/2026-05-27-visitor-analytics-design.md`.
 
 4. **Audit-report ingestion** — background worker fetches PDFs, extracts metadata and
    vulnerabilities, and creates moderation-queue "agent runs" for review. Commit `394d872` (#187).
@@ -123,16 +125,19 @@ Note: this section as initially AI generated but includes manual edits and descr
    to the Portal!**
 
 5. **Stellar Security Portal rebrand + design refresh** — renamed from Soroban Security Portal, new
-   designs with light & dark mode toggle. Commit `bd1ffd1` (<https://github.com/inferara/soroban-security-portal/pull/173>).
+   designs with light & dark mode toggle. Commit `bd1ffd1`
+   (<https://github.com/inferara/soroban-security-portal/pull/173>).
 
 6. **Protocol/auditor 1–5 star ratings** — public star ratings with reviews. Commits `baf49eb`
-   (#169), `896817d` (<https://github.com/inferara/soroban-security-portal/pull/81> / <https://github.com/inferara/soroban-security-portal/pull/178>).
+   (#169), `896817d` (<https://github.com/inferara/soroban-security-portal/pull/81> /
+   <https://github.com/inferara/soroban-security-portal/pull/178>).
 
 7. **OpenGraph report-summary cards** — social link previews now render audit stats instead of raw
    PDF covers. Commit `f06e16d` (<https://github.com/inferara/soroban-security-portal/pull/191>).
 
 8. **Performance work** — report cover compression, faster vulnerabilities/reports pages, caching.
-   Commits `ed0d0f8` (<https://github.com/inferara/soroban-security-portal/pull/176>), `0b778e2` (<https://github.com/inferara/soroban-security-portal/pull/182>).
+   Commits `ed0d0f8` (<https://github.com/inferara/soroban-security-portal/pull/176>), `0b778e2`
+   (<https://github.com/inferara/soroban-security-portal/pull/182>).
 
 9. **Navigator Contributions** — We have enabled Navigators to participate in the Portal. You can
    read more about the changes on Medium:
@@ -186,10 +191,11 @@ We have added many new social features to allow for community engagement:
   history, moderation targets
 - **Real-time notifications**: SignalR hub reply + mention notifications, notification bell,
   `/mentions` inbox.
-- **Social sharing buttons + OpenGraph meta tags**: commit `1925219` (<https://github.com/inferara/soroban-security-portal/pull/120>). This is an easy way to
-  share information on reports or findings with an automated image render which includes details
-  like # of findings, severity levels and fix %. Works in discord on x and likely a few other places!
-  Please try it out!
+- **Social sharing buttons + OpenGraph meta tags**: commit `1925219`
+  (<https://github.com/inferara/soroban-security-portal/pull/120>). This is an easy way to share
+  information on reports or findings with an automated image render which includes details like # of
+  findings, severity levels and fix %. Works in discord on x and likely a few other places! Please
+  try it out!
 
 > - Leaderboard? Or some info stat page of most viewed vulnerabilities (bookmarked?) etc.
 
