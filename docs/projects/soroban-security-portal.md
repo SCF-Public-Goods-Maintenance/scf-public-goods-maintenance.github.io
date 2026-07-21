@@ -92,7 +92,8 @@ Note: this section as initially AI generated but includes manual edits and descr
 
 1. **Dev Tools (soroban-ret integration)** — new Rust/Axum micro-service (`DevTools/soroban-ret-web`)
    plus a React page that lets users compile, disassemble, and inspect Soroban contract addresses.
-   Deployed behind the main portal. Commit `506767e` (<https://github.com/inferara/soroban-security-portal/pull/207>); docs at `DevTools/README.md`.
+   Deployed behind the main portal. Commit `506767e`
+   (<https://github.com/inferara/soroban-security-portal/pull/207>); docs at `DevTools/README.md`.
 
    This has been added as a bonus milestone to our reverse engineering tool:
    <https://github.com/Inferara/soroban-ret>
