@@ -103,7 +103,10 @@ alongside each release, and SBOM submission to PG Atlas runs on every push to ma
 
 <!-- markdownlint-disable MD034 -->
 
-N/A
+This is the SDK's first Public Goods Award proposal; it enters the program through the accepted New
+Project Intake (issue 86, linked above), so there are no committed deliverables from a previous award
+quarter to report. What the SDK shipped last quarter, before any Public Goods funding, is covered
+under Retroactive Impact.
 <!-- markdownlint-enable MD034 -->
 
 ## Proposed Impact
