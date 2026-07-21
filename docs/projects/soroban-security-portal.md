@@ -123,7 +123,7 @@ Note: this section as initially AI generated but includes manual edits and descr
    to the Portal!**
 
 5. **Stellar Security Portal rebrand + design refresh** — renamed from Soroban Security Portal, new
-   designs with light & dark mode toggle. Commit `bd1ffd1` (#173).
+   designs with light & dark mode toggle. Commit `bd1ffd1` (<https://github.com/inferara/soroban-security-portal/pull/173>).
 
 6. **Protocol/auditor 1–5 star ratings** — public star ratings with reviews. Commits `baf49eb`
    (#169), `896817d` (#81/#178).
