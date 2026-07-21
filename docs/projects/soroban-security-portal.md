@@ -129,7 +129,7 @@ Note: this section as initially AI generated but includes manual edits and descr
    (#169), `896817d` (#81/#178).
 
 7. **OpenGraph report-summary cards** — social link previews now render audit stats instead of raw
-   PDF covers. Commit `f06e16d` (#191).
+   PDF covers. Commit `f06e16d` (<https://github.com/inferara/soroban-security-portal/pull/191>).
 
 8. **Performance work** — report cover compression, faster vulnerabilities/reports pages, caching.
    Commits `ed0d0f8` (#176), `0b778e2` (#182).
