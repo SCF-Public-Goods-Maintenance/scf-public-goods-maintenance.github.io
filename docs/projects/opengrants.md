@@ -21,7 +21,7 @@ funding data set, including all completed SCF rounds._
 | **Category**         | Other                                            |
 | **Website**          | <https://opengrants.daostar.org/>                |
 | **Repository**       | <https://github.com/metagov/opengrants-platform> |
-|                      | <https://github.com/metagov/Grants-Gateway-API>  | 
+|                      | <https://github.com/metagov/Grants-Gateway-API>  |
 | **First Released**   | September 2025                                   |
 | **Intake**           | soft-launch                                      |
 | **Budget Requested** | $20,000                                          |
