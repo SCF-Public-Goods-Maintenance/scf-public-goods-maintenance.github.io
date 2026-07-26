@@ -160,15 +160,14 @@ The deliverables of Q2 were categorized as follows:
   [crates.io](https://crates.io/crates/solang/0.3.5)).
 - **Status (2026-07-26):** per-example coverage is now tracked in
   [#1901](https://github.com/hyperledger-solang/solang/issues/1901) with the calculation shown
-  openly: **40% merged** (10 of the 25 upstream examples that are language features), **60% when
-  open PRs are included** — `mint-lock`
-  ([#1985](https://github.com/hyperledger-solang/solang/pull/1985)), `other_custom_types`
-  ([#1983](https://github.com/hyperledger-solang/solang/pull/1983)), the idiomatic
-  `atomic_multiswap` via arrays-of-structs support
+  openly: **40% merged** (10 of the 25 upstream examples that are language features), **60% when open
+  PRs are included** — `mint-lock` ([#1985](https://github.com/hyperledger-solang/solang/pull/1985)),
+  `other_custom_types` ([#1983](https://github.com/hyperledger-solang/solang/pull/1983)), the
+  idiomatic `atomic_multiswap` via arrays-of-structs support
   ([#1986](https://github.com/hyperledger-solang/solang/pull/1986)), `single_offer`
   ([#1968](https://github.com/hyperledger-solang/solang/pull/1968)) and `increment_with_pause`
-  ([#1977](https://github.com/hyperledger-solang/solang/pull/1977)). The remaining work is
-  explicitly carried into this proposal as Deliverable 4 below.
+  ([#1977](https://github.com/hyperledger-solang/solang/pull/1977)). The remaining work is explicitly
+  carried into this proposal as Deliverable 4 below.
 
 ### Fuzzer
 
@@ -276,14 +275,14 @@ and creates a prioritized feedback loop that steers future work.
 ### 4. Support the remaining Soroban examples (carried over from Q2)
 
 Complete the remaining feasible upstream
-[soroban-examples](https://github.com/stellar/soroban-examples), fixing the compiler gaps they
-expose along the way — this quarter showed that most "example" work is really compiler work (array
+[soroban-examples](https://github.com/stellar/soroban-examples), fixing the compiler gaps they expose
+along the way — this quarter showed that most "example" work is really compiler work (array
 allocation, ABI returns, arrays of structs as parameters). Progress is tracked per example, with
 coverage percentages and the calculation shown, in
 [#1901](https://github.com/hyperledger-solang/solang/issues/1901).
 
-- **SMART alignment:** specific and measurable — raise **merged** coverage from 40% (10/25) to
-  ≥ 68% (17/25) by landing the five examples currently in open PRs
+- **SMART alignment:** specific and measurable — raise **merged** coverage from 40% (10/25) to ≥ 68%
+  (17/25) by landing the five examples currently in open PRs
   ([#1983](https://github.com/hyperledger-solang/solang/pull/1983),
   [#1985](https://github.com/hyperledger-solang/solang/pull/1985),
   [#1986](https://github.com/hyperledger-solang/solang/pull/1986),
