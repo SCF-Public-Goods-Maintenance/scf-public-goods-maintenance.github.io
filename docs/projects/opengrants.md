@@ -87,7 +87,7 @@ This generated the following impact for the Stellar ecosystem:
 <!-- markdownlint-disable MD034 -->
 
 1. **Ongoing hosting and maintenance — Completed.** Maintained OpenGrants infrastructure with zero
-   downtime and ingested SCF #43 funding data during the Q2 period, keeping Stellar in full DAOIP-5
+   downtime and ingested `SCF #43` funding data during the Q2 period, keeping Stellar in full DAOIP-5
    compliance. The real-time SCF integration and Airtable pipeline shipped prior to the Q2 grant and
    were maintained, not newly built, during this period.
 
@@ -138,9 +138,9 @@ and exposing OpenGrants data programmatically so agents and downstream tools can
 <!-- markdownlint-disable MD034 -->
 
 1. **SCF Intelligence Report.** OpenGrants generates and publishes a funding Intelligence Report to
-   the SCF community for the next round (SCF #45), which includes the following data: funding
+   the SCF community for the next round (`SCF #45`), which includes the following data: funding
    distribution, category breakdowns, milestone and tranche completion trends, and comparison against
-   prior rounds. Builds on the SCF #41 Intelligence Report that delegates used during community
+   prior rounds. Builds on the `SCF #41` Intelligence Report that delegates used during community
    voting, turning a one-off contribution into a repeatable governance input.
 
    - _Ecosystem value: consistent, data-driven context for delegates and the community during the
