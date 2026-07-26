@@ -74,7 +74,7 @@ This generated the following impact for the Stellar ecosystem:
 - OpenGrants infrastructure remained available with zero downtime as the upstream data source PG
   Atlas continues to build its dependency graph on.
 - OpenGrants maintained Stellar's 100% DAOIP-5 compliance rate throughout the period, including
-  ingestion of SCF #43 data as it became available.
+  ingestion of `SCF #43` data as it became available.
 - OpenGrants maintained its expanded ecosystem funding datasets, including the ENS integration
   supporting cross-ecosystem comparative analysis.
 
