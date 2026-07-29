@@ -1,3 +1,12 @@
+---
+title: "Tansu - Decentralized project governance on Stellar"
+parent: Public Good Projects
+proposal_issue: 105
+proposer: tupui
+category: "Governance Tools"
+budget: "$50,000 in XLM"
+---
+
 # Tansu - Decentralized project governance on Stellar
 
 <!-- markdownlint-disable MD036 -->
