@@ -13,6 +13,7 @@ budget: "15000"
 
 _Write your Stellar integration once in Kotlin and run it across Mobile, Web, Desktop, and Server:
 transactions, Stellar RPC and Horizon, smart contracts, OpenZeppelin smart accounts, and 17 SEPs._
+
 <!-- markdownlint-enable MD036 -->
 
 |                      |                                                                                                    |
@@ -38,6 +39,7 @@ authorization, context rules, and policy-based access control), and 17 Stellar E
 coding-agent skill. It is open-source (Apache-2.0), published on Maven Central, listed on the
 official Stellar developer documentation, built on audited cryptography (BouncyCastle, libsodium),
 and tested on CI with 81% unit test coverage tracked on Codecov, with zero open issues.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Team & Experience
@@ -97,6 +99,7 @@ The XDR code generator gained upstream source pinning, snapshot tests, and daily
 monitoring, and a generator bug collapsing multi-case discriminants was fixed. CI runs on every push
 with Codecov coverage tracking and monthly Dependabot updates, the AI-agent skill is updated
 alongside each release, and SBOM submission to PG Atlas runs on every push to main.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Past Deliverables
@@ -107,6 +110,7 @@ This is the SDK's first Public Goods Award proposal; it enters the program throu
 Project Intake (issue 86, linked above), so there are no committed deliverables from a previous award
 quarter to report. What the SDK shipped last quarter, before any Public Goods funding, is covered
 under Retroactive Impact.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Proposed Impact
@@ -130,6 +134,7 @@ Add a Kotlin Multiplatform target to the community stellar-contract-bindings gen
 by overcat and linked from the Stellar CLI), so developers can generate typed Kotlin contract clients
 from a deployed contract's spec, joining the Dart, Swift, and PHP targets that Soneso contributed
 (see: [stellar-contract-bindings generator][scbindings]).
+
 <!-- markdownlint-enable MD034 -->
 
 ## Proposed Deliverables
@@ -174,7 +179,16 @@ as with the existing subcommands for the other languages.
 
 Proof: pull requests to the stellar-contract-bindings and stellar-cli repositories, SDK release with
 the client addition, generated-code tests.
+
 <!-- markdownlint-enable MD034 -->
+
+## Metrics loaded from PG Atlas
+
+[![PG Atlas](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3Akmp_stellar_sdk&query=%24.activity_status&label=PG+Atlas&color=914CFF)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3Akmp_stellar_sdk)
+[![90d Contributors](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3Akmp_stellar_sdk&query=%24.active_contributors_90d&label=90d+Contributors&color=00B578)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3Akmp_stellar_sdk)
+[![Criticality](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3Akmp_stellar_sdk&query=%24.criticality_score&label=Criticality&color=E5484D)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3Akmp_stellar_sdk)
+[![Pony Factor](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3Akmp_stellar_sdk&query=%24.pony_factor&label=Pony+Factor&color=0090FF)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3Akmp_stellar_sdk)
+[![Adoption](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3Akmp_stellar_sdk&query=%24.adoption_score&label=Adoption&color=FF9900)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3Akmp_stellar_sdk)
 
 ## Legal Acknowledgements
 
