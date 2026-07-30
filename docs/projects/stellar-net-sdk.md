@@ -154,7 +154,7 @@ dotnet build StellarDotnetSdk/StellarDotnetSdk.csproj -c Release --nologo 2>&1 |
 
 Expected output verbatim:
 
-```
+```txt
 Passed!  - Failed:     0, Passed:  1927, Skipped:     1, Total:  1928   # unit suite (net8.0)
 52                                                                      # integration [Test] methods
 Passed!  - Failed:     0, Passed:    82, Skipped:     0, Total:    82   # SEP-45 tests
@@ -547,6 +547,14 @@ pulling the next backlog item (SEP-30, see ROADMAP.md) forward; it is never pre-
 scope.
 
 <!-- markdownlint-enable MD034 -->
+
+## Metrics loaded from PG Atlas
+
+[![PG Atlas](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3A.net_stellar_sdk&query=%24.activity_status&label=PG+Atlas&color=914CFF)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3A.net_stellar_sdk)
+[![90d Contributors](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3A.net_stellar_sdk&query=%24.active_contributors_90d&label=90d+Contributors&color=00B578)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3A.net_stellar_sdk)
+[![Criticality](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3A.net_stellar_sdk&query=%24.criticality_score&label=Criticality&color=E5484D)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3A.net_stellar_sdk)
+[![Pony Factor](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3A.net_stellar_sdk&query=%24.pony_factor&label=Pony+Factor&color=0090FF)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3A.net_stellar_sdk)
+[![Adoption](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3A.net_stellar_sdk&query=%24.adoption_score&label=Adoption&color=FF9900)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3A.net_stellar_sdk)
 
 ## Legal Acknowledgements
 
