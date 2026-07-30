@@ -13,6 +13,7 @@ budget: "20000"
 
 _A Stellar network explorer that turns validator, quorum, organization, and history archive data into
 plain-language network health insights._
+
 <!-- markdownlint-enable MD036 -->
 
 |                      |                                                                                                    |
@@ -42,6 +43,7 @@ observable.
 
 Radar also uses OBSRVR's `rs-stellar-history-archive-hasher`, published as
 `@withobsrvr/stellar-history-archive-hasher`, to support history archive verification.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Team & Experience
@@ -62,6 +64,7 @@ used by Radar's scanner.
 OBSRVR's broader Stellar work focuses on making Stellar network and ledger data easier to operate,
 inspect, and understand. Radar fits into that work as the network-health and validator-observability
 layer.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Retroactive Impact
@@ -81,6 +84,7 @@ organization pages.
 The main impact was reducing operational risk. Radar is now easier to build and deploy, better
 aligned with current Stellar dependencies, more resilient when scanning newer history archive
 formats, and more useful for operators inspecting validator and organization status.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Past Deliverables
@@ -198,6 +202,7 @@ This benefits the Stellar ecosystem by giving validators, infrastructure operato
 participants a clearer view of network health. Instead of requiring users to interpret raw quorum
 data themselves, Radar should surface practical explanations and let users drill into the technical
 details when needed.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Proposed Deliverables
@@ -277,7 +282,16 @@ Measure:
 
 Bootstrap removal PRs, maintenance PRs, dependency/protocol update PRs, and passing frontend
 build/tests.
+
 <!-- markdownlint-enable MD034 -->
+
+## Metrics loaded from PG Atlas
+
+[![PG Atlas](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3Aobsrvr_radar&query=%24.activity_status&label=PG+Atlas&color=914CFF)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3Aobsrvr_radar)
+[![90d Contributors](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3Aobsrvr_radar&query=%24.active_contributors_90d&label=90d+Contributors&color=00B578)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3Aobsrvr_radar)
+[![Criticality](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3Aobsrvr_radar&query=%24.criticality_score&label=Criticality&color=E5484D)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3Aobsrvr_radar)
+[![Pony Factor](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3Aobsrvr_radar&query=%24.pony_factor&label=Pony+Factor&color=0090FF)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3Aobsrvr_radar)
+[![Adoption](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3Aobsrvr_radar&query=%24.adoption_score&label=Adoption&color=FF9900)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3Aobsrvr_radar)
 
 ## Legal Acknowledgements
 
