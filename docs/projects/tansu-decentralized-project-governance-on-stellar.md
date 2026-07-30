@@ -13,6 +13,7 @@ budget: "$50,000 in XLM"
 
 _Tansu provides cryptographic proof of code integrity and transparent governance for open-source
 projects._
+
 <!-- markdownlint-enable MD036 -->
 
 |                      |                                                                                                    |
@@ -33,6 +34,7 @@ It brings transparency, security, and decentralized decision-making to software 
 combining on-chain project tracking, a powerful voting platform, and a flexible membership system. It
 integrates well with the Neural Quorum Governance score making it a great tool for the Stellar
 community. It is the first platform to offer anonymous voting on Stellar.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Team & Experience
@@ -91,6 +93,7 @@ exciting things: a concept of evidence for SBOM/CVE/attestation CIDs; support fo
 Radicle; and a linking of Git identity with a G-address. Tansu is now seeing a few contributors
 coming back and helping out which is a way to increase the pony factor. On that front, the team at
 Aha is fully onboarded as maintainers.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Past Deliverables
@@ -176,6 +179,7 @@ Proof of completion:
 **Conditional:** If
 [Nouns Builder on Stellar](https://communityfund.stellar.org/dashboard/submissions/recinNIkq2DGjZ8Hq)
 is funded, coordinate on NQG/Tansu per their [roadmap](https://hackmd.io/@dan13ram/r123BqdJMl).
+
 <!-- markdownlint-enable MD034 -->
 
 ## Proposed Deliverables
@@ -237,7 +241,16 @@ on-boarding and usage of Tansu; per-project config documented; yes/no approach d
 Measure: Result types consistency; TTL strategy documented and applied; #111 merged or scoped with
 plan; runbook published; assessment addendum; dependencies up-to-date; Radicle usage with some
 patches and issues.
+
 <!-- markdownlint-enable MD034 -->
+
+## Metrics loaded from PG Atlas
+
+[![PG Atlas](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3Atansu_-_soroban_versioning&query=%24.activity_status&label=PG+Atlas&color=914CFF)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3Atansu_-_soroban_versioning)
+[![90d Contributors](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3Atansu_-_soroban_versioning&query=%24.active_contributors_90d&label=90d+Contributors&color=00B578)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3Atansu_-_soroban_versioning)
+[![Criticality](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3Atansu_-_soroban_versioning&query=%24.criticality_score&label=Criticality&color=E5484D)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3Atansu_-_soroban_versioning)
+[![Pony Factor](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3Atansu_-_soroban_versioning&query=%24.pony_factor&label=Pony+Factor&color=0090FF)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3Atansu_-_soroban_versioning)
+[![Adoption](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3Atansu_-_soroban_versioning&query=%24.adoption_score&label=Adoption&color=FF9900)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3Atansu_-_soroban_versioning)
 
 ## Legal Acknowledgements
 
