@@ -131,7 +131,7 @@ have completed discovery/design with implementation carried into Q3 — several 
 > - Measure: update shipped in frontend
 > - Issue: https://github.com/stellar-scaffold/cli/issues/441
 
-In progress: the upgrade PR is open and under review at
+**Shipped.** Upgraded integration, improved UX, and network polling workaround merged in 
 https://github.com/stellar-scaffold/ui/pull/241. The Template Monorepo restructure (see D3, D8) moved
 wallet integration into the shared `@stellar-scaffold/app-lib` package, so the v2 upgrade now lands
 once for every framework template instead of once per template. Finishing this is committed in Q3
@@ -158,8 +158,9 @@ tracking issue is closed.
 > - Issue: https://github.com/stellar-scaffold/cli/issues/161
 
 **Substantially shipped** via the Template Monorepo effort
-(https://github.com/stellar-scaffold/cli/pull/543 and
-https://github.com/stellar-scaffold/ui/pull/234):
+(https://github.com/stellar-scaffold/cli/pull/543,
+https://github.com/stellar-scaffold/ui/pull/234, and
+https://github.com/stellar-scaffold/cli/pull/564):
 
 - The single React frontend repo became a multi-framework template monorepo (`templates/react`,
   `templates/svelte`, plus a shared `app-lib` package for wallet, storage, and formatting logic),
@@ -169,9 +170,9 @@ https://github.com/stellar-scaffold/ui/pull/234):
 - A new `scaffold.yml` `config:` section lets any template declare where its contracts, TypeScript
   bindings, and contract clients live, so community templates can follow their own framework
   conventions.
+- `--no-template` or `--template none` allows a contract-only workflow without any frontend
 
-Remaining from the original scope — the "no frontend" option and a community-template contribution
-guide — was not delivered in Q2 and is explicitly committed in Q3 (Proposed D5).
+A community-template contribution guide — was not delivered in Q2 and is explicitly committed in Q3 (Proposed D5).
 
 ### D4: SKILL.md to help agentic workflows
 
@@ -193,10 +194,9 @@ Proposed D4).
 > - Measure: new documentation page shipped to main Stellar docs
 > - Issue: https://github.com/stellar-scaffold/cli/issues/361
 
-Partial: scope was agreed in the issue discussion (minimize the page, link prominently to the
+**Shipped.** Scope was agreed in the issue discussion (minimize the page, link prominently to the
 dedicated docs site), and smaller upstream improvements shipped in the meantime
-(https://github.com/stellar/stellar-docs/pull/2267). The page rework itself carries into the Q3
-documentation deliverable (Proposed D6).
+(https://github.com/stellar/stellar-docs/pull/2267). Multiple pages reworked on Stellar docs (https://github.com/stellar/stellar-docs/pull/2708) and contain pointers to updated documentation on new, redesigned Scaffold docs site (https://github.com/stellar-scaffold/cli/pull/577).
 
 ### D6: Monitor releases of ecosystem projects
 
