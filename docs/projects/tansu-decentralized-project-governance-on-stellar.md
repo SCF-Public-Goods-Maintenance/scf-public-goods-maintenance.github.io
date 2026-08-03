@@ -163,13 +163,18 @@ Proof of completion:
 
 Q3's objective is about making Tansu reliable and usable for our first users. The main goals are:
 
-1. **PG Award Q3 on Tansu:** same testnet stack as Q2, we are going to run the Q3 program on Tansu and there are lots of things to figure out.
+1. **PG Award Q3 on Tansu:** same testnet stack as Q2, we are going to run the Q3 program on Tansu
+   and there are lots of things to figure out.
 
-2. **Stellar Registry:** this is our second use case, the registry has it's own set of constraints and we need to see how to effectively support the project.
+2. **Stellar Registry:** this is our second use case, the registry has it's own set of constraints
+   and we need to see how to effectively support the project.
 
-3. **Governance:** there are many things to improve, from the collateral system overall to new features around supply chain. Now that we have the first set of users, we have a better understanding of the scope and what we should do and not.
+3. **Governance:** there are many things to improve, from the collateral system overall to new
+   features around supply chain. Now that we have the first set of users, we have a better
+   understanding of the scope and what we should do and not.
 
-4. **Maintenance:** from the preparation to an audit, the migration to Radicle to many small code adjustments, there is a lot of continuous work.
+4. **Maintenance:** from the preparation to an audit, the migration to Radicle to many small code
+   adjustments, there is a lot of continuous work.
 
 **Conditional:** If
 [Nouns Builder on Stellar](https://communityfund.stellar.org/dashboard/submissions/recinNIkq2DGjZ8Hq)
@@ -185,18 +190,23 @@ is funded, coordinate on NQG/Tansu per their [roadmap](https://hackmd.io/@dan13r
 
 Tansu hosts the PG Award program.
 
-- **Program NQG score:** with SDF engineering and SCF team on PG Award-specific scoring [e07f96daae8e8bc9075dbe128b16e54357838f48](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/e07f96daae8e8bc9075dbe128b16e54357838f48);
-- **SCF NFT:** workflow to sync the data with the source of truth and work on Neurons [33d6cff5b33baf6171b686f51167eeb302407cd4](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/33d6cff5b33baf6171b686f51167eeb302407cd4);
+- **Program NQG score:** with SDF engineering and SCF team on PG Award-specific scoring
+  [e07f96daae8e8bc9075dbe128b16e54357838f48](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/e07f96daae8e8bc9075dbe128b16e54357838f48);
+- **SCF NFT:** workflow to sync the data with the source of truth and work on Neurons
+  [33d6cff5b33baf6171b686f51167eeb302407cd4](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/33d6cff5b33baf6171b686f51167eeb302407cd4);
 - **Mid-grant reviews:** tranche-2 review flow can be moved to GitHub and Tansu (template, outcome
   hooks);
 - **Q3 round:** intake, D&R, on-chain vote, open office hours, execution with SDF Community;
-- [Conditional **Nouns:**] Nouns Builder NQG alignment if their grant is approved [32e2f0739c61e8b739fc45053848b0b59f74a19d](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/32e2f0739c61e8b739fc45053848b0b59f74a19d).
+- [Conditional **Nouns:**] Nouns Builder NQG alignment if their grant is approved
+  [32e2f0739c61e8b739fc45053848b0b59f74a19d](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/32e2f0739c61e8b739fc45053848b0b59f74a19d).
 
-Measure: Q3 vote on testnet at https://testnet.tansu.dev/project/?name=stellarpgq3 ; (conditional on SDF) mainnet NFT/NQG populated; mid-grant template shipped or new process proposal documented.
+Measure: Q3 vote on testnet at https://testnet.tansu.dev/project/?name=stellarpgq3 ; (conditional on
+SDF) mainnet NFT/NQG populated; mid-grant template shipped or new process proposal documented.
 
 ### D2: Stellar Registry
 
-Registry Security Council vote on Tansu and further support [3111b944792c0b5da9f6c8f88e52cdeebd1a3d82](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/3111b944792c0b5da9f6c8f88e52cdeebd1a3d82).
+Registry Security Council vote on Tansu and further support
+[3111b944792c0b5da9f6c8f88e52cdeebd1a3d82](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/3111b944792c0b5da9f6c8f88e52cdeebd1a3d82).
 
 - **`registry-tansu-manager` factory:** authorization contracts governed via Tansu
   ([stellar-registry/contracts](https://github.com/stellar-registry/contracts/tree/main/contracts/registry-tansu-manager));
@@ -212,28 +222,37 @@ works.
 
 - **Evidence in dApp:** SBOM/CVE/Attestation usable
   [#204](https://github.com/Consulting-Manao/tansu/issues/204)[#196](https://github.com/Consulting-Manao/tansu/issues/196)
-- **Governance configuration:** rethink a per-project configuration for membership, weight mode, rethink the outcome flow;
+- **Governance configuration:** rethink a per-project configuration for membership, weight mode,
+  rethink the outcome flow;
 - **Collateral rework:** Merkle-based collateral or other mechanism to alleviate the contract
   constraints
-  [c6a71ed20bd6bfd9af5f34c838135919c21ac2f4]([https://github.com/Consulting-Manao/tansu/issues/111)[#112](https://github.com/Consulting-Manao/tansu/issues/112](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/c6a71ed20bd6bfd9af5f34c838135919c21ac2f4));
-- **Endorsement:** mechanism to attest a specific commit [8dea8085473cec6026e3a5c1126011fc4071e96a](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/8dea8085473cec6026e3a5c1126011fc4071e96a).
-- **Discussions:** improve the integration on Tansu of the discussions from GitHub [850a9420a6a4ac1fc0f091677455764fce3ab5b0](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/850a9420a6a4ac1fc0f091677455764fce3ab5b0)
+  [c6a71ed20bd6bfd9af5f34c838135919c21ac2f4]([https://github.com/Consulting-Manao/tansu/issues/111)[#112](<https://github.com/Consulting-Manao/tansu/issues/112](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/c6a71ed20bd6bfd9af5f34c838135919c21ac2f4)>);
+- **Endorsement:** mechanism to attest a specific commit
+  [8dea8085473cec6026e3a5c1126011fc4071e96a](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/8dea8085473cec6026e3a5c1126011fc4071e96a).
+- **Discussions:** improve the integration on Tansu of the discussions from GitHub
+  [850a9420a6a4ac1fc0f091677455764fce3ab5b0](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/850a9420a6a4ac1fc0f091677455764fce3ab5b0)
 
 Measure: Evidence on project pages and management in the dApp itself; Nido support with a transparent
-on-boarding and usage of Tansu; per-project config documented; yes/no approach documented; better management of discussions and other artifacts.
+on-boarding and usage of Tansu; per-project config documented; yes/no approach documented; better
+management of discussions and other artifacts.
 
 ### D4: Maintenance, Security and Operations
 
-- **Nido wallet support:** passkey smart accounts with [nido.fyi](https://nido.fyi) [62fa73dfad0c043a58c90feb9ad92ea7310656b7](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/62fa73dfad0c043a58c90feb9ad92ea7310656b7) and considering to use Blux;
+- **Nido wallet support:** passkey smart accounts with [nido.fyi](https://nido.fyi)
+  [62fa73dfad0c043a58c90feb9ad92ea7310656b7](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/62fa73dfad0c043a58c90feb9ad92ea7310656b7)
+  and considering to use Blux;
 - **Result types** across contract, SDK, and dApp. Evaluate the change from panics;
-- **Storage / TTL:** rent bump and TTL policy for Soroban storage [40170febe4f792b0c802c79130e9d778f1cea7c4](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/40170febe4f792b0c802c79130e9d778f1cea7c4);
+- **Storage / TTL:** rent bump and TTL policy for Soroban storage
+  [40170febe4f792b0c802c79130e9d778f1cea7c4](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/40170febe4f792b0c802c79130e9d778f1cea7c4);
 - **Audit-bank prep**: perimeter map, risk notes, runbook;
 - **Dependencies:** Soroban SDK, Stellar JS, CI deps kept current;
 - **Drips Wave:** continue to promote Stellar and the Drips Wave platform;
 - **Radicle:** assess gaps and use more
   ([radicle.consulting-manao.com](https://radicle.network/nodes/radicle.consulting-manao.com)).
 
-Measure: UX improved with passkey based account supported, result types consistency documented; TTL strategy documented and applied; runbook published; audit assessment addendum; dependencies up-to-date; Radicle usage with some patches and issues.
+Measure: UX improved with passkey based account supported, result types consistency documented; TTL
+strategy documented and applied; runbook published; audit assessment addendum; dependencies
+up-to-date; Radicle usage with some patches and issues.
 
 <!-- markdownlint-enable MD034 -->
 
