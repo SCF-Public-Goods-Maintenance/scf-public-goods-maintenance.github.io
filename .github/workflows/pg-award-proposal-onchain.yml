@@ -124,16 +124,37 @@ jobs:
             > "${OUTCOMES_FILE}"
 
           DISCUSSION_FILE="${RUNNER_TEMP}/proposal_discussion.md"
+          SUMMARY_FILE="${RUNNER_TEMP}/summary.md"
+          rm -f "${SUMMARY_FILE}"
+
+          TOPLEVEL_JSON="$(gh pr view "${PR_NUMBER}" --repo "${GITHUB_REPOSITORY}" --json comments)"
+          REVIEWS_JSON="$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}/comments" --paginate)"
+          HAS_SUMMARY='def has_summary: (.body // "") | split("\n") | any(gsub("\\r$";"") | test("^## Summary[ \\t]*$"));'
+
+          # ponytail: first ## Summary wins (toplevel then reviews); all matches omitted from discussion
+          SUMMARY_BODY="$(jq -rn --argjson tl "${TOPLEVEL_JSON}" --argjson rv "${REVIEWS_JSON}" "${HAS_SUMMARY}"'
+            (
+              [$tl.comments[]
+                | select((.author.login | endswith("[bot]") | not) and (.author.login != "github-actions"))
+                | select(has_summary) | .body]
+              + [$rv[]
+                | select((.user.login | endswith("[bot]") | not) and (.user.login != "github-actions"))
+                | select(has_summary) | .body]
+            )[0] // empty
+          ')"
+          [[ -n "${SUMMARY_BODY}" ]] && printf '%s\n' "${SUMMARY_BODY}" > "${SUMMARY_FILE}"
+
           {
             printf '# Discussion for PR #%s\n\nhttps://github.com/%s/pull/%s\n\n---\n\n' \
               "${PR_NUMBER}" "${GITHUB_REPOSITORY}" "${PR_NUMBER}"
-            gh pr view "${PR_NUMBER}" \
-              --repo "${GITHUB_REPOSITORY}" \
-              --json comments | \
-              jq -r '(.comments | map(select((.author.login | endswith("[bot]") | not) and (.author.login != "github-actions")))) as $human_comments | if ($human_comments | length)==0 then "_No top-level PR comments._\n" else ($human_comments[] | "## @\(.author.login) (\(.createdAt))\n\n\(.body // "")\n\n---\n") end'
-            gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}/comments" --paginate | \
-              jq -r '(map(select((.user.login | endswith("[bot]") | not) and (.user.login != "github-actions")))) as $human_reviews | if ($human_reviews | length)==0 then "_No review comments._\n" else ($human_reviews[] | "## @\(.user.login) on `\(.path)` (\(.created_at))\n\n\(.body // "")\n\n---\n") end'
+            jq -r "${HAS_SUMMARY}"'(.comments | map(select((.author.login | endswith("[bot]") | not) and (.author.login != "github-actions") and (has_summary | not)))) as $human_comments | if ($human_comments | length)==0 then "_No top-level PR comments._\n" else ($human_comments[] | "## @\(.author.login) (\(.createdAt))\n\n\(.body // "")\n\n---\n") end' \
+              <<<"${TOPLEVEL_JSON}"
+            jq -r "${HAS_SUMMARY}"'(map(select((.user.login | endswith("[bot]") | not) and (.user.login != "github-actions") and (has_summary | not)))) as $human_reviews | if ($human_reviews | length)==0 then "_No review comments._\n" else ($human_reviews[] | "## @\(.user.login) on `\(.path)` (\(.created_at))\n\n\(.body // "")\n\n---\n") end' \
+              <<<"${REVIEWS_JSON}"
           } > "${DISCUSSION_FILE}"
+
+          EXTRA_FORMS=()
+          [[ -f "${SUMMARY_FILE}" ]] && EXTRA_FORMS+=(-F "file=@${SUMMARY_FILE};filename=summary.md;type=text/markdown")
 
           FILEBASE_RESPONSE="$(
             curl --silent --show-error --fail \
@@ -142,7 +163,8 @@ jobs:
               "https://rpc.filebase.io/api/v0/add?wrap-with-directory=true" \
               -F "file=@${PROPOSAL_FILE};filename=proposal.md;type=text/markdown" \
               -F "file=@${OUTCOMES_FILE};filename=outcomes.json;type=application/json" \
-              -F "file=@${DISCUSSION_FILE};filename=proposal_discussion.md;type=text/markdown"
+              -F "file=@${DISCUSSION_FILE};filename=proposal_discussion.md;type=text/markdown" \
+              "${EXTRA_FORMS[@]}"
           )"
 
           CID="$(printf '%s\n' "${FILEBASE_RESPONSE}" | jq -r '.Hash // .Cid // empty' | tail -n 1)"
@@ -155,6 +177,11 @@ jobs:
           curl --silent --show-error --fail --location \
             "https://ipfs.filebase.io/ipfs/${CID}/proposal_discussion.md" \
             --output /dev/null
+          if [[ -f "${SUMMARY_FILE}" ]]; then
+            curl --silent --show-error --fail --location \
+              "https://ipfs.filebase.io/ipfs/${CID}/summary.md" \
+              --output /dev/null
+          fi
           VOTING_ENDS_AT="$(( $(date +%s) + 7 * 24 * 3600 ))"
 
           {
