@@ -41,6 +41,7 @@ jobs:
           EVENT_NAME: ${{ github.event_name }}
           PR_NUMBER_FROM_EVENT: ${{ github.event.pull_request.number }}
           PR_NUMBER_FROM_INPUT: ${{ inputs.pr_number }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
 
