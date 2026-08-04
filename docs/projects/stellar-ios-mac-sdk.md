@@ -4,7 +4,7 @@ parent: Public Good Projects
 proposal_issue: 41
 proposer: christian-rogobete
 category: "SDKs"
-budget: "18000"
+budget: "15000"
 ---
 
 # stellar-ios-mac-sdk
@@ -19,7 +19,7 @@ high-level Soroban smart contract support, and implements 18 Stellar Ecosystem P
 | **Repository**       | <https://github.com/Soneso/stellar-ios-mac-sdk> |
 | **First Released**   | March 2018                                      |
 | **Intake**           | soft-launch                                     |
-| **Budget Requested** | 18000                                           |
+| **Budget Requested** | 15000                                           |
 
 ## Project Description
 
@@ -31,227 +31,263 @@ including LOBSTR, Unstoppable Wallet, and others.
 
 ## Team & Experience
 
-My name is Christian (GitHub: christian-rogobete, Discord: soneso, LinkedIn:
-https://www.linkedin.com/in/rogobete/) and I am the main developer and maintainer of the iOS Stellar
-SDK. I have a master's degree in computer science and a master's degree in logistics and have been
-working in the IT field since the mid-1990s as a developer, software architect, project manager, and
-in other roles.
+My name is Christian, also known as Soneso in the Stellar community, and I am the main developer and
+maintainer of several Stellar Client SDKs.
+
+- GitHub: [christian-rogobete](https://github.com/christian-rogobete)
+- Discord: `soneso`
+- LinkedIn: [Christian Rogobete](https://www.linkedin.com/in/rogobete/)
 
 I began contributing to the Stellar network in 2017, specializing primarily in the development and
-maintenance of Stellar SDKs. The first Stellar SDK I developed was the iOS Stellar SDK, which won the
-Stellar Build Challenge in 2018 and has since been expanded and maintained by me with the help of the
-SDF Infrastructure Grant and the SCF Public Goods Award. Other SDKs I have developed include the
-Flutter Stellar SDK, the PHP Stellar SDK, and the Kotlin Multiplatform Stellar SDK.
+maintenance of Stellar SDKs. I developed the iOS Stellar SDK, the Flutter Stellar SDK, the PHP
+Stellar SDK, and the Kotlin Multiplatform Stellar SDK. I currently work full-time on my Stellar SDK
+projects.
 
-I currently work full-time on my Stellar SDK projects.
+Previous SCF participation:
 
-Previous SCF participation: Multiple SCF Build Awards (Flutter Wallet SDK, Swift Wallet SDK, KMP
-Stellar SDK, and others), SCF Public Goods Award since Q3 2025 (Batch 1) for iOS, Flutter, and PHP
-SDKs. Member of the SCF Public Goods Maintenance working group.
+- Multiple SCF Build Awards, including the KMP Stellar SDK OZ smart account support and wallet SDKs
+  for Dart and Swift
+- SCF Public Goods Award since Q3 2025 (Batch 1) for the iOS, Flutter, and PHP SDKs
 
 ## Retroactive Impact
 
-In Q1 2026, the iOS SDK shipped 5 releases (3.4.2 through 3.4.6). The SDK is used by wallets and
-applications including LOBSTR, Unstoppable Wallet, and others. Stats (as of April 10, 2026): 129
-stars, 56 forks, 140 releases, 0 open issues at end of quarter. Median time to close: 21.1h, 100%
-response rate.
+In Q2 2026 the iOS/macOS SDK shipped four releases — 3.4.7, 3.5.0, 3.6.0, and 3.6.1. The SDK is used
+by wallets and applications including LOBSTR and Unstoppable Wallet. At the close of the quarter: 130
+stars, 57 forks, 144 total releases, 0 open issues, a median first-response time of 2.7 hours, a
+median time-to-close of 21.1 hours, and a 100% response rate. Unit test coverage is tracked on
+Codecov and enforced in CI, currently at 91%.
 
-Unit test coverage was extended and tracking was set up, currently at 88.78%, with a new CI pipeline
-and Codecov integration (80% project, 70% patch thresholds). Security hardening was applied across
-all SDK modules. Bugs found during testing and maintenance were fixed. All public types now conform
-to Swift 6 Sendable for thread safety. Protocol 25 support was added.
+The SEP-11 TxRep rewrite shipped in v3.4.7: the monolithic 3,596-line hand-written TxRep.swift was
+replaced with generated toTxRep() and fromTxRep() methods on the XDR types, reducing TxRep.swift to a
+75-line facade with an unchanged public API. The rewrite also fixed several SEP-11 conformance
+issues, including pool-share ChangeTrustAsset encoding, unsigned and zero-operation transactions,
+L-address liquidity-pool StrKey decoding, and C-style MEMO_TEXT escaping.
 
-SEP-53 message signing was implemented, cross-SDK compatible with the Java, Python, Flutter, and PHP
-SDKs. A new XDR code generator replaces hand-written types with machine-generated code from Stellar's
-canonical .x files, adding new types and round-trip tests. A daily upstream XDR change detection
-workflow auto-creates issues when the spec changes.
+OpenZeppelin smart account support shipped in v3.5.0. It uses a two-layer design: a contract-agnostic
+core with an OpenZeppelin layer on top, so third parties can support other smart-account contract
+families without rewriting the cryptographic foundations (e.g. WebAuthn COSE public-key extraction,
+secp256r1 handling). It covers wallet lifecycle via passkeys, context rules and policies, automatic
+auth-entry signing, multi-signer authorization (passkey, delegated G-address, Ed25519),
+relayer-sponsored fees, and indexer-based credential discovery, on iOS and macOS with native
+ASAuthorization passkeys.
 
-An AI coding agent skill was published for AI-assisted development tools. The SDK documentation was
-fully rewritten with tested code examples.
+A demo application for iOS and macOS exercises the smart-account features against the released SDK,
+including Reown and Freighter wallet-connect via the stellar_signAuthEntry method. Beyond the
+committed demo, a full agent-signer flow was delivered: a standalone reference agent, a coordination
+server, and an approval inbox — the flow where a user delegates scoped authority to an agent, the
+agent acts within scope, over-scope calls are rejected on-chain and surfaced to the user for
+approval, and the approved call is re-submitted via the relayer.
 
-SBOM submission to PG Atlas was added and runs on every push. A new daily statistics collection has
-been implemented and runs via https://github.com/Soneso/soneso-sdk-stats (live dashboard:
-https://soneso.github.io/soneso-sdk-stats/).
+Smart account documentation comprises an onboarding guide, an API reference, and per-platform
+WebAuthn guides for iOS and macOS.
+
+Protocol 26 was tracked (matrices to Horizon/RPC v26.0.0) and Protocol 27 / CAP-71 was delivered in
+v3.6.0, with ADDRESS_V2 and ADDRESS_WITH_DELEGATES authorization support and an end-to-end
+ADDRESS_WITH_DELEGATES testnet integration test. The same release bounded XDR decode recursion depth,
+preventing a stack overflow from a maliciously nested delegate tree. Release 3.6.1 added a headless
+connectToContract path with RPC-visibility polling for smart accounts, hardened SEP-10 by rejecting
+challenges without finite time bounds, and fixed a SEP-6/SEP-24 anchor-transaction decode that
+crashed on an unrecognized kind/status, and recovered the dropped fee description field.
+
+CI stays hardened — Actions pinned to commit SHAs, least-privilege permissions, Codecov thresholds, a
+daily upstream XDR change-detection workflow, and monthly Dependabot updates — and compatibility
+matrices were regenerated to Horizon/RPC v27.0.0. SBOM submission to PG Atlas continues on every push
+to master, and daily statistics collection continues via soneso-sdk-stats, providing the
+responsiveness metrics above (see: [soneso.github.io/soneso-sdk-stats][statsdash]).
 
 ## Past Deliverables
 
 ### 1. Continuous Maintenance and Improvement Deliverable
 
-Description from last quarter: Regular SDK updates addressing horizon, rpc, protocol updates (e.g.
-p25), bug fixes, feature requests, code modernization, unit test coverage improvement, and
-documentation enhancements to ensure long-term sustainability. This includes a new documentation for
-AI Coding Agents, a so called "skill", providing token efficient documentation and best practices
-when using the SDK. Furthermore it includes setting up a configuration for unit test coverage
-tracking and adding to CI/CD pipeline.
+Description from last quarter:
+
+> Regular SDK updates addressing Horizon, Soroban RPC, and protocol updates (including Protocol 26),
+> bug fixes, feature requests, and documentation updates. Maintain existing SEP implementations and
+> update as needed. Keep compatibility matrices, CI pipelines, statistics dashboard, and SBOM
+> workflow up to date.
 
 Proof of completion:
 
-- Release 3.4.2: https://github.com/Soneso/stellar-ios-mac-sdk/releases/tag/3.4.2
-- Release 3.4.3: https://github.com/Soneso/stellar-ios-mac-sdk/releases/tag/3.4.3
-- Release 3.4.4: https://github.com/Soneso/stellar-ios-mac-sdk/releases/tag/3.4.4
-- Release 3.4.5: https://github.com/Soneso/stellar-ios-mac-sdk/releases/tag/3.4.5
-- Release 3.4.6: https://github.com/Soneso/stellar-ios-mac-sdk/releases/tag/3.4.6
+- Release 3.4.7: https://github.com/Soneso/stellar-ios-mac-sdk/releases/tag/3.4.7
+- Release 3.6.0: https://github.com/Soneso/stellar-ios-mac-sdk/releases/tag/3.6.0
+- Release 3.6.1: https://github.com/Soneso/stellar-ios-mac-sdk/releases/tag/3.6.1
+- Protocol 26 tracked: Horizon v26.0.0 / RPC v26.0.0 matrices (3.4.7)
+- Protocol 27 / CAP-71 support (v3.6.0): [PR #211][pr211]
+- Headless connectToContract + RPC-visibility polling for smart accounts (v3.6.1): [PR #213][pr213]
+- SEP-10 hardening, reject challenges without finite time bounds (v3.6.1): [PR #214][pr214]
+- SEP-6/SEP-24 anchor-transaction crash fix on unrecognized kind/status, and recovered fee
+  description field (v3.6.1): [PR #212][pr212]
+- Error-handling guide (docs/error-handling.md) with integration tests covering every documented
+  scenario (v3.4.7)
+- Dependabot bumps (monthly, pinned SHAs)
+- Stats dashboard: https://soneso.github.io/soneso-sdk-stats/
+- [Horizon compatibility matrix](https://github.com/Soneso/stellar-ios-mac-sdk/blob/master/compatibility/horizon/HORIZON_COMPATIBILITY_MATRIX.md)
+- [RPC compatibility matrix](https://github.com/Soneso/stellar-ios-mac-sdk/blob/master/compatibility/rpc/RPC_COMPATIBILITY_MATRIX.md)
+- [SEP compatibility matrices](https://github.com/Soneso/stellar-ios-mac-sdk/tree/master/compatibility/sep)
 
-Protocol support: Added Protocol 25 RPC response fields (v3.4.2). Updated XDR definitions to latest
-upstream (v3.4.5, v3.4.6).
-
-Test coverage and CI/CD: Unit test coverage was extended and tracking was set up, currently at
-88.78%. Added GitHub Actions CI with Codecov integration.
-
-- PR #183: https://github.com/Soneso/stellar-ios-mac-sdk/pull/183
-
-Security hardening: Replaced force-cast crash paths with proper error handling, validated memo text
-by UTF-8 byte count, rejected negative/overflowing amounts in toXDRAmount, percent-encoded all
-user-supplied URL values, guarded XDR array decoding against memory exhaustion, enforced HTTPS on
-SEP-7 callbacks. Pinned all CI actions to commit SHAs with least-privilege permissions. Dependabot
-configured for monthly updates.
-
-- PR #196: https://github.com/Soneso/stellar-ios-mac-sdk/pull/196
-
-Bug fixes: Bugs found during the test coverage extension and security hardening have been fixed.
-
-Thread safety improvements: All public types now conform to Swift 6 Sendable.
-
-- PR #189: https://github.com/Soneso/stellar-ios-mac-sdk/pull/189
-
-Documentation: Full documentation rewrite with tested code examples that are validated by the test
-suite.
-
-- PR #192: https://github.com/Soneso/stellar-ios-mac-sdk/pull/192
-
-AI Coding Agent documentation: Agent Skill following the agentskills.io open standard, compatible
-with Claude Code, Codex CLI, Cursor, Gemini CLI, and others. Also available via the Claude Code
-marketplace.
-
-- PR #190: https://github.com/Soneso/stellar-ios-mac-sdk/pull/190
-
-Compatibility matrices: Updated for Horizon, RPC, and all SEPs with automated generators
-(tools/matrix-generator/).
-
-- Horizon:
-  https://github.com/Soneso/stellar-ios-mac-sdk/blob/master/compatibility/horizon/HORIZON_COMPATIBILITY_MATRIX.md
-- RPC:
-  https://github.com/Soneso/stellar-ios-mac-sdk/blob/master/compatibility/rpc/RPC_COMPATIBILITY_MATRIX.md
-- SEPs: https://github.com/Soneso/stellar-ios-mac-sdk/tree/master/compatibility/sep
-
-SBOM submission: Added PG Atlas SBOM workflow that triggers on every push to master.
-
-- https://github.com/Soneso/stellar-ios-mac-sdk/blob/master/.github/workflows/sbom.yml
-
-Statistics and monitoring: A new repository https://github.com/Soneso/soneso-sdk-stats was created to
-collect daily statistics for the iOS SDK. Data collected: GitHub clones (daily counts and unique
-cloners), meta data (stars, forks, watchers), activity (52-week commit history and full release
-list), and issue/PR response times with closure stats. Metrics (as of April 10, 2026): 129 stars, 56
-forks, 140 releases, 0 open issues, median time to close 21.1h, 100% response rate. Live dashboard:
-https://soneso.github.io/soneso-sdk-stats/
-
-### 2. SEP-53 Support
-
-Description from last quarter: SEP-53 standardizes message signing functionality across Stellar
-wallets, libraries, and services, preventing ecosystem fragmentation and ensuring interoperability.
-SEP-53 support is also implemented in the Java and Python SDKs.
-
-Proof of completion:
-
-- Release 3.4.3: https://github.com/Soneso/stellar-ios-mac-sdk/releases/tag/3.4.3
-- PR #187: https://github.com/Soneso/stellar-ios-mac-sdk/pull/187
-- SEP-53 compatibility matrix:
-  https://github.com/Soneso/stellar-ios-mac-sdk/blob/master/compatibility/sep/SEP-0053_COMPATIBILITY_MATRIX.md
-- Documentation: https://github.com/Soneso/stellar-ios-mac-sdk/blob/master/docs/sep/sep-53.md
-
-Adds signMessage() and verifyMessage() on KeyPair with String and [UInt8] overloads. Unit tests cover
-all spec test vectors (ASCII, Japanese, binary), encoding round-trips, failure cases, and edge cases.
-Cross-SDK compatible with the Java, Python, Flutter, and PHP SDKs.
-
-### 3. XDR Classes Generator
-
-Description from last quarter: Currently the SDK has hundreds of manually written XDR
-classes/structs/enums used to encode and decode XDR objects. Extensions or updates in the XDR
-structure need to be implemented manually at this time, which makes the SDK difficult to maintain.
-The new XDR class generator will improve the maintainability and also add missing XDR classes so that
-they can immediately be used as new features require them.
-
-Proof of completion:
-
-- Release 3.4.5: https://github.com/Soneso/stellar-ios-mac-sdk/releases/tag/3.4.5
-- PR #191: https://github.com/Soneso/stellar-ios-mac-sdk/pull/191
-- Generator: https://github.com/Soneso/stellar-ios-mac-sdk/tree/master/tools/xdr-generator
-- XDR definitions: https://github.com/Soneso/stellar-ios-mac-sdk/tree/master/xdr
-- CI workflow:
-  https://github.com/Soneso/stellar-ios-mac-sdk/blob/master/.github/workflows/xdr-generator.yml
-
-Ruby-based code generator reads Stellar's canonical .x XDR definition files (from
-https://github.com/stellar/stellar-xdr). Replaces hand-written XDR type definitions with
-auto-generated Swift code and adds new types not previously in the SDK. Round-trip encode/decode unit
-tests cover 95% of generated types. CI snapshot tests verify generated code stays in sync with XDR
-definitions. High-level SDK APIs unchanged. The ledger close metadata XDR mentioned in the
-deliverable description can now be decoded. Daily upstream XDR change detection workflow auto-creates
-GitHub issues when the spec changes.
-
-## Proposed Impact
-
-Keep the SDK compatible with Horizon, Soroban RPC, and protocol updates including Protocol 26 when it
-ships. Maintain existing SEP implementations and update as needed. Fix bugs and respond to issues and
-feature requests.
-
-Add support for OpenZeppelin Smart Accounts (C-address wallets) on Soroban, enabling passkey-based
-wallet authentication, multi-signer authorization, and policy-based access control. This follows the
-SCF RFP for C-Address Tooling and matches the implementation already shipped in the KMP Stellar SDK
-(v1.4.0). A TypeScript reference exists in kalepail/smart-account-kit.
-
-Smart account support on iOS and macOS will allow native app developers to build Stellar wallets with
-OpenZeppelin smart accounts using passkeys and biometric authentication.
-
-Rewrite the SEP-11 TxRep implementation to delegate to code-generated methods, replacing the
-monolithic hand-written serialization. This improves maintainability and reduces the risk of encoding
-errors when the XDR spec changes. The same rewrite was already completed in the Flutter SDK (Q1 2026)
-and is planned for the PHP SDK (Q2 2026).
-
-## Proposed Deliverables
-
-### 1. Continuous Maintenance and Improvement
-
-Regular SDK updates addressing Horizon, Soroban RPC, and protocol updates (including Protocol 26),
-bug fixes, feature requests, and documentation updates. Maintain existing SEP implementations and
-update as needed. Keep compatibility matrices, CI pipelines, statistics dashboard, and SBOM workflow
-up to date.
-
-Proof: Release notes on GitHub, updated compatibility matrices, soneso-sdk-stats dashboard.
+Four releases shipped this quarter. Protocol 26 was tracked and Protocol 27 (CAP-71) was delivered,
+including an end-to-end ADDRESS_WITH_DELEGATES testnet integration test. Release 3.6.1 added a
+headless connectToContract path with RPC-visibility polling, hardened SEP-10, and improved SEP-6
+decoding. CI hardening (Actions pinned to commit SHAs, least-privilege permissions, Codecov
+thresholds) and the daily upstream XDR change-detection workflow remain in force, and compatibility
+matrices were regenerated to Horizon/RPC v27.0.0.
 
 ### 2. SEP-11 TxRep Rewrite
 
-Replace the monolithic hand-written TxRep implementation with generated toTxRep()/fromTxRep() methods
-on XDR types, reducing TxRep.swift to a thin facade. This mirrors the approach already completed in
-the Flutter and PHP SDKs.
+Description from last quarter:
 
-Proof: Release on GitHub, PR with implementation, updated test suite.
+> Replace the monolithic hand-written TxRep implementation with generated toTxRep()/fromTxRep()
+> methods on XDR types, reducing TxRep.swift to a thin facade. This mirrors the approach already
+> completed in the Flutter and PHP SDKs.
+
+Proof of completion:
+
+- Release 3.4.7: https://github.com/Soneso/stellar-ios-mac-sdk/releases/tag/3.4.7
+- PR 202: https://github.com/Soneso/stellar-ios-mac-sdk/pull/202
+
+TxRep.swift was reduced from 3,596 lines to a 75-line facade, with toTxRep()/fromTxRep() generated on
+the XDR types and the public API unchanged. The rewrite also fixed several SEP-11 conformance issues
+(pool-share ChangeTrustAsset encoding, unsigned and zero-operation transactions, L-address
+liquidity-pool StrKey decoding, and C-style MEMO_TEXT escaping).
 
 ### 3. OpenZeppelin Smart Account Support
 
-Implement support for the OpenZeppelin smart account contracts on Soroban, covering:
+Description from last quarter:
 
-- Wallet lifecycle: create, deploy, and connect smart account wallets with WebAuthn passkey
-  registration
-- Context rules and policies: create, edit, and remove authorization rules with configurable signers
-  and policies
-- Token operations and contract calls with automatic auth entry signing
-- Multi-signer authorization: passkey signers, delegated Stellar account signers, and Ed25519 key
-  signers
-- Fee sponsoring via relayer proxy for gasless transactions
-- Credential discovery via indexer integration
-- Platform-native WebAuthn via ASAuthorization for iOS and macOS with secure storage adapters
-- Demo application for iOS and macOS
-- Documentation: API reference and onboarding guide
+> Implement support for the OpenZeppelin smart account contracts on Soroban, covering:
+>
+> - Wallet lifecycle: create, deploy, and connect smart account wallets with WebAuthn passkey
+>   registration
+> - Context rules and policies: create, edit, and remove authorization rules with configurable
+>   signers and policies
+> - Token operations and contract calls with automatic auth entry signing
+> - Multi-signer authorization: passkey signers, delegated Stellar account signers, and Ed25519 key
+>   signers
+> - Fee sponsoring via relayer proxy for gasless transactions
+> - Credential discovery via indexer integration
+> - Platform-native WebAuthn via ASAuthorization for iOS and macOS with secure storage adapters
+> - Demo application for iOS and macOS
+> - Documentation: API reference and onboarding guide
 
-Proof: Release on GitHub, PR with implementation, demo app, documentation, test suite.
+Delivered in release [3.5.0][rel350] ([PR #208][pr208]), with the Protocol 27 ADDRESS_WITH_DELEGATES
+auth path integrated in 3.6.0. The additional wallet-connect scope committed in the PR-42 response
+was also delivered. Delivery by area:
 
-## Budget justification
+#### SDK implementation
 
-The budget increase from $15,000 to $18,000 reflects the addition of OpenZeppelin Smart Account
-support, which is a major new feature involving platform-native WebAuthn integration, a demo
-application, documentation, and manual testing across platforms (passkeys require physical device
-testing).
+Proof of completion:
+
+- Release 3.5.0: https://github.com/Soneso/stellar-ios-mac-sdk/releases/tag/3.5.0
+- PR 208: https://github.com/Soneso/stellar-ios-mac-sdk/pull/208
+
+A two-layer design separates a contract-agnostic core (passkey/WebAuthn, secp256r1) from the
+OpenZeppelin layer, so other smart-account contract families can be supported without rewriting the
+cryptographic core. All committed sub-items - wallet lifecycle, context rules and policies, automatic
+auth-entry signing, multi-signer authorization, fee sponsoring via relayer, credential discovery via
+indexer, and native ASAuthorization WebAuthn on iOS and macOS - are present and tested.
+
+#### Demo app
+
+Proof of completion:
+
+- Repository: https://github.com/Soneso/ios-oz-smartaccount-demo
+- Platforms: iOS and macOS
+
+#### Documentation
+
+Proof of completion:
+
+- [Smart-account documentation set][sadocs]: onboarding guide, API reference, and per-platform
+  WebAuthn guides (iOS, macOS)
+
+#### Agent-signer flow in the demo app
+
+Beyond the committed demo, a full agent-signer flow was added to the demo app: a standalone reference
+agent, a coordination server, and an approval inbox.
+
+Proof of completion:
+
+- Demo [PR #1][demopr1]
+- Agent-flow runbook (demo repo): [documentation/agent-flow.md][agflow]
+
+The user delegates scoped authority to the agent, the agent acts within scope, an over-scope call is
+rejected on-chain by the spending-limit policy and surfaced to the user through the coordination
+server, the user approves it in the demo app inbox, and the call is re-submitted via the relayer
+under the Default rule.
+
+## Proposed Impact
+
+Keep the SDK compatible with Horizon, Soroban RPC, and protocol updates including Protocol 27.
+Maintain existing SEP implementations and update as needed. Fix bugs and respond to issues and
+feature requests.
+
+Implement SEP-51 (XDR-JSON), a standard mapping between Stellar's XDR structures and JSON. This
+enables developers to inspect and manipulate XDR data in a human-readable format, improving debugging
+and tooling integration. The Python SDK and the PHP SDK already implement this SEP.
+
+Improve the Soroban developer experience by adding a helper that converts a returned smart-contract
+value (SCValXDR) to a native Swift value, so contract invocation and simulation results can be
+consumed directly instead of parsing the raw XDR union by hand. The JS and Python SDKs already
+provide this.
+
+Update the Swift contract-bindings implementation that Soneso contributed to the community
+stellar-contract-bindings generator (linked from the Stellar CLI) so it produces code compatible with
+the current SDK.
+
+## Proposed Deliverables
+
+### Continuous Maintenance and Improvement
+
+Regular SDK updates addressing Horizon, Soroban RPC, and protocol updates (tracking Protocol 27
+through its mainnet activation), bug fixes, feature requests, and documentation updates. Maintain
+existing SEP implementations and update as needed. Harden the smart-account feature as the network
+advances. Keep compatibility matrices, CI pipelines, statistics dashboard, and SBOM workflow up to
+date.
+
+Proof: Release notes on GitHub, PRs with the fixes, updated compatibility matrices, and the
+soneso-sdk-stats dashboard.
+
+### SEP-51 (XDR-JSON)
+
+Implement bi-directional XDR/JSON conversion via the XDR generator, with round-trip unit tests and
+documentation, for cross-SDK parity with the Python and PHP SDKs.
+
+Proof: GitHub release, PR with implementation and tests, SEP-51 compatibility matrix, documentation.
+
+### Native ScVal Conversion
+
+Add a helper that converts a smart-contract value (SCValXDR) to a native Swift value, so contract
+invocation and simulation results can be consumed directly instead of parsing the raw XDR union by
+hand. This matches the JS and Python SDKs.
+
+Proof: GitHub release, PR with implementation and tests, documentation.
+
+### Contract Bindings Update
+
+Update the Swift contract-bindings implementation that Soneso contributed to the community
+stellar-contract-bindings generator (linked from the Stellar CLI) so its generated Swift code is
+compatible with the current SDK.
+
+Proof: pull request to the stellar-contract-bindings repository.
+
+## Metrics loaded from PG Atlas
+
+[![PG Atlas](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3Astellar_ios_mac_sdk&query=%24.activity_status&label=PG+Atlas&color=914CFF)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3Astellar_ios_mac_sdk)
+[![90d Contributors](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3Astellar_ios_mac_sdk&query=%24.active_contributors_90d&label=90d+Contributors&color=00B578)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3Astellar_ios_mac_sdk)
+[![Pony Factor](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3Astellar_ios_mac_sdk&query=%24.pony_factor&label=Pony+Factor&color=0090FF)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3Astellar_ios_mac_sdk)
+[![Adoption](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.pgatlas.xyz%2Fprojects%2Fdaoip-5%3Ascf%3Aproject%3Astellar_ios_mac_sdk&query=%24.adoption_score&label=Adoption&color=FF9900)](https://www.pgatlas.xyz/projects/daoip-5%3Ascf%3Aproject%3Astellar_ios_mac_sdk)
 
 ## Legal Acknowledgements
 
 - [x] As the project representative, I agree to the Legal Acknowledgements.
+
+[agflow]: https://github.com/Soneso/ios-oz-smartaccount-demo/blob/main/documentation/agent-flow.md
+[demopr1]: https://github.com/Soneso/ios-oz-smartaccount-demo/pull/1
+[pr208]: https://github.com/Soneso/stellar-ios-mac-sdk/pull/208
+[pr211]: https://github.com/Soneso/stellar-ios-mac-sdk/pull/211
+[pr212]: https://github.com/Soneso/stellar-ios-mac-sdk/pull/212
+[pr213]: https://github.com/Soneso/stellar-ios-mac-sdk/pull/213
+[pr214]: https://github.com/Soneso/stellar-ios-mac-sdk/pull/214
+[rel350]: https://github.com/Soneso/stellar-ios-mac-sdk/releases/tag/3.5.0
+[sadocs]: https://github.com/Soneso/stellar-ios-mac-sdk/tree/master/docs/smart-accounts
+[statsdash]: https://soneso.github.io/soneso-sdk-stats/
