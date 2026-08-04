@@ -55,8 +55,11 @@ jobs:
             --repo "${GITHUB_REPOSITORY}" \
             --json title,labels,files)"
 
+          # ponytail: trim so leading/trailing spaces don't silently skip submit
+          PR_TITLE="$(jq -r '.title | gsub("^\\s+|\\s+$";"")' <<<"${PR_JSON}")"
           HAS_LABEL="$(jq -r 'any(.labels[]?; .name == "pg-award-proposal")' <<<"${PR_JSON}")"
-          HAS_TITLE_PREFIX="$(jq -r '.title | startswith("PG Award Proposal:")' <<<"${PR_JSON}")"
+          HAS_TITLE_PREFIX="false"
+          [[ "${PR_TITLE}" == "PG Award Proposal:"* ]] && HAS_TITLE_PREFIX="true"
           mapfile -t PROJECT_FILES < <(
             jq -r \
               '.files[].path | select(startswith("docs/projects/") and endswith(".md") and (endswith("/index.md") | not))' \
@@ -69,6 +72,10 @@ jobs:
           } >> "${GITHUB_OUTPUT}"
 
           if [[ "${HAS_LABEL}" != "true" || "${HAS_TITLE_PREFIX}" != "true" ]]; then
+            REASONS=()
+            [[ "${HAS_LABEL}" != "true" ]] && REASONS+=("missing label pg-award-proposal")
+            [[ "${HAS_TITLE_PREFIX}" != "true" ]] && REASONS+=("title must start with 'PG Award Proposal:' (got: $(printf '%q' "${PR_TITLE}"))")
+            echo "Skipping on-chain submit: ${REASONS[*]}"
             echo "eligible=false" >> "${GITHUB_OUTPUT}"
             exit 0
           fi
@@ -82,7 +89,7 @@ jobs:
             echo "eligible=true"
             echo "proposal_file=${PROJECT_FILES[0]}"
             echo "proposal_title<<EOF"
-            jq -r '.title' <<<"${PR_JSON}"
+            printf '%s\n' "${PR_TITLE}"
             echo "EOF"
           } >> "${GITHUB_OUTPUT}"
 
