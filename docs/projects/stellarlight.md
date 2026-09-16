@@ -4,7 +4,7 @@ parent: Public Good Projects
 proposal_issue: 74
 proposer: theboycoder
 category: "Ecosystem Visibility"
-budget: "$50,000"
+budget: "$40,000"
 ---
 
 # Stellarlight
@@ -26,7 +26,7 @@ tools, and ai agents._
 | **Agent skill**      | <https://github.com/Stellar-Light/stellar-scout> |
 | **First Released**   | Jan 2026                                         |
 | **Intake**           | renewal (2026q3)                                 |
-| **Budget Requested** | $50,000                                          |
+| **Budget Requested** | $40,000                                          |
 
 **Repository note:** the codebase has migrated to the Stellar-Light organization; the MCP server and
 agent-skill repos are already public, and the main repo's public flip lands this quarter
