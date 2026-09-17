@@ -209,13 +209,15 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          BODY=$(sed '1{/^---$/!q}; 1,/^---$/d' "${{ steps.render.outputs.file_path }}")
           PR_URL=$(gh pr create \
             --base main \
             --head "${{ steps.branch.outputs.name }}" \
             --title "PG Award Proposal: ${{ steps.render.outputs.project_title }}" \
-            --body-file "${{ steps.render.outputs.file_path }}" \
+            --body "$BODY" \
             --label "pg-award-proposal")
           echo "url=${PR_URL}" >> "$GITHUB_OUTPUT"
+          echo "number=${PR_URL##*/}" >> "$GITHUB_OUTPUT"
 
       # ── Close issue with link to PR ───────────────────────────────────────
       - name: Close issue and link to PR
@@ -229,7 +231,7 @@ jobs:
 
           **Next steps:**
           1. Edit your project page directly on the PR branch during the Discussion & Revisions phase.
-          2. Use the [GitHub web editor](https://github.com/${{ github.repository }}/edit/${{ steps.branch.outputs.name }}/${{ steps.render.outputs.file_path }}?pr=/${{ github.repository }}/pull/${{ github.event.issue.number }}) or \`git clone\` locally, commit, and push.
+          2. Use the [GitHub web editor](https://github.com/${{ github.repository }}/edit/${{ steps.branch.outputs.name }}/${{ steps.render.outputs.file_path }}?pr=/${{ github.repository }}/pull/${{ steps.pr.outputs.number }}) or \`git clone\` locally, commit, and push.
           3. Every commit to the project page auto-updates the PR description.
 
           _Please do not edit the PR description. The sync only works PR file --> PR body._
