@@ -6,6 +6,8 @@ on:
     paths:
       - "docs/projects/**.md"
 
+concurrency: proposal-sync-${{ github.event.pull_request.number }}
+
 permissions:
   contents: write
   pull-requests: write
