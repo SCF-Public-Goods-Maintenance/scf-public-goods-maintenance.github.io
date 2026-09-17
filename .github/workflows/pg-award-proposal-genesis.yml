@@ -83,8 +83,8 @@ jobs:
           echo "::error::Proposal form validation failed. See the issue comment for details."
           exit 1
 
-      # ── Clear validation-error label on success ───────────────────────────
-      - name: Remove validation-error label
+      # ── Clear validation-error and ineligible labels on success ───────────────────────────
+      - name: Remove validation-error and ineligible labels
         if: steps.reentry.outputs.skip != 'true'
         uses: issue-ops/labeler@v4
         with:
@@ -92,6 +92,72 @@ jobs:
           issue_number: ${{ github.event.issue.number }}
           labels: |
             issueops:validation-error
+            pg-proposal:ineligible
+
+      # ── Validate proposal eligibility ─────────────────────────────────────
+      - name: Check approved intake
+        if: steps.reentry.outputs.skip != 'true'
+        id: check-intake
+        uses: actions/github-script@v9
+        env:
+          INTAKE_ISSUE_URL: ${{ steps.parse.outputs.parsed_pg-award-intake }}
+        with:
+          script: |
+            const step_result = {exists: false, accepted: false, eligible: false}
+            const intake_url_pattern = new RegExp(`^https://github\\.com/${context.repo.owner}/${context.repo.repo}/issues/(?<intake_number>\\d+)$`)
+            const intake_match = process.env.INTAKE_ISSUE_URL.match(intake_url_pattern)
+            if (!intake_match) {
+              return step_result
+            }
+            step_result.intake_number = Number(intake_match.groups.intake_number)
+            let intake_issue
+            try {
+              intake_issue = await github.rest.issues.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: step_result.intake_number
+              })
+            } catch (error) {
+              if (error.status === 404) {
+                intake_issue = null
+              } else {
+                throw error
+              }
+            }
+            if (!intake_issue) {
+              return step_result
+            }
+            step_result.exists = true
+            const accepted = intake_issue.data.labels.some((label) => (
+              typeof label === 'string' ? label : label.name
+            ) === 'pg-intake:accepted')
+            if (!accepted) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                labels: ['pg-proposal:ineligible']
+              })
+            } else {
+              step_result.accepted = true
+              step_result.eligible = true
+            }
+            return step_result
+
+      - name: Abort and comment that eligibility is not confirmed
+        if:
+          steps.reentry.outputs.skip != 'true' &&
+          fromJSON(steps.check-intake.outputs.result).eligible != true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          URL_INVALID=":warning: The intake form URL is malformed or the issue number does not exist. Please edit the URL in the issue body above to run the intake check again. If you have not filled out an intake form, read the [proposer instructions](https://scf-public-goods-maintenance.github.io/pg-award/proposer-instructions/) first."
+          INTAKE_NOT_ACCEPTED=":no_entry: The linked intake form (#${{ fromJSON(steps.check-intake.outputs.result).intake_number }}) was not (yet) accepted. You may only create a proposal after the eligibility of this project has been confirmed."
+          gh issue comment ${{ github.event.issue.number }} \
+            -R ${{ github.repository }} \
+            --body "$URL_INVALID OR $INTAKE_NOT_ACCEPTED"
+          echo "::error::Linked intake issue was invalid."
+          exit 1
 
       # ── Render project page ───────────────────────────────────────────────
       - name: Render project page from parsed form

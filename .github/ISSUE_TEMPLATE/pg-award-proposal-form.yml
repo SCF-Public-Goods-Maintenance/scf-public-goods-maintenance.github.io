@@ -11,7 +11,7 @@ body:
         Thank you for your interest in the SCF Public Goods Award.
 
         **Important note on eligibility**:
-        If this project was voted on in a previous Public Goods Award round, you are eligible to create a proposal. Otherwise you must have filled an intake form and have been approved to make a proposal. Ineligible use of this form is frowned upon and is publicly visible.
+        Use this form only if you have filled an intake form and have been approved to make a proposal. Ineligible use of this form is frowned upon and is publicly visible.
 
         _UX limitation:_ any links in this form will open in your current browser tab by default. You risk losing progress. It's always a good idea to draft your answers in a separate file, or copy them there as a backup.
 
@@ -39,10 +39,8 @@ body:
     id: pg-award-intake
     attributes:
       label: PG intake form
-      description:
-        Link to the intake form of the project. If you have previously submitted through Airtable,
-        please write "soft-launch".
-      placeholder: https://scf-public-goods-maintenance.github.io
+      description: Link to the intake form of the project.
+      placeholder: https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/
     validations:
       required: true
 
