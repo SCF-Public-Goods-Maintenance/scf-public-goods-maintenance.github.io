@@ -12,11 +12,11 @@ permissions:
   pull-requests: write
 
 jobs:
-  reentry:
+  retrigger:
     if: contains(github.event.issue.labels.*.name, 'pg-proposal:pr-created')
     runs-on: ubuntu-latest
     steps:
-      # ── Re-entry comment ──────────────────────────────────────────────────
+      # ── Re-trigger comment ──────────────────────────────────────────────────
       - name: Point out that the PR was already created
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
