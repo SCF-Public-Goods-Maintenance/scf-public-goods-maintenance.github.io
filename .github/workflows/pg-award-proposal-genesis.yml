@@ -150,13 +150,24 @@ jobs:
           fromJSON(steps.check-intake.outputs.result).eligible != true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_EXISTS: ${{ fromJSON(steps.check-intake.outputs.result).exists }}
+          INTAKE_ACCEPTED: ${{ fromJSON(steps.check-intake.outputs.result).accepted }}
         run: |
           URL_INVALID=":warning: The intake form URL is malformed or the issue number does not exist. Please edit the URL in the issue body above to run the intake check again. If you have not filled out an intake form, read the [proposer instructions](https://scf-public-goods-maintenance.github.io/pg-award/proposer-instructions/) first."
           INTAKE_NOT_ACCEPTED=":no_entry: The linked intake form (#${{ fromJSON(steps.check-intake.outputs.result).intake_number }}) was not (yet) accepted. You may only create a proposal after the eligibility of this project has been confirmed."
+          if [[ "$ISSUE_EXISTS" != "true" ]]; then
+            COMMENT_BODY="$URL_INVALID"
+            echo "::error::Intake form URL was malformed or the issue did not exist."
+          elif [[ "$INTAKE_ACCEPTED" != "true" ]]; then
+            COMMENT_BODY="$INTAKE_NOT_ACCEPTED"
+            echo "::error::Linked intake issue did not have the pg-intake:accepted label."
+          else
+            COMMENT_BODY="Sorry, there's an error in \`check-intake\`, please contact a maintainer."
+            echo "::error::The check-intake step returned an impossible state."
+          fi
           gh issue comment ${{ github.event.issue.number }} \
             -R ${{ github.repository }} \
-            --body "$URL_INVALID OR $INTAKE_NOT_ACCEPTED"
-          echo "::error::Linked intake issue was invalid."
+            --body "$COMMENT_BODY"
           exit 1
 
       # ── Render project page ───────────────────────────────────────────────
