@@ -207,6 +207,51 @@ jobs:
           echo "url=${PR_URL}" >> "$GITHUB_OUTPUT"
           echo "number=${PR_URL##*/}" >> "$GITHUB_OUTPUT"
 
+      - name: Notify about renewal proposal
+        uses: actions/github-script@v9
+        env:
+          FILE_PATH: ${{ steps.render.outputs.file_path }}
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+        with:
+          script: |
+            let proposal_exists = false
+            try {
+              const proposal = await github.rest.repos.getContent({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                path: process.env.FILE_PATH,
+                ref: 'main'
+              })
+              proposal_exists = !Array.isArray(proposal.data)
+            } catch (error) {
+              if (error.status === 404) {
+                return
+              }
+              core.error(`Could not check whether the proposal page exists on main: ${error.message}`)
+            }
+
+            if (proposal_exists) {
+              const issue_comment = "Since you already completed the intake form flow, I've created your Proposal PR. This is a renewal proposal, and you did not need to use any forms. For a smoother experience next quarter, please follow the steps in the [renewals section](https://scf-public-goods-maintenance.github.io/pg-award/proposer-instructions/#renewals) of the proposer instructions."
+              const pr_comment = `:eyes: This renewal proposal was created through a form instead of opened directly by the project representative. @${process.env.ISSUE_AUTHOR}, did you run into problems following the renewal flow?`
+              await Promise.all([
+                github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  body: issue_comment
+                }),
+                github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: Number(process.env.PR_NUMBER),
+                  body: pr_comment
+                })
+              ]).catch((error) => {
+                core.error(`Could not post renewal notification comments: ${error.message}`)
+              })
+            }
+
       # ── Close issue with link to PR ───────────────────────────────────────
       - name: Close issue and link to PR
         env:
