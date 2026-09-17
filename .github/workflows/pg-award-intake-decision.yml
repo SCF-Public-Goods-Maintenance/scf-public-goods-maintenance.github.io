@@ -4,6 +4,8 @@ on:
   issue_comment:
     types: [created]
 
+concurrency: intake-decision-${{ github.event.issue.number }}
+
 permissions:
   issues: write
   contents: read
