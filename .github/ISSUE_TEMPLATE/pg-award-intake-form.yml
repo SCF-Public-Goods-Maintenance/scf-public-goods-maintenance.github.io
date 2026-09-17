@@ -53,7 +53,7 @@ body:
       options:
         - "First time submitting a proposal for the Public Goods Award"
         - "First time submitting to this Award but I've received SDF Infrastructure Grants before."
-        - "Submitted before to the Public Goods Award (eligible to create a proposal — you do not need to fill out this form)"
+        - "Renewal: edit your project page via PR — you do not need to fill out this form!"
     validations:
       required: true
 
