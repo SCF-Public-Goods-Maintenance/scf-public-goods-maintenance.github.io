@@ -20,6 +20,8 @@ validators:
     script: validate-date.js
 
   # Loose URL validation (https:// prefix + general structure)
+  - field: pg-award-intake
+    script: validate-url-loose.js
   - field: website
     script: validate-url-loose.js
   - field: git-repo
