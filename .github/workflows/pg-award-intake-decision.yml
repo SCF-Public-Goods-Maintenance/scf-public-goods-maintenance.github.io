@@ -144,17 +144,22 @@ jobs:
             // of this (now new) intake process is available.
             const MIN_VOTERS = 3;
 
-            if (totalVoters < MIN_VOTERS) {
-              const needed = MIN_VOTERS - totalVoters;
+            // Raise the quorum floor by the minority to force controversial intakes
+            // to stay open for longer so they can attract more participants.
+            const minority    = Math.min(ups, downs);
+            const votesNeeded = MIN_VOTERS + minority;
+
+            if (totalVoters < votesNeeded) {
+              const needed = votesNeeded - totalVoters;
               await github.rest.issues.createComment({
                 owner, repo, issue_number: issueNumber,
-                body: `:hourglass: Not enough pilot votes to finalize yet — ${totalVoters} of ${MIN_VOTERS} minimum votes cast (${needed} more needed).${doubleVoterNote}`,
+                body: `:hourglass: Not enough pilot votes to finalize yet — ${totalVoters} of ${votesNeeded} minimum votes cast (${needed} more needed).${doubleVoterNote}`,
               });
-              core.info(`Quorum check deferred: ${totalVoters}/${MIN_VOTERS} pilot votes cast.`);
+              core.info(`Quorum check deferred: ${totalVoters}/${votesNeeded} pilot votes cast.`);
               return;
             }
 
-            const threshold = MIN_VOTERS + 2 * downs;
+            const threshold = votesNeeded - 1;
             const accepted  = ups > threshold;
             const tied      = ups === threshold;
 
