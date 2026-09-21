@@ -198,6 +198,27 @@ Because the sync automation triggers on any PR that modifies files in `docs/proj
 description will automatically populate with the content of your updated project page. The renewal PR
 then goes through the same Discussion & Revisions → On-chain Vote → Payout cycle as new proposals.
 
+## Quarterly Deliverables
+
+Projects that received a previous Award submit evidence of completed deliverables **separately from
+the proposal for the next quarter**. As with renewals, you update your existing project page
+directly:
+
+1. Navigate to your project page in the
+   [`docs/projects/`](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/tree/main/docs/projects){:target="⚡"}
+   directory on the `main` branch.
+2. Click the **Edit** (pencil) icon on your project page.
+3. Under `## Past Deliverables`, add a new `### {Year} Q{N}` subsection with evidence for each
+   deliverable you committed to in that quarter's proposal. Leave previous quarters in place.
+4. Choose **"Create a new branch for this commit and start a pull request."**
+5. Name your branch following the convention: `deliverables/{slug}-{quarter}` (e.g.,
+   `deliverables/stellar-sdk-2026q3`).
+
+Because the sync automation triggers on any PR that modifies files in `docs/projects/`, your PR
+description will automatically populate with the content of your updated project page. The
+deliverables PR is reviewed against the deliverables you committed to in that quarter's proposal;
+approval by a supermajority of reviewers releases Tranche 2.
+
 ## Access & Permissions
 
 Proposers need to be added to the GitHub team corresponding to their SCF membership role. Those that
