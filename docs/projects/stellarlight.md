@@ -1,10 +1,13 @@
 ---
 title: "Stellarlight"
+canonical_id: daoip-5:scf:project:stellar_light
 parent: Public Good Projects
 proposal_issue: 74
 proposer: theboycoder
 category: "Ecosystem Visibility"
 budget: "$40,000"
+repos:
+  - https://github.com/Stellar-Light/stellarlight
 ---
 
 # Stellarlight

@@ -1,10 +1,13 @@
 ---
 title: "Stellar Security Portal"
+canonical_id: daoip-5:scf:project:soroban_security_portal
 parent: Public Good Projects
 proposal_issue: 58
 proposer: SurfingBowser
 category: "Developer Experience"
 budget: "10,000"
+repos:
+  - https://github.com/inferara/soroban-security-portal
 ---
 
 # Stellar Security Portal

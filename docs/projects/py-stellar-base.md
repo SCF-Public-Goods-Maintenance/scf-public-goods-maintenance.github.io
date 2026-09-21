@@ -1,10 +1,13 @@
 ---
 title: "py-stellar-base"
+canonical_id: daoip-5:scf:project:python_stellar_sdk
 parent: Public Good Projects
 proposal_issue: 55
 proposer: overcat
 category: "SDKs"
 budget: "15000"
+repos:
+  - https://github.com/StellarCN/py-stellar-base
 ---
 
 # py-stellar-base

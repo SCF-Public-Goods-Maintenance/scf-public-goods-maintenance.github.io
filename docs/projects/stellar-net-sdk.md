@@ -1,10 +1,13 @@
 ---
 title: "Stellar .NET SDK"
+canonical_id: daoip-5:scf:project:.net_stellar_sdk
 parent: Public Good Projects
 proposal_issue: 48
 proposer: jopmiddelkamp
 category: "SDKs"
 budget: "$15,000"
+repos:
+  - https://github.com/Beans-BV/dotnet-stellar-sdk
 ---
 
 # Stellar .NET SDK

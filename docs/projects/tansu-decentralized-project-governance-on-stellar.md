@@ -1,10 +1,13 @@
 ---
 title: "Tansu - Decentralized project governance on Stellar"
+canonical_id: daoip-5:scf:project:tansu_-_soroban_versioning
 parent: Public Good Projects
 proposal_issue: 105
 proposer: tupui
 category: "Governance Tools"
 budget: "$50,000 in XLM"
+repos:
+  - https://github.com/Consulting-Manao/tansu
 ---
 
 # Tansu - Decentralized project governance on Stellar

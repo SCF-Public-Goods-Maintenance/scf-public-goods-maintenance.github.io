@@ -12,6 +12,10 @@ permissions:
 
 jobs:
   sync:
+    # Bulk maintenance branches intentionally touch many project pages in one PR,
+    # which the single-page guards below are built to reject. Skip the sync for
+    # them; proposal and deliverables PRs are unaffected.
+    if: ${{ !startsWith(github.head_ref, 'maintenance/') }}
     runs-on: ubuntu-latest
 
     steps:

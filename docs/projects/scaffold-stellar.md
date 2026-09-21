@@ -1,10 +1,13 @@
 ---
 title: "Stellar Scaffold"
+canonical_id: daoip-5:scf:project:scaffold_stellar
 parent: Public Good Projects
 proposal_issue: 62
 proposer: chadoh
 category: "Developer Experience"
 budget: "50000"
+repos:
+  - https://github.com/stellar-scaffold/cli
 ---
 
 # Stellar Scaffold

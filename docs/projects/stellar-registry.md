@@ -1,10 +1,13 @@
 ---
 title: "Stellar Registry"
+canonical_id: daoip-5:scf:project:stellar_registry
 parent: Public Good Projects
 proposal_issue: 64
 proposer: chadoh
 category: "Developer Experience"
 budget: "50000"
+repos:
+  - https://github.com/stellar-registry
 ---
 
 # Stellar Registry

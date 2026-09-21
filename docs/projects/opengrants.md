@@ -1,10 +1,13 @@
 ---
 title: "OpenGrants"
+canonical_id: daoip-5:scf:project:opengrants
 parent: Public Good Projects
 proposal_issue: 78
 proposer: sam-mccarthy07
 category: "Other"
 budget: "$20,000"
+repos:
+  - https://github.com/metagov/opengrants-platform
 ---
 
 # OpenGrants

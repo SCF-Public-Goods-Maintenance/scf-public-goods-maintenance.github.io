@@ -1,5 +1,6 @@
 ---
 title: "Stellar Hardware Wallet Support"
+canonical_id: daoip-5:scf:project:stellar_hardware_wallet_support
 parent: Public Good Projects
 proposal_issue: 51
 proposer: overcat

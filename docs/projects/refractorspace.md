@@ -1,10 +1,13 @@
 ---
 title: "RefractorSpace"
+canonical_id: daoip-5:scf:project:refractorspace
 parent: Public Good Projects
 proposal_issue: 38
 proposer: orbitlens
 category: "Governance Tools"
 budget: "18,000"
+repos:
+  - https://github.com/stellar-expert/refractor
 ---
 
 # RefractorSpace

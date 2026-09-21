@@ -1,10 +1,13 @@
 ---
 title: "Scout"
+canonical_id: daoip-5:scf:project:scout
 parent: Public Good Projects
 proposal_issue: 66
 proposer: XianPaz
 category: "Security & Auditing Tools"
 budget: "33000"
+repos:
+  - https://github.com/CoinFabrik/scout-audit
 ---
 
 # Scout

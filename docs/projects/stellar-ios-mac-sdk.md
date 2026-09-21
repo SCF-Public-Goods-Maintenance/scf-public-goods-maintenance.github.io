@@ -1,10 +1,13 @@
 ---
 title: "stellar-ios-mac-sdk"
+canonical_id: daoip-5:scf:project:stellar_ios_mac_sdk
 parent: Public Good Projects
 proposal_issue: 41
 proposer: christian-rogobete
 category: "SDKs"
 budget: "15000"
+repos:
+  - https://github.com/Soneso/stellar-ios-mac-sdk
 ---
 
 # stellar-ios-mac-sdk

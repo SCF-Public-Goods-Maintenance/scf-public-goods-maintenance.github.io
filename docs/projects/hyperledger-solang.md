@@ -1,10 +1,13 @@
 ---
 title: "Hyperledger Solang"
+canonical_id: daoip-5:scf:project:solidity_contracts_on_soroban
 parent: Public Good Projects
 proposal_issue: 122
 proposer: salaheldinsoliman
 category: "Developer Experience"
 budget: "$25,000"
+repos:
+  - https://github.com/hyperledger-solang/solang
 ---
 
 # Hyperledger Solang

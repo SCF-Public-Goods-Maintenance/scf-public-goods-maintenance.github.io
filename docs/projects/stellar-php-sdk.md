@@ -1,10 +1,13 @@
 ---
 title: "stellar-php-sdk"
+canonical_id: daoip-5:scf:project:stellar_php_sdk
 parent: Public Good Projects
 proposal_issue: 45
 proposer: christian-rogobete
 category: "SDKs"
 budget: "15000"
+repos:
+  - https://github.com/Soneso/stellar-php-sdk
 ---
 
 # stellar-php-sdk

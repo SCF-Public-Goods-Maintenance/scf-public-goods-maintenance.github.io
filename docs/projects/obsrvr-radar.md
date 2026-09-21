@@ -1,10 +1,13 @@
 ---
 title: "OBSRVR Radar"
+canonical_id: daoip-5:scf:project:obsrvr_radar
 parent: Public Good Projects
 proposal_issue: 109
 proposer: tmosleyIII
 category: "Infrastructure Monitoring"
 budget: "20000"
+repos:
+  - https://github.com/withObsrvr/stellarbeat
 ---
 
 # OBSRVR Radar
