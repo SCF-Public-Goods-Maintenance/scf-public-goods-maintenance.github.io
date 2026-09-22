@@ -6,8 +6,6 @@ proposal_issue: 32
 proposer: jamesbachini
 category: "Developer Experience"
 budget: "$35,000"
-repos:
-  - https://github.com/jamesbachini/Soroban-Playground
 ---
 
 # soropg

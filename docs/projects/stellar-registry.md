@@ -6,8 +6,6 @@ proposal_issue: 64
 proposer: chadoh
 category: "Developer Experience"
 budget: "50000"
-repos:
-  - https://github.com/stellar-registry
 ---
 
 # Stellar Registry

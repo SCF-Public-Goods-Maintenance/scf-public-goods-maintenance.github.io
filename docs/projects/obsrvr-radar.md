@@ -6,8 +6,6 @@ proposal_issue: 109
 proposer: tmosleyIII
 category: "Infrastructure Monitoring"
 budget: "20000"
-repos:
-  - https://github.com/withObsrvr/stellarbeat
 ---
 
 # OBSRVR Radar

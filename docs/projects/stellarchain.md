@@ -6,8 +6,6 @@ proposal_issue: 60
 proposer: devfed1
 category: "Infrastructure Monitoring"
 budget: "50000"
-repos:
-  - https://github.com/stellarchain/v4
 ---
 
 # StellarChain

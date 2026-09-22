@@ -6,8 +6,6 @@ proposal_issue: 41
 proposer: christian-rogobete
 category: "SDKs"
 budget: "15000"
-repos:
-  - https://github.com/Soneso/stellar-ios-mac-sdk
 ---
 
 # stellar-ios-mac-sdk

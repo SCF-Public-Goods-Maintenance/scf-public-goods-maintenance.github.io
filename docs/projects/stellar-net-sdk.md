@@ -6,8 +6,6 @@ proposal_issue: 48
 proposer: jopmiddelkamp
 category: "SDKs"
 budget: "$15,000"
-repos:
-  - https://github.com/Beans-BV/dotnet-stellar-sdk
 ---
 
 # Stellar .NET SDK

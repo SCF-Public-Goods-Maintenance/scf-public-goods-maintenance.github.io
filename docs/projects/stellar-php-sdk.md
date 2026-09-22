@@ -6,8 +6,6 @@ proposal_issue: 45
 proposer: christian-rogobete
 category: "SDKs"
 budget: "15000"
-repos:
-  - https://github.com/Soneso/stellar-php-sdk
 ---
 
 # stellar-php-sdk

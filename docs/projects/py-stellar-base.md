@@ -6,8 +6,6 @@ proposal_issue: 55
 proposer: overcat
 category: "SDKs"
 budget: "15000"
-repos:
-  - https://github.com/StellarCN/py-stellar-base
 ---
 
 # py-stellar-base

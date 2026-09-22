@@ -6,8 +6,6 @@ proposal_issue: 53
 proposer: overcat
 category: "SDKs"
 budget: "15000"
-repos:
-  - https://github.com/lightsail-network/java-stellar-sdk
 ---
 
 # java-stellar-sdk

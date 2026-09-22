@@ -6,8 +6,6 @@ proposal_issue: 120
 proposer: christian-rogobete
 category: "SDKs"
 budget: "15000"
-repos:
-  - https://github.com/Soneso/kmp-stellar-sdk
 ---
 
 # kmp-stellar-sdk

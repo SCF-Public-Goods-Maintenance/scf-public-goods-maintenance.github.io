@@ -6,8 +6,6 @@ proposal_issue: 38
 proposer: orbitlens
 category: "Governance Tools"
 budget: "18,000"
-repos:
-  - https://github.com/stellar-expert/refractor
 ---
 
 # RefractorSpace

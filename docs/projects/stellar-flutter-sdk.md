@@ -6,8 +6,6 @@ proposal_issue: 43
 proposer: christian-rogobete
 category: "SDKs"
 budget: "15000"
-repos:
-  - https://github.com/Soneso/stellar_flutter_sdk
 ---
 
 # stellar-flutter-sdk

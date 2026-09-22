@@ -6,8 +6,6 @@ proposal_issue: 122
 proposer: salaheldinsoliman
 category: "Developer Experience"
 budget: "$25,000"
-repos:
-  - https://github.com/hyperledger-solang/solang
 ---
 
 # Hyperledger Solang
