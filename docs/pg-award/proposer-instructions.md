@@ -146,10 +146,10 @@ is mostly self-explanatory. A few things to keep in mind:
   Explorer" → `stellarexpert-explorer`). Choose a clear, recognizable name.
 - **PG Intake Form** — link to your approved intake issue. If you submitted through Airtable during
   the soft-launch period, write "soft-launch".
-- **Public Git Repository** — the form takes one repository, which becomes the **Repository** row
-  in your project page table. If your project spans more than one repository, add a row for each
-  to that table during Discussion & Revisions. PG Atlas reads this table, so any repository left
-  out is missing from your project's metrics.
+- **Public Git Repository** — the form takes one repository, which becomes the **Repository** row in
+  your project page table. If your project spans more than one repository, add a row for each to that
+  table during Discussion & Revisions. PG Atlas reads this table, so any repository left out is
+  missing from your project's metrics.
 - **Budget Requested** — up to $50,000 in XLM per quarter. Your budget should be reasonable relative
   to your retroactive impact and planned deliverables.
 - **Legal Acknowledgements** — you must agree to the
