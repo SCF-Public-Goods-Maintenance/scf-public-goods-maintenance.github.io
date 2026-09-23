@@ -97,7 +97,9 @@ responsiveness metrics above (see: [soneso.github.io/soneso-sdk-stats][statsdash
 
 ## Past Deliverables
 
-### 1. Continuous Maintenance and Improvement Deliverable
+### 2026 Q2
+
+#### 1. Continuous Maintenance and Improvement Deliverable
 
 Description from last quarter:
 
@@ -132,7 +134,7 @@ decoding. CI hardening (Actions pinned to commit SHAs, least-privilege permissio
 thresholds) and the daily upstream XDR change-detection workflow remain in force, and compatibility
 matrices were regenerated to Horizon/RPC v27.0.0.
 
-### 2. SEP-11 TxRep Rewrite
+#### 2. SEP-11 TxRep Rewrite
 
 Description from last quarter:
 
@@ -150,7 +152,7 @@ the XDR types and the public API unchanged. The rewrite also fixed several SEP-1
 (pool-share ChangeTrustAsset encoding, unsigned and zero-operation transactions, L-address
 liquidity-pool StrKey decoding, and C-style MEMO_TEXT escaping).
 
-### 3. OpenZeppelin Smart Account Support
+#### 3. OpenZeppelin Smart Account Support
 
 Description from last quarter:
 
@@ -173,7 +175,7 @@ Delivered in release [3.5.0][rel350] ([PR #208][pr208]), with the Protocol 27 AD
 auth path integrated in 3.6.0. The additional wallet-connect scope committed in the PR-42 response
 was also delivered. Delivery by area:
 
-#### SDK implementation
+##### SDK implementation
 
 Proof of completion:
 
@@ -186,21 +188,21 @@ cryptographic core. All committed sub-items - wallet lifecycle, context rules an
 auth-entry signing, multi-signer authorization, fee sponsoring via relayer, credential discovery via
 indexer, and native ASAuthorization WebAuthn on iOS and macOS - are present and tested.
 
-#### Demo app
+##### Demo app
 
 Proof of completion:
 
 - Repository: https://github.com/Soneso/ios-oz-smartaccount-demo
 - Platforms: iOS and macOS
 
-#### Documentation
+##### Documentation
 
 Proof of completion:
 
 - [Smart-account documentation set][sadocs]: onboarding guide, API reference, and per-platform
   WebAuthn guides (iOS, macOS)
 
-#### Agent-signer flow in the demo app
+##### Agent-signer flow in the demo app
 
 Beyond the committed demo, a full agent-signer flow was added to the demo app: a standalone reference
 agent, a coordination server, and an approval inbox.

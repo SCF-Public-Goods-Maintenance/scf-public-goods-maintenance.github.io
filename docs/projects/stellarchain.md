@@ -74,6 +74,8 @@ quarter.
 
 ## Past Deliverables
 
+### 2026 Q2
+
 1. **Expanded Soroban contract explorer surfaces - Completed** We improved contract detail pages with
    clearer History, Events, Storage, verification, source, SAC, and token-related fields. Contract
    pages now better separate normal contracts, token contracts, and Stellar Asset Contracts, while

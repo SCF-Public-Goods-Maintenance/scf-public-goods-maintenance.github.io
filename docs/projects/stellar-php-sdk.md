@@ -84,7 +84,9 @@ dependents, clones, stars, and responsiveness metrics for the SDK.
 
 ## Past Deliverables
 
-### 1. Continuous Maintenance and Improvement
+### 2026 Q2
+
+#### 1. Continuous Maintenance and Improvement
 
 Description from last quarter:
 
@@ -134,7 +136,7 @@ gate, and native ext-sodium, and error-path hardening landed across SEP-7, SEP-1
 and federation/stellar.toml loading. Compatibility matrices, the SBOM workflow, and the stats
 dashboard were kept current.
 
-### 2. SEP-11 TxRep Rewrite
+#### 2. SEP-11 TxRep Rewrite
 
 Description from last quarter:
 
@@ -151,7 +153,7 @@ Proof of completion:
 TxRep.php was reduced from 3,515 lines to a 505-line facade ("Thin facade over the generated XDR
 toTxRep/fromTxRep methods"), with serialization generated onto 144 XDR classes.
 
-### 3. SEP-51 (XDR-JSON) Support
+#### 3. SEP-51 (XDR-JSON) Support
 
 Description from last quarter:
 

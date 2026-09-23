@@ -48,7 +48,9 @@ Horizon request handling was hardened.
 
 ## Past Deliverables
 
-### 1. Continuous Maintenance and Improvement
+### 2026 Q2
+
+#### 1. Continuous Maintenance and Improvement
 
 Description from last quarter:
 
@@ -92,7 +94,7 @@ the implementation can be validated against a live Protocol 27 network. The tool
 modernized with a JDK 21 build toolchain and updated Gradle/Kotlin/dependencies, and Horizon request
 handling was hardened, alongside various bug fixes.
 
-### 2. SEP-46, SEP-47, and SEP-48 Support
+#### 2. SEP-46, SEP-47, and SEP-48 Support
 
 Description from last quarter:
 
@@ -117,7 +119,7 @@ helpers (`getContractWasm`, `getContractMeta`, `getContractSpec`, `getContractIn
 Soroban contract's Wasm and expose its self-described metadata. This gives tooling and off-chain
 systems a standard way to understand contract interfaces.
 
-### 3. AI Coding Agent Skill
+#### 3. AI Coding Agent Skill
 
 Description from last quarter:
 

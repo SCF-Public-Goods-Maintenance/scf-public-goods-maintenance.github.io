@@ -100,7 +100,9 @@ Aha is fully onboarded as maintainers.
 
 <!-- markdownlint-disable MD034 -->
 
-### P1: Q2 Public Goods Award on Tansu testnet
+### 2026 Q2
+
+#### P1: Q2 Public Goods Award on Tansu testnet
 
 Proof of completion:
 
@@ -113,7 +115,7 @@ First PG Award round with anonymous NQG-weighted pilot voting on testnet; 17 pro
 than $400,000 disbursed. The work was done as part of a
 [SCF Build Award](https://communityfund.stellar.org/project/pg-atlas-dse).
 
-### P2: Governance stack
+#### P2: Governance stack
 
 Proof of completion:
 
@@ -125,7 +127,7 @@ Proof of completion:
 - Anonymous voting, token-weighted ballots, outcome contracts, malicious-proposal flow:
   [governance docs](https://tansu.dev/docs/developers/governance)
 
-### P3: NQG + `scf-membership`
+#### P3: NQG + `scf-membership`
 
 Proof of completion:
 
@@ -133,7 +135,7 @@ Proof of completion:
   [#50](https://github.com/Consulting-Manao/tansu/pull/50)
 - Viewer: https://scf.pgatlas.xyz https://github.com/Consulting-Manao/scf-member-explorer
 
-### P4: Supply chain and evidence
+#### P4: Supply chain and evidence
 
 Proof of completion:
 
@@ -143,7 +145,7 @@ Proof of completion:
   .github/workflows/sbom.yml`
 - Workflows improvements: `.github/workflows`
 
-### P5: Maintainance
+#### P5: Maintainance
 
 Proof of completion:
 

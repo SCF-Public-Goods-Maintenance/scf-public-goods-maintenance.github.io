@@ -129,7 +129,9 @@ coverage transparency for all implemented SEPs.
 
 <!-- markdownlint-disable MD034 -->
 
-### 0. One-command full verification
+### 2026 Q2
+
+#### 0. One-command full verification
 
 Every claim below is reproducible in ~1 minute (excluding the live-network integration suite):
 
@@ -167,9 +169,9 @@ design).
 
 ---
 
-### 1. Deliverable-by-deliverable evidence
+#### 1. Deliverable-by-deliverable evidence
 
-#### Deliverable 1 — Protocol 26 "Yardstick" Support
+##### Deliverable 1 — Protocol 26 "Yardstick" Support
 
 **Closing issue:**
 [#155 — SDK Updates for Protocol 26 Compatibility](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/155)
@@ -217,7 +219,7 @@ stay open until the stable 16.0.0 release closes out the remaining RPC-flag foll
 
 ---
 
-#### Deliverable 2 — Integration Test Suite
+##### Deliverable 2 — Integration Test Suite
 
 | Metric                   | Planned                  | Delivered                                                                                                                                                   |
 | ------------------------ | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -270,7 +272,7 @@ not completed in Q2 move to Q3"), the full SHOULD list carries into Q3.
 
 ---
 
-#### Deliverable 3 — Multi-Platform Preparation: Multi-Target + .NET Modernization
+##### Deliverable 3 — Multi-Platform Preparation: Multi-Target + .NET Modernization
 
 **Part B — Modern .NET APIs: all 6 PRs merged** (closing issues
 [#164](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/164),
@@ -311,7 +313,7 @@ The multi-target package ships to NuGet with the stable 16.0.0 release early in 
 
 ---
 
-#### Deliverable 4 — SEP-45 Implementation + SEP Compatibility Matrices
+##### Deliverable 4 — SEP-45 Implementation + SEP Compatibility Matrices
 
 **Closing issues:**
 [#160 — SEP-45 Implementation](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/160) (closed
@@ -360,7 +362,7 @@ string jwt = await webAuth.JwtTokenAsync(
 
 ---
 
-#### Deliverable 5 — Release & Verification
+##### Deliverable 5 — Release & Verification
 
 | Criterion                    | Evidence                                                                                                                                                                                                                                                                                                                                                                                                          |
 | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -377,7 +379,7 @@ as a draft and ships early Q3 — tracked in
 
 ---
 
-#### Non-deliverable — Developer Support & Maintenance Responsiveness
+##### Non-deliverable — Developer Support & Maintenance Responsiveness
 
 Operational metrics across the Q2 '26 window (2026-04-01 → 2026-07-02), reproducible via `gh`/`git`:
 
@@ -402,7 +404,7 @@ mapping).
 
 ---
 
-### 2. Cross-reference: Q1 reviewer expectations → Q2 evidence
+#### 2. Cross-reference: Q1 reviewer expectations → Q2 evidence
 
 | Expectation from Q1 review                             | Addressed by                                                                                                                                                               |
 | ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -414,7 +416,7 @@ mapping).
 
 ---
 
-### 3. Honest gaps & carry-over (pre-empting follow-ups)
+#### 3. Honest gaps & carry-over (pre-empting follow-ups)
 
 - **Two D1 sub-items landed at window close, via
   [PR #198](https://github.com/Beans-BV/dotnet-stellar-sdk/pull/198) (in review).** The Horizon/RPC

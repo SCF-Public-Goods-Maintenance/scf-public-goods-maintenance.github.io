@@ -86,6 +86,8 @@ This generated the following impact for the Stellar ecosystem:
 
 <!-- markdownlint-disable MD034 -->
 
+### 2026 Q2
+
 1. **Ongoing hosting and maintenance — Completed.** Maintained OpenGrants infrastructure with zero
    downtime and ingested `SCF #43` funding data during the Q2 period, keeping Stellar in full DAOIP-5
    compliance. The real-time SCF integration and Airtable pipeline shipped prior to the Q2 grant and

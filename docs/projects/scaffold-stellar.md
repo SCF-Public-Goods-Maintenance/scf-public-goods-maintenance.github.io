@@ -116,6 +116,8 @@ what developers expect from modern, full-stack tooling.
 
 ## Past Deliverables
 
+### 2026 Q2
+
 **Q2 in summary.** We made Q2 a deliberate re-architecture quarter. Three structural efforts — the
 Registry split, the multi-framework Template Monorepo, and the Protocol 27 upgrade — consumed most of
 the quarter and touched nearly every deliverable below. That investment is what makes the Q3 list
@@ -124,7 +126,7 @@ templates have a real extension point, and the config-file migration has its fir
 the eight committed deliverables, one shipped fully, two shipped substantially, and the remainder
 have completed discovery/design with implementation carried into Q3 — several with open PRs already.
 
-### D1: Support Stellar-Wallets-Kit v2
+#### D1: Support Stellar-Wallets-Kit v2
 
 > - Update to Stellar-Wallets-Kit v2, released v2 in Feb 2025, to streamline Developers' experience
 >   and keep up to date with the latest standards in the ecosystem.
@@ -137,7 +139,7 @@ wallet integration into the shared `@stellar-scaffold/app-lib` package, so the v
 once for every framework template instead of once per template. Finishing this is committed in Q3
 (see Proposed D3).
 
-### D2: Allow package manager of choice
+#### D2: Allow package manager of choice
 
 > - Rather than forcing people to use NPM with Scaffold, allow them to pick the JS package manager of
 >   their choosing (yarn, bun, deno, etc)
@@ -149,7 +151,7 @@ https://github.com/stellar-scaffold/cli/pull/345, with follow-up improvements in
 https://github.com/stellar-scaffold/cli/pull/491, released in `stellar-scaffold-cli` v0.0.24. The
 tracking issue is closed.
 
-### D3: BYOFrontend
+#### D3: BYOFrontend
 
 > - Create two new Aha-maintained Scaffold frontend plugins: 1. no frontend, 2. Svelte. In addition,
 >   create documentation for how community members can contribute their own frontend templates for
@@ -174,7 +176,7 @@ and https://github.com/stellar-scaffold/cli/pull/564):
 A community-template contribution guide — was not delivered in Q2 and is explicitly committed in Q3
 (Proposed D5).
 
-### D4: SKILL.md to help agentic workflows
+#### D4: SKILL.md to help agentic workflows
 
 > - Add SKILL.md to Stellar Scaffold repository to facilitate more powerful and accurate AI & agentic
 >   workflows.
@@ -187,7 +189,7 @@ own alongside its site), and the template monorepo introduced a second need — 
 that `init` carries into generated end-user projects. The re-scoped design is committed in Q3 (see
 Proposed D4).
 
-### D5: Improve Scaffold info on main Stellar docs
+#### D5: Improve Scaffold info on main Stellar docs
 
 > - Minimize the info on the Stellar Scaffold page on the main Stellar docs in line with other tools
 >   that have their own documentations sites, linking prominently to https://scaffoldstellar.org
@@ -200,7 +202,7 @@ dedicated docs site), and smaller upstream improvements shipped in the meantime
 (https://github.com/stellar/stellar-docs/pull/2708) and contain pointers to updated documentation on
 new, redesigned Scaffold docs site (https://github.com/stellar-scaffold/cli/pull/577).
 
-### D6: Monitor releases of ecosystem projects
+#### D6: Monitor releases of ecosystem projects
 
 > - For Scaffold itself and all projects that are built with it, provide automatic notifications
 >   (perhaps in the form of GitHub issues or pull requests) when complex ecosystem dependencies, such
@@ -214,7 +216,7 @@ projects _built with_ Scaffold can inherit the same alerts. Our existing schedul
 the OpenZeppelin example contracts serves as the prototype. Carried into Q3 as a stretch goal
 (Proposed D9) behind the committed re-architecture work.
 
-### D7: Allow building for testnet when localnet unhealthy
+#### D7: Allow building for testnet when localnet unhealthy
 
 > - Scaffold currently requires running a local Stellar network, which it can do automatically, even
 >   when building for a testnet target. We will fix this.
@@ -227,7 +229,7 @@ fix lands with the Q3 `scaffold.yml` networks rework (Proposed D2), which decoup
 builds from localnet state; the new `scaffold doctor` command (Proposed D1) then gives users
 self-serve diagnosis of unhealthy localnets instead of a confusing failure.
 
-### D8: Re-architect stellar scaffold build internals & update to latest best practices
+#### D8: Re-architect stellar scaffold build internals & update to latest best practices
 
 > - Various bugs and sub-optimal behavior can be pinned on some early, messy architectural decisions
 >   made in stellar-scaffold-cli, the core of which is now nearly a year old. We will rework this
@@ -251,7 +253,7 @@ self-serve diagnosis of unhealthy localnets instead of a confusing failure.
 The discovery work here defined the remaining schema migration (networks and contract-client config)
 and the `--optimize` passthrough, both committed in Q3 (Proposed D2).
 
-### Ongoing maintenance, releases, and field feedback loop
+#### Ongoing maintenance, releases, and field feedback loop
 
 Regular tagged releases with notes continued throughout the quarter
 (https://github.com/stellar-scaffold/cli/releases), including three `stellar-scaffold-cli` releases,

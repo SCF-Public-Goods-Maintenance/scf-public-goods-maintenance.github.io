@@ -146,6 +146,8 @@ Note: this section as initially AI generated but includes manual edits and descr
 
 ## Previous Deliverables
 
+### 2026 Q2
+
 In this section I will quote the previous deliverable goals and the result of each.
 
 > - Increased community engagement

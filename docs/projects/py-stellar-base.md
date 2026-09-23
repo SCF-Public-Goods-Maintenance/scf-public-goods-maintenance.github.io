@@ -52,7 +52,9 @@ kept current.
 
 ## Past Deliverables
 
-### 1. Continuous Maintenance and Improvement
+### 2026 Q2
+
+#### 1. Continuous Maintenance and Improvement
 
 Description from last quarter:
 
@@ -99,7 +101,7 @@ environments, so the stable 15.0.0 is intentionally held until the implementatio
 against a live Protocol 27 network. The toolchain was also modernized with a migration to ruff,
 parallelized CI, and network-free test mocks, alongside numerous bug fixes and dependency updates.
 
-### 2. SEP-46, SEP-47, and SEP-48 Support
+#### 2. SEP-46, SEP-47, and SEP-48 Support
 
 Description from last quarter:
 
@@ -121,7 +123,7 @@ Introspection APIs for SEP-46 (contract metadata), SEP-47 (contract interface di
 Soroban contract's Wasm and expose its self-described metadata. This gives tooling and off-chain
 systems a standard way to understand contract interfaces.
 
-### 3. AI Coding Agent Skill
+#### 3. AI Coding Agent Skill
 
 Description from last quarter:
 

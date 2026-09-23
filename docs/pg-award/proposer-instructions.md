@@ -192,8 +192,7 @@ update your existing project page directly:
    [`docs/projects/`](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/tree/main/docs/projects){:target="⚡"}
    directory on the `main` branch.
 2. Click the **Edit** (pencil) icon on your project page.
-3. Update the relevant sections: new retroactive impact, deliverable evidence, next-quarter goals,
-   and updated budget.
+3. Update the relevant sections: new retroactive impact, next-quarter goals, and updated budget.
 4. Choose **"Create a new branch for this commit and start a pull request."**
 5. Name your branch following the convention: `proposals/{slug}-{quarter}` (e.g.,
    `proposals/stellar-sdk-2026q3`).

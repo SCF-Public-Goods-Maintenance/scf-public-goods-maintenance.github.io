@@ -89,7 +89,9 @@ and adoption metrics above (see: [soneso.github.io/soneso-sdk-stats][statsdash])
 
 ## Past Deliverables
 
-### 1. Continuous Maintenance and Improvement
+### 2026 Q2
+
+#### 1. Continuous Maintenance and Improvement
 
 Description from last quarter:
 
@@ -121,7 +123,7 @@ added a headless connectToContract path with RPC-visibility polling and hardened
 thresholds) and the daily upstream XDR change-detection workflow remain in force, and compatibility
 matrices were regenerated to Horizon/RPC v27.0.0.
 
-### 2. OpenZeppelin Smart Account Support
+#### 2. OpenZeppelin Smart Account Support
 
 Description from last quarter:
 
@@ -146,7 +148,7 @@ Delivered in release [3.1.0][rel310] ([PR #148][pr148]) and published to pub.dev
 
 Delivery by area:
 
-#### SDK implementation
+##### SDK implementation
 
 Proof of completion:
 
@@ -159,7 +161,7 @@ committed sub-items - wallet lifecycle, context rules and policies, automatic au
 multi-signer authorization, fee sponsoring via relayer, credential discovery via indexer, and
 cross-platform WebAuthn - are present and tested.
 
-#### Cross-platform demo
+##### Cross-platform demo
 
 Proof of completion:
 
@@ -173,14 +175,14 @@ address recovery), single- and multi-signer token transfers, on-chain context-ru
 signers, policies, and expiry, SEP-41 token allowances, and the agent delegation and approval-inbox
 flow.
 
-#### Documentation
+##### Documentation
 
 Proof of completion:
 
 - [Smart-account documentation set][sadocs]: onboarding guide, API reference, and per-platform
   WebAuthn guides (iOS, Android, web)
 
-#### Agent-signer flow in the demo app
+##### Agent-signer flow in the demo app
 
 Beyond the committed scope, the [PR-44 response][pr44resp] added a full agent-signer flow to the demo
 app.

@@ -107,6 +107,8 @@ in
 
 <!-- markdownlint-disable MD034 -->
 
+### 2026 Q1
+
 Follows a list of deliverables made during 2026-Q1
 
 Month 1 – Add new detectors - Chunk 2 of 3

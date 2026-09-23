@@ -85,9 +85,11 @@ engineering.
 
 <!-- markdownlint-disable MD034 -->
 
+### 2026 Q2
+
 The deliverables of Q2 were categorized as follows:
 
-### Codebase maintenance
+#### Codebase maintenance
 
 - `Deliverable`: A current issue of the codebase is the entangled target logic in
   [`codegen`](https://github.com/hyperledger-solang/solang/tree/main/src/codegen). As Solang supports
@@ -101,7 +103,7 @@ The deliverables of Q2 were categorized as follows:
   trait. This separates target concerns and detangles target-specific logic in codegen, reducing the
   amount of code that needs auditing.
 
-### Developer Experience
+#### Developer Experience
 
 `Deliverables:`
 
@@ -127,7 +129,7 @@ The deliverables of Q2 were categorized as follows:
   [solang-playground#35](https://github.com/hyperledger-solang/solang-playground/pull/35) (merged to
   `develop`).
 
-### Feature Completion
+#### Feature Completion
 
 `Deliverable:`
 
@@ -171,7 +173,7 @@ The deliverables of Q2 were categorized as follows:
   ([#1977](https://github.com/hyperledger-solang/solang/pull/1977)). The remaining work is explicitly
   carried into this proposal as Deliverable 4 below.
 
-### Fuzzer
+#### Fuzzer
 
 `Deliverable:`
 
