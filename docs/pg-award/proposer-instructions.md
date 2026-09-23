@@ -212,8 +212,8 @@ directly:
    directory on the `main` branch.
 2. Click the **Edit** (pencil) icon on your project page.
 3. Under `## Past Deliverables`, add a new `### {Year} Q{N}` subsection. Start it with the budget
-   allocation table described below, then give evidence for each deliverable you committed to in
-   that quarter's proposal, as `####` subheadings. Leave previous quarters in place.
+   allocation table described below, then give evidence for each deliverable you committed to in that
+   quarter's proposal, as `####` subheadings. Leave previous quarters in place.
 4. Choose **"Create a new branch for this commit and start a pull request."**
 5. Name your branch following the convention: `deliverables/{slug}-{quarter}` (e.g.,
    `deliverables/stellar-sdk-2026q3`).
@@ -240,11 +240,11 @@ The test for which bucket work belongs in is whether it **adds capability or pre
 
 - **Maintenance** — bug fixes, security patches, dependency updates, protocol-compatibility work,
   documentation of existing behaviour, release engineering, issue triage, and user support.
-- **New features** — capability that did not exist before, such as new APIs, new integrations, or
-  new tooling.
+- **New features** — capability that did not exist before, such as new APIs, new integrations, or new
+  tooling.
 
-Two cases are easy to get wrong. Supporting a new protocol version is **maintenance**, even though
-it is entirely new code, because it keeps the project compatible rather than adding capability. A
+Two cases are easy to get wrong. Supporting a new protocol version is **maintenance**, even though it
+is entirely new code, because it keeps the project compatible rather than adding capability. A
 rewrite is also **maintenance**, however large, if it leaves the project doing the same things.
 
 ## Access & Permissions
