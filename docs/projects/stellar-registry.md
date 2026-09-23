@@ -178,11 +178,13 @@ moved to soroban-sdk v27 / stellar-cli v27 (stellar-registry/contracts#11, stell
 
 <!-- markdownlint-disable MD034 -->
 
+### 2026 Q2
+
 Every deliverable below has merged, verifiable work behind it this quarter; where release mechanics
 remain, the item states exactly what is left. We also shipped substantial infrastructure beyond the
 proposed scope — see "Beyond the proposal" at the end of this section.
 
-### D1. Mainnet Deploy of Stellar Registry
+#### D1. Mainnet Deploy of Stellar Registry
 
 Description from last quarter:
 
@@ -210,7 +212,7 @@ Remaining for full public accessibility: the mainnet indexer pipeline and pointi
 [rgstry.xyz](https://rgstry.xyz) at mainnet — rolling out this week — plus secure-store/Ledger
 signing for admin operations (stellar-registry/cli#14).
 
-### D2. `import_contract!` Macro
+#### D2. `import_contract!` Macro
 
 Description from last quarter:
 
@@ -233,7 +235,7 @@ Proof of completion:
 pedantic-clippy clean), and in final review, and rgstry.xyz already teaches developers how to use the
 import macros on every contract page. The crates.io publish lands days into Q3.
 
-### D3. Flagged Contract Enforcement at Build Time
+#### D3. Flagged Contract Enforcement at Build Time
 
 Description from last quarter:
 
@@ -251,7 +253,7 @@ Proof of progress:
 - https://github.com/stellar-registry/cli/pull/17 – PR for D2 implements compile-time error
   mechanics, preventing contracts from building when their source contracts have been flagged.
 
-### D4. Server-Side Search, Pagination & Sorting on rgstry.xyz
+#### D4. Server-Side Search, Pagination & Sorting on rgstry.xyz
 
 Description from last quarter:
 
@@ -275,7 +277,7 @@ on rgstry.xyz today, and the API already supports limit/cursor pagination. Remai
 treatment for contracts (stellar-registry/indexer#24, open), the explorer's pagination/sorting UX,
 and validation against a 1,000+ entry dataset.
 
-### D5. rgstry.xyz UI Enhancements
+#### D5. rgstry.xyz UI Enhancements
 
 Description from last quarter:
 
@@ -305,7 +307,7 @@ full `contract info meta` fields, and contract pages gained README/LICENSE rende
 proposed scope. Remaining: surfacing the rest of the metadata fields in the UI, the embedded Contract
 Explorer (item 1), and the deploy button (item 3).
 
-### D6. Verified Build Integration with Stellar Expert
+#### D6. Verified Build Integration with Stellar Expert
 
 Description from last quarter:
 
@@ -329,7 +331,7 @@ now built by the stellar.expert workflow with OIDC build-provenance attestation,
 attested release is public. Remaining: displaying the badge on rgstry.xyz detail pages — targeting
 contract pages, since we established Stellar Expert has no Wasm-level pages (stellar-registry/ui#17).
 
-### D7. Registry Documentation & Education
+#### D7. Registry Documentation & Education
 
 Description from last quarter:
 
@@ -361,7 +363,7 @@ rgstry.xyz nav, every contract and wasm page carries usage guides, and all four 
 rewritten documentation. Remaining: moving the guide to Registry's own docs site, `import_contract!`
 coverage (follows the D2 release), and the video series.
 
-### Beyond the proposal
+#### Beyond the proposal
 
 Infrastructure we shipped this quarter that was not in the Q2 deliverables:
 

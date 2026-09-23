@@ -130,7 +130,9 @@ defi landscape, SCF funding, stablecoins, developer activity, and the hackathon 
 
 <!-- markdownlint-disable MD034 -->
 
-### The public API — 24 endpoints (live at /api/openapi.json)
+### 2026 Q2
+
+#### The public API — 24 endpoints (live at /api/openapi.json)
 
 built a full agent-facing rest api. the endpoints:
 
@@ -161,7 +163,7 @@ agents get typed access with no hand-rolled wrappers.
 verify: <https://stellarlight.xyz/api/openapi.json> · sample:
 <https://stellarlight.xyz/api/projects/search?q=defi> · <https://stellarlight.xyz/api/status>
 
-### MCP server, typed client, and installable skill
+#### MCP server, typed client, and installable skill
 
 `@stellar-light/scout-mcp` — an mcp server (18 tools) published to npm, so any mcp client (claude,
 cursor, etc.) can query the whole data layer. `@stellar-light/api-client` — a typed typescript sdk on
@@ -173,7 +175,7 @@ installed in a minute. mirrored to public repos and listed in skill registries.
 verify: <https://stellarlight.xyz/scout> · <https://www.npmjs.com/package/@stellar-light/scout-mcp> ·
 <https://www.npmjs.com/package/@stellar-light/api-client>
 
-### Skills marketplace
+#### Skills marketplace
 
 public catalog of ai skills, mcp servers, sdks, and tools for stellar builders at
 stellarlight.xyz/skills — merges SDF's official skills.stellar.org skills, stellar light's own, and
@@ -182,7 +184,7 @@ community submission flow.
 
 verify: <https://stellarlight.xyz/skills>
 
-### AI systems
+#### AI systems
 
 the ai work spans the whole platform, not one feature:
 
@@ -205,7 +207,7 @@ verify: <https://stellarlight.xyz/partners> (live ai concierge) ·
 <https://stellarlight.xyz/api/research?q=soroban> (semantic retrieval + confidence scores) · /ask is
 in private testing (not yet public)
 
-### Research corpus + code intelligence
+#### Research corpus + code intelligence
 
 vector-searchable knowledge corpus — SEPs, SCF handbook, dev docs, papers, security audits, incident
 reports — with confidence scoring, plus an indexed-and-scored github repo layer (~2,300
@@ -216,7 +218,7 @@ the authoritative repo and returns a source-grounded answer.
 verify: <https://stellarlight.xyz/api/research?q=soroban%20authorization> ·
 <https://stellarlight.xyz/api/repos/search?q=wallet>
 
-### Partner / anchor data layer + self-service portal
+#### Partner / anchor data layer + self-service portal
 
 full partner layer live at stellarlight.xyz/partners: a directory of anchors, on/off-ramps,
 infrastructure, tooling, and audit firms, each enriched directly from the partner's stellar.toml
@@ -227,7 +229,7 @@ and get quarterly freshness check-ins. a claim flow lets companies take ownershi
 
 verify: <https://stellarlight.xyz/partners>
 
-### Data sources, pipelines & freshness
+#### Data sources, pipelines & freshness
 
 integrated and kept fresh via automated pipelines: SDF entity airtable (projects + grants), the
 github api (dev activity, stars, commit recency, repo metadata), goldsky (stablecoin on-chain data),
@@ -239,7 +241,7 @@ data is.
 
 verify: <https://stellarlight.xyz/api/status>
 
-### Data quality + integrity
+#### Data quality + integrity
 
 golden-answer evals, retrieval chunk hygiene, org/builder attribution ("who built X"), an "inactive"
 lifecycle state so defunct projects stop ranking as active, and a daily api ⇄ openapi ⇄ docs drift
@@ -247,7 +249,7 @@ guard in CI that fails if the live api, the spec, and the docs ever disagree.
 
 verify: <https://stellarlight.xyz/api/changelog>
 
-### Platform, dashboards & quality-of-life
+#### Platform, dashboards & quality-of-life
 
 continuous improvements to the human-facing platform across the quarter:
 
@@ -280,7 +282,7 @@ verify: <https://stellarlight.xyz/leaderboard> · <https://stellarlight.xyz/hack
 <https://stellarlight.xyz/entities> · <https://ideas.stellarlight.xyz> ·
 <https://ideas.stellarlight.xyz/rfps>
 
-### Content and ecosystem reporting
+#### Content and ecosystem reporting
 
 thesis-driven ecosystem reports published on /blog:
 

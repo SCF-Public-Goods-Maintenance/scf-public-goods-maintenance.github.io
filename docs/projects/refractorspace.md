@@ -58,6 +58,8 @@ Q3 2026. According to our logs, the service reached the SLA of 99.992% since the
 
 ## Past Deliverables
 
+### 2026 Q2
+
 - We revamped the website home page with a focus on key product features (available here:
   https://refractor.space)
 - The webiste now highlights various usage scenarios and contains a simple step-by-step explanation

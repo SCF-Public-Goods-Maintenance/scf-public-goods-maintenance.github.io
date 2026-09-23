@@ -64,7 +64,9 @@ first time. This makes Soroban the highest-priority workstream heading into Q3.
 
 ## Past Deliverables
 
-### 1. Ongoing Maintenance
+### 2026 Q2
+
+#### 1. Ongoing Maintenance
 
 Description from last quarter:
 
@@ -86,7 +88,7 @@ v2.12.1, making on-device review clearer for signers. Alongside it, several Stel
 landed in Trezor Suite in coordination with the Trezor team, including Soroban contract token
 resolution, Soroban URL prioritization in fiat services, and improved token icon resolution.
 
-### 2. Stellar WalletConnect Support in Trezor Suite
+#### 2. Stellar WalletConnect Support in Trezor Suite
 
 Description from last quarter:
 
@@ -105,7 +107,7 @@ Trezor owners can now connect their devices to WalletConnect-based Stellar dApps
 transactions with hardware-level security, extending Stellar's reach into the growing WalletConnect
 ecosystem.
 
-### 3. Soroban Support for Trezor
+#### 3. Soroban Support for Trezor
 
 Description from last quarter:
 

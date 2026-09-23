@@ -92,6 +92,8 @@ formats, and more useful for operators inspecting validator and organization sta
 
 <!-- markdownlint-disable MD034 -->
 
+### 2026 Q2
+
 Maintenance, Protocol, and Dependency Updates
 
 Proof of completion:
