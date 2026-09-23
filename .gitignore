@@ -3,3 +3,6 @@ docs/_site
 
 # tooling caches
 **/node_modules
+
+# macOS
+.DS_Store
