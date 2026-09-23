@@ -1,5 +1,6 @@
 ---
 title: "soropg"
+canonical_id: daoip-5:scf:project:soropg
 parent: Public Good Projects
 proposal_issue: 32
 proposer: jamesbachini

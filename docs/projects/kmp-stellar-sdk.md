@@ -1,5 +1,6 @@
 ---
 title: "kmp-stellar-sdk"
+canonical_id: daoip-5:scf:project:kmp_stellar_sdk
 parent: Public Good Projects
 proposal_issue: 120
 proposer: christian-rogobete

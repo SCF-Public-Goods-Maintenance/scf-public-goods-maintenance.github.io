@@ -1,5 +1,6 @@
 ---
 title: "java-stellar-sdk"
+canonical_id: daoip-5:scf:project:java_stellar_sdk
 parent: Public Good Projects
 proposal_issue: 53
 proposer: overcat

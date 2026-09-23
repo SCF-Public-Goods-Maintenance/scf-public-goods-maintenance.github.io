@@ -1,5 +1,6 @@
 ---
 title: "Tansu - Decentralized project governance on Stellar"
+canonical_id: daoip-5:scf:project:tansu_-_soroban_versioning
 parent: Public Good Projects
 proposal_issue: 105
 proposer: tupui

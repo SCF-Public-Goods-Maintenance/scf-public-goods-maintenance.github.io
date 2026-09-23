@@ -1,5 +1,6 @@
 ---
 title: "stellar-ios-mac-sdk"
+canonical_id: daoip-5:scf:project:stellar_ios_mac_sdk
 parent: Public Good Projects
 proposal_issue: 41
 proposer: christian-rogobete

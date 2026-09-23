@@ -1,5 +1,6 @@
 ---
 title: "Scout"
+canonical_id: daoip-5:scf:project:scout
 parent: Public Good Projects
 proposal_issue: 66
 proposer: XianPaz

@@ -1,5 +1,6 @@
 ---
 title: "StellarChain"
+canonical_id: daoip-5:scf:project:stellarchain.io
 parent: Public Good Projects
 proposal_issue: 60
 proposer: devfed1
