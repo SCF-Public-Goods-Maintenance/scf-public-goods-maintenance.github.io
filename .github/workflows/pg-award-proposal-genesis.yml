@@ -27,9 +27,10 @@ jobs:
           echo "::notice::Skipping genesis — PR already created for this issue."
 
   genesis:
+    # prettier-ignore
     if:
-      contains(github.event.issue.labels.*.name, 'pg-award-proposal') && !
-      contains(github.event.issue.labels.*.name, 'pg-proposal:pr-created')
+      contains(github.event.issue.labels.*.name, 'pg-award-proposal')
+      && ! contains(github.event.issue.labels.*.name, 'pg-proposal:pr-created')
     runs-on: ubuntu-latest
 
     steps:
@@ -198,11 +199,11 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           BODY=$(sed '1{/^---$/!q}; 1,/^---$/d' "${{ steps.render.outputs.file_path }}")
-          PR_URL=$(gh pr create \
+          PR_URL=$(printf '%s' "${BODY:0:65536}" | gh pr create \
             --base main \
             --head "${{ steps.branch.outputs.name }}" \
             --title "PG Award Proposal: ${{ steps.render.outputs.project_title }}" \
-            --body "$BODY" \
+            --body-file - \
             --label "pg-award-proposal")
           echo "url=${PR_URL}" >> "$GITHUB_OUTPUT"
           echo "number=${PR_URL##*/}" >> "$GITHUB_OUTPUT"

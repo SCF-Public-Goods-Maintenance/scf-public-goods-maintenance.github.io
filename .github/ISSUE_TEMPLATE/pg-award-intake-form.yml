@@ -10,8 +10,7 @@ body:
 
         Thank you for your interest in the SCF Public Goods Award.
 
-        **Important note on eligibility**:
-        If this project was voted on in a previous Public Goods Award round, you are eligible to create a proposal directly on [Tansu](https://testnet.tansu.dev/project/?name=stellarpg). You do **not** need to fill out this form.
+        Only projects that are new to the PG Award fill out this intake form. If you are going through intake a second time, please include a link to your previous intake under "Why does your project qualify as a Stellar public good?", and specify what has changed since then.
 
         _UX limitation:_ any links in this form will open in your current browser tab by default. You risk losing progress. It's always a good idea to draft your answers in a separate file, or copy them there as a backup.
 
@@ -148,7 +147,7 @@ body:
         e.g. end user-facing products built upon your project (directly or indirectly), Total Value
         Locked, and/or Monthly Active Users.
     validations:
-      required: true
+      required: trueWhy does your project qualify as a Stellar public good?
 
   - type: textarea
     id: pg-qualification
