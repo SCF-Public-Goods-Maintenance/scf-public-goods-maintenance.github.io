@@ -10,8 +10,7 @@ body:
 
         Thank you for your interest in the SCF Public Goods Award.
 
-        **Important note on eligibility**:
-        If this project was voted on in a previous Public Goods Award round, you are eligible to create a proposal directly on [Tansu](https://testnet.tansu.dev/project/?name=stellarpg). You do **not** need to fill out this form.
+        Only projects that are new to the PG Award fill out this intake form. If you are going through intake a second time, please include a link to your previous intake under "Why does your project qualify as a Stellar public good?", and specify what has changed since then.
 
         _UX limitation:_ any links in this form will open in your current browser tab by default. You risk losing progress. It's always a good idea to draft your answers in a separate file, or copy them there as a backup.
 
@@ -53,7 +52,7 @@ body:
       options:
         - "First time submitting a proposal for the Public Goods Award"
         - "First time submitting to this Award but I've received SDF Infrastructure Grants before."
-        - "Submitted before to the Public Goods Award (eligible to create a proposal — you do not need to fill out this form)"
+        - "Renewal: edit your project page via PR — you do not need to fill out this form!"
     validations:
       required: true
 

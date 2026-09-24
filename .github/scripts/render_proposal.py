@@ -20,7 +20,6 @@ import re
 import sys
 import textwrap
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
@@ -102,7 +101,7 @@ def main():
     parsed = json.loads(raw)
 
     # --- Extract fields -------------------------------------------------------
-    project_name = str(parsed.get("project-name", "Untitled Project"))
+    project_name_raw = str(parsed.get("project-name", "Untitled Project"))
     one_sentence = str(parsed.get("one-sentence", ""))
     intake_link = str(parsed.get("pg-award-intake", ""))
     release_date = str(parsed.get("release-date", ""))
@@ -118,23 +117,25 @@ def main():
     budget_ask = str(parsed.get("budget-ask", ""))
     legal = format_checkboxes(parsed.get("legal-acknowledgements", ""))
 
-    slug = slugify(project_name)
+    # basic input sanitation on project name
+    # still not safe to interpolate in the shell
+    project_title = project_name_raw.replace("\n", "⏎")
+
+    slug = slugify(project_name_raw)
     if not slug:
         slug = f"project-{issue_number}"
 
     # --- Build page -----------------------------------------------------------
-    front_matter = textwrap.dedent(
-        f"""\
+    front_matter = textwrap.dedent(f"""\
         ---
-        title: "{project_name.replace('"', '\\"')}"
+        title: "{project_title.replace('"', '\\"')}"
         parent: Public Good Projects
         proposal_issue: {issue_number}
         proposer: {issue_author}
         category: "{category.replace('"', '\\"')}"
         budget: "{budget_ask.replace('"', '\\"')}"
         ---
-    """
-    )
+    """)
 
     def md_url(url: str) -> str:
         """Wrap a URL in angle brackets to satisfy MD034/no-bare-urls."""
@@ -144,7 +145,7 @@ def main():
         return url
 
     body_parts = [
-        f"# {project_name}\n",
+        f"# {project_title}\n",
         wrap_with_md_lint(f"_{one_sentence}_", MarkdownLinterFlag.MD036),
         "| | |",
         "| --- | --- |",
@@ -195,7 +196,7 @@ def main():
         {
             "slug": slug,
             "file_path": file_path,
-            "project_title": project_name,
+            "project_title": project_title,
         }
     )
 

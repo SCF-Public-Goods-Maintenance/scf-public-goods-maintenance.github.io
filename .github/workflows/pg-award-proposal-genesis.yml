@@ -4,43 +4,41 @@ on:
   issues:
     types: [opened, edited, reopened]
 
+concurrency: proposal-genesis-${{ github.event.issue.number }}
+
 permissions:
   contents: write
   issues: write
   pull-requests: write
 
 jobs:
-  genesis:
-    if: contains(github.event.issue.labels.*.name, 'pg-award-proposal')
+  retrigger:
+    if: contains(github.event.issue.labels.*.name, 'pg-proposal:pr-created')
     runs-on: ubuntu-latest
-
     steps:
-      # ── Re-entry guard ────────────────────────────────────────────────────
-      # If the issue already spawned a PR, skip everything and leave a comment.
-      - name: Check for existing PR
-        id: reentry
-        if: contains(github.event.issue.labels.*.name, 'pg-proposal:pr-created')
+      # ── Re-trigger comment ────────────────────────────────────────────────
+      - name: Point out that the PR was already created
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh issue comment ${{ github.event.issue.number }} \
             -R ${{ github.repository }} \
             --body ":warning: A proposal PR was already created from this issue. Please edit the project page on the PR branch instead."
-          echo "skip=true" >> "$GITHUB_OUTPUT"
+          echo "::notice::Skipping genesis — PR already created for this issue."
 
-      - name: Abort if PR already exists
-        if: steps.reentry.outputs.skip == 'true'
-        run: |
-          echo "::notice::Skipping — PR already created for this issue."
-          exit 0
+  genesis:
+    # prettier-ignore
+    if:
+      contains(github.event.issue.labels.*.name, 'pg-award-proposal')
+      && ! contains(github.event.issue.labels.*.name, 'pg-proposal:pr-created')
+    runs-on: ubuntu-latest
 
+    steps:
       # ── Parse & validate ──────────────────────────────────────────────────
       - name: Checkout repo
-        if: steps.reentry.outputs.skip != 'true'
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Parse proposal form
-        if: steps.reentry.outputs.skip != 'true'
         id: parse
         uses: issue-ops/parser@v5
         with:
@@ -48,7 +46,6 @@ jobs:
           issue-form-template: pg-award-proposal-form.yml
 
       - name: Validate proposal form
-        if: steps.reentry.outputs.skip != 'true'
         id: validate
         uses: issue-ops/validator@v4
         with:
@@ -57,7 +54,7 @@ jobs:
           add-comment: false
 
       - name: Label on validation failure
-        if: steps.reentry.outputs.skip != 'true' && steps.validate.outputs.result != 'success'
+        if: steps.validate.outputs.result != 'success'
         uses: issue-ops/labeler@v4
         with:
           action: add
@@ -67,7 +64,7 @@ jobs:
             issueops:validation-error
 
       - name: Post validation failure comment
-        if: steps.reentry.outputs.skip != 'true' && steps.validate.outputs.result != 'success'
+        if: steps.validate.outputs.result != 'success'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COMMENT_ERRORS: ${{ steps.validate.outputs.errors }}
@@ -78,24 +75,114 @@ jobs:
               --body-file -
 
       - name: Abort on validation failure
-        if: steps.reentry.outputs.skip != 'true' && steps.validate.outputs.result != 'success'
+        if: steps.validate.outputs.result != 'success'
         run: |
           echo "::error::Proposal form validation failed. See the issue comment for details."
           exit 1
 
-      # ── Clear validation-error label on success ───────────────────────────
-      - name: Remove validation-error label
-        if: steps.reentry.outputs.skip != 'true'
+      # ── Clear validation-error and ineligible labels on success ───────────
+      - name: Remove validation-error and ineligible labels
         uses: issue-ops/labeler@v4
         with:
           action: remove
           issue_number: ${{ github.event.issue.number }}
           labels: |
             issueops:validation-error
+            pg-proposal:ineligible
+
+      # ── Validate proposal eligibility ─────────────────────────────────────
+      - name: Check approved intake
+        id: check-intake
+        uses: actions/github-script@v9
+        env:
+          INTAKE_ISSUE_URL: ${{ steps.parse.outputs.parsed_pg-award-intake }}
+        with:
+          script: |
+            const step_result = {exists: false, accepted: false, eligible: false}
+            const intake_url_pattern = new RegExp(`^https://github\\.com/${context.repo.owner}/${context.repo.repo}/issues/(?<intake_number>\\d+)$`)
+            const intake_match = process.env.INTAKE_ISSUE_URL.match(intake_url_pattern)
+            if (!intake_match) {
+              return step_result
+            }
+            step_result.intake_number = Number(intake_match.groups.intake_number)
+            let intake_issue
+            try {
+              intake_issue = await github.rest.issues.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: step_result.intake_number
+              })
+            } catch (error) {
+              if (error.status === 404) {
+                intake_issue = null
+              } else {
+                throw error
+              }
+            }
+            if (!intake_issue) {
+              return step_result
+            }
+            step_result.exists = true
+            const accepted = intake_issue.data.labels.some((label) => (
+              typeof label === 'string' ? label : label.name
+            ) === 'pg-intake:accepted')
+            if (!accepted) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                labels: ['pg-proposal:ineligible']
+              })
+            } else {
+              step_result.accepted = true
+              step_result.eligible = true
+            }
+            return step_result
+
+      - name: Abort and comment that eligibility is not confirmed
+        if: fromJSON(steps.check-intake.outputs.result).eligible != true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_EXISTS: ${{ fromJSON(steps.check-intake.outputs.result).exists }}
+          INTAKE_ACCEPTED: ${{ fromJSON(steps.check-intake.outputs.result).accepted }}
+        run: |
+          URL_INVALID=":warning: The intake form URL is malformed or the issue number does not exist. Please edit the URL in the issue body above to run the intake check again. If you have not filled out an intake form, read the [proposer instructions](https://scf-public-goods-maintenance.github.io/pg-award/proposer-instructions/) first."
+          INTAKE_NOT_ACCEPTED=":no_entry: The linked intake form (#${{ fromJSON(steps.check-intake.outputs.result).intake_number }}) was not (yet) accepted. You may only create a proposal after the eligibility of this project has been confirmed."
+          if [[ "$ISSUE_EXISTS" != "true" ]]; then
+            COMMENT_BODY="$URL_INVALID"
+            echo "::error::Intake form URL was malformed or the issue did not exist."
+          elif [[ "$INTAKE_ACCEPTED" != "true" ]]; then
+            COMMENT_BODY="$INTAKE_NOT_ACCEPTED"
+            echo "::error::Linked intake issue did not have the pg-intake:accepted label."
+          else
+            COMMENT_BODY="Sorry, there's an error in \`check-intake\`, please contact a maintainer."
+            echo "::error::The check-intake step returned an impossible state."
+          fi
+          gh issue comment ${{ github.event.issue.number }} \
+            -R ${{ github.repository }} \
+            --body "$COMMENT_BODY"
+          exit 1
+
+      # ── Catch scenario: PR was created after the triggering event ─────────
+      - name: Check whether proposal PR was already created
+        id: check-pr-label
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if ! LABELS=$(gh issue view "${{ github.event.issue.number }}" \
+            -R "${{ github.repository }}" \
+            --json labels \
+            --jq '.labels[].name'); then
+            echo "::error::Could not check whether a proposal PR was already created."
+            exit 1
+          fi
+          if grep -Fxq 'pg-proposal:pr-created' <<< "$LABELS"; then
+            echo "::error::A proposal PR was already created for this issue."
+            exit 1
+          fi
 
       # ── Render project page ───────────────────────────────────────────────
       - name: Render project page from parsed form
-        if: steps.reentry.outputs.skip != 'true'
         id: render
         env:
           PARSED_JSON: ${{ steps.parse.outputs.json }}
@@ -105,7 +192,6 @@ jobs:
 
       # ── Create branch, commit, push ───────────────────────────────────────
       - name: Determine branch name
-        if: steps.reentry.outputs.skip != 'true'
         id: branch
         run: |
           SLUG="${{ steps.render.outputs.slug }}"
@@ -116,33 +202,84 @@ jobs:
           echo "name=${BRANCH}" >> "$GITHUB_OUTPUT"
 
       - name: Commit and push project page
-        if: steps.reentry.outputs.skip != 'true'
+        env:
+          PROJECT_TITLE: ${{ steps.render.outputs.project_title }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -c "${{ steps.branch.outputs.name }}" origin/main
           git add "${{ steps.render.outputs.file_path }}"
-          git commit -m "Add project page: ${{ steps.render.outputs.project_title }}"
+          git commit -m "Add project page: $PROJECT_TITLE"
           git push origin "${{ steps.branch.outputs.name }}"
 
-      # ── Create PR ─────────────────────────────────────────────────────────
+      # ── Create PR and label issue as PR-created ───────────────────────────
       - name: Create Pull Request
-        if: steps.reentry.outputs.skip != 'true'
         id: pr
+        shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_TITLE: ${{ steps.render.outputs.project_title }}
         run: |
-          PR_URL=$(gh pr create \
+          BODY=$(sed '1{/^---$/!q}; 1,/^---$/d' "${{ steps.render.outputs.file_path }}")
+          PR_URL=$(printf '%s' "${BODY:0:65536}" | gh pr create \
             --base main \
             --head "${{ steps.branch.outputs.name }}" \
-            --title "PG Award Proposal: ${{ steps.render.outputs.project_title }}" \
-            --body-file "${{ steps.render.outputs.file_path }}" \
+            --title "PG Award Proposal: $PROJECT_TITLE" \
+            --body-file - \
             --label "pg-award-proposal")
+          gh issue edit "${{ github.event.issue.number }}" \
+            -R "${{ github.repository }}" \
+            --add-label "pg-proposal:pr-created"
           echo "url=${PR_URL}" >> "$GITHUB_OUTPUT"
+          echo "number=${PR_URL##*/}" >> "$GITHUB_OUTPUT"
+
+      - name: Notify about renewal proposal
+        uses: actions/github-script@v9
+        env:
+          FILE_PATH: ${{ steps.render.outputs.file_path }}
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+        with:
+          script: |
+            let proposal_exists = false
+            try {
+              const proposal = await github.rest.repos.getContent({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                path: process.env.FILE_PATH,
+                ref: 'main'
+              })
+              proposal_exists = !Array.isArray(proposal.data)
+            } catch (error) {
+              if (error.status === 404) {
+                return
+              }
+              core.error(`Could not check whether the proposal page exists on main: ${error.message}`)
+            }
+
+            if (proposal_exists) {
+              const issue_comment = "Since you already completed the intake form flow, I've created your Proposal PR. This is a renewal proposal, and you did not need to use any forms. For a smoother experience next quarter, please follow the steps in the [renewals section](https://scf-public-goods-maintenance.github.io/pg-award/proposer-instructions/#renewals) of the proposer instructions."
+              const pr_comment = `:eyes: This renewal proposal was created through a form instead of opened directly by the project representative. @${process.env.ISSUE_AUTHOR}, did you run into problems following the renewal flow?`
+              await Promise.all([
+                github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  body: issue_comment
+                }),
+                github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: Number(process.env.PR_NUMBER),
+                  body: pr_comment
+                })
+              ]).catch((error) => {
+                core.error(`Could not post renewal notification comments: ${error.message}`)
+              })
+            }
 
       # ── Close issue with link to PR ───────────────────────────────────────
       - name: Close issue and link to PR
-        if: steps.reentry.outputs.skip != 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -152,37 +289,26 @@ jobs:
 
           **Next steps:**
           1. Edit your project page directly on the PR branch during the Discussion & Revisions phase.
-          2. Use the [GitHub web editor](https://github.com/${{ github.repository }}/edit/${{ steps.branch.outputs.name }}/${{ steps.render.outputs.file_path }}?pr=/${{ github.repository }}/pull/${{ github.event.issue.number }}) or \`git clone\` locally, commit, and push.
+          2. Use the [GitHub web editor](https://github.com/${{ github.repository }}/edit/${{ steps.branch.outputs.name }}/${{ steps.render.outputs.file_path }}?pr=/${{ github.repository }}/pull/${{ steps.pr.outputs.number }}) or \`git clone\` locally, commit, and push.
           3. Every commit to the project page auto-updates the PR description.
 
           _Please do not edit the PR description. The sync only works PR file --> PR body._
 
           See [Proposer Instructions](https://scf-public-goods-maintenance.github.io/pg-award/proposer-instructions/) for the full process."
 
-      # ── Label issue as PR-created ─────────────────────────────────────────
-      - name: Add pr-created label
-        if: steps.reentry.outputs.skip != 'true'
-        uses: issue-ops/labeler@v4
-        with:
-          action: add
-          create: true
-          issue_number: ${{ github.event.issue.number }}
-          labels: |
-            pg-proposal:pr-created
-
       # ── Step summary ──────────────────────────────────────────────────────
       - name: Write step summary
-        if: steps.reentry.outputs.skip != 'true'
-        run: |
-          cat >> "$GITHUB_STEP_SUMMARY" <<EOF
-          ## Proposal Genesis
+        env:
+          SUMMARY: |
+            ## Proposal Genesis
 
-          | | |
-          | --- | --- |
-          | **Issue** | #${{ github.event.issue.number }} |
-          | **Project** | ${{ steps.render.outputs.project_title }} |
-          | **Slug** | \`${{ steps.render.outputs.slug }}\` |
-          | **File** | \`${{ steps.render.outputs.file_path }}\` |
-          | **Branch** | \`${{ steps.branch.outputs.name }}\` |
-          | **PR** | ${{ steps.pr.outputs.url }} |
-          EOF
+            | | |
+            | --- | --- |
+            | **Issue** | #${{ github.event.issue.number }} |
+            | **Project** | ${{ steps.render.outputs.project_title }} |
+            | **Slug** | `${{ steps.render.outputs.slug }}` |
+            | **File** | `${{ steps.render.outputs.file_path }}` |
+            | **Branch** | `${{ steps.branch.outputs.name }}` |
+            | **PR** | ${{ steps.pr.outputs.url }} |
+        run: |
+          printf '%s\n' "$SUMMARY" >> "$GITHUB_STEP_SUMMARY"
