@@ -185,6 +185,8 @@ Completed work:
 
 ## Proposed Impact
 
+### 2026 Q3
+
 <!-- markdownlint-disable MD034 -->
 
 Q3 will continue the goal of making Radar easier to operate and easier to understand.
@@ -209,6 +211,8 @@ details when needed.
 <!-- markdownlint-enable MD034 -->
 
 ## Proposed Deliverables
+
+### 2026 Q3
 
 <!-- markdownlint-disable MD034 -->
 

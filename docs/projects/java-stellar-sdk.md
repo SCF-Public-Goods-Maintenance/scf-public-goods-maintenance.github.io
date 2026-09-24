@@ -142,6 +142,8 @@ building on Stellar with the SDK, lowering the barrier for developers using AI t
 
 ## Proposed Impact
 
+### 2026 Q3
+
 The primary goal for Q3 2026 is to ship java-stellar-sdk 4.0.0 as a stable release with full Protocol
 27 support, giving the ecosystem's JVM and Android developer base a supported path to the new
 protocol. CAP-71 Soroban authorization is already implemented in the 4.0.0 beta; the stable release
@@ -150,7 +152,9 @@ maintenance continues in parallel.
 
 ## Proposed Deliverables
 
-### 1. Release java-stellar-sdk 4.0.0 with Full Protocol 27 Support
+### 2026 Q3
+
+#### 1. Release java-stellar-sdk 4.0.0 with Full Protocol 27 Support
 
 Finalize the 4.0.0 beta into a stable release with complete Protocol 27 support, including CAP-71
 Soroban authorization (`ADDRESS_V2` and delegated `ADDRESS_WITH_DELEGATES` credentials) and the
@@ -162,7 +166,7 @@ stable release to Maven Central, is paced by Protocol 27 test-network availabili
 Proof: Stable 4.0.0 release on GitHub and Maven Central, auth examples and migration notes, passing
 CI on master.
 
-### 2. Continuous Maintenance and Improvement
+#### 2. Continuous Maintenance and Improvement
 
 Beyond routine upkeep, responding to community issues and pull requests, tracking Horizon and Soroban
 RPC changes, keeping Android compatibility current, and keeping CI/CD and dependencies up to date, we

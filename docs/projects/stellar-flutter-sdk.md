@@ -201,6 +201,8 @@ under the Default rule.
 
 ## Proposed Impact
 
+### 2026 Q3
+
 Keep the SDK compatible with Horizon, Soroban RPC, and protocol updates including Protocol 27.
 Maintain existing SEP implementations and update as needed. Fix bugs and respond to issues and
 feature requests.
@@ -220,7 +222,9 @@ the current SDK.
 
 ## Proposed Deliverables
 
-### Continuous Maintenance and Improvement
+### 2026 Q3
+
+#### Continuous Maintenance and Improvement
 
 Regular SDK updates addressing Horizon, Soroban RPC, and protocol updates (tracking Protocol 27
 through its mainnet activation), bug fixes, feature requests, and documentation updates. Maintain
@@ -231,14 +235,14 @@ compatibility matrices, CI pipelines, statistics dashboard, and SBOM workflow up
 Proof: Release notes on GitHub, PRs with the fixes and refactors, updated compatibility matrices, and
 the soneso-sdk-stats dashboard.
 
-### SEP-51 (XDR-JSON)
+#### SEP-51 (XDR-JSON)
 
 Implement bi-directional XDR/JSON conversion via the XDR generator, with round-trip unit tests and
 documentation, for cross-SDK parity with the Python and PHP SDKs.
 
 Proof: GitHub release, PR with implementation and tests, SEP-51 compatibility matrix, documentation.
 
-### Native ScVal Conversion
+#### Native ScVal Conversion
 
 Add a helper that converts a smart-contract value (XdrSCVal) to a native Dart value, so contract
 invocation and simulation results can be consumed directly instead of parsing the raw XDR union by
@@ -246,7 +250,7 @@ hand. This matches the JS and Python SDKs.
 
 Proof: GitHub release, PR with implementation and tests, documentation.
 
-### Contract Bindings Update
+#### Contract Bindings Update
 
 Update the Dart contract-bindings implementation that Soneso contributed to the community
 stellar-contract-bindings generator (linked from the Stellar CLI) so its generated Dart code is

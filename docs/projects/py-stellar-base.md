@@ -147,6 +147,8 @@ Stellar with the SDK, lowering the barrier for developers using AI tools.
 
 ## Proposed Impact
 
+### 2026 Q3
+
 The primary goal for Q3 2026 is to ship py-stellar-base 15.0.0 as a stable release with full Protocol
 27 support, giving the ecosystem's large Python user base a supported path to the new protocol.
 CAP-71 Soroban authorization is already implemented in the 15.0.0 beta; the stable release is held
@@ -155,7 +157,9 @@ maintenance continues in parallel.
 
 ## Proposed Deliverables
 
-### 1. Release py-stellar-base 15.0.0 with Full Protocol 27 Support
+### 2026 Q3
+
+#### 1. Release py-stellar-base 15.0.0 with Full Protocol 27 Support
 
 Finalize the 15.0.0 beta into a stable release with complete Protocol 27 support, including CAP-71
 Soroban authorization (`ADDRESS_V2` and delegated `ADDRESS_WITH_DELEGATES` credentials). The
@@ -166,7 +170,7 @@ PyPI.
 Proof: Stable 15.0.0 release on GitHub and PyPI, auth examples and migration notes, passing CI on
 main.
 
-### 2. Continuous Maintenance and Improvement
+#### 2. Continuous Maintenance and Improvement
 
 Beyond routine upkeep, responding to community issues and pull requests, tracking Horizon and Soroban
 RPC changes, and keeping CI/CD, the SBOM workflow, and dependencies current, we want to be candid

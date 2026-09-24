@@ -73,6 +73,8 @@ Q3 2026. According to our logs, the service reached the SLA of 99.992% since the
 
 ## Proposed Impact
 
+### 2026 Q3
+
 We aim to improve the website, documentation, provide relevant usage examples, and perform some
 direct outreach to Stellar developers community to showcase how they can streamline their complex
 multisig workflows using our service. This may significantly simplify life for any developers that
@@ -80,6 +82,8 @@ have to deal with multi-party controlled wallets, preauthorized transactions, or
 backed by by Stellar.
 
 ## Proposed Deliverables
+
+### 2026 Q3
 
 - Review the automatic signer scheme detection algorithm to fully account for:
   - Soroban transaction authorization entries ($4000)

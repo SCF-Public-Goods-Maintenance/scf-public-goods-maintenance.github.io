@@ -385,6 +385,8 @@ Infrastructure we shipped this quarter that was not in the Q2 deliverables:
 
 ## Proposed Impact
 
+### 2026 Q3
+
 <!-- markdownlint-disable MD034 -->
 
 **Complete the mainnet launch.** The Registry contract is live on mainnet as of this proposal. Q3
@@ -412,9 +414,11 @@ the ecosystem its first crates.io-style package experience for on-chain code.
 
 ## Proposed Deliverables
 
+### 2026 Q3
+
 <!-- markdownlint-disable MD034 -->
 
-### D1: Complete the Mainnet Launch (carried from Q2)
+#### D1: Complete the Mainnet Launch (carried from Q2)
 
 With the registry contract live on mainnet, finish the public rollout: run the mainnet indexer
 pipeline, point rgstry.xyz at the mainnet API and remove the "Coming Soon" banner, and land
@@ -424,7 +428,7 @@ raw secret key.
 Proof: mainnet data live and browsable at rgstry.xyz, the contract visible on Stellar Expert, and
 named contracts resolvable via `stellar registry` CLI.
 
-### D2: Release `import_contract!` (carried from Q2)
+#### D2: Release `import_contract!` (carried from Q2)
 
 Merge stellar-registry/cli#17 and publish the macro in released crates, documented with at least one
 working example and covered by integration tests.
@@ -432,14 +436,14 @@ working example and covered by integration tests.
 Proof: a crates.io release containing `import_contract!`, linked docs and example, CI running the
 integration tests.
 
-### D3: Flagged Contract Enforcement at Build Time (carried from Q2)
+#### D3: Flagged Contract Enforcement at Build Time (carried from Q2)
 
 Extend `import_contract!` / `import_contract_client!` to fail compilation when the referenced Wasm or
 Contract is flagged in the Registry, building on the on-chain flagging that shipped in April.
 
 Proof: a test demonstrating a flagged contract causes a build failure, and documented behavior.
 
-### D4: Finish Search, Pagination & Sorting on rgstry.xyz (carried from Q2)
+#### D4: Finish Search, Pagination & Sorting on rgstry.xyz (carried from Q2)
 
 Extend server-side search to contracts (stellar-registry/indexer#24), fix search-result updating
 (stellar-registry/ui#22), and ship pagination and sorting so the explorer handles 1,000+ entries
@@ -448,7 +452,7 @@ without degraded load time.
 Proof: live on rgstry.xyz; search, pagination, and sorting demonstrated against a 1,000+ entry
 dataset.
 
-### D5: Contract Explorer, Deploy Button & Verified-Build Badges (carried from Q2)
+#### D5: Contract Explorer, Deploy Button & Verified-Build Badges (carried from Q2)
 
 Ship the remaining explorer features: the embedded Contract Explorer on contract detail pages, a
 "deploy this Wasm" button, the remaining `stellar contract info meta` fields surfaced on detail
@@ -457,7 +461,7 @@ pages, and verified-build status from Stellar Expert on contract detail pages.
 Proof: all features live on production rgstry.xyz, manually verified against at least one mainnet
 contract.
 
-### D6: Governance Operations UI
+#### D6: Governance Operations UI
 
 Ship the governance proposal forms (stellar-registry/ui#16): propose adding a Wasm or contract to the
 root registry, creating a subregistry, or changing owners — executed through the Tansu-DAO-gated
@@ -466,7 +470,7 @@ registry manager contract that merged in Q2.
 Proof: a governance proposal created from rgstry.xyz, voted on in Tansu, and executed on-chain via
 `trigger`, with the transaction linked.
 
-### D7: Registry Documentation & Education (carried from Q2)
+#### D7: Registry Documentation & Education (carried from Q2)
 
 Publish the Registry docs site and video series covering publishing a Wasm, deploying named and
 unnamed contracts, using `import_contract!`, and publishing/releasing via the verified-build CI
@@ -474,7 +478,7 @@ workflow.
 
 Proof: documentation live on the Registry docs site and videos on The Aha Company's YouTube channel.
 
-### D8: Support named G-addresses
+#### D8: Support named G-addresses
 
 Just as Registry today allows giving names to Wasms and Contracts, expand it to also allow giving
 names to G-addresses. These will be displayed in the rgstry.xyz UI, so that the "Deployer" and
@@ -489,7 +493,7 @@ Issue: https://github.com/stellar-scaffold/cli/issues/421
 Proof: code shipped; address system available, documented, and advertised to the community; more than
 just Aha addresses added and available.
 
-### D9: Surface emerging Source Verification information
+#### D9: Surface emerging Source Verification information
 
 The Registry team submitted a
 [proposal for the Source Verification system RFP](https://communityfund.stellar.org/dashboard/submissions/receWOpMjj7FxAydj).
@@ -506,7 +510,7 @@ and Registry gives everyone a way to view and make sense of this information.
 Proof: all SEP-58 fields viewable on rgstry.xyz; verification status of those fields by independent
 Source Verification services also shown in a way that exposes, rather than flattens, disagreement.
 
-### D10: guide Tansu evolution to support Registry needs
+#### D10: guide Tansu evolution to support Registry needs
 
 Harnessing Tansu for Registry's governance required significant effort and an unsatisfying technical
 workaround (see above discussion of Tansu-DAO-gated registry manager). We will collaborate with the
@@ -525,7 +529,7 @@ Proof:
 either migrates out of the stellar-registry repository to Tansu, becoming easier to use for all
 ecosystem projects, or becomes altogether unnecessary.
 
-### D11: Registry GH Workflow to publish Wasms and upgrade contracts
+#### D11: Registry GH Workflow to publish Wasms and upgrade contracts
 
 Wrap the
 [stellar-expert/soroban-build-workflow](https://github.com/stellar-expert/soroban-build-workflow) and
@@ -546,7 +550,7 @@ privilege levels.
 Proof: new repository available at, say, `stellar-registry/gh-build-workflow`. Documented and tested
 in production with the Registry wasm itself.
 
-### D12: UI: Expose full contract version history
+#### D12: UI: Expose full contract version history
 
 The Registry API
 [now exposes full version history](https://stellar-registry-testnet.fly.dev/v1/contracts/registry),
@@ -561,7 +565,7 @@ full-blockchain comprehensibility.
 Proof: Contract detail pages on [rgstry.xyz/contracts](https://testnet.rgstry.xyz/contracts) display
 information about full contract history.
 
-### D13: Documentation consolidation & redesign; potential migration of rgstry.xyz
+#### D13: Documentation consolidation & redesign; potential migration of rgstry.xyz
 
 Implement new logo and design elements, secured in Q2, across rgstry.xyz site and other Registry
 properties such as GitHub. Organize videos created as part of D7 into landing page and other relevant
@@ -579,7 +583,7 @@ simple to onboard and make the most of Registry.
 Proof: redesigned site live, videos highlighted throughout, and question of domain's permanent home
 settled with decision documented and justified.
 
-### D14: Extend `import_contract!` macro to support SAC and XLM
+#### D14: Extend `import_contract!` macro to support SAC and XLM
 
 Currently it is difficult to work with Stellar Asset Contracts, you need to know the asset encoding
 or provide the contract Id. Furthermore, writing unit tests which use SACs, particularly the native

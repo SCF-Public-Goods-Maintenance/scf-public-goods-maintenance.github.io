@@ -129,6 +129,8 @@ shift from design discussion to a planned firmware task makes Soroban the top pr
 
 ## Proposed Impact
 
+### 2026 Q3
+
 The primary goal for Q3 2026 is Soroban. Now that the Trezor team has added Soroban support to their
 roadmap, delivering Soroban transaction signing on Trezor is the highest-priority workstream, working
 alongside the Trezor firmware team to drive the integration forward. In parallel, we will add
@@ -138,7 +140,9 @@ the two most widely used secure-hardware ecosystems as the network evolves.
 
 ## Proposed Deliverables
 
-### 1. Soroban Support for Trezor
+### 2026 Q3
+
+#### 1. Soroban Support for Trezor
 
 Advance Soroban transaction signing on Trezor in collaboration with the Trezor firmware team,
 building on the `StellarInvokeHostFunctionOp` implementation already submitted upstream. With Soroban
@@ -152,7 +156,7 @@ steps.
 Proof: Development activity and review progress on the Soroban firmware implementation, tracked via
 the development branch and CI results.
 
-### 2. Protocol 27 Support for the Ledger App and SDK
+#### 2. Protocol 27 Support for the Ledger App and SDK
 
 Add Protocol 27 support to the Stellar Ledger app and its associated SDK/integration libraries,
 ensuring transactions built under the upcoming protocol upgrade continue to parse, display, and sign
@@ -161,7 +165,7 @@ breakage for security-conscious users and integrators when the network transitio
 
 Proof: Release/changelog for the Stellar Ledger app and SDK covering Protocol 27 support.
 
-### 3. Ongoing Maintenance
+#### 3. Ongoing Maintenance
 
 Regular upkeep of the Stellar Ledger app and Trezor integrations in coordination with the Ledger and
 Trezor teams: responding to community issues and pull requests, keeping SDK and firmware dependencies

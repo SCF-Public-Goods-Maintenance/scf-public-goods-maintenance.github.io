@@ -149,6 +149,8 @@ As suggested in the SDF review:
 
 ## Proposed Impact
 
+### 2026 Q2
+
 <!-- markdownlint-disable MD034 -->
 
 Our plan for 2026 Q2 was developed with two main objectives:
@@ -175,6 +177,8 @@ We will also develop a roadmap to evolve our AI POC into a beta-ready product.
 <!-- markdownlint-enable MD034 -->
 
 ## Proposed Deliverables
+
+### 2026 Q2
 
 <!-- markdownlint-disable MD034 -->
 

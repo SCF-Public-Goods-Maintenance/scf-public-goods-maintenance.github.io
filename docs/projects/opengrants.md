@@ -102,6 +102,8 @@ This generated the following impact for the Stellar ecosystem:
 
 ## Proposed Impact
 
+### 2026 Q3
+
 <!-- markdownlint-disable MD034 -->
 
 For the next three months, OpenGrants will remain the reliable, up-to-date source of structured
@@ -137,6 +139,8 @@ and exposing OpenGrants data programmatically so agents and downstream tools can
 <!-- markdownlint-enable MD034 -->
 
 ## Proposed Deliverables
+
+### 2026 Q3
 
 <!-- markdownlint-disable MD034 -->
 

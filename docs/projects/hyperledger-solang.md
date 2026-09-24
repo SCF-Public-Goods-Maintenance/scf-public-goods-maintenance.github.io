@@ -206,6 +206,8 @@ The deliverables of Q2 were categorized as follows:
 
 ## Proposed Impact
 
+### 2026 Q3
+
 <!-- markdownlint-disable MD034 -->
 
 - **Expand Solidity support via fuzzing.** Keep running and improving the
@@ -234,9 +236,9 @@ The deliverables of Q2 were categorized as follows:
 
 <!-- markdownlint-disable MD034 -->
 
-## Proposed Deliverables (next three months)
+### 2026 Q3
 
-### 1. Extend Solidity support via fuzzing — harden the compiler
+#### 1. Extend Solidity support via fuzzing — harden the compiler
 
 Continue running and improving the [Solang fuzzer](https://github.com/salaheldinsoliman/fuzzer),
 triaging and fixing the compiler crashes it surfaces. Robustness is the gating requirement to bring
@@ -249,7 +251,7 @@ Soroban.
   already exists and a wave of fixes is already in flight (e.g. #1884–#1894, #1915, #1924); relevant
   to bringing Solang to production; and time-bound to the next three months.
 
-### 2. Differential tester — first working version (via the LFDT mentorship)
+#### 2. Differential tester — first working version (via the LFDT mentorship)
 
 Through the
 [LFDT mentorship](https://github.com/LF-Decentralized-Trust-Mentorships/mentorship-program/issues/74),
@@ -265,7 +267,7 @@ cannot, the next level of production-readiness assurance for Solidity on Stellar
   relevant to compiler correctness for Stellar; and time-bound to the next three months, when the
   mentorship concludes.
 
-### 3. Grow developer reach and run a structured feedback round
+#### 3. Grow developer reach and run a structured feedback round
 
 Produce Solidity-on-Stellar developer content — blog posts, a video walkthrough, and a live workshop
 — centered on the new **Luxor (v0.3.5)** release and the Playground, then collect and triage
@@ -277,7 +279,7 @@ and creates a prioritized feedback loop that steers future work.
   GitHub issues; achievable given our ~20 monthly active users and prior launch reach; relevant to
   adoption and onboarding; and time-bound to the next three months.
 
-### 4. Support the remaining Soroban examples (carried over from Q2)
+#### 4. Support the remaining Soroban examples (carried over from Q2)
 
 Complete the remaining feasible upstream
 [soroban-examples](https://github.com/stellar/soroban-examples), fixing the compiler gaps they expose

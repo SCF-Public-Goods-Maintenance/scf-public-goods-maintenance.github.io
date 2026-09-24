@@ -180,6 +180,8 @@ and union-arm rejection.
 
 ## Proposed Impact
 
+### 2026 Q3
+
 Keep the SDK compatible with Horizon, Soroban RPC, and protocol updates including Protocol 27.
 Maintain existing SEP implementations and update as needed. Fix bugs and respond to issues and
 feature requests.
@@ -198,7 +200,9 @@ offline. The Python and Java SDKs already implement this.
 
 ## Proposed Deliverables
 
-### Continuous Maintenance and Improvement
+### 2026 Q3
+
+#### Continuous Maintenance and Improvement
 
 Regular SDK updates addressing Horizon, Soroban RPC, and protocol updates (tracking Protocol 27
 through its mainnet activation), bug fixes, feature requests, and documentation updates. Maintain
@@ -209,7 +213,7 @@ compatibility matrices, CI pipelines, statistics dashboard, and SBOM workflow up
 Proof: Release notes on GitHub, updated compatibility matrices, Codecov coverage report, and the
 soneso-sdk-stats dashboard.
 
-### Native ScVal Conversion
+#### Native ScVal Conversion
 
 Add a helper that converts a smart-contract value (XdrSCVal) to a native PHP value, so contract
 invocation and simulation results can be consumed directly instead of parsing the raw XDR union by
@@ -217,7 +221,7 @@ hand. This matches the JS and Python SDKs.
 
 Proof: GitHub release, PR with implementation and tests, documentation.
 
-### Contract Bindings Update
+#### Contract Bindings Update
 
 Update the PHP contract-bindings implementation that Soneso contributed to the community
 stellar-contract-bindings generator (linked from the Stellar CLI) so its generated PHP code is
@@ -225,7 +229,7 @@ compatible with the current SDK.
 
 Proof: pull request to the stellar-contract-bindings repository.
 
-### SEP-35 (Operation IDs)
+#### SEP-35 (Operation IDs)
 
 Implement SEP-35: a TOID utility that packs and unpacks a ledger sequence, transaction order, and
 operation index into the total-order ID used for operation IDs and Horizon paging cursors, with unit

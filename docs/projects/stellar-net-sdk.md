@@ -440,6 +440,8 @@ mapping).
 
 ## Proposed Impact
 
+### 2026 Q3
+
 <!-- markdownlint-disable MD034 -->
 
 Over the next three months Q3 2026, our goals are to close the SDK's most-used SEP gaps and to
@@ -473,9 +475,11 @@ milestone, not a sample app.
 
 ## Proposed Deliverables
 
+### 2026 Q3
+
 <!-- markdownlint-disable MD034 -->
 
-### Deliverable 1 — SEP Expansion: SEP-7, SEP-12, SEP-38 (+ matrices)
+#### Deliverable 1 — SEP Expansion: SEP-7, SEP-12, SEP-38 (+ matrices)
 
 - **Specific:** Implement SEP-7 (URI scheme for payment requests and delegated signing), SEP-12 (KYC
   API), and SEP-38 (anchor RFQ/quotes), each with unit tests and a per-SEP compatibility matrix in
@@ -495,7 +499,7 @@ milestone, not a sample app.
 - **Time-bound:** Complete by end of the 3-month period, shipped in one or more 16.x minors as they
   complete.
 
-### Deliverable 2 — MAUI Validation (incl. environment setup)
+#### Deliverable 2 — MAUI Validation (incl. environment setup)
 
 - **Specific:** Three parts. **Part 0, desk check (week 1 of July):** confirm whether the crypto
   backends (NSec, Sodium.Core) load on iOS/Android at all, given that neither ships native libsodium
@@ -528,7 +532,7 @@ milestone, not a sample app.
 - **Time-bound:** Desk check in week 1 of July; environment and validation in the second half of the
   quarter, after the multi-target package is published.
 
-### Non-deliverable 1 — Developer Support & Maintenance Responsiveness
+#### Non-deliverable 1 — Developer Support & Maintenance Responsiveness
 
 - **Specific:** Triage and respond to SDK-related GitHub issues, feature requests, and Discord
   inquiries throughout the quarter. The two already-triaged bugs (#193, #197) are part of the Q2
@@ -539,7 +543,7 @@ milestone, not a sample app.
 - **Relevant:** Maintains developer trust and reduces adoption friction.
 - **Time-bound:** Ongoing throughout the 3-month period.
 
-### Non-deliverable 2 — Capacity Buffer
+#### Non-deliverable 2 — Capacity Buffer
 
 A contingency reserve sized for this quarter's specific risks: native-crypto or trimming surprises
 during MAUI validation, netstandard2.1 regressions surfacing after the multi-target package reaches

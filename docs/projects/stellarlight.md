@@ -307,6 +307,8 @@ launch interview: <https://x.com/lumenloop/status/2069451377223536659>.
 
 ## Proposed Impact
 
+### 2026 Q3
+
 <!-- markdownlint-disable MD034 -->
 
 the ecosystem is going ai-native, and stellar light is positioned to be the data layer it runs on.
@@ -383,9 +385,11 @@ indispensable foundation the ecosystem's ai layer is built on.
 
 ## Proposed Deliverables
 
+### 2026 Q3
+
 <!-- markdownlint-disable MD034 -->
 
-### 1. code + current-state intelligence layer — the raven dependency
+#### 1. code + current-state intelligence layer — the raven dependency
 
 build the code-truth layer: score live soroban/stellar repo code and match it against the docs and
 CAP/protocol history, layered on top of the repo/project/funding/partner data already indexed, so
@@ -398,7 +402,7 @@ flagged this as the piece that makes stellar light irreplaceable rather than dup
 code-truth endpoint live and documented in the openapi spec, answering a defined set of
 code/current-state questions with sourced references.
 
-### 2. continuous eval + improvement loop
+#### 2. continuous eval + improvement loop
 
 institutionalize a repeatable evaluation cycle: run a large, growing question set — from raven's
 evals, from real questions builders ask across the ecosystem, and from our own golden set — against
@@ -408,7 +412,7 @@ ecosystem grows around it, rather than drifting. measurable: eval harness runnin
 cadence with a tracked answer-quality score that improves over the quarter, and regressions caught
 before they ship (drift guard + golden evals in CI).
 
-### 3. partner portal to general availability
+#### 3. partner portal to general availability
 
 take the partner layer out of beta: onboard real anchors, on/off-ramps, infrastructure, tooling, and
 audit-firm partners onto the self-service portal, ship the claim + ownership-verification flow, keep
@@ -419,7 +423,7 @@ and infra providers, and partners get a reason to keep their own data accurate �
 loop that also feeds raven. measurable: portal out of beta, partners live with maintained profiles,
 concierge matching on structured fields, and freshness check-ins sending.
 
-### 4. data pipelines, freshness + ranking quality — ongoing
+#### 4. data pipelines, freshness + ranking quality — ongoing
 
 maintain and harden every automated pipeline (sdf airtable, github, goldsky, defillama, rwa.xyz,
 dorahacks, stellar passport, electric capital, and partners' stellar.toml) and keep ranking/relevance
@@ -430,7 +434,7 @@ infrastructure rather than a stale directory. measurable: pipelines running with
 downtime, new projects/stablecoins/repos reflected within ~1 week, drift guard green, and /api/status
 freshness current.
 
-### 5. scf program support, rfp + hackathon maintenance, and reporting — ongoing
+#### 5. scf program support, rfp + hackathon maintenance, and reporting — ongoing
 
 keep the rfp section populated with the current (q2) round of scf rfps and surface them to builders
 (also mirrored to the scf gitbook); maintain the ideas platform, the hackathon tracker with

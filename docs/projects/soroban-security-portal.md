@@ -231,6 +231,8 @@ menu.
 
 ## Proposed Impact
 
+### 2026 Q3
+
 We hope that although there are not thousands of daily users, the few that do use it can continue to
 rely on quality information to learn and keep Stellar secure.
 
@@ -240,18 +242,20 @@ base for auditors, developers, users and curious minds makes people (and bots) s
 
 ## Proposed Deliverables
 
+### 2026 Q3
+
 As the Stellar Security Portal is in a good place now, we will focus our attention towards continued
 maintenance and small improvements. As we are currently caught up on all publicly available audit
 reports we plan to keep it that way.
 
-### Ongoing maintenance budget (100%)
+#### Ongoing maintenance budget (100%)
 
 The majority of the budget request will go towards ongoing maintenance for both the Portal and the
 contents (audit reports & vulnerabilities) which are hosted there. As always we want to ensure that
 we have as much up to date information as we can on the portal. Adding individual vulns is time
 consuming and requires thoroughly checking each vulnerability for consistency.
 
-### New Features
+#### New Features
 
 New features are currently being supported through the Drips & Grantfox campaigns. Layout adjustments
 or code fixes are covered under the regular maintenance tracking budget.

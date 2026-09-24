@@ -106,6 +106,8 @@ quarter.
 
 ## Proposed Impact
 
+### 2026 Q3
+
 1. **Transaction Investigation and Safety Context** Give users, support teams, and ecosystem
    participants a practical way to trace suspicious or confusing account activity. The goal is not to
    make fraud determinations, but to provide clear evidence, graph context, known labels, timeline
@@ -127,6 +129,8 @@ quarter.
    longer time ranges.
 
 ## Proposed Deliverables
+
+### 2026 Q3
 
 1. **StellarChain Investigator: Transaction, Account, and Payment Tracing Tool**
 

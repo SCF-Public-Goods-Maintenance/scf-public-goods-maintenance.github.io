@@ -83,22 +83,24 @@ https://github.com/jamesbachini/Soroban-Playground/graphs/commit-activity
 
 ## Proposed Impact
 
-### Availability Deliverable
+### 2026 Q2
+
+#### Availability Deliverable
 
 Maintain and scale SoroPG to support the growing demand.
 
-### Academy Deliverable
+#### Academy Deliverable
 
 Build a learning platform with lessons for developers new to Stellar. I've started working towards
 this by implementing workspaces in the repo. This allows you to pull in complete code bases such as
 from [Stellar's Soroban Examples](https://github.com/stellar/soroban-examples/) repo.
 
-### Documentation Deliverable
+#### Documentation Deliverable
 
 Neglected to date but important for technical reference. I know how it works but it might be useful
 for others to know as well or at least have a place to find out and dig into the nuts and bolts.
 
-### General
+#### General
 
 For the best part of the last year it's been, to my knowledge, the only viable option for an online
 IDE in the Stellar ecosystem. AI has and will continue to disrupt how we build software which has
@@ -111,7 +113,9 @@ Stellar.
 
 ## Proposed Deliverables
 
-### Availability
+### 2026 Q2
+
+#### Availability
 
 - Maintain SoroPG with ≥99% uptime
 
@@ -122,7 +126,7 @@ Ecosystem value: Deliver a competitive online IDE for smart contract developers.
 
 Budget allocation: $25k
 
-### Academy
+#### Academy
 
 - Launch an Academy MVP integrated into SoroPG
 
@@ -135,7 +139,7 @@ Ecosystem value: Accelerates developer onboarding and education pipeline.
 
 Budget allocation: $10k
 
-### Documentation
+#### Documentation
 
 - Publish core technical documentation
 

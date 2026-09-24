@@ -262,6 +262,8 @@ OpenZeppelin example-contract updates, and the Protocol 27 upgrade.
 
 ## Proposed Impact
 
+### 2026 Q3
+
 With Stellar Registry incubated out as its own public good, Stellar Scaffold enters Q3 with a sharper
 scope: the front door of the Stellar ecosystem. The template monorepo shipped in Q2 turns "the
 official React starter" into a multi-framework template system — Svelte is live, and the `org/repo`
@@ -274,7 +276,7 @@ We are deliberately committing to a shorter list this quarter than last: the Q2 
 done, and Q3 is about finishing what it unblocked. Every committed deliverable below either has an
 open PR, a shipped first slice, or a completed design from Q2 discovery.
 
-### A note on budget
+#### A note on budget
 
 The Registry split moves that workstream to its own proposal, but it does not shrink this one
 proportionally: the template surface we maintain grew from one framework to a monorepo of shared
@@ -284,7 +286,9 @@ now buys depth and reliability on that wider surface rather than breadth of new 
 
 ## Proposed Deliverables
 
-## D1: Create `scaffold doctor` command
+### 2026 Q3
+
+#### D1: Create `scaffold doctor` command
 
 - A new command that examines and diagnoses environment problems in the user's project: wrong Rust
   toolchain, missing dependencies (e.g. Docker), an unhealthy localnet, incorrect `scaffold.yml`
@@ -298,7 +302,7 @@ now buys depth and reliability on that wider surface rather than breadth of new 
   It also provides value to projects bootstrapped by other means (not Scaffold) that end up with
   environment and version problems.
 
-## D2: Complete the `scaffold.yml` configuration migration
+#### D2: Complete the `scaffold.yml` configuration migration
 
 - Finish the CLI configuration rework begun in Q2: fold network and contract-client configuration
   into `scaffold.yml` (whose `config:` section shipped with the template monorepo), retire
@@ -313,7 +317,7 @@ now buys depth and reliability on that wider surface rather than breadth of new 
   rework also decouples target-network builds from localnet state (the root cause behind issue 267)
   and enables per-framework directory conventions for community templates.
 
-## D3: Ship Stellar-Wallets-Kit v2 through the shared wallet module
+#### D3: Ship Stellar-Wallets-Kit v2 through the shared wallet module
 
 - Land the in-review Wallets-Kit v2 upgrade in the shared `@stellar-scaffold/app-lib` package so all
   framework templates (React, Svelte, and future Vue) get the upgrade from a single integration
@@ -324,7 +328,7 @@ now buys depth and reliability on that wider surface rather than breadth of new 
 - Ecosystem value: keeps scaffolded apps current with the latest wallet standards, and validates the
   shared-app-lib architecture: one wallet integration maintained once, consumed by every template.
 
-## D4: Agent-facing docs: hosted `SKILL.md` + in-project `AGENTS.md`
+#### D4: Agent-facing docs: hosted `SKILL.md` + in-project `AGENTS.md`
 
 - Publish a self-contained `SKILL.md` at scaffoldstellar.org teaching AI agents Scaffold as a system,
   and ship `AGENTS.md` files in generated projects (with `init` stripping contributor-only content so
@@ -337,7 +341,7 @@ now buys depth and reliability on that wider surface rather than breadth of new 
   fool-proof, preventing AIs from making silly mistakes both when scaffolding a project and when
   working inside one.
 
-## D5: Complete BYOFrontend: "no frontend" option + community-template guide
+#### D5: Complete BYOFrontend: "no frontend" option + community-template guide
 
 - Finish the remaining scope from Q2's BYOFrontend deliverable: a "no frontend" init option
   (contracts and clients without a UI layer) and a contribution guide documenting how community
@@ -350,7 +354,7 @@ now buys depth and reliability on that wider surface rather than breadth of new 
   ecosystem gets more framework options (Vue, Solid, etc.) without every template landing on one
   team's maintenance budget.
 
-## D6: Documentation consolidation & redesign
+#### D6: Documentation consolidation & redesign
 
 - Redesign the Scaffold docs website (taking inspiration from the new Registry site), update the
   tutorial to cover the latest Registry publish/deploy integration, complete the domain migration,
@@ -364,7 +368,7 @@ now buys depth and reliability on that wider surface rather than breadth of new 
   information across the ecosystem and keeping the Registry integration path — now a cross-project
   concern — accurately documented.
 
-## D7: Ongoing maintenance & releases
+#### D7: Ongoing maintenance & releases
 
 - Regular tagged releases with changelogs, protocol upgrades, OpenZeppelin example-contract updates,
   issue/PR triage, and CI reliability work as the template matrix grows.
@@ -372,7 +376,7 @@ now buys depth and reliability on that wider surface rather than breadth of new 
 - Ecosystem value: a "front door" tool must always work with the current protocol and ecosystem
   libraries; reliability is the feature.
 
-## D8 (Stretch): At least one ecosystem-contributed UI template
+#### D8 (Stretch): At least one ecosystem-contributed UI template
 
 - Work with a specific community partner or host a hackathon to solicit at least one new UI template.
   This could be a new JS view engine such as Vue, or an existing view engine (React, Svelte)
@@ -385,7 +389,7 @@ now buys depth and reliability on that wider surface rather than breadth of new 
   demand for Vue prove itself via the community path than pre-commit maintenance of a third official
   template.
 
-## D9 (Stretch): Monitor releases of ecosystem projects
+#### D9 (Stretch): Monitor releases of ecosystem projects
 
 - Implement the scheduled-CI monitoring approach designed in Q2: automatic notifications (issues or
   PRs) when complex ecosystem dependencies such as Stellar-Wallets-Kit publish updates, structured so
@@ -395,7 +399,7 @@ now buys depth and reliability on that wider surface rather than breadth of new 
 - Ecosystem value: ecosystem dependencies ship breaking changes; catching them early keeps Scaffold —
   and every project scaffolded from it — working and current.
 
-## D10 (Stretch): Anonymous usage telemetry
+#### D10 (Stretch): Anonymous usage telemetry
 
 - Add basic, anonymous usage telemetry to the CLI (e.g. `scaffold init` counts, deploys per network)
   so the team can measure real adoption instead of relying on anecdote. Do this in conjunction with
@@ -406,7 +410,7 @@ now buys depth and reliability on that wider surface rather than breadth of new 
 - Ecosystem value: lets us (and SCF) evaluate Scaffold's actual ecosystem impact quantitatively and
   prioritize future work by evidence.
 
-## D11 (Stretch): Interactive OpenZeppelin contract wizard
+#### D11 (Stretch): Interactive OpenZeppelin contract wizard
 
 - An interactive CLI mirroring wizard.openzeppelin.com for adding OZ-based contracts to a Scaffold
   project (building on the draft in https://github.com/stellar-scaffold/cli/pull/391).
@@ -415,7 +419,7 @@ now buys depth and reliability on that wider surface rather than breadth of new 
 - Ecosystem value: safe, audited building blocks become the path of least resistance for new
   contracts.
 
-## D12 (Stretch): Update starter app's Debug page
+#### D12 (Stretch): Update starter app's Debug page
 
 - Improve the generated app's contract Debug page: clearer results display, additional transaction
   details, and a persistent block-explorer link.

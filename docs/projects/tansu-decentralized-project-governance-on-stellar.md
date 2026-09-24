@@ -162,6 +162,8 @@ Proof of completion:
 
 ## Proposed Impact
 
+### 2026 Q3
+
 <!-- markdownlint-disable MD034 -->
 
 Q3's objective is about making Tansu reliable and usable for our first users. The main goals are:
@@ -187,9 +189,11 @@ is funded, coordinate on NQG/Tansu per their [roadmap](https://hackmd.io/@dan13r
 
 ## Proposed Deliverables
 
+### 2026 Q3
+
 <!-- markdownlint-disable MD034 -->
 
-### D1: Public Goods Award
+#### D1: Public Goods Award
 
 Tansu hosts the PG Award program.
 
@@ -206,7 +210,7 @@ Tansu hosts the PG Award program.
 Measure: Q3 vote on testnet at https://testnet.tansu.dev/project/?name=stellarpgq3 ; (conditional on
 SDF) mainnet NFT/NQG populated; mid-grant template shipped or new process proposal documented.
 
-### D2: Stellar Registry
+#### D2: Stellar Registry
 
 Registry Security Council vote on Tansu and further support
 [3111b944792c0b5da9f6c8f88e52cdeebd1a3d82](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/3111b944792c0b5da9f6c8f88e52cdeebd1a3d82).
@@ -221,7 +225,7 @@ Registry Security Council vote on Tansu and further support
 Measure: Testnet demo: Tansu vote executes a registry action; templates in dApp; name resolution
 works.
 
-### D3: Governance features
+#### D3: Governance features
 
 - **Evidence in dApp:** SBOM/CVE/Attestation usable
   [#204](https://github.com/Consulting-Manao/tansu/issues/204)[#196](https://github.com/Consulting-Manao/tansu/issues/196)
@@ -239,7 +243,7 @@ Measure: Evidence on project pages and management in the dApp itself; Nido suppo
 on-boarding and usage of Tansu; per-project config documented; yes/no approach documented; better
 management of discussions and other artifacts.
 
-### D4: Maintenance, Security and Operations
+#### D4: Maintenance, Security and Operations
 
 - **Nido wallet support:** passkey smart accounts with [nido.fyi](https://nido.fyi)
   [62fa73dfad0c043a58c90feb9ad92ea7310656b7](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/62fa73dfad0c043a58c90feb9ad92ea7310656b7)
