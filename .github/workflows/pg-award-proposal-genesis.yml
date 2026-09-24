@@ -16,7 +16,7 @@ jobs:
     if: contains(github.event.issue.labels.*.name, 'pg-proposal:pr-created')
     runs-on: ubuntu-latest
     steps:
-      # ── Re-trigger comment ──────────────────────────────────────────────────
+      # ── Re-trigger comment ────────────────────────────────────────────────
       - name: Point out that the PR was already created
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -80,7 +80,7 @@ jobs:
           echo "::error::Proposal form validation failed. See the issue comment for details."
           exit 1
 
-      # ── Clear validation-error and ineligible labels on success ───────────────────────────
+      # ── Clear validation-error and ineligible labels on success ───────────
       - name: Remove validation-error and ineligible labels
         uses: issue-ops/labeler@v4
         with:
@@ -163,6 +163,24 @@ jobs:
             --body "$COMMENT_BODY"
           exit 1
 
+      # ── Catch scenario: PR was created after the triggering event ─────────
+      - name: Check whether proposal PR was already created
+        id: check-pr-label
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if ! LABELS=$(gh issue view "${{ github.event.issue.number }}" \
+            -R "${{ github.repository }}" \
+            --json labels \
+            --jq '.labels[].name'); then
+            echo "::error::Could not check whether a proposal PR was already created."
+            exit 1
+          fi
+          if grep -Fxq 'pg-proposal:pr-created' <<< "$LABELS"; then
+            echo "::error::A proposal PR was already created for this issue."
+            exit 1
+          fi
+
       # ── Render project page ───────────────────────────────────────────────
       - name: Render project page from parsed form
         id: render
@@ -192,9 +210,10 @@ jobs:
           git commit -m "Add project page: ${{ steps.render.outputs.project_title }}"
           git push origin "${{ steps.branch.outputs.name }}"
 
-      # ── Create PR ─────────────────────────────────────────────────────────
+      # ── Create PR and label issue as PR-created ───────────────────────────
       - name: Create Pull Request
         id: pr
+        shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -205,6 +224,9 @@ jobs:
             --title "PG Award Proposal: ${{ steps.render.outputs.project_title }}" \
             --body-file - \
             --label "pg-award-proposal")
+          gh issue edit "${{ github.event.issue.number }}" \
+            -R "${{ github.repository }}" \
+            --add-label "pg-proposal:pr-created"
           echo "url=${PR_URL}" >> "$GITHUB_OUTPUT"
           echo "number=${PR_URL##*/}" >> "$GITHUB_OUTPUT"
 
@@ -270,16 +292,6 @@ jobs:
           _Please do not edit the PR description. The sync only works PR file --> PR body._
 
           See [Proposer Instructions](https://scf-public-goods-maintenance.github.io/pg-award/proposer-instructions/) for the full process."
-
-      # ── Label issue as PR-created ─────────────────────────────────────────
-      - name: Add pr-created label
-        uses: issue-ops/labeler@v4
-        with:
-          action: add
-          create: true
-          issue_number: ${{ github.event.issue.number }}
-          labels: |
-            pg-proposal:pr-created
 
       # ── Step summary ──────────────────────────────────────────────────────
       - name: Write step summary
