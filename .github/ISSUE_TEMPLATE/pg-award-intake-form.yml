@@ -147,7 +147,7 @@ body:
         e.g. end user-facing products built upon your project (directly or indirectly), Total Value
         Locked, and/or Monthly Active Users.
     validations:
-      required: trueWhy does your project qualify as a Stellar public good?
+      required: true
 
   - type: textarea
     id: pg-qualification
