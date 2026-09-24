@@ -202,12 +202,14 @@ jobs:
           echo "name=${BRANCH}" >> "$GITHUB_OUTPUT"
 
       - name: Commit and push project page
+        env:
+          PROJECT_TITLE: ${{ steps.render.outputs.project_title }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -c "${{ steps.branch.outputs.name }}" origin/main
           git add "${{ steps.render.outputs.file_path }}"
-          git commit -m "Add project page: ${{ steps.render.outputs.project_title }}"
+          git commit -m "Add project page: $PROJECT_TITLE"
           git push origin "${{ steps.branch.outputs.name }}"
 
       # ── Create PR and label issue as PR-created ───────────────────────────
@@ -216,12 +218,13 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_TITLE: ${{ steps.render.outputs.project_title }}
         run: |
           BODY=$(sed '1{/^---$/!q}; 1,/^---$/d' "${{ steps.render.outputs.file_path }}")
           PR_URL=$(printf '%s' "${BODY:0:65536}" | gh pr create \
             --base main \
             --head "${{ steps.branch.outputs.name }}" \
-            --title "PG Award Proposal: ${{ steps.render.outputs.project_title }}" \
+            --title "PG Award Proposal: $PROJECT_TITLE" \
             --body-file - \
             --label "pg-award-proposal")
           gh issue edit "${{ github.event.issue.number }}" \
@@ -295,16 +298,17 @@ jobs:
 
       # ── Step summary ──────────────────────────────────────────────────────
       - name: Write step summary
-        run: |
-          cat >> "$GITHUB_STEP_SUMMARY" <<EOF
-          ## Proposal Genesis
+        env:
+          SUMMARY: |
+            ## Proposal Genesis
 
-          | | |
-          | --- | --- |
-          | **Issue** | #${{ github.event.issue.number }} |
-          | **Project** | ${{ steps.render.outputs.project_title }} |
-          | **Slug** | \`${{ steps.render.outputs.slug }}\` |
-          | **File** | \`${{ steps.render.outputs.file_path }}\` |
-          | **Branch** | \`${{ steps.branch.outputs.name }}\` |
-          | **PR** | ${{ steps.pr.outputs.url }} |
-          EOF
+            | | |
+            | --- | --- |
+            | **Issue** | #${{ github.event.issue.number }} |
+            | **Project** | ${{ steps.render.outputs.project_title }} |
+            | **Slug** | `${{ steps.render.outputs.slug }}` |
+            | **File** | `${{ steps.render.outputs.file_path }}` |
+            | **Branch** | `${{ steps.branch.outputs.name }}` |
+            | **PR** | ${{ steps.pr.outputs.url }} |
+        run: |
+          printf '%s\n' "$SUMMARY" >> "$GITHUB_STEP_SUMMARY"
