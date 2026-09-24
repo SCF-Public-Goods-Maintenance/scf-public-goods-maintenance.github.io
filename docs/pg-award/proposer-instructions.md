@@ -211,10 +211,12 @@ directly:
    [`docs/projects/`](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/tree/main/docs/projects){:target="⚡"}
    directory on the `main` branch.
 2. Click the **Edit** (pencil) icon on your project page.
-3. Under `## Past Deliverables`, add a new `### {Year} Q{N}` subsection with evidence for each
+3. Update `## Retroactive Impact` to cover the quarter you are reporting on. This section is
+   rewritten each quarter rather than added to; previous versions remain in the page history.
+4. Under `## Past Deliverables`, add a new `### {Year} Q{N}` subsection with evidence for each
    deliverable you committed to in that quarter's proposal. Leave previous quarters in place.
-4. Choose **"Create a new branch for this commit and start a pull request."**
-5. Name your branch following the convention: `deliverables/{slug}-{quarter}` (e.g.,
+5. Choose **"Create a new branch for this commit and start a pull request."**
+6. Name your branch following the convention: `deliverables/{slug}-{quarter}` (e.g.,
    `deliverables/stellar-sdk-2026q3`).
 
 Because the sync automation triggers on any PR that modifies files in `docs/projects/`, your PR
