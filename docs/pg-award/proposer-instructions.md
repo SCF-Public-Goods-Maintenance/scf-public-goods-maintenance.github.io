@@ -211,8 +211,9 @@ directly:
    [`docs/projects/`](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/tree/main/docs/projects){:target="⚡"}
    directory on the `main` branch.
 2. Click the **Edit** (pencil) icon on your project page.
-3. Under `## Past Deliverables`, add a new `### {Year} Q{N}` subsection with evidence for each
-   deliverable you committed to in that quarter's proposal. Leave previous quarters in place.
+3. Under `## Past Deliverables`, add a new `### {Year} Q{N}` subsection. Start it with the budget
+   allocation table described below, then give evidence for each deliverable you committed to in that
+   quarter's proposal, as `####` subheadings. Leave previous quarters in place.
 4. Choose **"Create a new branch for this commit and start a pull request."**
 5. Name your branch following the convention: `deliverables/{slug}-{quarter}` (e.g.,
    `deliverables/stellar-sdk-2026q3`).
@@ -221,6 +222,29 @@ Because the sync automation triggers on any PR that modifies files in `docs/proj
 description will automatically populate with the content of your updated project page. The
 deliverables PR is reviewed against the deliverables you committed to in that quarter's proposal;
 approval by a supermajority of reviewers releases Tranche 2.
+
+### Budget Allocation
+
+Each quarter's deliverables begin with a table splitting the award between maintenance and everything
+else, so that the program can track maintenance funding consistently from quarter to quarter:
+
+| Budget allocation | Amount  |
+| ----------------- | ------- |
+| Maintenance       | $12,000 |
+| Other             | $3,000  |
+
+Use dollar amounts rather than percentages. The two rows should sum to the amount you were awarded
+for that quarter. If all of your work fell into one row, enter `$0` for the other.
+
+- **Maintenance** is work that keeps what already exists working: bug fixes, security patches,
+  dependency updates, protocol-compatibility work, documentation of existing behaviour, release
+  engineering, issue triage, and user support.
+- **Other** is the remainder of the award — anything not covered by the definition above. New
+  features, new integrations, research, audits, and community work all belong here.
+
+Two cases are easy to get wrong. Supporting a new protocol version is **maintenance**, even though it
+is entirely new code, because it keeps the project compatible rather than adding capability. A
+rewrite is also **maintenance**, however large, if it leaves the project doing the same things.
 
 ## Access & Permissions
 
