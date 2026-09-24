@@ -225,23 +225,22 @@ approval by a supermajority of reviewers releases Tranche 2.
 
 ### Budget Allocation
 
-Each quarter's deliverables begin with a table splitting the award between maintenance and new
-features, so that the program can track maintenance funding consistently from quarter to quarter:
+Each quarter's deliverables begin with a table splitting the award between maintenance and everything
+else, so that the program can track maintenance funding consistently from quarter to quarter:
 
 | Budget allocation | Amount  |
 | ----------------- | ------- |
 | Maintenance       | $12,000 |
-| New features      | $3,000  |
+| Other             | $3,000  |
 
 Use dollar amounts rather than percentages. The two rows should sum to the amount you were awarded
-for that quarter. If all of your work fell into one bucket, enter `$0` for the other.
+for that quarter. If all of your work fell into one row, enter `$0` for the other.
 
-The test for which bucket work belongs in is whether it **adds capability or preserves it**:
-
-- **Maintenance** — bug fixes, security patches, dependency updates, protocol-compatibility work,
-  documentation of existing behaviour, release engineering, issue triage, and user support.
-- **New features** — capability that did not exist before, such as new APIs, new integrations, or new
-  tooling.
+- **Maintenance** is work that keeps what already exists working: bug fixes, security patches,
+  dependency updates, protocol-compatibility work, documentation of existing behaviour, release
+  engineering, issue triage, and user support.
+- **Other** is the remainder of the award — anything not covered by the definition above. New
+  features, new integrations, research, audits, and community work all belong here.
 
 Two cases are easy to get wrong. Supporting a new protocol version is **maintenance**, even though it
 is entirely new code, because it keeps the project compatible rather than adding capability. A
