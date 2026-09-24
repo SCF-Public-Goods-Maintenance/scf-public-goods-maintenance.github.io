@@ -234,8 +234,6 @@ The deliverables of Q2 were categorized as follows:
 
 <!-- markdownlint-disable MD034 -->
 
-## Proposed Deliverables (next three months)
-
 ### 1. Extend Solidity support via fuzzing — harden the compiler
 
 Continue running and improving the [Solang fuzzer](https://github.com/salaheldinsoliman/fuzzer),
