@@ -122,35 +122,72 @@ jobs:
               else if (reaction.content === '-1') downSet.add(login);
             }
 
-            const pilotUps    = [...upSet];
-            const pilotDowns  = [...downSet];
-            const ups         = pilotUps.length;
-            const downs       = pilotDowns.length;
-            const totalVoters = ups + downs;
+            // Voters who reacted both +1 and -1 send an ambiguous signal — neither
+            // reaction is counted until they remove one.
+            const doubleSet = upSet.intersection(downSet);
+            for (const login of doubleSet) {
+              upSet.delete(login);
+              downSet.delete(login);
+            }
+
+            const pilotUps     = [...upSet];
+            const pilotDowns   = [...downSet];
+            const pilotDoubles = [...doubleSet];
+            const ups          = pilotUps.length;
+            const downs        = pilotDowns.length;
+            const totalVoters  = ups + downs;
+
+            const doubleVoterNote = pilotDoubles.length
+              ? `\n\n:warning: ${pilotDoubles.map(l => `@${l}`).join(', ')} reacted with both :+1: and :-1: — that vote will be counted once the ambiguous reaction is removed.`
+              : '';
 
             // Minimum pilot votes (ups + downs) required before any outcome can be
             // finalized. Adjust once participation-rate data from several quarters
             // of this (now new) intake process is available.
             const MIN_VOTERS = 3;
 
-            if (totalVoters < MIN_VOTERS) {
-              const needed = MIN_VOTERS - totalVoters;
+            // Raise the quorum floor by the minority to force controversial intakes
+            // to stay open for longer so they can attract more participants.
+            const minority    = Math.min(ups, downs);
+            const votesNeeded = MIN_VOTERS + minority;
+
+            if (totalVoters < votesNeeded) {
+              const needed = votesNeeded - totalVoters;
               await github.rest.issues.createComment({
                 owner, repo, issue_number: issueNumber,
-                body: `:hourglass: Not enough pilot votes to finalize yet — ${totalVoters} of ${MIN_VOTERS} minimum votes cast (${needed} more needed).`,
+                body: `:hourglass: Not enough pilot votes to finalize yet — ${totalVoters} of ${votesNeeded} minimum votes cast (${needed} more needed).${doubleVoterNote}`,
               });
-              core.info(`Quorum check deferred: ${totalVoters}/${MIN_VOTERS} pilot votes cast.`);
+              core.info(`Quorum check deferred: ${totalVoters}/${votesNeeded} pilot votes cast.`);
               return;
             }
 
-            const threshold = MIN_VOTERS + 2 * downs;
-            const accepted  = ups >= threshold;
+            const threshold = votesNeeded - 1;
+            const accepted  = ups > threshold;
+            const tied      = ups === threshold;
 
             core.info(
-              `Pilot :+1: ${ups}  Pilot :-1: ${downs}  threshold: ${threshold}  accepted: ${accepted}`
+              `Pilot :+1: ${ups}  Pilot :-1: ${downs}  threshold: ${threshold}  accepted: ${accepted}  tied: ${tied}`
             );
 
-            // ── 3. Ensure outcome labels exist, then swap labels on the issue ─────
+            const upList   = pilotUps.map(l   => `@${l}`).join(', ') || '_none_';
+            const downList = pilotDowns.map(l => `@${l}`).join(', ') || '_none_';
+
+            // ── 3. Handle a tie — not a verdict, so the issue stays open for review ─
+            if (tied) {
+              const body = [
+                `:scales: **Tied** — ${ups} pilot ups, ${downs} pilot downs (threshold: ${threshold})`,
+                ``,
+                `:+1: ${upList}`,
+                `:-1: ${downList}`,
+                ``,
+                `More participation is needed to reach a verdict. The eligibility review is still open.`,
+              ].join('\n') + doubleVoterNote;
+              await github.rest.issues.createComment({ owner, repo, issue_number: issueNumber, body });
+              core.info(`Quorum check tied: ${ups} pilot ups vs threshold ${threshold}.`);
+              return;
+            }
+
+            // ── 4. Ensure outcome labels exist, then swap labels on the issue ─────
             async function ensureLabel(name, color, description) {
               try {
                 await github.rest.issues.createLabel({ owner, repo, name, color, description });
@@ -176,21 +213,19 @@ jobs:
               labels: [accepted ? 'pg-intake:accepted' : 'pg-intake:rejected'],
             });
 
-            // ── 4. Post result comment ────────────────────────────────────────────
+            // ── 5. Post result comment ────────────────────────────────────────────
             // Mentions ensure that voting Pilots are notified via GitHub.
             const icon    = accepted ? ':zap:' : ':card_file_box:';
             const verdict = accepted ? '**Accepted**' : '**Rejected**';
-            const upList   = pilotUps.map(l   => `@${l}`).join(', ') || '_none_';
-            const downList = pilotDowns.map(l => `@${l}`).join(', ') || '_none_';
             const body = [
               `${icon} ${verdict} — ${ups} pilot ups, ${downs} pilot downs (threshold: ${threshold})`,
               ``,
               `:+1: ${upList}`,
               `:-1: ${downList}`,
-            ].join('\n');
+            ].join('\n') + doubleVoterNote;
             await github.rest.issues.createComment({ owner, repo, issue_number: issueNumber, body });
 
-            // ── 5. Close and lock the issue ───────────────────────────────────────
+            // ── 6. Close and lock the issue ───────────────────────────────────────
             await github.rest.issues.update({
               owner, repo, issue_number: issueNumber,
               state:        'closed',
