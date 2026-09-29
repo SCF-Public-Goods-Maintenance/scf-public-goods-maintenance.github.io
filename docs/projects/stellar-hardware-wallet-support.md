@@ -54,9 +54,16 @@ has maintained ongoing bug fixes and updates in collaboration with the Trezor te
 
 ## Retroactive Impact
 
-In Q3 2026, Soroban support shipped on Trezor. Working with the Trezor firmware team, we released Soroban transaction and authorization entry signing in Trezor firmware v2.12.4, so Trezor users can approve smart contract transactions on their device. v2.12.5 shows SEP-41 token transfers and approvals as token operations instead of raw contract calls. Protocol 27 delegated authentication (CAP-71) and contract creation are merged and will ship in the next firmware release.
+In Q3 2026, Soroban support shipped on Trezor. Working with the Trezor firmware team, we released
+Soroban transaction and authorization entry signing in Trezor firmware v2.12.4, so Trezor users can
+approve smart contract transactions on their device. v2.12.5 shows SEP-41 token transfers and
+approvals as token operations instead of raw contract calls. Protocol 27 delegated authentication
+(CAP-71) and contract creation are merged and will ship in the next firmware release.
 
-On Ledger, Protocol 27 (CAP-71) support shipped in Stellar Ledger app v6.1.0, available in Ledger Wallet. The release passed a security audit with SDF's support. It displays every authorization a smart contract transaction requests, skips redundant review screens, and adds validation to XDR parsing and APDU handling. Maintenance work added USDT0 support and reduced the app's size.
+On Ledger, Protocol 27 (CAP-71) support shipped in Stellar Ledger app v6.1.0, available in Ledger
+Wallet. The release passed a security audit with SDF's support. It displays every authorization a
+smart contract transaction requests, skips redundant review screens, and adds validation to XDR
+parsing and APDU handling. Maintenance work added USDT0 support and reduced the app's size.
 
 ## Past Deliverables
 
@@ -66,49 +73,92 @@ On Ledger, Protocol 27 (CAP-71) support shipped in Stellar Ledger app v6.1.0, av
 
 Description from last quarter:
 
-> Advance Soroban transaction signing on Trezor in collaboration with the Trezor firmware team, building on the `StellarInvokeHostFunctionOp` implementation already submitted upstream. With Soroban now on the Trezor team's roadmap, the quarter's focus is integration: iterating on review feedback, aligning the on-device confirmation UX, passing CI, and driving the work toward merge. This brings hardware-secured Soroban smart contract interactions to Trezor users — a first for the ecosystem. Because firmware team priorities can shift, merge within the quarter is not guaranteed, but the implementation will be actively driven and review/CI/community-interest metrics tracked to guide next steps.
+> Advance Soroban transaction signing on Trezor in collaboration with the Trezor firmware team,
+> building on the `StellarInvokeHostFunctionOp` implementation already submitted upstream. With
+> Soroban now on the Trezor team's roadmap, the quarter's focus is integration: iterating on review
+> feedback, aligning the on-device confirmation UX, passing CI, and driving the work toward merge.
+> This brings hardware-secured Soroban smart contract interactions to Trezor users — a first for the
+> ecosystem. Because firmware team priorities can shift, merge within the quarter is not guaranteed,
+> but the implementation will be actively driven and review/CI/community-interest metrics tracked to
+> guide next steps.
 
 Proof of completion:
 
-- Trezor firmware v2.12.4: https://github.com/trezor/trezor-firmware/blob/main/core/CHANGELOG.T3T1.md#2124-19th-august-2026 — Soroban smart contract transaction signing (`StellarInvokeHostFunctionOp`) and Soroban authorization entry signing
-- Trezor firmware v2.12.5: https://github.com/trezor/trezor-firmware/blob/main/core/CHANGELOG.T3T1.md#2125-16th-september-2026 — SEP-41 `transfer`/`approve` invocations of Stellar Asset Contracts and trusted token contracts shown as token operations
-- All commits this quarter: https://github.com/trezor/trezor-firmware/commits/main/?author=overcat&since=2026-07-01&until=2026-09-30
+- Trezor firmware v2.12.4:
+  https://github.com/trezor/trezor-firmware/blob/main/core/CHANGELOG.T3T1.md#2124-19th-august-2026 —
+  Soroban smart contract transaction signing (`StellarInvokeHostFunctionOp`) and Soroban
+  authorization entry signing
+- Trezor firmware v2.12.5:
+  https://github.com/trezor/trezor-firmware/blob/main/core/CHANGELOG.T3T1.md#2125-16th-september-2026
+  — SEP-41 `transfer`/`approve` invocations of Stellar Asset Contracts and trusted token contracts
+  shown as token operations
+- All commits this quarter:
+  https://github.com/trezor/trezor-firmware/commits/main/?author=overcat&since=2026-07-01&until=2026-09-30
 
-Soroban support was merged upstream with the Trezor team and shipped this quarter. Firmware v2.12.4 supports signing Soroban smart contract transactions and authorization entries, and v2.12.5 displays SEP-41 token transfers and approvals as token operations instead of raw contract calls. Protocol 27 delegated authentication (CAP-71) and contract creation are merged for the next release. This is a major milestone: Trezor users now have fairly complete Soroban support. 🎉
+Soroban support was merged upstream with the Trezor team and shipped this quarter. Firmware v2.12.4
+supports signing Soroban smart contract transactions and authorization entries, and v2.12.5 displays
+SEP-41 token transfers and approvals as token operations instead of raw contract calls. Protocol 27
+delegated authentication (CAP-71) and contract creation are merged for the next release. This is a
+major milestone: Trezor users now have fairly complete Soroban support. 🎉
 
 #### 2. Protocol 27 Support for the Ledger App and SDK
 
 Description from last quarter:
 
-> Add Protocol 27 support to the Stellar Ledger app and its associated SDK/integration libraries, ensuring transactions built under the upcoming protocol upgrade continue to parse, display, and sign correctly on Ledger devices. Keeping hardware signing current with each protocol upgrade prevents breakage for security-conscious users and integrators when the network transitions.
+> Add Protocol 27 support to the Stellar Ledger app and its associated SDK/integration libraries,
+> ensuring transactions built under the upcoming protocol upgrade continue to parse, display, and
+> sign correctly on Ledger devices. Keeping hardware signing current with each protocol upgrade
+> prevents breakage for security-conscious users and integrators when the network transitions.
 
 Proof of completion:
 
-- https://github.com/LedgerHQ/app-stellar/commit/88f590f2504619641037a1a355ccb4e2a5fed836 — add Protocol 27 (CAP-71) Soroban authorization support
-- All commits this quarter: https://github.com/LedgerHQ/app-stellar/commits/develop?author=overcat&since=2026-07-01&until=2026-09-30
+- https://github.com/LedgerHQ/app-stellar/commit/88f590f2504619641037a1a355ccb4e2a5fed836 — add
+  Protocol 27 (CAP-71) Soroban authorization support
+- All commits this quarter:
+  https://github.com/LedgerHQ/app-stellar/commits/develop?author=overcat&since=2026-07-01&until=2026-09-30
 
-Protocol 27 support shipped in Stellar Ledger app v6.1.0, available in Ledger Wallet. The release passed a security audit with SDF's support. The app parses and signs the new authorization credentials and signing payloads introduced by Protocol 27 (CAP-71). It also displays every Soroban authorization entry and skips redundant ones, shortening the review for about two thirds of Soroban transactions.
+Protocol 27 support shipped in Stellar Ledger app v6.1.0, available in Ledger Wallet. The release
+passed a security audit with SDF's support. The app parses and signs the new authorization
+credentials and signing payloads introduced by Protocol 27 (CAP-71). It also displays every Soroban
+authorization entry and skips redundant ones, shortening the review for about two thirds of Soroban
+transactions.
 
 #### 3. Ongoing Maintenance
 
 Description from last quarter:
 
-> Regular upkeep of the Stellar Ledger app and Trezor integrations in coordination with the Ledger and Trezor teams: responding to community issues and pull requests, keeping SDK and firmware dependencies current, and ensuring Stellar assets and protocol features remain fully supported.
+> Regular upkeep of the Stellar Ledger app and Trezor integrations in coordination with the Ledger
+> and Trezor teams: responding to community issues and pull requests, keeping SDK and firmware
+> dependencies current, and ensuring Stellar assets and protocol features remain fully supported.
 
-Proof of completion (a representative selection; all commits are linked in the two deliverables above):
+Proof of completion (a representative selection; all commits are linked in the two deliverables
+above):
 
-- https://github.com/LedgerHQ/app-stellar/commit/f6b0003665987420004eccae5a2981b7cf1d9e16 — Ledger: reject signing payloads with unreviewed trailing bytes
-- https://github.com/LedgerHQ/app-stellar/commit/5bd0e89a96584281521ee68ed8a3232ebadb3a9a — Ledger: reject flag values the protocol does not define
-- https://github.com/LedgerHQ/app-stellar/commit/7344d58c584d2a46a86352d479b3d241d583a8ec — Ledger: harden XDR parser allocations against untrusted length prefixes
-- https://github.com/LedgerHQ/app-stellar/commit/988688afedc12111f88ba90fa4ac194d4bc30a45 — Ledger: enforce bounded type invariants at construction
-- https://github.com/LedgerHQ/app-stellar/commit/9129fe4292f714d14253c9333e59c025ed664ba5 — Ledger: reject empty ED25519 signed-payload signers at parse time
-- https://github.com/LedgerHQ/app-stellar/commit/6da196dcef42ec5ebf863810a38c6530e69d1949 — Ledger: bind APDU chunks to the active signing instruction
-- https://github.com/LedgerHQ/app-stellar/commit/3c773c52b729bd975077bd817b8d2720768b5d65 — Ledger: display full asset issuer addresses during review
-- https://github.com/LedgerHQ/app-stellar/commit/98d9bbb979acb2f0ce57b8dae9798fd9c3f8691d — Ledger: remove the app's only `f64`, cutting flex `.text` by 6.9%
-- https://github.com/LedgerHQ/app-stellar/commit/66f9e24836760aa16d90b1be75095ef3b6952c13 — Ledger: add support for the USDT0 token
-- https://github.com/trezor/trezor-firmware/commit/d8b61fd6e0acbdaf2d598d8ae13b459cc5dfff54 — Trezor: modernize Stellar Python type hints and drop dead code
+- https://github.com/LedgerHQ/app-stellar/commit/f6b0003665987420004eccae5a2981b7cf1d9e16 — Ledger:
+  reject signing payloads with unreviewed trailing bytes
+- https://github.com/LedgerHQ/app-stellar/commit/5bd0e89a96584281521ee68ed8a3232ebadb3a9a — Ledger:
+  reject flag values the protocol does not define
+- https://github.com/LedgerHQ/app-stellar/commit/7344d58c584d2a46a86352d479b3d241d583a8ec — Ledger:
+  harden XDR parser allocations against untrusted length prefixes
+- https://github.com/LedgerHQ/app-stellar/commit/988688afedc12111f88ba90fa4ac194d4bc30a45 — Ledger:
+  enforce bounded type invariants at construction
+- https://github.com/LedgerHQ/app-stellar/commit/9129fe4292f714d14253c9333e59c025ed664ba5 — Ledger:
+  reject empty ED25519 signed-payload signers at parse time
+- https://github.com/LedgerHQ/app-stellar/commit/6da196dcef42ec5ebf863810a38c6530e69d1949 — Ledger:
+  bind APDU chunks to the active signing instruction
+- https://github.com/LedgerHQ/app-stellar/commit/3c773c52b729bd975077bd817b8d2720768b5d65 — Ledger:
+  display full asset issuer addresses during review
+- https://github.com/LedgerHQ/app-stellar/commit/98d9bbb979acb2f0ce57b8dae9798fd9c3f8691d — Ledger:
+  remove the app's only `f64`, cutting flex `.text` by 6.9%
+- https://github.com/LedgerHQ/app-stellar/commit/66f9e24836760aa16d90b1be75095ef3b6952c13 — Ledger:
+  add support for the USDT0 token
+- https://github.com/trezor/trezor-firmware/commit/d8b61fd6e0acbdaf2d598d8ae13b459cc5dfff54 — Trezor:
+  modernize Stellar Python type hints and drop dead code
 
-Outside Protocol 27, the Ledger app's XDR parsing and APDU handling now reject malformed or unexpected transaction data, so the data a user reviews matches the data they sign. The app now displays full asset issuer addresses, which helps users tell apart assets with similar codes. The app is also smaller and supports the USDT0 stablecoin.
+Outside Protocol 27, the Ledger app's XDR parsing and APDU handling now reject malformed or
+unexpected transaction data, so the data a user reviews matches the data they sign. The app now
+displays full asset issuer addresses, which helps users tell apart assets with similar codes. The app
+is also smaller and supports the USDT0 stablecoin.
 
 ## Proposed Impact
 
