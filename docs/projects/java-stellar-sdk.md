@@ -42,12 +42,20 @@ Stellar community since 2018 and has rich experience in Stellar-related developm
 series of Stellar infrastructure software. Currently maintained Stellar-related projects are listed
 at https://lightsail.network.
 
-
 ## Retroactive Impact
 
-In Q3 2026, both planned deliverables were completed, and two higher-priority items were added mid-quarter: Protocol 28 support in the SDK and SEP-48-based Java binding generation in stellar-contract-bindings. These took most of the quarter, so the planned maintenance work was smaller than expected. The SDK shipped three stable releases: 4.0.0 brought Protocol 27 support to a stable release as planned, 4.0.1 fixed a parsing bug, and 5.0.0 added Protocol 28 support, including CAP-85 external executable references. In stellar-contract-bindings, the Java generator was rewritten and now generates typed bindings for contract events as well as functions.
+In Q3 2026, both planned deliverables were completed, and two higher-priority items were added
+mid-quarter: Protocol 28 support in the SDK and SEP-48-based Java binding generation in
+stellar-contract-bindings. These took most of the quarter, so the planned maintenance work was
+smaller than expected. The SDK shipped three stable releases: 4.0.0 brought Protocol 27 support to a
+stable release as planned, 4.0.1 fixed a parsing bug, and 5.0.0 added Protocol 28 support, including
+CAP-85 external executable references. In stellar-contract-bindings, the Java generator was rewritten
+and now generates typed bindings for contract events as well as functions.
 
-Maintenance still delivered results. In the SDK, a community-reported parsing bug was fixed and released the next day, the SDK no longer polls the RPC server continuously while waiting for a transaction, and text is now always encoded as UTF-8. In stellar-contract-bindings, the Java generator was simplified.
+Maintenance still delivered results. In the SDK, a community-reported parsing bug was fixed and
+released the next day, the SDK no longer polls the RPC server continuously while waiting for a
+transaction, and text is now always encoded as UTF-8. In stellar-contract-bindings, the Java
+generator was simplified.
 
 ## Past Deliverables
 
@@ -57,21 +65,38 @@ Maintenance still delivered results. In the SDK, a community-reported parsing bu
 
 Description from last quarter:
 
-> Finalize the 4.0.0 beta into a stable release with complete Protocol 27 support, including CAP-71 Soroban authorization (`ADDRESS_V2` and delegated `ADDRESS_WITH_DELEGATES` credentials) and the redesigned `Auth.Signer` that natively supports custom account contracts (BLS, WebAuthn, threshold, policy). The implementation is already done in beta; the remaining work — validating against a live Protocol 27 network, auth examples and a migration guide for the breaking auth changes, and the stable release to Maven Central — is paced by Protocol 27 test-network availability.
+> Finalize the 4.0.0 beta into a stable release with complete Protocol 27 support, including CAP-71
+> Soroban authorization (`ADDRESS_V2` and delegated `ADDRESS_WITH_DELEGATES` credentials) and the
+> redesigned `Auth.Signer` that natively supports custom account contracts (BLS, WebAuthn, threshold,
+> policy). The implementation is already done in beta; the remaining work — validating against a live
+> Protocol 27 network, auth examples and a migration guide for the breaking auth changes, and the
+> stable release to Maven Central — is paced by Protocol 27 test-network availability.
 
 Proof of completion:
 
 - Release 4.0.0: https://github.com/lightsail-network/java-stellar-sdk/releases/tag/4.0.0
 
-4.0.0 brought Protocol 27 support to a stable release. It supports the new CAP-71 authorization credentials (`ADDRESS_V2` and `ADDRESS_WITH_DELEGATES`), and the redesigned signing interface (`Auth.Signer`) supports custom account contracts such as BLS, WebAuthn, threshold, and policy contracts. The release notes include a migration guide for the breaking `Auth.Signer` change.
+4.0.0 brought Protocol 27 support to a stable release. It supports the new CAP-71 authorization
+credentials (`ADDRESS_V2` and `ADDRESS_WITH_DELEGATES`), and the redesigned signing interface
+(`Auth.Signer`) supports custom account contracts such as BLS, WebAuthn, threshold, and policy
+contracts. The release notes include a migration guide for the breaking `Auth.Signer` change.
 
 #### D2. Continuous Maintenance and Improvement
 
 Description from last quarter:
 
-> Beyond routine upkeep — responding to community issues and pull requests, tracking Horizon and Soroban RPC changes, keeping Android compatibility current, and keeping CI/CD and dependencies up to date — we want to be candid about our intent for Q3: rather than adding new features, we plan to slow down and look inward. We will audit the codebase for accumulated technical debt, refactor rough edges, and optimize code that has grown organically across many releases, so the SDK stays maintainable and dependable for the long term.
+> Beyond routine upkeep — responding to community issues and pull requests, tracking Horizon and
+> Soroban RPC changes, keeping Android compatibility current, and keeping CI/CD and dependencies up
+> to date — we want to be candid about our intent for Q3: rather than adding new features, we plan to
+> slow down and look inward. We will audit the codebase for accumulated technical debt, refactor
+> rough edges, and optimize code that has grown organically across many releases, so the SDK stays
+> maintainable and dependable for the long term.
 >
-> This is a deliberate decision to consolidate, not to coast. For this SDK, "maintenance" has consistently produced meaningful improvements well beyond what we formally plan — Q2 is the clearest example, where full Protocol 27 support, the `Auth.Signer` redesign, and a JDK 21 toolchain upgrade all shipped under this same deliverable. We expect Q3 to be no different: as we dig into the code, concrete fixes and refinements will follow.
+> This is a deliberate decision to consolidate, not to coast. For this SDK, "maintenance" has
+> consistently produced meaningful improvements well beyond what we formally plan — Q2 is the
+> clearest example, where full Protocol 27 support, the `Auth.Signer` redesign, and a JDK 21
+> toolchain upgrade all shipped under this same deliverable. We expect Q3 to be no different: as we
+> dig into the code, concrete fixes and refinements will follow.
 
 Proof of completion:
 
@@ -79,21 +104,29 @@ Proof of completion:
 - https://github.com/lightsail-network/java-stellar-sdk/pull/811
 - https://github.com/lightsail-network/java-stellar-sdk/pull/819
 - https://github.com/lightsail-network/java-stellar-sdk/pull/820
-- View all merged PRs (Q3 2026): https://github.com/lightsail-network/java-stellar-sdk/pulls?q=is%3Apr+is%3Amerged+merged%3A2026-07-01..2026-09-30
+- View all merged PRs (Q3 2026):
+  https://github.com/lightsail-network/java-stellar-sdk/pulls?q=is%3Apr+is%3Amerged+merged%3A2026-07-01..2026-09-30
 - https://github.com/lightsail-network/stellar-contract-bindings/pull/29
 - https://github.com/lightsail-network/stellar-contract-bindings/pull/33
 
-Maintenance was smaller than planned, because Protocol 28 support and SEP-48 binding generation (D3 and D4) were added mid-quarter and took up much of the time planned for it.
+Maintenance was smaller than planned, because Protocol 28 support and SEP-48 binding generation (D3
+and D4) were added mid-quarter and took up much of the time planned for it.
 
-In the SDK, a community user reported that a valid testnet transaction could not be parsed (an `ExtendFootprintTTLOperation` with `extendTo` set to 0). The fix shipped in 4.0.1 the next day. After submitting a contract transaction, the SDK now waits between status checks instead of polling the RPC server continuously. Text is now always encoded as UTF-8, so non-ASCII text produces the same bytes on every JVM. These two fixes are in the pending release.
+In the SDK, a community user reported that a valid testnet transaction could not be parsed (an
+`ExtendFootprintTTLOperation` with `extendTo` set to 0). The fix shipped in 4.0.1 the next day. After
+submitting a contract transaction, the SDK now waits between status checks instead of polling the RPC
+server continuously. Text is now always encoded as UTF-8, so non-ASCII text produces the same bytes
+on every JVM. These two fixes are in the pending release.
 
-In stellar-contract-bindings, type mapping and templates in the Java generator were simplified, and generated Java no longer depends on the javatuples library.
+In stellar-contract-bindings, type mapping and templates in the Java generator were simplified, and
+generated Java no longer depends on the javatuples library.
 
 #### D3. Protocol 28 Support
 
 Description from last quarter:
 
-> This work was not explicitly planned but was completed as additional contribution during the quarter.
+> This work was not explicitly planned but was completed as additional contribution during the
+> quarter.
 
 Proof of completion:
 
@@ -101,13 +134,18 @@ Proof of completion:
 - https://github.com/lightsail-network/java-stellar-sdk/pull/817
 - https://github.com/lightsail-network/java-stellar-sdk/pull/815
 
-Protocol 28 support was added mid-quarter and shipped in 5.0.0, so Java and Android developers can build against the new protocol as soon as it is available. CAP-85 lets a contract follow Wasm code that an owner contract publishes under a tag, so updating the tag upgrades every contract that follows it. The SDK can now create such contracts, look up the code they point to, and read their interface specs.
+Protocol 28 support was added mid-quarter and shipped in 5.0.0, so Java and Android developers can
+build against the new protocol as soon as it is available. CAP-85 lets a contract follow Wasm code
+that an owner contract publishes under a tag, so updating the tag upgrades every contract that
+follows it. The SDK can now create such contracts, look up the code they point to, and read their
+interface specs.
 
 #### D4. SEP-48 Contract Bindings in stellar-contract-bindings
 
 Description from last quarter:
 
-> This work was not explicitly planned but was completed as additional contribution during the quarter.
+> This work was not explicitly planned but was completed as additional contribution during the
+> quarter.
 
 Proof of completion:
 
@@ -117,7 +155,10 @@ Proof of completion:
 - https://github.com/lightsail-network/stellar-contract-bindings/pull/32
 - https://github.com/lightsail-network/stellar-contract-bindings/pull/27
 
-This work was added mid-quarter and builds on the SEP-48 support added to the SDK in Q2. 0.6.0b fixed the Java generator so that its output compiles, and CI now checks this on every change. The generator was then rewritten and merged for the next release: it generates typed bindings for contract events, structs, unions, and contract errors, with a simpler API for callers.
+This work was added mid-quarter and builds on the SEP-48 support added to the SDK in Q2. 0.6.0b fixed
+the Java generator so that its output compiles, and CI now checks this on every change. The generator
+was then rewritten and merged for the next release: it generates typed bindings for contract events,
+structs, unions, and contract errors, with a simpler API for callers.
 
 ## Proposed Impact
 
