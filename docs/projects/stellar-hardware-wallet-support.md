@@ -69,7 +69,7 @@ parsing and APDU handling. Maintenance work added USDT0 support and reduced the 
 
 ### 2026 Q3
 
-#### 1. Soroban Support for Trezor
+#### D1. Soroban Support for Trezor
 
 Description from last quarter:
 
@@ -101,7 +101,7 @@ SEP-41 token transfers and approvals as token operations instead of raw contract
 delegated authentication (CAP-71) and contract creation are merged for the next release. This is a
 major milestone: Trezor users now have fairly complete Soroban support. 🎉
 
-#### 2. Protocol 27 Support for the Ledger App and SDK
+#### D2. Protocol 27 Support for the Ledger App and SDK
 
 Description from last quarter:
 
@@ -123,7 +123,7 @@ credentials and signing payloads introduced by Protocol 27 (CAP-71). It also dis
 authorization entry and skips redundant ones, shortening the review for about two thirds of Soroban
 transactions.
 
-#### 3. Ongoing Maintenance
+#### D3. Ongoing Maintenance
 
 Description from last quarter:
 
