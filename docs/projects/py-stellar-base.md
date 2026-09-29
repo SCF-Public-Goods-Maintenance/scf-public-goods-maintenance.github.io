@@ -17,7 +17,8 @@ RPC, with implementations of several Stellar Ecosystem Proposals._
 | -------------------- | ---------------------------------------------- |
 | **Category**         | SDKs                                           |
 | **Website**          | <https://stellar-sdk.readthedocs.io>           |
-| **Repository**       | <https://github.com/StellarCN/py-stellar-base> |
+| **py-stellar-base**           | <https://github.com/StellarCN/py-stellar-base>                   |
+| **stellar-contract-bindings** | <https://github.com/lightsail-network/stellar-contract-bindings> |
 | **First Released**   | October 2016                                   |
 | **Intake**           | soft-launch                                    |
 | **Budget Requested** | 15000                                          |
@@ -33,6 +34,8 @@ py-stellar-base is one of the most popular SDKs in the Stellar ecosystem, used b
 including SDF, Lobstr, and Trezor. Its accessibility makes it a common first choice for developers
 new to Stellar, lowering the barrier to entry for the broader ecosystem.
 
+This project also maintains stellar-contract-bindings, a CLI tool built on py-stellar-base that generates typed Python client code for Soroban smart contracts from their SEP-48 interface specifications, so developers can call a contract without writing the encoding by hand.
+
 ## Team & Experience
 
 overcat (GitHub: [overcat](https://github.com/overcat), Discord: @overcat.me) has been active in the
@@ -42,108 +45,87 @@ at https://lightsail.network.
 
 ## Retroactive Impact
 
-In Q2 2026, all three planned deliverables were completed, and protocol work went beyond the plan.
-The SDK shipped three stable releases (14.0.0 through 14.1.1). Support for the smart-contract
-self-description SEPs (SEP-46, SEP-47, SEP-48) and an AI coding agent skill both landed in 14.1.0.
-`stellar_sdk.auth` was redesigned so any account contract can authorize Soroban entries, and the
-generated XDR was advanced from the planned Protocol 26 to Protocol 27, with CAP-71 Soroban
-authorization support implemented in the 15.0.0-beta0 pre-release. Alongside features, the toolchain
-was modernized, migration to ruff, parallelized CI, and network-free test mocks, and dependencies
-kept current.
+In Q3 2026, both planned deliverables were completed, and two higher-priority items were added mid-quarter: Protocol 28 support in the SDK and SEP-48-based binding generation in stellar-contract-bindings. These took most of the quarter, so the planned maintenance work was smaller than expected. The SDK shipped three stable releases: 15.0.0 brought Protocol 27 support to a stable release as planned, and 16.0.0 and 16.1.0 added Protocol 28 support, including CAP-85 external executable references. stellar-contract-bindings released 0.6.0b, which generates typed Python bindings for contract events as well as functions.
+
+Maintenance still delivered results. In the SDK, the unit test suite was restructured and a community-reported CAP-71 signing bug was fixed within a week. In stellar-contract-bindings, the tool now reuses the SDK's SEP-48 parser, and the Python generator was simplified.
+
 
 ## Past Deliverables
 
-### 2026 Q2
+### 2026 Q3
 
-#### 1. Continuous Maintenance and Improvement
-
-Description from last quarter:
-
-> Regular SDK updates addressing Horizon, Soroban RPC, and protocol changes (including Protocol 26),
-> bug fixes, feature requests, and documentation updates. Keep CI/CD pipelines, SBOM workflow, and
-> dependency updates current.
-
-Proof of completion:
-
-- Release 14.0.0: https://github.com/StellarCN/py-stellar-base/releases/tag/14.0.0
-- Release 14.1.0: https://github.com/StellarCN/py-stellar-base/releases/tag/14.1.0
-- Release 14.1.1: https://github.com/StellarCN/py-stellar-base/releases/tag/14.1.1
-- Pre-release 15.0.0-beta0: https://github.com/StellarCN/py-stellar-base/releases/tag/15.0.0-beta0
-
-Some notable PR, not exhaustive:
-
-- PR #1189: https://github.com/StellarCN/py-stellar-base/pull/1189 — feat: add CAP-71 (Protocol 27)
-  Soroban authorization support
-- PR #1199: https://github.com/StellarCN/py-stellar-base/pull/1199 — test: migrate from aioresponses
-  to aiointercept for aiohttp 3.14 support
-- PR #1188: https://github.com/StellarCN/py-stellar-base/pull/1188 — feat: add simulateTransaction
-  authV2 flag
-- PR #1177: https://github.com/StellarCN/py-stellar-base/pull/1177 — Migrate to ruff, PR 2
-- PR #1176: https://github.com/StellarCN/py-stellar-base/pull/1176 — Migrate to ruff, PR 1
-- PR #1172: https://github.com/StellarCN/py-stellar-base/pull/1172 — test: replace real network
-  requests with local httpserver mocks
-- PR #1167: https://github.com/StellarCN/py-stellar-base/pull/1167 — test: use local httpbin fixture
-  in tests
-- PR #1162: https://github.com/StellarCN/py-stellar-base/pull/1162 — feat: improve
-  stellar_sdk.contract.AssembledTransaction authorization lifecycle for contract account
-  authorization
-- PR #1160: https://github.com/StellarCN/py-stellar-base/pull/1160 — feat!: redesign stellar_sdk.auth
-  so any account contract can authorize Soroban entries
-- View all 37 merged PRs (Q2 2026):
-  https://github.com/StellarCN/py-stellar-base/pulls?q=is%3Apr+is%3Amerged+merged%3A2026-04-01..2026-06-30
-
-Three stable releases shipped. The generated XDR was upgraded to Protocol 26 and then to Protocol 27,
-exceeding the planned Protocol 26 target. `stellar_sdk.auth` was redesigned so any account contract
-(default Stellar account, BLS, WebAuthn, threshold, etc.) can authorize Soroban entries, and CAP-71
-Protocol 27 Soroban authorization — including the new address-bound and delegated credential types —
-was implemented across the high-level API. This work currently ships in the 15.0.0-beta0 pre-release
-rather than a stable release: Protocol 27 is not yet broadly available in real-world test
-environments, so the stable 15.0.0 is intentionally held until the implementation can be validated
-against a live Protocol 27 network. The toolchain was also modernized with a migration to ruff,
-parallelized CI, and network-free test mocks, alongside numerous bug fixes and dependency updates.
-
-#### 2. SEP-46, SEP-47, and SEP-48 Support
+#### D1. Release py-stellar-base 15.0.0 with Full Protocol 27 Support
 
 Description from last quarter:
 
-> Add support for SEP-46 (Contract Meta), SEP-47 (Contract Interface Discovery), and SEP-48 (Contract
-> Interface Specification). These three SEPs form the foundation for smart contract self-description:
-> SEP-46 defines how contracts embed metadata in Wasm custom sections, SEP-47 lets contracts declare
-> which SEPs they implement, and SEP-48 provides a rich interface specification including Soroban
-> host types, user-defined types, and event schemas. Together they enable the SDK to parse and expose
-> contract metadata, which is essential for tooling, auto-generated contract clients, and off-chain
-> systems that need to understand contract interfaces.
+> Finalize the 15.0.0 beta into a stable release with complete Protocol 27 support, including CAP-71 Soroban authorization (`ADDRESS_V2` and delegated `ADDRESS_WITH_DELEGATES` credentials). The implementation is already done in beta; the remaining work — validating against a live Protocol 27 network, auth examples and a migration guide for the breaking auth changes, and the stable release to PyPI — is paced by Protocol 27 test-network availability.
 
 Proof of completion:
 
-- Release 14.1.0: https://github.com/StellarCN/py-stellar-base/releases/tag/14.1.0
+- Release 15.0.0: https://github.com/StellarCN/py-stellar-base/releases/tag/15.0.0
+- https://github.com/StellarCN/py-stellar-base/pull/1198
+- Auth example: https://github.com/StellarCN/py-stellar-base/commit/98230946a467ed7481b69573a77e205737fbe036 — docs: add CAP-71 delegated authorization example
 
-Introspection APIs for SEP-46 (contract metadata), SEP-47 (contract interface discovery), and SEP-48
-(contract interface specification) were added and shipped in 14.1.0, including `ContractMeta`,
-`ContractSpec`, `ContractInfo`, and `SorobanServer[Async].get_contract_*` helpers that parse a
-Soroban contract's Wasm and expose its self-described metadata. This gives tooling and off-chain
-systems a standard way to understand contract interfaces.
+15.0.0 brought Protocol 27 support to a stable release. It supports the new CAP-71 authorization credentials (`ADDRESS_V2` and `ADDRESS_WITH_DELEGATES`) in signing, contract clients, and SEP-45.
 
-#### 3. AI Coding Agent Skill
+#### D2. Continuous Maintenance and Improvement
 
 Description from last quarter:
 
-> Publish an AI coding agent skill for py-stellar-base following the agentskills.io open standard,
-> compatible with Claude Code, Codex CLI, Cursor, Gemini CLI, and others. The skill provides
-> token-efficient documentation and best practices for AI-assisted development with the SDK, lowering
-> the barrier for developers using AI tools to build on Stellar.
+> Beyond routine upkeep — responding to community issues and pull requests, tracking Horizon and Soroban RPC changes, and keeping CI/CD, the SBOM workflow, and dependencies current — we want to be candid about our intent for Q3: rather than adding new features, we plan to slow down and look inward. We will audit the codebase for accumulated technical debt, refactor rough edges, and optimize code that has grown organically across many releases, so the SDK stays maintainable and dependable for the long term.
+>
+> This is a deliberate decision to consolidate, not to coast. For this SDK, "maintenance" has consistently produced meaningful improvements well beyond what we formally plan — Q2 is the clearest example, where full Protocol 27 support, the `stellar_sdk.auth` redesign, and a toolchain modernization all shipped under this same deliverable. We expect Q3 to be no different: as we dig into the code, concrete fixes and refinements will follow.
 
 Proof of completion:
 
-- Skill marketplace listing:
-  https://skillsmp.com/creators/stellarcn/py-stellar-base/skills-py-stellar-base — published
-  py-stellar-base agent skill
+- https://github.com/StellarCN/py-stellar-base/pull/1207
+- https://github.com/StellarCN/py-stellar-base/pull/1218
+- https://github.com/StellarCN/py-stellar-base/pull/1206
+- Commit 56bffa5: https://github.com/StellarCN/py-stellar-base/commit/56bffa593a03db621344c9089fa0e4ffcf61fe3e — test: merge call_builder sync/async test trees (38 files -> 19)
+- Commit cf03fa9: https://github.com/StellarCN/py-stellar-base/commit/cf03fa96897ecc8c131d2dccbaab6e8c900b138b — test: standardize all HTTP mocking on pytest-httpserver
+- Commit 54c8705: https://github.com/StellarCN/py-stellar-base/commit/54c8705461058482dd9d91612826625d29057642 — test: restore behavioral coverage lost in the sync/async merges
+- View all merged PRs (Q3 2026): https://github.com/StellarCN/py-stellar-base/pulls?q=is%3Apr+is%3Amerged+merged%3A2026-07-01..2026-09-30
+- https://github.com/lightsail-network/stellar-contract-bindings/pull/23
+- https://github.com/lightsail-network/stellar-contract-bindings/pull/29
+- https://github.com/lightsail-network/stellar-contract-bindings/pull/35
 
-An Agent Skills-compatible `stellar-sdk` skill was published — both in the SDK repository and to the
-skill marketplace — with Claude Code plugin marketplace metadata and topic references covering
-transactions, Horizon, Soroban, XDR/SCVal, async workflows, SEP integrations, security, and
-troubleshooting. It gives AI coding assistants token-efficient, accurate guidance for building on
-Stellar with the SDK, lowering the barrier for developers using AI tools.
+Maintenance was smaller than planned, because Protocol 28 support and SEP-48 binding generation (D3 and D4) were added mid-quarter and took up much of the time planned for it. The planned consolidation still produced results.
+
+In the SDK, the unit test suite was restructured: sync and async test trees were merged and HTTP mocking was standardized on one library, removing about 2,900 net lines. A community-reported CAP-71 bug was fixed within a week: signing one part of a delegated entry with a different expiration used to silently invalidate the signatures already on it, and it now raises an error instead. The fix is in the pending release. The federation lookup now uses the HTTP client the caller supplies.
+
+In stellar-contract-bindings, the tool dropped its own Wasm parser and now uses the SDK's SEP-48 parser, so both projects share one implementation. Type mapping and templates in the Python generator were simplified, dead code was removed, and dependencies and CI were updated.
+
+#### D3. Protocol 28 Support
+
+Description from last quarter:
+
+> This work was not explicitly planned but was completed as additional contribution during the quarter.
+
+Proof of completion:
+
+- Release 16.0.0: https://github.com/StellarCN/py-stellar-base/releases/tag/16.0.0
+- Release 16.1.0: https://github.com/StellarCN/py-stellar-base/releases/tag/16.1.0
+- https://github.com/StellarCN/py-stellar-base/pull/1212
+- https://github.com/StellarCN/py-stellar-base/pull/1213
+- https://github.com/StellarCN/py-stellar-base/pull/1216
+
+Protocol 28 support was added mid-quarter and shipped in 16.0.0 and 16.1.0, so Python developers can build against the new protocol as soon as it is available. CAP-85 lets a contract follow Wasm code that an owner contract publishes under a tag, so updating the tag upgrades every contract that follows it. The SDK can now create such contracts, look up the code they point to, and read their interface specs.
+
+#### D4. SEP-48 Contract Bindings in stellar-contract-bindings
+
+Description from last quarter:
+
+> This work was not explicitly planned but was completed as additional contribution during the quarter.
+
+Proof of completion:
+
+- Release 0.6.0b: https://github.com/lightsail-network/stellar-contract-bindings/releases/tag/0.6.0b
+- https://github.com/lightsail-network/stellar-contract-bindings/pull/24
+- https://github.com/lightsail-network/stellar-contract-bindings/pull/26
+- https://github.com/lightsail-network/stellar-contract-bindings/pull/30
+- https://github.com/lightsail-network/stellar-contract-bindings/pull/25
+
+This work was added mid-quarter and builds on the SEP-48 support added to the SDK in Q2. The Python generator can now produce typed bindings for the events a contract declares in its SEP-48 spec, not only for its functions. Generated Python code no longer executes text taken from a contract spec, keeps the contract's documentation readable, and uses the contract's own names for union cases.
 
 ## Proposed Impact
 
