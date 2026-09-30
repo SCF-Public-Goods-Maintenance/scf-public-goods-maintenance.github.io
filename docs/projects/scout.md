@@ -16,16 +16,16 @@ _Scout is an extensible open source vulnerability analyzer built for Soroban._
 
 <!-- markdownlint-enable MD036 -->
 
-|                      |                                                        |
-| -------------------- | ------------------------------------------------------ |
-| **Category**         | Security & Auditing Tools                              |
-| **Website**          | <https://www.coinfabrik.com/products/scout/>           |
-| **Repository**       | <https://github.com/CoinFabrik/scout-audit>            |
-| **Repository**       | <https://github.com/CoinFabrik/soroban-audit-harness>  |
-| **Repository**       | <https://github.com/CoinFabrik/scout-agent>            |
-| **First Released**   | 30 June 2023                                           |
-| **Intake**           | soft-launch                                            |
-| **Budget Requested** | 33000                                                  |
+|                      |                                                       |
+| -------------------- | ----------------------------------------------------- |
+| **Category**         | Security & Auditing Tools                             |
+| **Website**          | <https://www.coinfabrik.com/products/scout/>          |
+| **Repository**       | <https://github.com/CoinFabrik/scout-audit>           |
+| **Repository**       | <https://github.com/CoinFabrik/soroban-audit-harness> |
+| **Repository**       | <https://github.com/CoinFabrik/scout-agent>           |
+| **First Released**   | 30 June 2023                                          |
+| **Intake**           | soft-launch                                           |
+| **Budget Requested** | 33000                                                 |
 
 ## Project Description
 
@@ -99,8 +99,8 @@ Below is a list of updated Scout metrics:
 - crates.io downloads of `cargo-scout-audit`: 36,232 in total, 1,054 in the last 90 days
 
 These figures should be read with care: AI coding agents increasingly run Scout in short-lived
-environments, where each session is counted as a new user, so run and user counts can be inflated
-by automated use.
+environments, where each session is counted as a new user, so run and user counts can be inflated by
+automated use.
 
 The proof of concept was evaluated against 31 audited revisions from 28 Soroban repositories,
 covering 243 vulnerabilities confirmed by professional auditors and hidden from the models during
@@ -161,8 +161,8 @@ Proof of completion:
 Instead of refining the Q1 scout-agent prototype, we built a new, more general proof of concept. The
 Q1 prototype covered four vulnerability types and relied on simplified code summaries because of the
 model limitations at the time. The new harness analyzes whole Soroban repositories for a much wider
-range of security issues, supports several model providers, and can be benchmarked repeatably
-against professionally audited projects.
+range of security issues, supports several model providers, and can be benchmarked repeatably against
+professionally audited projects.
 
 #### Q2 D3. AI Agent POC Iteration 2
 
@@ -213,8 +213,8 @@ Proof of completion:
 - [Evaluation costs](https://github.com/CoinFabrik/soroban-audit-harness/blob/main/docs/Scout%20AI%202026-Q2.md#costs)
 - [Exploit-validation experiment with IronCurtain](https://github.com/CoinFabrik/soroban-audit-harness/blob/main/docs/Scout%20AI%202026-Q2.md#out-of-scope-experiment)
 
-Running the benchmark required more than $2,000 in model API charges (about $274 for GLM-5.3 High
-and $1,759 to $1,938 for Claude Fable 5.1 High), plus GPT-5.6 Sol High runs under an existing
+Running the benchmark required more than $2,000 in model API charges (about $274 for GLM-5.3 High and
+$1,759 to $1,938 for Claude Fable 5.1 High), plus GPT-5.6 Sol High runs under an existing
 subscription (about $229 at API rates). We also tested an exploit-oriented workflow based on
 IronCurtain; it showed that turning candidate findings into reproducible exploits is a separate and
 far more open-ended stage.
