@@ -102,7 +102,7 @@ verifying they were unreachable.
 
 ### 2026 Q3
 
-**Scanner Reliability and Readability**
+#### Scanner Reliability and Readability
 
 Proof of completion:
 
