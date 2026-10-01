@@ -12,15 +12,15 @@ budget: "18,000"
 
 _Pending transactions storage and multisig aggregator for Stellar Network._
 
-|                                 |                                                                                                    |
-| ------------------------------- | -------------------------------------------------------------------------------------------------- |
-| **Category**                    | Governance Tools                                                                                   |
-| **Website**                     | <https://refractor.space>                                                                          |
-| **App Repository**              | <https://github.com/stellar-expert/refractor>                                                      |
-| **SignerInspector Repository**  | <https://github.com/stellar-expert/stellar-tx-signers-inspector>                                   |
-| **First Released**              | March 2021                                                                                         |
-| **Intake**                      | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/26> |
-| **Budget Requested**            | 18,000                                                                                             |
+|                                |                                                                                                    |
+| ------------------------------ | -------------------------------------------------------------------------------------------------- |
+| **Category**                   | Governance Tools                                                                                   |
+| **Website**                    | <https://refractor.space>                                                                          |
+| **App Repository**             | <https://github.com/stellar-expert/refractor>                                                      |
+| **SignerInspector Repository** | <https://github.com/stellar-expert/stellar-tx-signers-inspector>                                   |
+| **First Released**             | March 2021                                                                                         |
+| **Intake**                     | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/26> |
+| **Budget Requested**           | 18,000                                                                                             |
 
 ## Project Description
 
@@ -54,9 +54,9 @@ Active developers of the Refractor service:
 ## Retroactive Impact
 
 Our service is actively used by Aquarius DAO, Reflector DAO, YieldBlox DAO, Stratum, and other
-services. We have several new integrations. Currently discussing an option to add Refractor to
-the dapp explorer with the Freighter team. According to our logs, the service reached the SLA
-of 99.994% since the beginning of 2026.
+services. We have several new integrations. Currently discussing an option to add Refractor to the
+dapp explorer with the Freighter team. According to our logs, the service reached the SLA of 99.994%
+since the beginning of 2026.
 
 ## Past Deliverables
 
@@ -72,26 +72,28 @@ of 99.994% since the beginning of 2026.
   CactusLink, Hana, Klever, OneKey, Rabet.
 - Server-side aggregator, website, and all dependency libs updated to support the upcoming Stellar
   protocol upgrade.
-  
+
 ### 2026 Q3
 
 - The automatic signer scheme detection algorithm has been reviewed and extended to fully account for
-  Soroban transaction authorization entries, so the required signers for smart contract invocations are
-  now identified correctly. Our signature scheme discovery algorithm has been reworked to analyze and 
-  aggregate signatures for Soroban authorization entries. It also autodetects authorization entries 
-  requirements inside transactions wrapped with FeeBumpTransaction.  
-- Signer detection now properly handles CAP-0071-01 (delegated authentication for custom accounts) and
-  CAP-0071-02 (address-bound Soroban address credentials). Delegated authentication supports parsing of 
-  `SorobanAddressCredentialsWithDelegates` + `SOROBAN_CREDENTIALS_ADDRESS_V2` and recursive
-  authentication resolution tree.
-- The transaction analyzer follows ledger entry sponsorship changes and associated signature requirements.
-  In addition, it produces warnings for invalid/malformed sponsorship transactions (missing
-  EndSponsorshipOp, mismatched sponsorship recepient, etc).
+  Soroban transaction authorization entries, so the required signers for smart contract invocations
+  are now identified correctly. Our signature scheme discovery algorithm has been reworked to analyze
+  and aggregate signatures for Soroban authorization entries. It also autodetects authorization
+  entries requirements inside transactions wrapped with FeeBumpTransaction.
+- Signer detection now properly handles CAP-0071-01 (delegated authentication for custom accounts)
+  and CAP-0071-02 (address-bound Soroban address credentials). Delegated authentication supports
+  parsing of `SorobanAddressCredentialsWithDelegates` + `SOROBAN_CREDENTIALS_ADDRESS_V2` and
+  recursive authentication resolution tree.
+- The transaction analyzer follows ledger entry sponsorship changes and associated signature
+  requirements. In addition, it produces warnings for invalid/malformed sponsorship transactions
+  (missing EndSponsorshipOp, mismatched sponsorship recepient, etc).
 - We added direct WalletConnect integration and reworked the signing UX to better support mobile
-  wallets flow. Freighter and Albedo are available through direct shortcuts, other wallet that support
-  WalletConnect can sign a transaction either through QR code scan or direct wc:// protocol link.  
+  wallets flow. Freighter and Albedo are available through direct shortcuts, other wallet that
+  support WalletConnect can sign a transaction either through QR code scan or direct wc:// protocol
+  link.
 
 Incomplete deliverable:
+
 - Allow adding signatures for `SIGNER_KEY_TYPE_HASH_X` and `SIGNER_KEY_TYPE_ED25519` directly from
   the interface without wallet invocation ($1000).
 
