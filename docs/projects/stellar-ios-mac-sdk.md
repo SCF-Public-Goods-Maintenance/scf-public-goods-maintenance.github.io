@@ -66,7 +66,7 @@ and exchange with other tools.
 Native ScVal Conversion shipped in 3.11.0. When an app calls a smart contract, the answer comes back
 in Stellar's binary format, which the app had to take apart by hand. The new helper turns any such
 value into a plain Swift value with one call, so apps can use contract results directly and with less
-code. Bence ([ngybnc][ngybnc]), a Soneso team member, joined the iOS SDK work this quarter and
+code. Bence ([ngybnc][ngybnc]), a Soneso team member, returned to the iOS SDK work this quarter and
 authored this deliverable.
 
 The Contract Bindings Update keeps the Swift output of the community code generator, which the
