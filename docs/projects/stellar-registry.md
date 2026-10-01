@@ -520,7 +520,7 @@ the form opens a prefilled issue in https://github.com/stellar-registry/gov.
   - Created Tansu proposal https://testnet.tansu.dev/proposal/?id=11&name=stellarregistry
   - Security council approved, vote closed, out-of-band anyone-can-fire run of
 
-    ```
+    ```bash
     stellar contract invoke --id registry-tansu-manager -- trigger --proposal_id 11
     ```
 
