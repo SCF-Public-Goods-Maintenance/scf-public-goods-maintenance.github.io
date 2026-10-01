@@ -680,9 +680,9 @@ Description from last quarter:
 
 ##### ✅ Complete
 
-- New [stellar-registry/actions](https://github.com/stellar-registry/actions) repo shipped along
-  with [stellar-registry/actions-demo](https://github.com/stellar-registry/actions-demo) showing how
-  to use it.
+- New [stellar-registry/actions](https://github.com/stellar-registry/actions) repo shipped along with
+  [stellar-registry/actions-demo](https://github.com/stellar-registry/actions-demo) showing how to
+  use it.
 - https://github.com/stellar-registry/contracts/pull/53 updates Registry's own contract to
   auto-publish Wasm on commits to `main`,
   https://stellar.expert/explorer/testnet/tx/5793597e4fce5cc536d22263d57bd583d06da2d8e4a648e3b268bc29c0a52cbc
