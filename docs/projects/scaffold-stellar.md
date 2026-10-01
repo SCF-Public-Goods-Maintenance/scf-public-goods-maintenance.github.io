@@ -96,6 +96,16 @@ XRPL, Cardano, Canton, Starknet**). This gives us a unique ability to benchmark 
 across chains and bring proven patterns back to Stellar—while keeping Stellar Scaffold aligned with
 what developers expect from modern, full-stack tooling.
 
+## Specific teammates assigned to Stellar Scaffold
+
+In the latter half of 2026, the Stellar Scaffold team consists primarily of the following
+individuals:
+
+- **Zach Fedor** — @zachfedor • [LinkedIn](https://www.linkedin.com/in/zachfedor/) (primary
+  maintainer)
+- **Chad Ostrowski** — @chadoh • [LinkedIn](https://www.linkedin.com/in/chadoh/) (contributor)
+- **Pam Selle** — @pselle • [LinkedIn](https://www.linkedin.com/in/pamelaselle/) (reviewer)
+
 ## Retroactive Impact
 
 - **Self-serve environment diagnosis.** The new `stellar scaffold doctor` command
