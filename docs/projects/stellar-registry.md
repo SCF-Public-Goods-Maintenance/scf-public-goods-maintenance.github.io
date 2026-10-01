@@ -525,13 +525,18 @@ the form opens a prefilled issue in https://github.com/stellar-registry/gov.
   short-term, Wasms & Contracts seeded as part of initial Registry rollout need to be transferred to
   their appropriate teams. Beyond this one-time mass authorship reassignment, there will be no
   steady-state demand for this governance operation.)
+- Tested end-to-end:
+  - Governance form (https://testnet.rgstry.xyz/governance/add-wasm) used to request a Wasm be added
+    to root registry
+  - Created Tansu proposal https://testnet.tansu.dev/proposal/?id=11&name=stellarregistry
+  - Security council approved, vote closed, out-of-band anyone-can-fire run of
 
-##### ⚠️ Pending
+    ```
+    stellar contract invoke --id registry-tansu-manager -- trigger --proposal_id 11
+    ```
 
-- Proof still outstanding: create a proposal from rgstry.xyz, vote it through in Tansu, execute via
-  `trigger`, and link the transaction here
-  - Will be provable at 3:09PM NYC 1 Oct by triggering the outcome for
-    https://testnet.tansu.dev/proposal/?id=11&name=stellarregistry
+  - Requested Wasm `verified-build-demo` now in Root Registry!
+    https://testnet.rgstry.xyz/wasms/verified-build-demo
 
 #### D7: Registry Documentation & Education (carried from Q2)
 
