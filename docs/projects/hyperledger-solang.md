@@ -21,6 +21,10 @@ _A Solidity compiler for Stellar_
 | **Category**         | Developer Experience                                                                               |
 | **Website**          | <https://solang.io/>                                                                               |
 | **Repository**       | <https://github.com/hyperledger-solang/solang>                                                     |
+| **Repository**       | <https://github.com/hyperledger-solang/solang-playground>                                          |
+| **Repository**       | <https://github.com/Islam-Imad/sorobench>                                                          |
+| **Repository**       | <https://github.com/aryanbaranwal001/antlion>                                                      |
+| **Repository**       | <https://github.com/salaheldinsoliman/fuzzer>                                                      |
 | **First Released**   | November 2025                                                                                      |
 | **Intake**           | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/24> |
 | **Budget Requested** | $25,000                                                                                            |
@@ -98,7 +102,7 @@ engineering.
 
 ### 2026 Q3
 
-The deliverables of 2026 Q2 were planned as follows:
+The deliverables of 2026 Q3 were planned as follows:
 
 #### 1. Extend Solidity support via fuzzing — harden the compiler
 
@@ -320,6 +324,8 @@ The deliverables of Q2 were categorized as follows:
 
 ## Proposed Deliverables
 
+<!-- markdownlint-disable MD024 -->
+
 <!-- markdownlint-disable MD034 -->
 
 ### 1. Extend Solidity support via fuzzing — harden the compiler
@@ -385,6 +391,8 @@ coverage percentages and the calculation shown, in
   Solidity-on-Stellar parity; and time-bound to the next three months.
 
 <!-- markdownlint-enable MD034 -->
+
+<!-- markdownlint-enable MD024 -->
 
 ## Metrics loaded from PG Atlas
 
