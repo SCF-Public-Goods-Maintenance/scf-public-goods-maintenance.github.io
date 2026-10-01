@@ -371,7 +371,7 @@ Infrastructure we shipped this quarter that was not in the Q2 deliverables:
 
 ### 2026 Q3
 
-#### D1: Complete the Mainnet Launch (carried from Q2)
+#### ✅ D1: Complete the Mainnet Launch (carried from Q2)
 
 Description from last quarter:
 
@@ -383,7 +383,7 @@ Description from last quarter:
 > Proof: mainnet data live and browsable at rgstry.xyz, the contract visible on Stellar Expert, and
 > named contracts resolvable via `stellar registry` CLI.
 
-##### ✅ Complete
+**✅ Complete:**
 
 - Mainnet data is now fully indexed in Goldsky (https://github.com/stellar-registry/indexer/pull/25)
   and queryable via API calls at https://stellar-registry-mainnet.fly.dev/
@@ -394,7 +394,7 @@ Description from last quarter:
 - All `stellar registry` commands working across both testnet and mainnet (see @kalepail's request at
   stellar-registry/gov#1 as proof)
 
-#### D2: Release `import_contract!` (carried from Q2)
+#### ✅ D2: Release `import_contract!` (carried from Q2)
 
 Description from last quarter:
 
@@ -404,7 +404,7 @@ Description from last quarter:
 > Proof: a crates.io release containing `import_contract!`, linked docs and example, CI running the
 > integration tests.
 
-##### ✅ Complete
+**✅ Complete:**
 
 The macro has landed! This was a hefty engineering task that entailed two large-scale
 re-architectures, code consolidation from other repositories (`stellar-scaffold/cli` repo is no
@@ -421,7 +421,7 @@ release, we declared all Stellar Registry crates to have reached official beta, 
   all tests run
   [on every commit to the GitHub repo](https://github.com/stellar-registry/cli/actions/workflows/rust.yml)
 
-#### D3: Flagged Contract Enforcement at Build Time (carried from Q2)
+#### ✅ D3: Flagged Contract Enforcement at Build Time (carried from Q2)
 
 Description from last quarter:
 
@@ -430,7 +430,7 @@ Description from last quarter:
 >
 > Proof: a test demonstrating a flagged contract causes a build failure, and documented behavior.
 
-##### ✅ Complete
+**✅ Complete:**
 
 - `import_contract!` introductory PR added flagged-contract handling (see
   [in PR's `crates/stellar-registry-macro/src/contract.rs#157`](https://github.com/stellar-registry/cli/pull/17/changes#diff-c9fd228d9177e15a059824ea2767bae20b7a7a80a87ddcbed776737b87f3b191R157-R161)
@@ -441,7 +441,7 @@ Description from last quarter:
   contracts. Since `import_contract!` relies on `fetch-contract-id`, it also satisfies the
   requirement to prove the behavior for the macro.)
 
-#### D4: Finish Search, Pagination & Sorting on rgstry.xyz (carried from Q2)
+#### ✅ D4: Finish Search, Pagination & Sorting on rgstry.xyz (carried from Q2)
 
 Description from last quarter:
 
@@ -452,12 +452,12 @@ Description from last quarter:
 > Proof: live on rgstry.xyz; search, pagination, and sorting demonstrated against a 1,000+ entry
 > dataset.
 
-##### ✅ Complete
+**✅ Complete:**
 
 - stellar-registry/indexer#24
 - See every mainnet contract matching `kal`: https://stellar.rgstry.xyz/contracts?query=kal
 
-#### D5: Contract Explorer, Deploy Button & Verified-Build Badges (carried from Q2)
+#### ✅ D5: Contract Explorer, Deploy Button & Verified-Build Badges (carried from Q2)
 
 Description from last quarter:
 
@@ -468,7 +468,7 @@ Description from last quarter:
 > Proof: all features live on production rgstry.xyz, manually verified against at least one mainnet
 > contract.
 
-##### ✅ Complete
+**✅ Complete:**
 
 - https://github.com/stellar-registry/ui/pull/23, Deploy from Wasm
   - prereq: https://github.com/stellar-registry/indexer/pull/32, Extract Wasm Details webhook
@@ -478,7 +478,7 @@ Description from last quarter:
   - prereq: https://github.com/stellar-registry/indexer/pull/40, Fetch data once-per-registered
     contract on the indexer side
 
-#### D6: Governance Operations UI
+#### ✅ D6: Governance Operations UI
 
 Description from last quarter:
 
@@ -489,7 +489,7 @@ Description from last quarter:
 > Proof: a governance proposal created from rgstry.xyz, voted on in Tansu, and executed on-chain via
 > `trigger`, with the transaction linked.
 
-##### ✅ Complete
+**✅ Complete:**
 
 Tracking issue: https://github.com/stellar-registry/ui/issues/51. A new Governance section on
 rgstry.xyz hosts one form per operation. On testnet, a form builds the on-chain outcome transaction,
@@ -527,7 +527,7 @@ the form opens a prefilled issue in https://github.com/stellar-registry/gov.
   - Requested Wasm `verified-build-demo` now in Root Registry!
     https://testnet.rgstry.xyz/wasms/verified-build-demo
 
-#### D7: Registry Documentation & Education (carried from Q2)
+#### 🟩 D7: Registry Documentation & Education (carried from Q2)
 
 Description from last quarter:
 
@@ -538,7 +538,7 @@ Description from last quarter:
 > Proof: documentation live on the Registry docs site and videos on The Aha Company's YouTube
 > channel.
 
-##### ✅ Complete
+**✅ Complete:**
 
 - Stellar Registry Full Walk-Through published to The Aha Company YouTube,
   https://www.youtube.com/watch?v=xAlWmJOdMSQ, takes the place of originally-planned many-video
@@ -547,12 +547,12 @@ Description from last quarter:
   https://github.com/stellar-registry/cli/issues/48)
 - https://github.com/stellar-scaffold/cli/issues/437, Scaffold Tutorial's Registry docs updated
 
-##### ⚠️ Pending
+**⚠️ Pending:**
 
 - https://github.com/stellar-registry/cli/issues/34, Present at Stellar Community Call: Kaan aware of
   intent to present; waiting to be scheduled
 
-#### D8: Support named G-addresses
+#### ✅ D8: Support named G-addresses
 
 Description from last quarter:
 
@@ -567,7 +567,7 @@ Description from last quarter:
 > Proof: code shipped; address system available, documented, and advertised to the community; more
 > than just Aha addresses added and available.
 
-##### ✅ Complete
+**✅ Complete:**
 
 Scope was narrowed during Q3 to foundational contract-level support; see tracking issue
 https://github.com/stellar-registry/cli/issues/51.
@@ -583,7 +583,7 @@ https://github.com/stellar-registry/cli/issues/51.
 Displaying names in the rgstry.xyz UI (e.g. "Deployer" and "Admin" fields), CLI support,
 documentation and community outreach, and onboarding non-Aha addresses will be proposed as Q4 work.
 
-#### D9: Surface emerging Source Verification information
+#### ✅ D9: Surface emerging Source Verification information
 
 Description from last quarter:
 
@@ -602,7 +602,7 @@ Description from last quarter:
 > Proof: all SEP-58 fields viewable on rgstry.xyz; verification status of those fields by independent
 > Source Verification services also shown in a way that exposes, rather than flattens, disagreement.
 
-##### ✅ Complete
+**✅ Complete:**
 
 - https://github.com/stellar-registry/indexer/pull/49, SEP-58 build fields exposed in the indexer's
   Wasm meta
@@ -611,12 +611,12 @@ Description from last quarter:
 - https://github.com/stellar-registry/ui/pull/83, same Source Verification section on contract detail
   pages
 
-##### ⚠️ Pending
+**⚠️ Pending:**
 
 - Registry could do more! New 3rd-party, off-chain Build Verification Services never got in touch to
   update Registry with their build-verification information.
 
-#### D10: guide Tansu evolution to support Registry needs
+#### ✅ D10: guide Tansu evolution to support Registry needs
 
 Description from last quarter:
 
@@ -635,7 +635,7 @@ Description from last quarter:
 > either migrates out of the stellar-registry repository to Tansu, becoming easier to use for all
 > ecosystem projects, or becomes altogether unnecessary.
 
-##### ✅ Complete
+**✅ Complete:**
 
 - Tansu merged the manager into its own repo:
   [`841dd84`](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/commits/841dd84790f3b8f2c8ae4fbf65ca10d5a9adab69),
@@ -648,7 +648,7 @@ Description from last quarter:
 - Remove the now-duplicate `registry-tansu-manager` and `tansu-stub` from stellar-registry/contracts:
   https://github.com/stellar-registry/contracts/pull/55
 
-#### D11: Registry GH Workflow to publish Wasms and upgrade contracts
+#### ✅ D11: Registry GH Workflow to publish Wasms and upgrade contracts
 
 Description from last quarter:
 
@@ -672,7 +672,7 @@ Description from last quarter:
 > Proof: new repository available at, say, `stellar-registry/gh-build-workflow`. Documented and
 > tested in production with the Registry wasm itself.
 
-##### ✅ Complete
+**✅ Complete:**
 
 - New [stellar-registry/actions](https://github.com/stellar-registry/actions) repo shipped along with
   [stellar-registry/actions-demo](https://github.com/stellar-registry/actions-demo) showing how to
@@ -685,7 +685,7 @@ Description from last quarter:
   [Perch](https://github.com/stellar-registry/perch), a "composable policy layer for Soroban smart
   accounts", which we designed and shipped this quarter.
 
-#### D12: UI: Expose full contract version history
+#### ✅ D12: UI: Expose full contract version history
 
 Description from last quarter:
 
@@ -702,14 +702,14 @@ Description from last quarter:
 > Proof: Contract detail pages on [rgstry.xyz/contracts](https://testnet.rgstry.xyz/contracts)
 > display information about full contract history.
 
-##### ✅ Complete
+**✅ Complete:**
 
 - Work completed in PR: https://github.com/stellar-registry/ui/pull/40
   - Some fixes: https://github.com/stellar-registry/ui/pull/62
 - Contract detail pages display contract history; example:
   https://stellar.rgstry.xyz/contracts/kale/kale
 
-#### D13: Documentation consolidation & redesign; potential migration of rgstry.xyz
+#### 🟩 D13: Documentation consolidation & redesign; potential migration of rgstry.xyz
 
 Description from last quarter:
 
@@ -729,12 +729,12 @@ Description from last quarter:
 > Proof: redesigned site live, videos highlighted throughout, and question of domain's permanent home
 > settled with decision documented and justified.
 
-##### ✅ Complete
+**✅ Complete:**
 
 - logo & icons: https://github.com/stellar-registry/ui/issues/41
 - docs consolidation: https://github.com/stellar-registry/ui/issues/42
 
-##### ⚠️ Pending
+**⚠️ Pending:**
 
 - domain move discussion: no public link. History of discussion:
 
@@ -744,7 +744,7 @@ Description from last quarter:
   - @chadoh to raise again in Stellar Community Call when presenting Registry (see
     [D7](#d7-registry-documentation--education-carried-from-q2))
 
-#### D14: Extend `import_contract!` macro to support SAC and XLM
+#### ✅ D14: Extend `import_contract!` macro to support SAC and XLM
 
 Description from last quarter:
 
@@ -768,11 +768,11 @@ The goal here is to ensure that `import_contract!(xlm)` and similar (such as
 `import_asset!` and `import_contract!`, where `import_contract!` alternative works for any SAC
 registered in [stellar.rgstry.xyz](https://rgstry.xyz).
 
-##### ✅ Complete
+**✅ Complete:**
 
 - https://github.com/stellar-registry/cli/pull/64
 
-#### D15: Verified Build Integration with Stellar Expert
+#### ✅ D15: Verified Build Integration with Stellar Expert
 
 This is copied from D6 in Q2, as outlined in the
 [Q3 Proposal discussion](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/pull/117#issuecomment-5125268576).
@@ -801,7 +801,7 @@ Extra details from
 > as documented in a new issue, stellar-registry/ui#38. This is a sub-issue of our original tracking
 > issue stellar-registry/cli#35, which we will continue to use as our tracking issue for Q3.
 
-##### ✅ Complete
+**✅ Complete:**
 
 - https://github.com/stellar-registry/ui/pull/57, Verified Build (SEP-55) badge from Stellar Expert
   data for _Contracts_ (done to satisfy
