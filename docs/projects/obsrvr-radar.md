@@ -182,7 +182,7 @@ Completed work:
 - Added Playwright end-to-end coverage driving the real UI: the analysis tool running, each verdict
   explainer opening, and the main pages rendering.
 
-**UI Cleanup and Ongoing Maintenance**
+#### UI Cleanup and Ongoing Maintenance
 
 Proof of completion:
 
