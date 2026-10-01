@@ -137,7 +137,7 @@ Completed work:
   troubleshooting section built from the failures encountered this quarter, each listed with the
   symptom that identifies it.
 
-**Plain-Language Network Analysis and FBAS Reliability**
+#### Plain-Language Network Analysis and FBAS Reliability
 
 Proof of completion:
 
