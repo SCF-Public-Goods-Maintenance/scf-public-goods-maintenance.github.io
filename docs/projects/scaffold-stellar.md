@@ -309,7 +309,7 @@ biggest pieces, a full configuration overhaul (D2) and the agent skill (D4), are
 changes. We still made progress on one stretch goal: the Contract Explorer behind the Debug page
 (D12) shipped two releases.
 
-#### D1: Create `scaffold doctor` command
+#### ✅ D1: Create `scaffold doctor` command
 
 Description from last quarter:
 
@@ -319,7 +319,7 @@ Description from last quarter:
 >
 > Measure: command shipped, tested, and documented.
 
-##### ✅ Complete
+**✅ Complete:**
 
 - https://github.com/stellar-scaffold/cli/pull/593 (closes
   https://github.com/stellar-scaffold/cli/issues/557): `stellar scaffold doctor` collects the CLI's
@@ -331,7 +331,7 @@ Description from last quarter:
 - Release: part of `stellar-scaffold-cli` v0.0.28, whose release PR is open
   (https://github.com/stellar-scaffold/cli/pull/599).
 
-#### D2: Complete the `scaffold.yml` configuration migration
+#### ✅ D2: Complete the `scaffold.yml` configuration migration
 
 Description from last quarter:
 
@@ -342,7 +342,7 @@ Description from last quarter:
 > Measure: new schema shipped, tested, and documented; `environments.toml` deprecated with a
 > migration path; optimize passthrough shipped.
 
-##### ✅ Complete
+**✅ Complete:**
 
 - **New schema shipped.** The `scaffold.yml` v2 schema, designed in
   https://github.com/stellar-scaffold/cli/issues/181 and reviewed in
@@ -365,7 +365,7 @@ Description from last quarter:
 - **Fixes the root cause of localnet coupling.** v2 builds target only the network you choose
   explicitly, which removes the coupling behind https://github.com/stellar-scaffold/cli/issues/267.
 
-##### ⏳ Final steps
+**⏳ Final steps:**
 
 - Merge the documentation, which is already written and in review: the full schema reference, the
   migration guide, and updated tutorial and quick-start pages
@@ -373,7 +373,7 @@ Description from last quarter:
   `stellar-scaffold-cli` v0.0.28 release (https://github.com/stellar-scaffold/cli/pull/599).
 - Confirm https://github.com/stellar-scaffold/cli/issues/267 against a v2 build and close it.
 
-#### D3: Ship Stellar-Wallets-Kit v2 through the shared wallet module
+#### ✅ D3: Ship Stellar-Wallets-Kit v2 through the shared wallet module
 
 Description from last quarter:
 
@@ -383,7 +383,7 @@ Description from last quarter:
 >
 > Measure: upgrade merged and released across all official templates.
 
-##### ✅ Complete
+**✅ Complete:**
 
 - https://github.com/stellar-scaffold/ui/pull/241 merged 2026-07-24 (closes
   https://github.com/stellar-scaffold/cli/issues/441). Because the upgrade is in the shared `app-lib`
@@ -392,7 +392,7 @@ Description from last quarter:
 - Follow-up clarification of wallet network handling:
   https://github.com/stellar-scaffold/ui/pull/259.
 
-#### D4: Agent-facing docs: hosted `SKILL.md` + in-project `AGENTS.md`
+#### ✅ D4: Agent-facing docs: hosted `SKILL.md` + in-project `AGENTS.md`
 
 Description from last quarter:
 
@@ -403,7 +403,7 @@ Description from last quarter:
 > Measure: `SKILL.md` live and fetchable by URL; generated projects include a correct `AGENTS.md`;
 > both documented.
 
-##### ✅ Complete
+**✅ Complete:**
 
 - **Hosted skill.** https://github.com/stellar-scaffold/cli/pull/612 (closes
   https://github.com/stellar-scaffold/cli/issues/394) adds the Stellar Scaffold
@@ -423,12 +423,12 @@ Description from last quarter:
   framework's routes, providers, and stores, and `init` carries it into every generated project. The
   skill tells agents to read it before editing the frontend.
 
-##### ⏳ Final steps
+**⏳ Final steps:**
 
 - Merge https://github.com/stellar-scaffold/cli/pull/612. The skill, its reference files, and the
   docs page are all written and in review.
 
-#### D5: Complete BYOFrontend: "no frontend" option + community-template guide
+#### ⏳ D5: Complete BYOFrontend: "no frontend" option + community-template guide
 
 Description from last quarter:
 
@@ -440,7 +440,7 @@ Description from last quarter:
 > Measure: no-frontend option shipped and tested; contribution guide published on the docs site; at
 > least the existing official templates documented as reference implementations.
 
-##### ✅ Complete: no-frontend option
+**✅ Complete (no-frontend option):**
 
 - https://github.com/stellar-scaffold/cli/pull/564, released in `stellar-scaffold-cli` v0.0.26:
   `init --no-template` / `--template none` removes all JS files and config, skips choosing a package
@@ -448,7 +448,7 @@ Description from last quarter:
   [CLI reference](https://github.com/stellar-scaffold/cli/blob/main/docs/site/docs/cli.md) documents
   it alongside the `--template org/repo` community-template selector.
 
-##### ✅ Complete: community-template support
+**✅ Complete (community-template support):**
 
 - `init --template org/repo` installs any community template from GitHub, and the CLI reference
   documents it.
@@ -457,13 +457,13 @@ Description from last quarter:
 - The official React and Svelte templates serve as reference implementations. Both were migrated to
   v2 this quarter (https://github.com/stellar-scaffold/ui/pull/279).
 
-##### ⏳ Final steps: contribution guide
+**⏳ Final steps (contribution guide):**
 
 - Write a short how-to page that ties these existing pieces together for template authors. We
   deliberately waited until the v2 schema landed at the end of the quarter, so the guide documents
   the final format and not one that was about to be replaced.
 
-#### D6: Documentation consolidation & redesign
+#### ⏳ D6: Documentation consolidation & redesign
 
 Description from last quarter:
 
@@ -473,7 +473,7 @@ Description from last quarter:
 >
 > Measure: redesigned docs site live; tutorial updated; upstream Stellar docs page PR merged.
 
-##### ✅ Complete
+**✅ Complete:**
 
 - Redesigned docs site live at <https://stellarscaffold.org>
   (https://github.com/stellar-scaffold/cli/pull/577, closes
@@ -495,7 +495,7 @@ Description from last quarter:
   (https://github.com/stellar-scaffold/cli/pull/589,
   https://github.com/stellar-scaffold/cli/pull/590).
 
-##### ⏳ Final steps
+**⏳ Final steps:**
 
 - stellar-docs#2708 has one remaining review comment, a hero image URL that changed with the domain
   move. Once that asset is restored, the PR is ready to merge.
@@ -503,7 +503,7 @@ Description from last quarter:
   (https://github.com/stellar-scaffold/cli/issues/602) has been triaged: the tutorial's starting
   command needs updating for the template monorepo. The fix is next in the docs queue.
 
-#### D7: Ongoing maintenance & releases
+#### ✅ D7: Ongoing maintenance & releases
 
 Description from last quarter:
 
@@ -512,7 +512,7 @@ Description from last quarter:
 >
 > Measure: regular tagged releases + changelogs + documented learnings from events.
 
-##### ✅ Complete
+**✅ Complete:**
 
 - Releases with changelogs (https://github.com/stellar-scaffold/cli/releases): `stellar-scaffold-cli`
   v0.0.25 (07-07), v0.0.26 (07-23), and v0.0.27 (08-13); `stellar-scaffold-macro` v0.8.15;
@@ -539,7 +539,7 @@ Description from last quarter:
 
 #### D8–D11 (Stretch)
 
-##### Deferred
+**Deferred:**
 
 We put the quarter's effort into finishing every committed deliverable, so we deferred the other
 stretch goals and did not start them: a community UI template
@@ -549,7 +549,7 @@ stretch goals and did not start them: a community UI template
 (https://github.com/stellar-scaffold/cli/issues/156; draft
 https://github.com/stellar-scaffold/cli/pull/391 unchanged).
 
-#### D12 (Stretch): Update starter app's Debug page
+#### ⏳ D12 (Stretch): Update starter app's Debug page
 
 Description from last quarter:
 
@@ -558,7 +558,7 @@ Description from last quarter:
 >
 > Measure: updated Debug page shipped in templates.
 
-##### ✅ Complete: Contract Explorer upgrades
+**✅ Complete (Contract Explorer upgrades):**
 
 The Debug page is powered by the Contract Explorer (https://github.com/theahaco/contract-explorer),
 which is also used by Stellar Registry. Two releases shipped this quarter:
@@ -572,7 +572,7 @@ which is also used by Stellar Registry. Two releases shipped this quarter:
   template (https://github.com/theahaco/contract-explorer/pull/4,
   https://github.com/theahaco/contract-explorer/pull/6).
 
-##### ⏳ Final steps
+**⏳ Final steps:**
 
 - Connect the standalone explorer to the templates' Debug page
   (https://github.com/stellar-scaffold/ui/issues/274).
