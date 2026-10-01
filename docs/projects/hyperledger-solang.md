@@ -70,17 +70,25 @@ engineering.
 
 <!-- markdownlint-disable MD034 -->
 
-- Since [soft launching Solang and its Playground](https://medium.com/@salaheldin_sameh/announcing-solang-compiler-suite-solidity-support-for-stellars-soroban-1fa82335101b), we've had ~40 monthly active users, from which we are receiving feedback to improve the compiler and its tooling.
+- Since
+  [soft launching Solang and its Playground](https://medium.com/@salaheldin_sameh/announcing-solang-compiler-suite-solidity-support-for-stellars-soroban-1fa82335101b),
+  we've had ~40 monthly active users, from which we are receiving feedback to improve the compiler
+  and its tooling.
 
-- We've created a developer community around Solang and Stellar, mainly in Egypt and Arabic-speaking countries, whereby Solang is used to bridge concepts from EVM to Soroban. 
-  There, Solang serves two functions: 
-  - As a popular, well-written and well-maintained open-source compiler where developer talents could contribute to low level code interfacing Soroban VM internals. Solang here acts as a gate to open source contributions for Stellar and the wider LFDT ecosystem.
+- We've created a developer community around Solang and Stellar, mainly in Egypt and Arabic-speaking
+  countries, whereby Solang is used to bridge concepts from EVM to Soroban. There, Solang serves two
+  functions:
+  - As a popular, well-written and well-maintained open-source compiler where developer talents could
+    contribute to low level code interfacing Soroban VM internals. Solang here acts as a gate to open
+    source contributions for Stellar and the wider LFDT ecosystem.
   - As a familiar language to Solidity developers wanting to enter the Stellar dev ecosystem
 
-- Solang has had three LFDT mentorships related to Stellar so far, two of which have been completed. One is in progress and spans 2026Q2-Q4. A Mentorship is a 3-6 months program, managed by [LFDT](https://www.lfdecentralizedtrust.org),  where a mentee contributes to Solang/Stellar effort, while receiving continuous feedback about their work.
+- Solang has had three LFDT mentorships related to Stellar so far, two of which have been completed.
+  One is in progress and spans 2026Q2-Q4. A Mentorship is a 3-6 months program, managed by
+  [LFDT](https://www.lfdecentralizedtrust.org), where a mentee contributes to Solang/Stellar effort,
+  while receiving continuous feedback about their work.
 
-
-- Increasing Mappings from Soroban examples to Solidity. 
+- Increasing Mappings from Soroban examples to Solidity.
 
 <!-- markdownlint-enable MD034 -->
 
@@ -94,44 +102,56 @@ The deliverables of 2026 Q2 were planned as follows:
 
 #### 1. Extend Solidity support via fuzzing — harden the compiler
 
-`Deliverable`: Continue running and improving the [Solang fuzzer](https://github.com/salaheldinsoliman/fuzzer),
-triaging and fixing the compiler crashes it surfaces. Robustness is the gating requirement to bring
-Solang to production, so fewer compiler crashes directly de-risk deploying Solidity contracts on
-Soroban.
+`Deliverable`: Continue running and improving the
+[Solang fuzzer](https://github.com/salaheldinsoliman/fuzzer), triaging and fixing the compiler
+crashes it surfaces. Robustness is the gating requirement to bring Solang to production, so fewer
+compiler crashes directly de-risk deploying Solidity contracts on Soroban.
 
-`Proof of completion`: To help us track differences from `solc` (The EVM solidity compiler), and plan for `2026Q4`, we imported `solc` semantic test suite and run it against Solang with [Sorobench](https://github.com/Islam-Imad/sorobench/tree/main). Sorobench tests behaviour differences from `Solc`, and helps the maintainers decide on which Solidity features/behaviours still need work. 
+`Proof of completion`: To help us track differences from `solc` (The EVM solidity compiler), and plan
+for `2026Q4`, we imported `solc` semantic test suite and run it against Solang with
+[Sorobench](https://github.com/Islam-Imad/sorobench/tree/main). Sorobench tests behaviour differences
+from `Solc`, and helps the maintainers decide on which Solidity features/behaviours still need work.
 
-This [commit](https://github.com/hyperledger-solang/solang/commit/d99ae7dfa97cff69023763f03387ed9e8a1e02f9) adds `Sorobench` to Solang's CI, there you can check what subset of Solidity is currently supported and where the gaps are. We will lay out those in detail in the upcoming proposal for 2026Q4.
-
-
-
+This
+[commit](https://github.com/hyperledger-solang/solang/commit/d99ae7dfa97cff69023763f03387ed9e8a1e02f9)
+adds `Sorobench` to Solang's CI, there you can check what subset of Solidity is currently supported
+and where the gaps are. We will lay out those in detail in the upcoming proposal for 2026Q4.
 
 #### 2. Differential testing with the Soroban SDK — first working version (via the LFDT mentorship)
 
 `Deliverable`: Through the
 [LFDT mentorship](https://github.com/LF-Decentralized-Trust-Mentorships/mentorship-program/issues/74),
-build a differential tester — a separate tool from the fuzzer/Sorobench — that compiles and runs a Soroban Rust smart contract, alongside its Solidity counter-part with Solang then compare behaviour, runtime, size and cost. 
+build a differential tester — a separate tool from the fuzzer/Sorobench — that compiles and runs a
+Soroban Rust smart contract, alongside its Solidity counter-part with Solang then compare behaviour,
+runtime, size and cost.
 
-`Proof of Completion`: 
+`Proof of Completion`:
 
-A first release of [`antlion`](https://github.com/aryanbaranwal001/antlion) is currently available, and it produced its [first set of findings](https://github.com/aryanbaranwal001/antlion/blob/main/report.md). To summarize, the tool compares two WASMs that execute the same logic, one produced with Solang and the other with the Rust SDK. it then measures each's size, runtime cost, behaviour, host calls, etc ...
+A first release of [`antlion`](https://github.com/aryanbaranwal001/antlion) is currently available,
+and it produced its
+[first set of findings](https://github.com/aryanbaranwal001/antlion/blob/main/report.md). To
+summarize, the tool compares two WASMs that execute the same logic, one produced with Solang and the
+other with the Rust SDK. it then measures each's size, runtime cost, behaviour, host calls, etc ...
 
-This provides insights to the maintainers on design decisions we took during writing the compiler, i.e should we store a struct as a single `MapObject` or store each element separately in storage. 
-
+This provides insights to the maintainers on design decisions we took during writing the compiler,
+i.e should we store a struct as a single `MapObject` or store each element separately in storage.
 
 #### 3. Grow developer reach and run a structured feedback round
 
-`Deliverable`: Produce Solidity-on-Stellar developer content — blog posts, a video walkthrough, and a live workshop
-— centered on the new **Luxor (v0.3.5)** release and the Playground, then collect and triage
-feedback. This lowers the onboarding barrier for Solidity/EVM developers to Stellar, grows adoption,
-and creates a prioritized feedback loop that steers future work.
+`Deliverable`: Produce Solidity-on-Stellar developer content — blog posts, a video walkthrough, and a
+live workshop — centered on the new **Luxor (v0.3.5)** release and the Playground, then collect and
+triage feedback. This lowers the onboarding barrier for Solidity/EVM developers to Stellar, grows
+adoption, and creates a prioritized feedback loop that steers future work.
 
-`Proof of completion`: 
-Since we already got [some traction](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/pull/123#issuecomment-5083884638) in 2026Q2 from developer communities in Egypt and Arabic speaking countries,
-We decided to further extend our developer reach and content in that direction. This [LinkedIn post](https://www.linkedin.com/posts/omariosman_over-the-past-few-weeks-i-led-an-educational-share-7511181138338398209-oG6V/?utm_source=share&utm_medium=member_android&rcm=ACoAACkz6fgB1DJQbyB--6J-FMzKHhrqDV4-RTM) summarizes the materials produced as well as their impact. 
-The things to highlight is the Solang video walkthrough, in Arabic:  https://www.youtube.com/playlist?list=PLX6QQqtNsnPg,
-As well as a [blogpost about `Sorobench`](https://medium.com/@islamimad404/6541ccd71752), written by @Islam-Imad, the author of Sorobench and a maintainer of Solang.
-
+`Proof of completion`: Since we already got
+[some traction](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/pull/123#issuecomment-5083884638)
+in 2026Q2 from developer communities in Egypt and Arabic speaking countries, We decided to further
+extend our developer reach and content in that direction. This
+[LinkedIn post](https://www.linkedin.com/posts/omariosman_over-the-past-few-weeks-i-led-an-educational-share-7511181138338398209-oG6V/?utm_source=share&utm_medium=member_android&rcm=ACoAACkz6fgB1DJQbyB--6J-FMzKHhrqDV4-RTM)
+summarizes the materials produced as well as their impact. The things to highlight is the Solang
+video walkthrough, in Arabic: https://www.youtube.com/playlist?list=PLX6QQqtNsnPg, As well as a
+[blogpost about `Sorobench`](https://medium.com/@islamimad404/6541ccd71752), written by @Islam-Imad,
+the author of Sorobench and a maintainer of Solang.
 
 #### 4. Support the remaining Soroban examples (carried over from Q2)
 
@@ -142,12 +162,15 @@ allocation, ABI returns, arrays of structs as parameters). Progress is tracked p
 coverage percentages and the calculation shown, in
 [#1901](https://github.com/hyperledger-solang/solang/issues/1901).
 
+`Proof of completion` We are using the same parent
+[GitHub issue](https://github.com/hyperledger-solang/solang/issues/1901) to track Soroban examples
+support. This
+[status update](https://github.com/hyperledger-solang/solang/issues/1901#issuecomment-5867159083)
+states that coverage is now at 80%, where the remaining 20% are either:
 
-`Proof of completion` 
-We are using the same parent [GitHub issue](https://github.com/hyperledger-solang/solang/issues/1901) to track Soroban examples support.
-This [status update](https://github.com/hyperledger-solang/solang/issues/1901#issuecomment-5867159083) states that coverage is now at 80%, where the remaining 20% are either:
 - Examples that depend on external Rust crates (`import_ark_bn254`, `privacy-pools`)
-- Examples that depend on `Context`, a complex Rust enum. Solidity enums are plain integers with no data, therefore those examples have no 1-1 mapping to Solidity.
+- Examples that depend on `Context`, a complex Rust enum. Solidity enums are plain integers with no
+  data, therefore those examples have no 1-1 mapping to Solidity.
 
 We will follow on how those 20% will be tackled in the `2026Q4` proposal.
 
@@ -248,7 +271,6 @@ The deliverables of Q2 were categorized as follows:
   Solidity contracts and report Solang compilation errors.
 
 `Proof of Completion:`
-
 
 - The fuzzing harness [`solang-fuzz`](https://github.com/salaheldinsoliman/fuzzer) — originally
   authored by [@jubnzv](https://github.com/jubnzv)
