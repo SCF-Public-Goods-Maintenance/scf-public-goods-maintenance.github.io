@@ -51,8 +51,8 @@ experience feel like familiar package management—like crates.io or NPM.
 
 <!-- markdownlint-disable MD034 -->
 
-Scaffold Stellar is built and maintained by **The Aha Company** (formerly Aha Labs), a team of 10+
-senior engineers deeply embedded in the Stellar ecosystem.
+Stellar Registry is built and maintained by **The Aha Company**, a team of 10+ senior engineers
+deeply embedded in the Stellar ecosystem.
 
 **Early Soroban origin:**
 
@@ -74,46 +74,35 @@ development on Stellar, including:
 - **JavaScript developer experience patterns,** including the **Contract Client** behavior in
   **stellar-sdk-js**, which helps application developers interact with contracts more safely and
   predictably.
-
-**Why we were selected for Scaffold Stellar and our SCF track record:**
-
-In early 2025, SDF searched for a team that could bring a ScaffoldETH-like end-to-end experience to
-Stellar. They selected us based on:
-
-1. our deep **CLI & JS expertise** proven through shipped core tooling, and
-2. our track record delivering developer infrastructure via SCF, including:
-   - **Smart Deploy**:
-     [https://communityfund.stellar.org/project/smart-deploy-yoj](https://communityfund.stellar.org/project/smart-deploy-yoj)
-   - **Loam**:
-     [https://communityfund.stellar.org/project/loam-qj5](https://communityfund.stellar.org/project/loam-qj5)
-
-Scaffold Stellar is a direct continuation of that work: turning the hard-won Developer Experience
-(DevX) knowledge from core tooling into a “front door” experience that helps developers go from idea
-to proof-of-concept quickly, with strong defaults and a convention-over-configuration approach.
-
-**Ongoing maintenance and production-grade integration experience:**
-
-Since then, we have remained engaged with SDF to support and maintain key tooling (most recently
-improving Stellar CLI handling of **hardware-based keys**) and we continue to operate as an
-integration partner on production deployments. Notably, we **architected and developed Société
-Générale’s EURCV** on Stellar (now live), bringing a rigorous, real-world perspective to developer
-tooling and reliability requirements.
+- **Stellar Scaffold**, helping newcomers, experts, and AI agents ship quickly, reduce bugs, and
+  focus on app logic not nuts-and-bolts wiring and boilerplate.
 
 **Deep community participation and ecosystem leadership:**
 
 Our team includes well-known ecosystem contributors. Several members hold key community roles (e.g.,
 **SCF Pilot**, **category delegates**) and actively build their own SCF projects (e.g., **Moonlight,
-Tansu, Stellar Merch Store, PG Atlas**). We contribute to protocol and tooling discussions, provide
-developer support at hackathons and conferences, and invest heavily in community outreach and
-education. We show up consistently at major events and actively communicate about Stellar, both its
-strengths and the practical realities builders need to know.
+Tansu, Stellar Merch Store, PG Atlas, Turbolong**). We contribute to protocol and tooling
+discussions, provide developer support at hackathons and conferences, and invest heavily in
+community outreach and education. We show up consistently at major events and actively communicate
+about Stellar, both its strengths and the practical realities builders need to know.
 
 **Cross-ecosystem perspective (DevX benchmarking):**
 
 Beyond Stellar, The Aha Company is also an integration partner in other ecosystems (e.g., **Filecoin,
 XRPL, Cardano, Canton, Starknet**). This gives us a unique ability to benchmark developer experience
-across chains and bring proven patterns back to Stellar—while keeping Scaffold Stellar aligned with
+across chains and bring proven patterns back to Stellar—while keeping Stellar Registry aligned with
 what developers expect from modern, full-stack tooling.
+
+**Specific teammates assigned to Stellar Registry:**
+
+In the latter half of 2026, the Stellar Registry team consists primarily of the following
+individuals, in order of involvement:
+
+* **Pam Selle** — @pselle • [LinkedIn](https://www.linkedin.com/in/pamelaselle/)
+* **Willem Wyndham** — @willemneal • [LinkedIn](https://www.linkedin.com/in/willem-wyndham/)
+* **Chad Ostrowski** — @chadoh • [LinkedIn](https://www.linkedin.com/in/chadoh/)
+* **Zach Fedor** — @zachfedor • [LinkedIn](https://www.linkedin.com/in/zachfedor/) (limited to UI
+  involvement on Registry for 2026 half 2)
 
 <!-- markdownlint-enable MD034 -->
 
