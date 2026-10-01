@@ -167,9 +167,9 @@ accounts.
 
 **Also shipped.** Foundational support for named G-addresses in the registry contract
 (stellar-registry/contracts#37, stellar-registry/contracts#38); full contract version history on
-contract detail pages (stellar-registry/ui#40); a [Stellar Registry Full Walk-Through
-video](https://www.youtube.com/watch?v=xAlWmJOdMSQ) on The Aha Company's YouTube channel; and a new
-logo and consolidated documentation.
+contract detail pages (stellar-registry/ui#40); a
+[Stellar Registry Full Walk-Through video](https://www.youtube.com/watch?v=xAlWmJOdMSQ) on The Aha
+Company's YouTube channel; and a new logo and consolidated documentation.
 
 <!-- markdownlint-enable MD034 -->
 
