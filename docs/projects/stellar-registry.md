@@ -82,9 +82,9 @@ development on Stellar, including:
 Our team includes well-known ecosystem contributors. Several members hold key community roles (e.g.,
 **SCF Pilot**, **category delegates**) and actively build their own SCF projects (e.g., **Moonlight,
 Tansu, Stellar Merch Store, PG Atlas, Turbolong**). We contribute to protocol and tooling
-discussions, provide developer support at hackathons and conferences, and invest heavily in
-community outreach and education. We show up consistently at major events and actively communicate
-about Stellar, both its strengths and the practical realities builders need to know.
+discussions, provide developer support at hackathons and conferences, and invest heavily in community
+outreach and education. We show up consistently at major events and actively communicate about
+Stellar, both its strengths and the practical realities builders need to know.
 
 **Cross-ecosystem perspective (DevX benchmarking):**
 
@@ -98,10 +98,10 @@ what developers expect from modern, full-stack tooling.
 In the latter half of 2026, the Stellar Registry team consists primarily of the following
 individuals, in order of involvement:
 
-* **Pam Selle** — @pselle • [LinkedIn](https://www.linkedin.com/in/pamelaselle/)
-* **Willem Wyndham** — @willemneal • [LinkedIn](https://www.linkedin.com/in/willem-wyndham/)
-* **Chad Ostrowski** — @chadoh • [LinkedIn](https://www.linkedin.com/in/chadoh/)
-* **Zach Fedor** — @zachfedor • [LinkedIn](https://www.linkedin.com/in/zachfedor/) (limited to UI
+- **Pam Selle** — @pselle • [LinkedIn](https://www.linkedin.com/in/pamelaselle/)
+- **Willem Wyndham** — @willemneal • [LinkedIn](https://www.linkedin.com/in/willem-wyndham/)
+- **Chad Ostrowski** — @chadoh • [LinkedIn](https://www.linkedin.com/in/chadoh/)
+- **Zach Fedor** — @zachfedor • [LinkedIn](https://www.linkedin.com/in/zachfedor/) (limited to UI
   involvement on Registry for 2026 half 2)
 
 <!-- markdownlint-enable MD034 -->
