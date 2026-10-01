@@ -121,56 +121,55 @@ what developers expect from modern, full-stack tooling.
 
 <!-- markdownlint-disable MD034 -->
 
-In Q2 2026 the Registry grew from a testnet prototype into production infrastructure — deployed to
-mainnet at the close of the quarter — with its own organization, on-chain governance, verified
-builds, and a real data platform behind rgstry.xyz.
+In Q3 2026 the Registry finished its mainnet launch and grew from infrastructure you can query into a
+toolkit developers can build with: `import_contract!` shipped in a released crate, rgstry.xyz became
+a full discovery and deployment platform, and the governance machinery we built for Registry was
+adopted upstream by Tansu for every project that uses it.
 
-**The Registry is live on mainnet.** The registry contract is deployed to Stellar mainnet at its
-deterministic, salt-derived ID `CDU4M3LDIOUJJ5F3YXKJ4EJEP5VPRPG6N2LJ5HOQIMN7MNGL3NS3EGUY` (baked into
-the CLI) via the phased deploy pipeline (stellar-registry/contracts#14, merged 2026-07-06), seeded
-with verified ecosystem contracts (circle, soroswap, blend, defindex, xlm). The mainnet indexer
-pipeline and the rgstry.xyz mainnet cutover are rolling out this week.
+**The mainnet launch is complete.** Mainnet data is fully indexed in Goldsky
+(stellar-registry/indexer#25) and served from https://stellar-registry-mainnet.fly.dev/.
+[stellar.rgstry.xyz](https://stellar.rgstry.xyz) is now the primary subdomain (with rgstry.xyz
+redirecting to it), the registry contract is visible on Stellar Expert, and every `stellar registry`
+command works across both testnet and mainnet.
 
-**Registry became standalone infrastructure.** The Registry was split out of the
-theahaco/scaffold-stellar monorepo into its own GitHub organization,
-[github.com/stellar-registry](https://github.com/stellar-registry), with four repos — `cli`,
-`contracts`, `ui`, and `indexer` — each with full history preserved, scoped CI, dependabot, and
-rewritten documentation. The Registry now stands on its own, as promised in our Q2 proposal ("the
-Registry stands independently and is designed to serve the entire Soroban developer community").
+**Registry is now composable from Rust.** `import_contract!` is released, documented on
+[crates.io](https://crates.io/crates/stellar-registry) and
+[docs.rs](https://docs.rs/stellar-registry), and covered by unit tests that run on every commit.
+Shipping it took two large re-architectures, the consolidation of the related
+`import_contract_client!` and `import_asset!` macros into the Registry repo, and a new
+[`stellar-registry-name`](https://crates.io/crates/stellar-registry-name) crate. With that release,
+all Stellar Registry crates reached official beta at version 0.1.0. Compile-time safety came with it:
+flagged contracts fail to resolve by default, proven by an integration test
+(stellar-registry/cli#60). The macro also now handles Stellar Asset Contracts, so
+`import_contract!(xlm)` and `import_contract!("circle/usdc")` work for any SAC registered in Registry
+(stellar-registry/cli#64).
 
-**Five on-chain registry releases.** Registry contract versions v0.5.0 through v0.6.2 shipped in
-April, adding contract flagging with a gas-optimized storage encoding (unflagged entries pay zero
-overhead on the hot invocation path), `SubRegistry` events, cross-registry deploys
-(`deploy_with_subregistry`) that record provenance on Deploy events, deterministic salt-derived
-contract IDs, and dry-run deploy options.
+**rgstry.xyz became a real discovery platform.** Server-side fuzzy search now covers contracts as
+well as Wasms (stellar-registry/indexer#24), e.g. every mainnet contract matching
+[`kal`](https://stellar.rgstry.xyz/contracts?query=kal). Wasm pages gained a "deploy this Wasm" form
+(stellar-registry/ui#23) and contract pages an embedded Contract Explorer (stellar-registry/ui#24).
+Verified-build (SEP-55) badges from Stellar Expert data now appear on contracts
+(stellar-registry/ui#57), and SEP-58 source-verification fields are surfaced on Wasm and contract
+pages (stellar-registry/indexer#49, stellar-registry/ui#82, stellar-registry/ui#83).
 
-**On-chain governance shipped.** The Tansu-DAO-gated registry manager contract merged
-(stellar-registry/contracts#5): a manager whose `trigger(proposal_id)` entry point executes an
-approved Tansu DAO proposal (e.g. `registry.publish_hash` / `registry.deploy`) in a single
-transaction. Verified live end-to-end on testnet: proposal → vote → trigger → publish, with
-replay-guard rejection confirmed.
+**Governance became shared infrastructure.** A new Governance section on rgstry.xyz provides forms to
+propose adding a contract to the root registry (stellar-registry/ui#67), adding a Wasm
+(stellar-registry/ui#71), or creating a subregistry (stellar-registry/ui#81). Meanwhile, the
+workaround we built last quarter to act on Tansu proposals was merged into Tansu itself (merged to
+Tansu `main` 2026-09-02), builds against the real Tansu contract, and is documented in Tansu's
+governance docs, so any ecosystem project can now use it. We deleted our duplicate
+`registry-tansu-manager` and `tansu-stub` (stellar-registry/contracts#55).
 
-**Verified builds are live.** We adopted the stellar-expert/soroban-build-workflow for releases
-(stellar-registry/contracts#10), replacing 243 lines of bespoke CI with environment-gated, OIDC
-build-provenance-attested releases, and published the first verified build of the registry contract.
-We also submitted a Contract Source Verification RFP to the SCF Build Award RFP track and
-collaborated with Ethan Frey (Confio) on its technical architecture.
+**Secure CI publishing, and a new product.** The Registry contract now auto-publishes its Wasm on
+commits to `main` (stellar-registry/contracts#53). Keeping keys on GitHub safe led us to design and
+ship [Perch](https://github.com/stellar-registry/perch), a composable policy layer for Soroban smart
+accounts.
 
-**The indexer went v1.** The first mainnet-ready pipeline & API (stellar-registry/indexer#5) moved
-data into a versioned schema, added auto-discovery of named subregistries (oz, blend, soroswap,
-defindex), and grew an archive pipeline exposing full per-contract version history
-(stellar-registry/indexer#14), including versions that predate contract's addition to Stellar
-Registry. June added structured logging with request-id tracing and a trigram index enabling fuzzy
-server-side search (stellar-registry/indexer#23).
-
-**rgstry.xyz matured.** The UI gained a testnet/mainnet network switch with per-environment
-Cloudflare Worker deploys, in-UI usage guides for the import macros, README/LICENSE rendering from a
-contract's GitHub repo, contract metadata on detail pages, server-side search, and request-id-traced
-error reporting — 18 merged PRs in the quarter.
-
-**Releases and toolchain.** Crates published: `stellar-registry` v0.0.8–v0.0.10,
-`stellar-registry-cli` v0.0.20/v0.0.21, `stellar-registry-build` v0.0.8. The contracts and CLI both
-moved to soroban-sdk v27 / stellar-cli v27 (stellar-registry/contracts#11, stellar-registry/cli#13).
+**Also shipped.** Foundational support for named G-addresses in the registry contract
+(stellar-registry/contracts#37, stellar-registry/contracts#38); full contract version history on
+contract detail pages (stellar-registry/ui#40); a [Stellar Registry Full Walk-Through
+video](https://www.youtube.com/watch?v=xAlWmJOdMSQ) on The Aha Company's YouTube channel; and a new
+logo and consolidated documentation.
 
 <!-- markdownlint-enable MD034 -->
 
