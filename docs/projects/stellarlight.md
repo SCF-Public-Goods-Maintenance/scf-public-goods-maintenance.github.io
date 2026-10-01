@@ -66,69 +66,301 @@ contributing to its growth via SCF, hackathons, VC programs, events, SDF program
 
 <!-- markdownlint-disable MD034 -->
 
-this quarter stellar light went from "a website you browse" to "a data layer the ecosystem can
-query." the platform launched publicly, and — more importantly — the same data became
-machine-readable so ai agents and tools consume it directly.
+last quarter stellar light became a data layer agents could query. this quarter it became one they
+depend on, and it started catching and fixing its own mistakes.
 
-**public launch.** stellarlight.xyz is live and public: the directory, stablecoin explorer, github
-leaderboard, dev-activity tracker, ideas/rfp platform, hackathon tracker, and blog are all in front
-of the ecosystem. the launch was covered in an ecosystem interview:
-<https://x.com/lumenloop/status/2069451377223536659>.
+**raven runs on it.** raven, the ecosystem agent SDF is building, uses stellar light as its stellar
+data layer and grades us in the open: 16 findings filed against our data or contract this quarter, 12
+closed at the root. api usage went from 46 thousand calls in mid-july to 464 thousand by september
+29, with 110 thousand in the last seven days (stellarlight.xyz/analytics). raven's team ran about
+39,000 requests against us in two days of evaluations, reported three production problems (stalls,
+error bodies, vector fallbacks), and all three were fixed and measured within a day: 600 requests per
+minute sustained with p99 1.7 seconds and no errors. raven now runs on a metered partner key (1,200
+per minute, 200,000 per day), the headers and warnings its team asked for (match mode, server timing,
+retry-after, fallback reasons) ship on every answer, and the skill raven pins is checked daily
+against ours.
 
-**the agent-native data layer (the big shift).** the plan for this quarter was to make the
-ecosystem's data ai-queryable and plug into stella, SDF's ecosystem assistant. stella is being sunset
-(shutting down at the end of the month), so instead of building for one bot i built an open interface
-any agent can consume — which turned out far more valuable and future-proof. shipped: a public rest
-api (24 endpoints across projects, repos, hackathons, builders, funding, research, partners), an
-openapi 3.1 spec at /api/openapi.json, an mcp server published to npm (`@stellar-light/scout-mcp`), a
-typed client (`@stellar-light/api-client`), and an installable `stellar-scout` skill. i also built a
-public **skills marketplace** at stellarlight.xyz/skills — a curated, filterable catalog of the ai
-skills, mcp servers, sdks, and tools available to stellar builders (merging SDF's official
-skills.stellar.org catalog, stellar light's own, and community submissions) so builders find and
-install the right agent tooling in one place. the ecosystem's data — and the tools to use it — is now
-a machine surface, not just a ui.
+**the code-truth layer exists.** 13,437 stellar and soroban repos are indexed and scored (about 2,300
+in june), each carrying facts read from its code and pinned to a commit: interfaces, dependencies,
+capabilities, toolchain, ci and tests, live mainnet usage, and a trust composite. contracts are
+first-class entities (`/api/contracts`, 122 mainnet contracts with events and verification), claims
+get verdicts with evidence (`/api/verify`), 899 repos carry a written knowledge note, and the CAP
+registry is cross-walked into the research corpus so "which CAP added this" has a sourced answer.
 
-**the ecosystem's ai agents already consume it.** stellar light is already being used as a data
-source by the ecosystem's emerging ai agents — including **raven**, the ai agent tyler van der hoeven
-(kalepail) is building at SDF, which sits on top of stellar light and lumenloop (raph's
-research/media layer) as its data layers. i worked directly with tyler this quarter to make stellar
-light more consumable by raven, and measurably improved how well it routes to and answers from our
-data by hardening the openapi spec — a large, reproducible jump in correct routing. early proof that
-the ecosystem's ai layer needs exactly this kind of fresh, structured, authoritative source, and that
-stellar light is becoming it.
+**quality is measured, and it moved.** the answer-quality score on the standing question matrix went
+from 59% in july to 100% from september 6 onward. the whole system is on one public dashboard,
+stellarlight.xyz/quality: the score series, every guard's last verdict, the open findings with their
+evidence, the lane scoreboard, and the phase plan. behind it: an improvement ledger that turns every
+detector into one tracked backlog, a daily truth battery, golden evaluations after every deploy,
+contract invariants in ci, 52 scheduled workflows with idempotence gates on every writer, and two
+agent lanes that pick a ledger row and open a pull request on their own. 1,401 pull requests merged
+this quarter (numbers 221 through 1745), and the repository went public in july.
 
-**ai across the platform.** beyond serving agents, the platform runs its own ai. an ai data-cleaning
-pipeline normalizes, de-duplicates, re-categorizes, and flags stale/broken data across 900+ projects
-so the directory stays accurate at scale. i built the retrieval quality itself: a vector-searchable
-research corpus (SEPs, SCF handbook, dev docs, papers, security audits, incident reports) plus an
-indexed-and-scored github repo layer (~2,300 stellar/soroban repos ranked by freshness, traction, and
-SCF/hackathon/builder authority) so agents find the right code and the right source, not noise. every
-answer carries a confidence score (relevance + freshness + authority) so consumers — human or agent —
-know how much to trust it. a natural-language interface (`/ask`) puts all of this behind a
-plain-english question; it's currently in private testing.
+**new registries the ecosystem did not have.** a verified real-world-asset registry (113 rows, 97
+rwa.xyz tokens, 52 issuers, each re-verified on chain, from the issuer's own stellar.toml outward
+where one exists, with the verification level served per row and refreshed every six hours); the
+stablecoin service rebuilt on our own pipeline and domain (41 assets, six-hourly, the full price
+history carried over), with pyth price feeds under evaluation for a product test with sdf; a
+structured security-audit registry (64 reports); and hackathon prior-art search across every
+dorahacks build.
 
-**the partner portal (an ai product on its own).** built the partner layer end to end: a directory of
-anchors, on/off-ramps, infrastructure, tooling, and audit firms, each enriched directly from the
-partner's stellar.toml (supported assets, SEP-6/24/31, on/off-ramp capability, jurisdiction) to match
-the official stellar anchor directory. on top of it, an ai concierge that matches builders to the
-right partner from a plain-english need ("i need a USDC off-ramp in mexico"), and a full self-service
-portal (in beta): partners log in and maintain their profile through an ai-guided chat, get demand
-signals when builders search for them, and receive quarterly freshness check-ins so their data never
-goes stale. a claim flow lets real companies take ownership of their listing.
+**built for scf and sdf.** the i³ awards voting system: pilots sign an authorization with their
+wallet, an anonymous relay writes the ballot on chain, ballot status follows the wallet across
+devices, the pilot roster can be read straight from the scf voting contract, and the round manifest
+and the published results get anchored on tansu (rehearsed end to end on a mock round). 34 nominees
+and 76 pilots are loaded; the nominations round opens to pilots on sdf's go. the rfp section carries
+the q3 briefs and scf round #46 as an open row, the 10 scf skills live in the marketplace, and
+builder profiles show hackathon submissions.
 
-**data quality + integrity.** golden-answer evaluations, retrieval chunk hygiene, org/builder
-attribution ("who built X" → the company behind each project), defunct-project handling so dead
-projects stop ranking as active, and a daily drift guard that asserts the api, the openapi spec, and
-the docs never disagree.
-
-**content.** thesis-driven ecosystem reports published on /blog covering the state of stellar, the
-defi landscape, SCF funding, stablecoins, developer activity, and the hackathon pipeline.
+**the partner layer.** the directory, the concierge and matching on stellar.toml fields are live and
+in use (43 published partners, 21 anchors, 12 with toml-verified assets, seps and ramp types); this
+is how builders and raven find partners today. the portal came out of beta on 2026-10-01 and the
+first quarterly check-in reached 11 partners the same day; no partner has edited its own profile yet,
+which is the q4 work, and the details are in the q3 section below.
 
 <!-- markdownlint-enable MD034 -->
 
 ## Past Deliverables
 
 <!-- markdownlint-disable MD034 -->
+
+### 2026 Q3
+
+#### Q3 D1: code + current-state intelligence layer (the raven dependency)
+
+committed: a code-truth layer that scores live soroban/stellar repo code, matches it against docs and
+CAP/protocol history, and answers code-level, current-state questions with sourced references,
+exposed through the existing api/openapi/mcp/skill surfaces. measurable: code-truth endpoint live and
+documented in the openapi spec, answering a defined question set with sourced references.
+
+delivered:
+
+- **repo code facts, pinned to commits.** every scanned repo serves `codeVerified.scannedRef` (facts
+  tied to the commit they were read from, #830), `contractInterface` (exported functions, #796),
+  `stellarDeps`, `sdkCapabilities` including x402 and mpp (#808, #817), a toolchain dimension with ci
+  and tests presence (#864), `codeInUse` (live mainnet usage of the repo's contracts, #863),
+  language-frontier capabilities and calibrated depth for python, go, kotlin and java (#868, #869),
+  an audit-drift signal on project rows (#862) and usage-aware ranking (#871). the index grew from
+  about 2,300 to 13,437 scored repos.
+- **contracts as first-class entities.** `GET /api/contracts` (operation `listContracts`, #891): 122
+  mainnet contracts with events, subinvocations, wasm verification and the project that owns them;
+  #1279 stopped calling other people's contracts "verified".
+- **claims get verdicts.** `GET /api/verify` (operation `verifyClaim`, #1057): a claim in ("is blend
+  audited by certora", "is X live", "is X maintained", "is EURC issued by circle"), a supported /
+  unsupported / unresolved verdict with evidence and confidence out.
+- **the trust composite.** `GET /api/repos/trust` (#901) folds scan depth, usage, audit state and
+  activity into one score a consumer can read.
+- **knowledge notes.** the note pool went from 419 to 899 noted repos and closed to zero unnoted
+  (served as `knowledgeNotes` on repo rows), with audit-drift and live-usage facts inside the notes
+  (#865, the 2026-09-14 waves).
+- **protocol history.** CAP crosswalk facts and a committed cap registry in the research corpus
+  (#764), plus stored truth for every cap document row (#793), so "which CAP added this host
+  function" resolves to a sourced document. `/api/repos/explain` answers from our own scan when
+  deepwiki has no page (#697).
+- **the defined question set.** `scripts/eval/code-truth-probes.ts` freezes what the serve paths must
+  answer about scanned code (interfaces, domains, dependencies, usage, depth, contracts, the vet-idea
+  and scf-pitch composites) and exits 1 on any miss; since 2026-09-30 it runs on the daily eval lane
+  (#1743, 10 of 10 passing). a code-question battery is wired into the routing and consumer
+  evaluations (#696) and mirrors raven's soroban battery topics (#844). the content-freshness guard
+  fails ci when a published stellar cli command goes stale (#351).
+- **for raven, the contract it routes on.** the openapi spec went from 1.2 at the start of july to
+  1.9.54 (38 operations, 244 changelog entries), every discovery operation carrying the routing
+  guidance raven's catalog indexes; a scorer replica of raven's own routing math
+  (`scripts/eval/raven-scorer-replica.ts`) and a routing eval that asks raven real builder questions
+  and checks it lands on the right operation (#689, #692) let us classify every routing miss from our
+  side. `/api/changelog` is the consumption contract, gated so its newest entry can never name a
+  field the schema lacks; the installable skill is served live and kept byte-identical with the
+  mirror raven pins, checked daily (#708, #717). `@stellar-light/scout-mcp` had 9 releases and
+  `@stellar-light/api-client` 14.
+- **for raven, what it asked for in production.** a metered partner tier (1,200 requests per minute,
+  200,000 per day, #1714) and the matching client release the same day; after its team's two-day load
+  test, the three problems they reported were fixed within a day: stalls bounded by database and
+  embedding timeouts and a connection-pool cap (#1721, #1728, #1729), `Retry-After` on every 503,
+  `X-Scout-Match-Mode` and `Server-Timing` headers on every research response, and `meta.warnings`
+  stating why a fallback happened, so an agent can tell a slow answer from a degraded one.
+
+verify: <https://stellarlight.xyz/api/contracts?limit=5> ·
+<https://stellarlight.xyz/api/verify?claim=is%20Blend%20audited%20by%20Certora> ·
+<https://stellarlight.xyz/api/repos/explain?q=reflector> ·
+<https://stellarlight.xyz/api/repos/search?dependsOn=soroban-sdk&limit=3> ·
+<https://stellarlight.xyz/api/openapi.json> (`listContracts`, `verifyClaim`, `getRepoTrust`)
+
+#### Q3 D2: continuous eval + improvement loop
+
+committed: an eval harness on a regular cadence with a tracked answer-quality score that improves
+over the quarter, and regressions caught before they ship (drift guard + golden evals in ci).
+
+delivered:
+
+- **the score moved.** the standing question matrix (engine a, 8 buckets, the mechanized successor of
+  the 597-probe july audit) went 59% (2026-07-09), 82% (2026-07-11), 99% (2026-08-28), then 100% on
+  every weekly run from 2026-09-06.
+- **the quality dashboard.** stellarlight.xyz/quality is the public face of the loop: the score
+  series above, every guard's last verdict (12 holding, 3 breached, 4 stale on 2026-09-29), the open
+  findings with the evidence behind each, the consumer findings raven filed, the miss funnel, the
+  lane scoreboard, and the phase plan from QUALITY.md with what shipped against each phase. the same
+  data is served as json at /api/quality so an agent can read our health the way we do.
+- **one backlog for every detector.** the improvement ledger (#683 to #686) normalizes every engine's
+  findings into one status-tracked file, feeds raven's real questions through the gateway (#684,
+  #687) and closes findings only through waves that re-check them (#685).
+- **daily and per-deploy gates.** guard d, a daily rotating truth battery over the live api (#1047;
+  108 of 108 on 2026-08-29); golden evaluations after every production deploy (post-deploy-eval, 51
+  of 53 on 2026-09-26); the daily raven parity lane (51 pass both, 0 raven-only failures on
+  2026-09-29); the api-drift guard asserting the api, the openapi spec and the docs agree; the
+  self-audit lane at 69 checks passing, 0 failures on 2026-09-29.
+- **invariants in ci.** QUALITY.md (#1058) names the recurring defect classes and the closure rule;
+  three invariants run in `contract:check`: schema opacity (47 open maps paid down to zero, #1092),
+  honesty-layer conformance (#1060) and enum literals; plus the contract gate (spec snapshot,
+  generated client types, changelog coupling, #372) and the routing-surface check.
+- **agent lanes.** the repair lane (#1559) and the task lane (#1569) pick one ledger row a day and
+  open a pull request from a checkout with no production secrets; 52 scheduled workflows run (every
+  file under .github/workflows with a cron), every writer with read-back and an idempotence gate.
+- **third-party grading, and the loop built around it.** raven's audit filed 16 findings against
+  stellar light this quarter; 12 are closed at the root (examples: count instability on wallet
+  queries #1064, rfp fundability and stablecoin counts #955, enum drift and rwa issuer coverage
+  #1532), 4 remain open with evidence attached. two guards exist only because of how raven consumes
+  us: cross-surface consistency (the same fact must agree across every operation that serves it) and
+  honest absence (an empty result must say whether it was checked); engine d mines raven's real
+  questions and our api logs for the queries we miss (#452, #687); and our `meta.generatedAt`,
+  `matchMode` and `counts` became judge-visible evidence in raven's own evaluation (#1062).
+
+verify: <https://stellarlight.xyz/quality> · <https://stellarlight.xyz/api/quality> ·
+<https://github.com/Stellar-Light/stellarlight/blob/main/QUALITY.md> ·
+<https://github.com/Stellar-Light/stellarlight/actions/workflows/post-deploy-eval.yml> ·
+<https://github.com/Stellar-Light/stellarlight/actions/workflows/raven-eval-parity.yml>
+
+#### Q3 D3: partner portal to general availability
+
+committed: portal out of beta, partners live with maintained profiles, concierge matching on
+structured fields, and freshness check-ins sending.
+
+delivered:
+
+- **out of beta.** the beta label came off the directory, the concierge and the portal on 2026-10-01
+  (#1749). what builders and raven use today: 43 published partners (21 anchors, 5 wallets, 5 audit
+  firms, 4 protocols, 3 infrastructure, 3 asset issuers, 2 tooling), each profile maintained from the
+  partner's own stellar.toml with provenance (`tomlSourceUrl`, `tomlFetchedAt`, #831) and aged daily
+  by the freshness lane (fresh, aging, stale, archived) so a stale listing is visibly stale and drops
+  out of ai matching; 12 of the 21 anchors carry toml-verified fields, the other 9 publish no
+  stellar.toml at all (each domain checked 2026-09-30). raven exposes the directory through
+  `get_partners`.
+- **concierge matching on structured fields.** the deterministic matchmaker and the concierge rank on
+  assets, SEP-6/24/31, ramp types and country; official anchors missing from the directory were
+  seeded from anchors.stellar.org (#246).
+- **claim + ownership verification.** a claim is verified by construction: the claimant's mailbox has
+  to sit on the listing's own domain (shared hosts excluded), and a verified claim sets the account
+  email without an admin in the loop (#1742, 2026-09-30). the sign-in link is the path a partner uses
+  to change anything.
+- **freshness check-ins sending.** the first quarterly check-in went out on 2026-10-01 to the 11
+  published partners with a contact address on file, 10 of them in the default directory listing and
+  one below its quality bar (#1749, #1750; 11 delivered, 0 failed): "still active and taking work?
+  review your listing and update what changed", signed in with the address we mailed. the digest runs
+  every monday and bundles the check-in with builder-lead alerts so a partner is never mailed twice;
+  a partner with no address or a failed send is reported, not counted, and comes back the next week.
+- **the product passes.** portal v2 with login and ai-guided maintenance (#240), the public concierge
+  chat and weekly lead digest (#241), a real listing pipeline with claim requests (#244), directory
+  v5 (#326), personalized related partners (#345), partner logos fixed (#330); contract work in
+  august and september: `getPartner` declares its full 31-field profile (#1045), the asset-issuer
+  type (#1269), region as a typed enum with 400s instead of silent zeros (#1314, #1323), honest nulls
+  for facts never checked (#992, #1360).
+
+what i take from it: the value came from discovery, not from partners editing listings. no partner
+has maintained its own profile yet; stellar.toml stays the source of truth, and q4 treats partner
+onboarding as outreach on top of the check-in rather than more product.
+
+verify: <https://stellarlight.xyz/partners> · <https://stellarlight.xyz/partners/chat> ·
+<https://stellarlight.xyz/api/partners?type=anchor&limit=3> ·
+<https://stellarlight.xyz/api/partners/matchmaker?q=USDC%20off-ramp%20mexico>
+
+#### Q3 D4: data pipelines, freshness + ranking quality
+
+committed: pipelines running with no significant downtime, new projects/stablecoins/repos reflected
+within about a week, drift guard green, /api/status freshness current.
+
+delivered:
+
+- **stablecoins on our own pipeline.** the stablecoin measurement service was rebuilt in four phases
+  (#957 to #960): own collections, a six-hourly writer, the api served from our own store, and the
+  explorer on our domain, with the full price history (3,763 rows, 18 assets, from november 2025)
+  carried over. 41 assets tracked; usdt0's september launch landed the same week. we are evaluating
+  pyth price feeds as a data source for a product test with sdf.
+- **a verified rwa registry.** `GET /api/rwa` (#1298): 113 rows, 97 rwa.xyz tokens, 52 issuers, each
+  verified on chain, from the issuer's stellar.toml outward where one exists, with the verification
+  level served per row, and re-measured every six hours (#1309), with on-chain control flags (#1305)
+  and a cross-vendor audit correction (#1302).
+- **audits, hackathons, builders, dev activity.** the audit registry serves 64 reports with
+  per-auditor findings extraction (#603); hackathons run on the dorahacks v1 hub api across every
+  organizer plus curated events (#757, #914), with prior-art search over every build (#693); 233
+  builder profiles (2026-10-01) show hackathon submissions with placement (#931); electric capital
+  snapshots refresh weekly (as of 2026-09-21).
+- **research corpus.** 10,893 documents across 16 sources on 2026-10-01 (seps, caps, dev docs, the
+  sdf blog, lumenloop research and news, audits, incidents, the security program, releases, the ec
+  developer report); the vector index gained a source filter so every source answers semantically
+  (#1728); exact-figure retrieval guaranteed on the vector path (#715).
+- **the directory stays true.** scf pages beyond the fund's 500-row listing cap recovered 112 rows
+  and 147 awards (#1397); 108 proven-broken links were routed into a repair queue (#1413); duplicate
+  records fold under a canonical with an operator veto (#1311); repositories that no longer exist are
+  stamped `gone`; one field, one writer ended the enrich and curate flip-flops (#1400). new facts
+  land within days: spectra's stellar launch was reported on 2026-09-26 and the row served live
+  status, structured products, tvl and nine contracts on 2026-09-28 (#1734).
+- **pipelines that report their own failures.** the on-chain lane had been hitting stellar.expert's
+  rate limit at the end of every run and reporting success; it now backs off, retries and ends red if
+  a row stays stale (#1735); the toml parser keeps asset-code case (#1736).
+- **uptime under load.** the database connection cap that caused stalls was found and fixed (pool
+  cap, fail-fast timeouts, an adapter crash trapped, #1721, #1728, #1729); every 503 carries
+  retry-after; measured on 2026-09-29: 600 requests per minute for a minute, 600 of 600 answered, p99
+  1.7 seconds. 52 scheduled workflows run; the api-drift guard is green and every /api/status source
+  updated on 2026-09-29.
+- **the site.** /ask, the natural-language search over projects, research and partners, is public;
+  /analytics shows usage in the open (all-time and 30-day calls, the last 7 days by endpoint);
+  /entities and /builders give organizations and builders their own profiles with code activity and
+  link provenance (#911, #913); the stablecoin explorer was rebuilt on our domain with per-asset
+  pages, issuer drawers and a latest-updates rail (#962 to #965).
+- **discovery.** duplicate titles, missing canonicals and missing structured data fixed, 24 category
+  landing pages added (2026-09-15), homepage payload cut from 566 kb to 356 kb.
+
+verify: <https://stellarlight.xyz/api/status> · <https://stellarlight.xyz/api/rwa?limit=3> ·
+<https://stellarlight.xyz/api/stablecoins> · <https://stellarlight.xyz/stablecoins> ·
+<https://stellarlight.xyz/api/audits?limit=3> ·
+<https://stellarlight.xyz/api/hackathons/builds?q=oracle> ·
+<https://github.com/Stellar-Light/stellarlight/actions/workflows/api-drift.yml>
+
+#### Q3 D5: scf program support, rfp + hackathon maintenance, and reporting
+
+committed: rfps live and current, ideas + hackathon trackers current, and ecosystem reports published
+over the quarter.
+
+delivered:
+
+- **the i³ awards.** sdf asked in july for a pilots-only voting system for the i³ awards; it is
+  built, rehearsed end to end on a mock round, and open on a private ballot page: a pilot signs an
+  authorization with their wallet and an anonymous relay writes the ballot on chain under a random id
+  (#1689 to #1695); a signed cross-device ballot status so a pilot is recognized on any device
+  (#1726); authorship proof kept per ballot (#1718) and, since 2026-09-30, an authorization memo that
+  commits to a server-issued nonce so a copy of a signed authorization reveals nothing (#1744); a
+  lane that reads the scf voting contract's eligible-voter list as import-ready csv (#1528); the
+  round manifest and the published results anchored on tansu (#1635 to #1639); a daily reconcile
+  between chain and record (#1630, #1632); an admin-only tally view of who voted for what, with the
+  standings the publish lane would count (2026-10-01). status on 2026-10-01: 34 nominees across 3
+  categories, 76 pilots whitelisted, and a rehearsal round open to any wallet for sdf's own testing
+  before the pilots get the link.
+- **rfps.** q3 rollover with the layerzero dvn and x402 bazaar briefs (#751); scf round #46 is served
+  as an open row with its 2026-11-08 deadline; 16 briefs (2 open, 14 closed) alongside the round row.
+  the scf public goods award is structured truth on project rows (#631) and per-round awards are
+  official records (#759, #811).
+- **ideas, skills, builders.** the ideas platform and `vet-idea` are live; the 10 scf skills sit in
+  the marketplace as one service offering with two reviewer skills (#672, #707); builder profiles
+  show hackathon submissions with placement (#931); the hackathon tracker is current (26 events,
+  hackmeridian listed as upcoming).
+- **reports, not met.** the six thesis reports were refreshed on 2026-08-14 and the scf funding
+  analysis gained round-level data (41 rounds, #576), but no new report was published this quarter;
+  the blog now also syndicates ecosystem posts from sdf and tellus through the feed sync. the
+  quarter's writing went into the code-truth and quality work above, and reports are the shortfall in
+  this deliverable.
+
+verify: <https://stellarlight.xyz/api/rfps> · <https://stellarlight.xyz/ideas> ·
+<https://stellarlight.xyz/skills?source=stellarlight> · <https://stellarlight.xyz/hackathons> ·
+<https://github.com/Stellar-Light/stellarlight/tree/main/src/lib/awards> (the i³ voting code)
 
 ### 2026 Q2
 
