@@ -226,6 +226,22 @@ description will automatically populate with the content of your updated project
 deliverables PR is reviewed against the deliverables you committed to in that quarter's proposal;
 approval by a supermajority of reviewers releases Tranche 2.
 
+### Tagging work with its deliverable
+
+Give each deliverable in your proposal a short identifier -- `D1`, `D2`, and so on -- and start the
+title of any pull request in your own repositories that implements it with that identifier:
+
+```text
+D3: add CAP-71 delegated auth parsing
+```
+
+Reviewers can then trace a commitment to the work that delivered it without relying on the links you
+remember to gather at quarter end, and you spend less time assembling evidence. A label on the pull
+request works equally well if you prefer.
+
+This is a convention, not a requirement, and nothing checks it. It simply makes your deliverables
+report much easier to write and to review.
+
 ## Access & Permissions
 
 Proposers need to be added to the GitHub team corresponding to their SCF membership role. Those that
