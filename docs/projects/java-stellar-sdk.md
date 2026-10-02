@@ -160,6 +160,97 @@ the Java generator so that its output compiles, and CI now checks this on every 
 was then rewritten and merged for the next release: it generates typed bindings for contract events,
 structs, unions, and contract errors, with a simpler API for callers.
 
+### 2026 Q2
+
+#### 1. Continuous Maintenance and Improvement
+
+Description from last quarter:
+
+> Regular SDK updates addressing Horizon, Soroban RPC, and protocol changes (including Protocol 26),
+> bug fixes, feature requests, and documentation updates. Keep CI/CD pipelines and dependency updates
+> current.
+
+Proof of completion:
+
+- Release 3.0.0: https://github.com/lightsail-network/java-stellar-sdk/releases/tag/3.0.0
+- Release 3.1.0: https://github.com/lightsail-network/java-stellar-sdk/releases/tag/3.1.0
+- Pre-release 4.0.0-beta0:
+  https://github.com/lightsail-network/java-stellar-sdk/releases/tag/4.0.0-beta0
+
+Some notable PR, not exhaustive:
+
+- PR #804: https://github.com/lightsail-network/java-stellar-sdk/pull/804 — feat: add CAP-71
+  (Protocol 27) Soroban authorization support
+- PR #807: https://github.com/lightsail-network/java-stellar-sdk/pull/807 — feat: add
+  simulateTransaction useUpgradedAuth flag
+- PR #806: https://github.com/lightsail-network/java-stellar-sdk/pull/806 — refactor!: return
+  signature SCVal from Auth.Signer for custom account contracts
+- PR #800: https://github.com/lightsail-network/java-stellar-sdk/pull/800 — chore: upgrade generated
+  XDR definitions to Protocol 27
+- PR #784: https://github.com/lightsail-network/java-stellar-sdk/pull/784 — docs: improve xdr
+  generator javadocs
+- PR #783: https://github.com/lightsail-network/java-stellar-sdk/pull/783 — docs: add missing Javadoc
+  comments for various classes and methods
+
+- View all 23 merged PRs (Q2 2026):
+  https://github.com/lightsail-network/java-stellar-sdk/pulls?q=is%3Apr+is%3Amerged+merged%3A2026-04-01..2026-06-30
+
+Two stable releases shipped. The generated XDR was upgraded to Protocol 26 and then to Protocol 27,
+exceeding the planned Protocol 26 target. CAP-71 Protocol 27 Soroban authorization, including the new
+address-bound and delegated credential types, was implemented across the high-level API and shipped
+in the 4.0.0-beta0 pre-release, and `Auth.Signer` was further redesigned to natively support custom
+account contracts (BLS, WebAuthn, threshold, policy) in the pending release. This Protocol 27 work
+currently ships in the 4.0.0-beta0 pre-release rather than a stable release: Protocol 27 is not yet
+broadly available in real-world test environments, so the stable 4.0.0 is intentionally held until
+the implementation can be validated against a live Protocol 27 network. The toolchain was also
+modernized with a JDK 21 build toolchain and updated Gradle/Kotlin/dependencies, and Horizon request
+handling was hardened, alongside various bug fixes.
+
+#### 2. SEP-46, SEP-47, and SEP-48 Support
+
+Description from last quarter:
+
+> Add support for SEP-46 (Contract Meta), SEP-47 (Contract Interface Discovery), and SEP-48 (Contract
+> Interface Specification). These three SEPs form the foundation for smart contract self-description:
+> SEP-46 defines how contracts embed metadata in Wasm custom sections, SEP-47 lets contracts declare
+> which SEPs they implement, and SEP-48 provides a rich interface specification including Soroban
+> host types, user-defined types, and event schemas. Together they enable the SDK to parse and expose
+> contract metadata, which is essential for tooling, auto-generated contract clients, and off-chain
+> systems that need to understand contract interfaces.
+
+Proof of completion:
+
+- PR #796: https://github.com/lightsail-network/java-stellar-sdk/pull/796 — add SEP-46/47/48 contract
+  introspection support
+- Release 3.1.0: https://github.com/lightsail-network/java-stellar-sdk/releases/tag/3.1.0
+
+Introspection APIs for SEP-46 (contract metadata), SEP-47 (contract interface discovery), and SEP-48
+(contract interface specification) were added and shipped in 3.1.0, including `ContractMeta`,
+`ContractSpec`, and `ContractInfo` wrappers under `org.stellar.sdk.contract` and `SorobanServer`
+helpers (`getContractWasm`, `getContractMeta`, `getContractSpec`, `getContractInfo`) that parse a
+Soroban contract's Wasm and expose its self-described metadata. This gives tooling and off-chain
+systems a standard way to understand contract interfaces.
+
+#### 3. AI Coding Agent Skill
+
+Description from last quarter:
+
+> Publish an AI coding agent skill for the java-stellar-sdk following the agentskills.io open
+> standard, compatible with Claude Code, Codex CLI, Cursor, Gemini CLI, and others. The skill
+> provides token-efficient documentation and best practices for AI-assisted development with the SDK,
+> lowering the barrier for developers using AI tools to build on Stellar.
+
+Proof of completion:
+
+- PR #797: https://github.com/lightsail-network/java-stellar-sdk/pull/797 — add agent skill for
+  java-stellar-sdk
+- Release 3.1.0: https://github.com/lightsail-network/java-stellar-sdk/releases/tag/3.1.0
+
+An Agent Skills-compatible skill was published under `skills/`, with Claude Code plugin manifests in
+`.claude-plugin/` and Stellar-specific guidance covering transactions, operations, Horizon, Soroban,
+XDR/SCVal, and SEP protocols. It gives AI coding assistants token-efficient, accurate guidance for
+building on Stellar with the SDK, lowering the barrier for developers using AI tools.
+
 ## Proposed Impact
 
 The primary goal for Q3 2026 is to ship java-stellar-sdk 4.0.0 as a stable release with full Protocol
