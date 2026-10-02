@@ -155,6 +155,12 @@ is mostly self-explanatory. A few things to keep in mind:
   service is up. The program polls it, so you never have to report uptime yourself. The endpoint does
   not need to be live when you add it to your proposal: the first 2xx data point marks the beginning
   of the uptime calculation.
+- **Metrics endpoint** — if the work you are funded for does not land in a git repository, add a
+  `metrics_endpoint` line to your project page front matter pointing at a public URL returning counts
+  you consider meaningful, as JSON. Reports logged, datasets published, records curated: whatever
+  your quarter is actually measured in. The program polls it, so your progress is visible without you
+  having to assemble it. As with the health endpoint, the URL does not need to resolve when you
+  submit.
 - **Budget Requested** — up to $50,000 in XLM per quarter. Your budget should be reasonable relative
   to your retroactive impact and planned deliverables.
 - **Legal Acknowledgements** — you must agree to the
