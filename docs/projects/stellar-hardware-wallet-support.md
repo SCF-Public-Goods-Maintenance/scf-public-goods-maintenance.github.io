@@ -160,6 +160,69 @@ unexpected transaction data, so the data a user reviews matches the data they si
 displays full asset issuer addresses, which helps users tell apart assets with similar codes. The app
 is also smaller and supports the USDT0 stablecoin.
 
+### 2026 Q2
+
+#### 1. Ongoing Maintenance
+
+Description from last quarter:
+
+> Regular upkeep of the Stellar Ledger app and Trezor integrations in coordination with the Ledger
+> and Trezor teams: responding to community issues and pull requests, keeping SDK and firmware
+> dependencies current, and ensuring Stellar assets and protocol features remain fully supported.
+
+Proof of completion:
+
+- Trezor firmware v2.12.1:
+  https://github.com/trezor/trezor-firmware/blob/main/core/CHANGELOG.T3W1.md#fixed — improved Stellar
+  transaction confirmation/signing flow
+- Trezor Suite Stellar fixes:
+  https://github.com/trezor/trezor-suite/pulls?q=is%3Apr+author%3Aovercat+is%3Aclosed — merged
+  Stellar maintenance work across Trezor Suite
+
+The Stellar transaction confirmation and signing flow was refined and shipped in Trezor firmware
+v2.12.1, making on-device review clearer for signers. Alongside it, several Stellar maintenance fixes
+landed in Trezor Suite in coordination with the Trezor team, including Soroban contract token
+resolution, Soroban URL prioritization in fiat services, and improved token icon resolution.
+
+#### 2. Stellar WalletConnect Support in Trezor Suite
+
+Description from last quarter:
+
+> Add WalletConnect support for Stellar in Trezor Suite, enabling users to connect their Trezor
+> hardware wallets to Stellar dApps directly from the suite. This brings hardware-level signing
+> security to WalletConnect-based Stellar applications and improves interoperability across the
+> ecosystem.
+
+Proof of completion:
+
+- Trezor Suite Mobile v26.4.2: https://github.com/trezor/trezor-suite/releases/tag/v26.4.2%40mobile —
+  Stellar WalletConnect support shipped
+
+Stellar WalletConnect support was implemented and released to users in Trezor Suite (Mobile) v26.4.2.
+Trezor owners can now connect their devices to WalletConnect-based Stellar dApps and approve
+transactions with hardware-level security, extending Stellar's reach into the growing WalletConnect
+ecosystem.
+
+#### 3. Soroban Support for Trezor
+
+Description from last quarter:
+
+> Implement Soroban transaction signing support for Trezor in collaboration with the Trezor team.
+> This work follows prior design and discussion with the Trezor team. Due to current firmware team
+> priorities, PR merge is not guaranteed within the quarter, but the implementation will be submitted
+> and metrics (review feedback, CI results, community interest) will be tracked to guide future work.
+
+Proof of completion:
+
+- Development branch: https://github.com/overcat/trezor-firmware/pull/3 — Soroban
+  `StellarInvokeHostFunctionOp` implementation
+
+The Soroban signing implementation (`StellarInvokeHostFunctionOp`) was submitted upstream to
+trezor-firmware. As anticipated in the Q2 plan, it did not merge within the quarter, but in the final
+week of the quarter a key milestone was reached: the Trezor team added Soroban support to their TODO,
+putting it on their roadmap for the first time. Development continues on a dedicated branch, and this
+shift from design discussion to a planned firmware task makes Soroban the top priority for Q3.
+
 ## Proposed Impact
 
 The primary goal for Q3 2026 is Soroban. Now that the Trezor team has added Soroban support to their
