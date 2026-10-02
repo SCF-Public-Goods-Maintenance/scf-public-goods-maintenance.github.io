@@ -41,14 +41,19 @@ maintainer of several Stellar Client SDKs.
 
 I began contributing to the Stellar network in 2017, specializing primarily in the development and
 maintenance of Stellar SDKs. I developed the iOS Stellar SDK, the Flutter Stellar SDK, the PHP
-Stellar SDK, and the Kotlin Multiplatform Stellar SDK. I currently work full-time on my Stellar SDK
-projects.
+Stellar SDK, and the Kotlin Multiplatform Stellar SDK. I work full-time in the Stellar ecosystem; the
+SDKs are my main work.
 
 Previous SCF participation:
 
 - Multiple SCF Build Awards, including the KMP Stellar SDK OZ smart account support and wallet SDKs
   for Dart and Swift
-- SCF Public Goods Award since Q3 2025 (Batch 1) for the iOS, Flutter, and PHP SDKs
+- SCF Public Goods Award since Q3 2025 (Batch 1) for the iOS, Flutter, and PHP SDKs, and since Q3
+  2026 for the KMP SDK
+
+Bence ([ngybnc][ngybnc]) is a Soneso team member and works with me on the SDK. He has worked on the
+PHP SDK since 2022. In Q3 2026 he authored the Native ScVal Conversion and SEP-35 deliverables and
+the SEP-29 memo-required check.
 
 ## Retroactive Impact
 
@@ -320,58 +325,66 @@ and union-arm rejection.
 
 ## Proposed Impact
 
-Keep the SDK compatible with Horizon, Soroban RPC, and protocol updates including Protocol 27.
-Maintain existing SEP implementations and update as needed. Fix bugs and respond to issues and
-feature requests.
+Keep the SDK compatible with Horizon, Soroban RPC, and protocol updates, starting with the Horizon
+and RPC 29.0.0 releases. Maintain existing SEP implementations and update as needed. Fix bugs and
+respond to issues and feature requests.
 
-Improve the Soroban developer experience by adding a helper that converts a returned smart-contract
-value (XdrSCVal) to a native PHP value, so contract invocation and simulation results can be consumed
-directly instead of parsing the raw XDR union by hand. The JS and Python SDKs already provide this.
+Make the SDK more reliable for the apps that use it. In addition to the regular maintenance, this
+quarter will run a hardening round: an AI-assisted review of the whole SDK has proposed a list of
+security hardening measures, bug fixes, and improvements to code, tests, and documentation. The round
+will validate each proposal and work through the valid ones as far as the quarter allows.
 
-Update the PHP contract-bindings implementation that Soneso contributed to the community
-stellar-contract-bindings generator (linked from the Stellar CLI) so it produces code compatible with
-the current SDK.
-
-Implement SEP-35 (Operation IDs), the standard for the total-order ID of a ledger, transaction, or
-operation, so backend integrators can compute and parse operation IDs and Horizon paging cursors
-offline. The Python and Java SDKs already implement this.
+Make Stellar assets easier to use in apps that work with smart contracts. Add a Stellar Asset
+Contract toolkit, so an app can open XLM or any issued asset as a Soroban contract with the same
+client it uses for other contracts, look up the asset's contract id, read a balance, and build a
+transfer. The JS SDK already provides this.
 
 ## Proposed Deliverables
 
 ### Continuous Maintenance and Improvement
 
-Regular SDK updates addressing Horizon, Soroban RPC, and protocol updates (tracking Protocol 27
-through its mainnet activation), bug fixes, feature requests, and documentation updates. Maintain
-existing SEP implementations and update as needed, keep the SEP compatibility matrices current. Hold
-line coverage at 90% or above (currently 92.74%) under the blocking Codecov thresholds. Keep
-compatibility matrices, CI pipelines, statistics dashboard, and SBOM workflow up to date.
+Regular SDK updates addressing Horizon, Soroban RPC, and protocol updates (the Horizon and RPC 29.0.0
+releases, then every following protocol release, each supported before its mainnet activation), bug
+fixes, feature requests, and documentation updates. Maintain existing SEP implementations and update
+as needed. Keep compatibility matrices, the AI agent skill, CI pipelines, statistics dashboard, and
+SBOM workflow up to date.
 
-Proof: Release notes on GitHub, updated compatibility matrices, Codecov coverage report, and the
-soneso-sdk-stats dashboard.
+Hardening round: an AI-assisted review of the whole SDK has proposed a list of security hardening
+measures, bug fixes, and improvements to code, tests, and documentation. We will check and validate
+each proposal; valid proposals will become issues in the repository, labeled as part of this round,
+and will be worked through as far as the quarter allows, security hardening and bug fixes first, then
+the improvements.
 
-### Native ScVal Conversion
+Dated duties: the SDK's dependency data will keep reaching PG Atlas through GitHub's API change on
+2026-11-13. Before GitHub moves its default runners to Ubuntu 26.04 (rollout 2026-10-19 to
+2026-11-19), we will verify the Linux CI jobs (tests, static analysis, dependency audit, PHPDoc, SBOM
+submission, SEP-51 corpus drift, XDR generator, XDR update check, AI PR review) on Ubuntu 26.04 and
+adapt them where they break. CI will cover PHP 8.5 and, from its release on 2026-11-19, PHP 8.6.
 
-Add a helper that converts a smart-contract value (XdrSCVal) to a native PHP value, so contract
-invocation and simulation results can be consumed directly instead of parsing the raw XDR union by
-hand. This matches the JS and Python SDKs.
+Commitments for the quarter, each checkable from public data:
+
+1. First maintainer response to every community issue and pull request within 48 hours. Proof:
+   responsiveness panel of the [soneso-sdk-stats dashboard][statsdash].
+2. Every protocol release supported before its mainnet activation, with the Horizon and RPC matrices
+   regenerated at each Horizon and RPC release. Proof: [protocol delivery ledger][protoledger],
+   matrix headers.
+3. Unit test coverage at or above 90% under the required Codecov check; Horizon, RPC, and every SEP
+   matrix at 100% at each release. Proof: Codecov report, matrices in the repository.
+4. No release with an open dependency advisory, with Dependabot covering every dependency manifest.
+   Proof: release notes, Dependabot configuration.
+5. The dated duties done by their dates. Proof: workflow runs.
+
+Proof: Release notes on GitHub, the labeled issues of the hardening round and their PRs, updated
+compatibility matrices, workflow runs, the Codecov report, and the soneso-sdk-stats dashboard.
+
+### Stellar Asset Contract Toolkit
+
+Add Stellar Asset Contract (SAC) support to the high-level contract client: a client for an asset's
+contract opened from the SAC interface description shipped with the SDK, the contract id derived from
+the asset, a balance read, a transfer builder, and read calls that need no funded account, with unit
+tests, a testnet integration test, a documentation section, and the agent skill reference.
 
 Proof: GitHub release, PR with implementation and tests, documentation.
-
-### Contract Bindings Update
-
-Update the PHP contract-bindings implementation that Soneso contributed to the community
-stellar-contract-bindings generator (linked from the Stellar CLI) so its generated PHP code is
-compatible with the current SDK.
-
-Proof: pull request to the stellar-contract-bindings repository.
-
-### SEP-35 (Operation IDs)
-
-Implement SEP-35: a TOID utility that packs and unpacks a ledger sequence, transaction order, and
-operation index into the total-order ID used for operation IDs and Horizon paging cursors, with unit
-tests and documentation.
-
-Proof: GitHub release, PR with implementation and tests, SEP-35 compatibility matrix, documentation.
 
 ## Metrics loaded from PG Atlas
 
