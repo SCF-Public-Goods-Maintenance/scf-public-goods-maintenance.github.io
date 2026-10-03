@@ -53,27 +53,188 @@ context), and reliable public data presentation for independent verification.
 
 ## Retroactive Impact
 
-Over the last three months (April-June 2026), StellarChain continued improving public access to
-Stellar network data and prepared the foundation for deeper Q3 transparency work. We expanded the v4
-explorer with stronger contract views, improved API response consistency, better pagination, clearer
-frontend states, and richer backend indexing paths for Soroban contracts, events, storage,
-transactions, balances, and verification metadata.
+During Q3 2026 (July-September), with final integration and QA continuing just after the quarter
+closed, we took StellarChain beyond the core explorer experience. We added an Account Trust Checker
+and a more advanced investigation flow for indexed classic payment activity. Users can search by
+account or transaction, follow bounded candidate paths, filter by asset, date, or ledger, review
+grouped payments and timelines, keep a local case queue, and export the current page as JSON, CSV, or
+HTML. We present this information as evidence, not as a fraud verdict, and we show the coverage limits
+whenever the available history may be incomplete.
 
-We also worked on historical statistics infrastructure and large-scale data ingestion so that the
-explorer can move beyond recent API windows and provide longer-term visibility into Stellar activity.
-This included continued work around statistics storage, chart-ready metrics, and contract data
-collection from ledger/RPC sources. These improvements help users and builders answer more practical
-questions: what happened, when it happened, which accounts or contracts were involved, whether a
-contract is a Stellar Asset Contract, and how indexed Soroban balances compare with classic asset
-market data.
+Statistics also received a major rebuild. The explorer now has dedicated metric pages, selectable
+time ranges and bucket sizes, clearer tooltips, keyboard and pointer navigation, older-history
+loading, and CSV exports that keep the exact source values. On the backend, we added safer forwardfill
+and repair tools, bounded metric windows, pagination metadata, and read models that avoid scanning the
+largest statistics tables without limits. Where the available data is not reliable enough for a
+metric, we leave it disabled instead of guessing from unrelated aggregates.
 
-On the product side, we continued refining high-traffic explorer pages with clearer layouts, faster
-loading behavior, improved contract detail pages, and more consistent mobile/desktop experiences. The
-work reduces dead ends for users who search by transaction, account, contract, asset, or ledger, and
-it prepares StellarChain for investigation, reporting, and sustainability features in the upcoming
-quarter.
+We also made contract pages easier to understand. SACs and custom Wasm contracts are separated more
+clearly, holder and holding views are easier to inspect, and contract events, storage, arguments,
+balances, RPC fallback, source, and provenance now have more precise labels. SEP-55 attestations,
+decompiled source, and legacy verification remain separate signals. We do not show a SEP-58
+reproducible-build claim until a rebuild has actually been completed and matched.
+
+For sustainability, we prepared a Coinzilla native-ad placement that only loads after optional-cookie
+consent and always carries a visible advertising label. It stays separate from explorer evidence,
+rankings, verification, and account trust results. The placement is off by default and cannot show
+live ads until Coinzilla approves the site and provides a valid publisher zone. Partner pages,
+catalog management, regional metadata, and privacy-reviewed click analytics are still future work.
+
+At the same time, we kept working on Orion, our full-history data service. As the work progressed, we
+decided not to keep extending several fragmented import paths just to meet the short-term need. That
+would have left us with more duplication and maintenance work later. Instead, we chose the more
+ambitious route: a storage-efficient, Horizon-compatible service that can keep Stellar's full history
+synchronized with new ledgers. Orion made meaningful progress during Q3, but it is not released or
+counted as a completed deliverable. Full-history integration, account-history publication,
+end-to-end API validation, and complete Horizon compatibility will continue through Q4 and future
+funding work.
+
+We also released StellarKey publicly: an open-source, self-custodial Stellar wallet with Merchant
+Mode and our own Private Payments implementation. The wallet and merchant tools are available now.
+Private Payments Protocol V2 remains an unaudited, Testnet-only preview and must not be used with real
+funds. StellarKey is part of the wider ecosystem we are building around StellarChain, not a
+replacement for any of the Q3 commitments below.
 
 ## Past Deliverables
+
+### 2026 Q3
+
+> **A note on scope:** The list below covers what we formally committed to for Q3, but it is only one
+> part of the wider ecosystem we are building. In parallel, we are working on full-history data,
+> synchronized APIs, the explorer, contract intelligence, a self-custodial wallet, merchant tools,
+> and privacy research. We count work as completed only when it is released and can be checked. The
+> larger projects that are still in progress are listed separately and clearly marked.
+
+1. **Investigator for accounts, transactions, and payment activity — Delivered for the data we have
+   indexed**
+
+   We shipped two ways to use the Investigator. Basic mode gives newcomers a simpler Account Trust
+   Checker, while Advanced mode adds account and transaction search, one-hop evidence, bounded
+   two-hop candidate paths, and filters for operation, asset, date, ledger, direction, and small
+   amounts. Results can be viewed as grouped flows or individual events, explored on a payment map
+   and timeline, saved in a local case queue, paged through, and exported as JSON, CSV, or HTML.
+
+   The API always shows its coverage and any truncation. Asset-first search is still switched off
+   until the additional index is installed and populated. We also do not describe contract activity
+   as funds flow until caller and transfer provenance can be shown properly.
+
+   Evidence: [frontend investigation and reporting](https://github.com/stellarchain/v4/commit/5795502),
+   [case queue and chart/investigator integration](https://github.com/stellarchain/v4/commit/45601e3),
+   [paginated trace API](https://github.com/stellarchain/v4-api/commit/deb5e02), and
+   [bounded depth and asset-side read models](https://github.com/stellarchain/v4-api/commit/f96e7e8).
+
+2. **Affiliate and partner layer — Partially delivered**
+
+   We added one optional Coinzilla native-ad placement on the homepage. It has a visible
+   `Advertisement` label, a short explanation, configuration checks, optional-cookie consent, and
+   failure isolation. There is also a development preview that never contacts Coinzilla.
+
+   The ad stays away from Account Trust Checker, investigation evidence, rankings, verification,
+   and contract provenance. It will not show live ads until Coinzilla approves the site and provides
+   a valid zone ID. Partner pages, the partner catalog and admin tools, regional notes, and click
+   analytics are still to come.
+
+   Evidence: `src/components/ads/CoinzillaNativeAd.tsx`, `src/lib/ads/coinzilla.ts`, and the sponsored
+   placement rules in `UX-CONTRACT.md`.
+
+3. **Contract intelligence, SAC balances, and verification — Delivered for current coverage; deeper
+   verification continues**
+
+   We expanded contract indexing and explorer pages for transactions, events, storage, argument
+   usage, balances, and holder balances. We also improved SAC event parsing and metadata, added RPC
+   fallback, and made SAC supply comparison available alongside separately calculated classic asset
+   supply.
+
+   The labels are now more honest about what each signal means: SAC, custom Wasm, source available,
+   decompiled source, legacy verification, and SEP-55 provenance are kept separate. Decompiled code
+   is not presented as a verified build. SEP-58 reproducible builds, complete contract coverage, and
+   reliable contract-caller or token-transfer attribution remain gated until we can prove them.
+
+   Evidence: [SAC reconciliation and holder views](https://github.com/stellarchain/v4/commit/39dc828),
+   [contract metrics and balance indexing](https://github.com/stellarchain/v4-api/commit/fb9e73a),
+   [SEP-55 verification hardening](https://github.com/stellarchain/v4-api/commit/fc2b6da), and
+   [contract RPC fallback](https://github.com/stellarchain/v4-api/commit/6b5d66f).
+
+4. **Historical charts and public API reliability — Delivered for supported metrics**
+
+   We redesigned the Statistics overview and added 21 individual `/chart/{slug}` pages. They support
+   24-hour, 7-day, one-month, and one-year ranges, with five-minute, hourly, or daily buckets where
+   the source data supports them. Charts now include interactive tooltips, keyboard and pointer
+   navigation, older-history loading, related-chart links, and CSV exports for the current page.
+
+   The public network-metrics API now uses bounded 1–30 day windows, pagination metadata, source
+   provenance, request cancellation, and clear errors for unsupported bucket sizes. We also added
+   guarded forwardfill and repair tools without restarting the historical backfill. Metrics such as
+   asset-level volume and rankings, top payers, top receivers, top contract callers, and a corrected
+   transaction-fee series remain unpublished until their coverage and read models are ready.
+
+   Evidence: [network metrics API](https://github.com/stellarchain/v4-api/commit/71f0670),
+   [guarded forwardfill and repairs](https://github.com/stellarchain/v4-api/commit/fa5a92e),
+   [bounded metric reads](https://github.com/stellarchain/v4-api/commit/96c812a), and
+   [historical chart UX](https://github.com/stellarchain/v4/commit/5795502).
+
+5. **Orion full-history infrastructure — In progress and not released yet**
+
+   While building the historical data layer, we reached a point where adding more code to the old
+   import paths would have solved the immediate problem but created more duplication and maintenance
+   work. We decided to take the stronger long-term route and build Orion instead. We regularly
+   reassess the path as we learn from the data, and in this case a larger but more durable solution
+   made more sense than finishing something we would soon need to replace.
+
+   Orion is designed to become a fast, storage-efficient, Horizon-compatible service for Stellar's
+   full history. It will import historical data, keep up with new ledgers, provide the REST reads
+   StellarChain needs.
+   StellarChain will use Orion's compact model instead of keeping unnecessary copies of the same
+   data.
+
+   The basic approach is straightforward:
+   - XDR stays the authoritative source and is stored separately from processed history.
+   - Orion validates the XDR and writes compact Parquet history, while small indexes make it possible
+     to locate transactions and account activity without scanning the whole archive.
+   - Recent history and current state move forward together through verified publications.
+   - Checksums, isolated staging, and retained generations protect readers during updates.
+   - Tests compare exact results and resource use with the existing baseline.
+
+   Progress snapshot as of 3 October 2026:
+   - The native account-index evidence loader is implemented. All 87 uncached, race-enabled test
+     executions passed, but it has not been deployed yet.
+   - Live sync and the API reached ledger 64,610,303. The active publication batch was 87.5% complete,
+     with roughly 20 minutes remaining at the time of the snapshot.
+   - The account forest was 43.75% emitted, with roughly six hours of emission left before
+     verification and publication.
+   - Overall acceptance remains at 25%: one of four equally weighted stages is complete. The full
+     ETA is not confirmed, and gap-account integration is still open.
+
+   Sample measurements show about 52.56% less storage for the processed cluster, but this does not
+   prove the same reduction across the full archive. We still need to publish the account-history
+   indexes, join the original, intervening, and live ranges correctly, integrate gap accounts, and
+   validate the API end to end. Orion is finished only when it is usable and continuously
+   synchronized—not simply when an import completes or a sample test passes. It is listed here as
+   extra Q3 progress, not as a completed Q3 commitment.
+
+6. **StellarKey wallet, merchant tools, and Private Payments — Public release; privacy protocol
+   remains Testnet-only** [https://stellarkey.io/](https://stellarkey.io/)
+
+   We released StellarKey publicly as an open-source, self-custodial Stellar wallet. Users keep
+   control of their keys and encrypted records. The wallet supports sending, receiving, Stellar DEX
+   swaps, batch payments, encrypted vaults, and backups. Merchant Mode adds QR checkout, inventory,
+   invoices, refunds, reconciliation, and sales reports without making StellarKey a custodial
+   payment processor.
+
+   Private Payments is the research-heavy part of the same application. Protocol V2 generates
+   zero-knowledge proofs in the browser and is designed to shield the asset, amount, recipient, and
+   memo of internal XLM or USDC transfers. Deposits, withdrawals, the submitting account, fee payer,
+   timing, proof, commitments, nullifiers, and ciphertext remain public where applicable. Privacy is
+   context, not a guarantee, and activity patterns or reuse can weaken it.
+
+   Protocol V2 is unaudited and Testnet-only, so it must not be used with real funds. Mainnet remains
+   gated on an independent security review and the required trusted-setup evidence. Dedicated
+   desktop and mobile apps and browser extensions are also on the roadmap.
+
+   Evidence: [StellarKey public application](https://stellarkey.io),
+   [open-source repository](https://github.com/stellarchain/io.stellarkey),
+   [Private Payments whitepaper](https://github.com/stellarchain/io.stellarkey/blob/main/docs/whitepaper/private-payments.pdf),
+   and [video demonstration](https://youtu.be/R5xJyHOJ2Uo).
 
 ### 2026 Q2
 
