@@ -212,11 +212,11 @@ current.
 | Platform operation (6): hosting, ingestion, storage, backups, CDN, domains, calendar, AI and data APIs |      2,238 |
 | **Total**                                                                                              | **26,288** |
 
-Running the platform costs under
-$750 a month, AI across thirteen agents included. The cost is
-people: shipping the release, and reviewing what agents and the ecosystem contribute. Requested
-figure rounded down to $26,000.
-The legacy host is retired after the transition, reducing platform cost from next quarter.
+Running the platform costs under $750 a month, AI across thirteen agents included. The cost is
+people: shipping the release, and reviewing what agents and the ecosystem contribute.
+
+Requested figure rounded down to $26,000. The legacy host is retired after the transition, reducing
+platform cost from next quarter.
 <!-- markdownlint-enable MD034 -->
 
 ## Legal Acknowledgements
