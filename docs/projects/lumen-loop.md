@@ -45,8 +45,11 @@ distilled from the same corpus.
 
 Lumen Loop is a solo-maintainer project.
 
-Raphael Fortin, based in Canada. GitHub: https://github.com/rawritude Discord: ra.ph LinkedIn:
-https://www.linkedin.com/in/raphael-fortin-305bb688/
+Raphael Fortin, based in Canada.
+
+- GitHub: <https://github.com/rawritude>
+- Discord: ra.ph
+- LinkedIn: <https://www.linkedin.com/in/raphael-fortin-305bb688/>
 
 Lumen Loop launched in March 2024 and has run continuously since, through two SCF Build Awards
 (rounds 26 and 35). I have volunteered as an SCF Pilot for several years, previously helped run the
@@ -54,9 +57,9 @@ Stellar Hacks hackathon series, and was a contractor for the Stellar Development
 maintain awesome-stellar-community-fund, a set of open SCF review and round-resolution skills
 distilled from Lumen Loop's corpus.
 
-Stewardship and access. Two others hold read access to the codebase: @tupui (community) and @kalepail
-(SDF). If I am no longer able to maintain Lumen Loop, both have my permission to take over and
-continue running the project. The ecosystem database is CC-BY-4.0 in a public repo and already
+**Stewardship and access.** Two others hold read access to the codebase: @tupui (community) and
+@kalepail (SDF). If I am no longer able to maintain Lumen Loop, both have my permission to take over
+and continue running the project. The ecosystem database is CC-BY-4.0 in a public repo and already
 forked, so the dataset survives independently of the service.
 <!-- markdownlint-enable MD034 -->
 
@@ -87,7 +90,7 @@ launched projects reach an ecosystem-wide audience they could not otherwise buy,
 terms as anyone.
 
 **Full metrics, with sources and time windows:**
-https://gist.github.com/rawritude/db1399943994798e7c36a2bed7d8239b
+<https://gist.github.com/rawritude/db1399943994798e7c36a2bed7d8239b>
 <!-- markdownlint-enable MD034 -->
 
 ## Past Deliverables
@@ -107,29 +110,31 @@ Loop changes that, letting projects maintain their own presence and letting anyo
 record. The goal is a discovery layer the ecosystem participates in rather than one it reads.
 
 **Make the record more useful to decide with.** Coverage alone does not tell you which projects are
-alive, which are maintained, or where funding has gone and what came of it. Health scoring, a stated
-inclusion policy and independent funding reports turn a directory into something the ecosystem can
-reason with, and make the data as useful to agents and tools as it is to people.
+alive, which are maintained, or where funding has gone and what came of it. Health scoring, stated
+inclusion and content standards and independent funding reports turn a directory into something the
+ecosystem can reason with, and make the data as useful to agents and tools as it is to people.
 <!-- markdownlint-enable MD034 -->
 
 ## Proposed Deliverables
 
 <!-- markdownlint-disable MD034 -->
 
-**1. Release the next version of Lumen Loop this quarter. It brings:**
+### 1. Release the next version of Lumen Loop this quarter
 
-- Projects run their own presence. Teams claim their listing, keep it current, post jobs, and publish
-  their own content on a Stellar-native publishing platform where the ecosystem context is already
-  there, so what they write lands connected to the right projects, stories and events.
-- Anyone can contribute. News, events not on Luma, corrections and links can be submitted directly,
-  and submitters can track what happened to them.
-- A knowledge base for every project. Durable, structured context held in Lumen Loop rather than
+The release brings:
+
+- **Projects run their own presence.** Teams claim their listing, keep it current, post jobs, and
+  publish their own content on a Stellar-native publishing platform where the ecosystem context is
+  already there, so what they write lands connected to the right projects, stories and events.
+- **Anyone can contribute.** News, events not on Luma, corrections and links can be submitted
+  directly, and submitters can track what happened to them.
+- **A knowledge base for every project.** Durable, structured context held in Lumen Loop rather than
   behind permissioned third-party APIs, including historical material and unpublished data served to
   consumers like Raven and to any agent querying the corpus.
-- Open access for tools and agents. Self-serve API keys, agent skills and usage visibility, without
-  asking anyone.
-- Curation that improves over time. Every editorial decision, by staff, contributors or agents, is
-  recorded with its reasoning, so agents draw on past decisions and make better ones.
+- **Open access for tools and agents.** Self-serve API keys, agent skills and usage visibility,
+  without asking anyone.
+- **Curation that improves over time.** Every editorial decision, by staff, contributors or agents,
+  is recorded with its reasoning, so agents draw on past decisions and make better ones.
 
 _Value:_ projects represent themselves, anyone can contribute without going through one person, and
 the corpus becomes infrastructure other tools build on.
@@ -137,9 +142,11 @@ the corpus becomes infrastructure other tools build on.
 _Measure:_ the new version is live on lumenloop.com, with projects able to claim and maintain their
 own listing and anyone able to submit content.
 
-**2. Publish project health scoring.** A quantitative score for each project, derived from
-development activity, releases, content, social activity and on-chain signals, shown on project pages
-alongside the underlying metrics and served through the API and MCP.
+### 2. Publish project health scoring
+
+A quantitative score for each project, derived from development activity, releases, content, social
+activity and on-chain signals, shown on project pages alongside the underlying metrics and served
+through the API and MCP.
 
 _Value:_ a consistent, transparent measure of which projects are active, available to anyone
 assessing ecosystem health.
@@ -147,18 +154,21 @@ assessing ecosystem health.
 _Measure:_ health scores appear on project pages with their underlying metrics and are returned by
 the API and MCP.
 
-**3. Publish inclusion and content standards.** The criteria for listing early-stage and
-alternatively-funded projects, such as InstAwards recipients, and for content that projects publish
-through Lumen Loop.
+### 3. Publish inclusion and content standards
+
+The criteria for listing early-stage and alternatively-funded projects, such as InstAwards
+recipients, and for content that projects publish through Lumen Loop.
 
 _Value:_ the directory and the publishing platform run on clear, stated criteria.
 
 _Measure:_ standards published on lumenloop.com.
 
-**4. Sustain and deepen editorial coverage.** The weekly newsletter continues throughout the quarter,
-and by quarter end carries Stellar network data: stablecoin, RWA and network statistics with
-accompanying graphics. Independent reporting covers the SCF and Public Goods rounds, drawing on the
-ecosystem database for recipient history, prior awards and outcomes.
+### 4. Sustain and deepen editorial coverage
+
+The weekly newsletter continues throughout the quarter, and by quarter end carries Stellar network
+data: stablecoin, RWA and network statistics with accompanying graphics. Independent reporting covers
+the SCF and Public Goods rounds, drawing on the ecosystem database for recipient history, prior
+awards and outcomes.
 
 _Value:_ keeps the ecosystem current week to week, adds quantitative context to qualitative coverage,
 and leaves a durable record of where funding went and what came of it.
@@ -166,10 +176,12 @@ and leaves a durable record of where funding went and what came of it.
 _Measure:_ a newsletter every week of the quarter, one issue with stablecoin, RWA and network
 statistics and graphics, and both round reports published.
 
-**5. Curation and oversight.** A funded contributor reviews agent suggestions, curation policies,
-ingested sources and new project entries; manages portal access and community contributions; and
-handles categorisation, summary review, publishing and distribution to ecosystem channels. Access is
-scoped and permissioned, and does not extend to the codebase.
+### 5. Curation and oversight
+
+A funded contributor reviews agent suggestions, curation policies, ingested sources and new project
+entries; manages portal access and community contributions; and handles categorisation, summary
+review, publishing and distribution to ecosystem channels. Access is scoped and permissioned, and
+does not extend to the codebase.
 
 _Value:_ human review over an agent-run platform, and the capacity that makes open contribution
 workable.
@@ -177,27 +189,33 @@ workable.
 _Measure:_ curated changes to projects and content are counted and published continuously through
 Lumen Loop's metrics endpoint, declared on the project page for the program to poll.
 
-**6. Maintain the platform throughout the quarter.**
+### 6. Maintain the platform throughout the quarter
 
 - Ecosystem database updated as the ecosystem changes, committed publicly, with new projects and SCF
   award data added as they appear
 - News, events, media and governance coverage published continuously
 - Events calendar and iCal feed kept current
 - Public feeds, API and MCP server available to everyone, free
-- Value: the standing service the ecosystem already depends on.
+
+_Value:_ the standing service the ecosystem already depends on.
 
 _Measure:_ lumenloop.com/api/health is declared as the project's health endpoint so the program
 observes availability directly; database committed as the ecosystem changes; calendar and feeds kept
 current.
 
-**Budget allocation**
+### Budget allocation
 
-- Maintainer, 20 hrs/week: release and new capabilities (1 to 4) - 18,200
-- Contributor, 13 hrs/week from onboarding (9 weeks): curation and oversight (5) - 5,850
-- Platform operation (6): hosting, content ingestion, storage, backups, CDN, domains, ecosystem
-  calendar, AI and data APIs - 2,238
+| Allocation                                                                                             |  $/quarter |
+| ------------------------------------------------------------------------------------------------------ | ---------: |
+| Maintainer, 20 hrs/week: release and new capabilities (1 to 4)                                         |     18,200 |
+| Contributor, 13 hrs/week from onboarding (9 weeks): curation and oversight (5)                         |      5,850 |
+| Platform operation (6): hosting, ingestion, storage, backups, CDN, domains, calendar, AI and data APIs |      2,238 |
+| **Total**                                                                                              | **26,288** |
 
-Total: 26,288 USD
+Running the platform costs under $750 a month, AI across thirteen agents included. The cost is
+people: shipping the release, and reviewing what agents and the ecosystem contribute. Requested
+figure rounded down to $26,000. The legacy host is retired after the transition, reducing platform
+cost from next quarter.
 <!-- markdownlint-enable MD034 -->
 
 ## Legal Acknowledgements
