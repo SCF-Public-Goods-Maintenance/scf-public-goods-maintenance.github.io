@@ -159,8 +159,8 @@ is mostly self-explanatory. A few things to keep in mind:
   `metrics_endpoint` line to your project page front matter pointing at a public URL returning counts
   you consider meaningful, as JSON. Reports logged, datasets published, records curated: whatever
   your quarter is actually measured in. The program polls it, so your progress is visible without you
-  having to assemble it. As with the health endpoint, the URL does not need to resolve when you
-  submit.
+  having to assemble it. As with the health endpoint, the URL does not need to resolve yet when your
+  PR is merged.
 - **Budget Requested** — up to $50,000 in XLM per quarter. Your budget should be reasonable relative
   to your retroactive impact and planned deliverables.
 - **Legal Acknowledgements** — you must agree to the
