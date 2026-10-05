@@ -72,25 +72,146 @@ layer.
 
 <!-- markdownlint-disable MD034 -->
 
-Q2 2026 was mostly an operational-readiness quarter for OBSRVR Radar. I did not complete the full
-roadmap I originally wanted for Q2. Larger product goals like design-token migration, data lake
-analytics, and deeper trust graph improvements are still open and should carry into Q3.
+Q3 2026 delivered all three committed deliverables for OBSRVR Radar.
 
-The work that did land was still important. Radar stayed current with Stellar dependencies and
-protocol defaults, deployments became more reliable, staging moved away from a permanent environment
-toward an ephemeral pull-request lifecycle, history archive scanning became more resilient, the
-archive hasher dependency was refreshed, and the UI gained targeted improvements for validator and
-organization pages.
+There were a few issues that were resolved that made failures invisible that were related to network
+scanning and history scanning. For network scanning, there were instances where even though the site
+would say that a node was live there was no indication that the scan of that node failed. Even though
+the scan failed, we were still able to figure out that a node was validating correctly but there was
+no indication to the owner that there was a problem. The other silent failure was related to history
+scanning, there were failures in the scanning but those did not appear in any logs. These were
+related to protocol updates to upstream packages not producing the desired result.
 
-The main impact was reducing operational risk. Radar is now easier to build and deploy, better
-aligned with current Stellar dependencies, more resilient when scanning newer history archive
-formats, and more useful for operators inspecting validator and organization status.
+Radar now reports network safety in close to plain language as possible. The network analysis section
+carries a verdict block that answers what halts the network, what could fork it, and what could cut a
+node off from it, with each figure linked to an explanation of what it means and why it is that
+value. Another invisible issue was related to Network Analysis not running correctly. The analysis
+beneath it was repaired and hardened: output parsing now fails loudly instead of returning zero,
+analysis levels degrade independently instead of all-or-nothing, and a statistic that cannot be
+computed is reported as unknown rather than as a number.
+
+The frontend cleanup is complete. Bootstrap, jQuery, popper.js and Bootstrap Icons were removed, CSS
+dropped from 345 kB to 127 kB, and roughly 7,400 lines of unreachable code were deleted after
+verifying they were unreachable.
 
 <!-- markdownlint-enable MD034 -->
 
 ## Past Deliverables
 
 <!-- markdownlint-disable MD034 -->
+
+### 2026 Q3
+
+#### Scanner Reliability and Readability
+
+Proof of completion:
+
+Scanner reliability and readability: https://github.com/withObsrvr/stellarbeat/pull/63
+
+History archive cache misconfiguration detection: https://github.com/withObsrvr/stellarbeat/pull/64
+
+Q3 deliverables PR: https://github.com/withObsrvr/stellarbeat/pull/65
+
+Completed work:
+
+- Added structured connection-failure reporting to the network crawler so unreachable peers are
+  logged with a cause rather than silently dropped.
+- Added overlay protocol probing and typed connection errors to distinguish refused, timed-out,
+  protocol-incompatible, and authentication failures.
+- Added detection of history archive cache misconfiguration, so an archive served from a stale cache
+  is no longer reported as "behind". Three outcomes that were collapsed into one are now
+  distinguished: genuinely behind, unreachable, and served from a stale cache.
+- Fixed a rollup failure that discarded every scan result before persistence. A nullable column was
+  aggregated with `sum()`, which returns null rather than zero when no node reports a value, and the
+  NOT NULL target column rejected the row.
+- Fixed geo lookups never being retried after failure. Lookups were only performed for nodes whose IP
+  had changed, so a node located once during a provider outage stayed without country or ISP data
+  indefinitely. This was the root cause of country and ISP analysis returning meaningless results.
+  After the fix a single scan went from 4 stored geo records to 226.
+- Made FBAS analysis levels degrade independently. Node, organization, country and ISP previously ran
+  through a single `Promise.all`, so a failure at one level discarded the results of all four.
+- Fixed the nix development shell corrupting `NETWORK_QUORUM_SET`. The shell sourced the `.env`
+  files, and shell quote removal turned the value into invalid JSON, so no scan could start inside
+  the development environment.
+- Added `docs/local-development.md` covering environment setup, the FBAS service image, and a
+  troubleshooting section built from the failures encountered this quarter, each listed with the
+  symptom that identifies it.
+
+#### Plain-Language Network Analysis and FBAS Reliability
+
+Proof of completion:
+
+Q3 deliverables PR: https://github.com/withObsrvr/stellarbeat/pull/65
+
+Archive hasher update: https://github.com/withObsrvr/stellarbeat/pull/62
+
+Hasher repository: https://github.com/withObsrvr/rs-stellar-history-archive-hasher
+
+Completed work:
+
+- Repaired the main-page network analysis tool, which had never worked. Clicking "Perform analysis"
+  threw `DataCloneError` before the worker started, because Vue refs and the shared Node and
+  Organization objects were passed to `postMessage` and neither is structured-cloneable. The worker
+  serialised its input to JSON regardless, so the callers now serialise once.
+- Added a network verdict block to the main page, presenting safety in plain language: what halts the
+  network, what could fork the top tier, what could cut a node off from it, the top tier size and
+  symmetry, and concentration by organization, ISP and country.
+- Implemented the verdict wording as a pure function over scan statistics, covered by 24 tests that
+  pin the copy rather than only the numbers.
+- Added separate top-tier and network-wide organization safety thresholds. Radar previously computed
+  only the top-tier figure while labelling it as network-wide, which was the source of a discrepancy
+  reported by the python-fbas author. Both are now computed and displayed.
+- Implemented the symmetric top tier check, which had been hardcoded to `false` under a TODO. Every
+  visitor had been shown a permanent "top tier is not symmetric, analysis could be slow" warning.
+- Rewrote the four FBAS explainers for the reader looking at a number rather than at the analysis
+  tool, including the arithmetic that makes the figures actionable, and corrected attribution to
+  python-fbas.
+- Made the FBAS service output parsers fail loudly. Every parser previously defaulted to zero or an
+  empty set when the expected line was missing, so a CLI format change, a crash, and a genuine "no
+  result" all arrived as a real-looking answer. The parsers now raise, naming the command and the
+  actual output, with fixture tests per format. This caught a live break within hours of landing,
+  when a python-fbas sync changed the `min-quorum` output label.
+- Stopped using zero to mean "not computed". Splitting-set sizes are nullable end to end. This was
+  not cosmetic: the notification system treats a splitting set of zero as total loss of safety and
+  notifies subscribers, so a network that became more robust would have raised the alarm.
+- Fixed aggregated quorum sets that could require more participants than existed, which produced
+  unsatisfiable configurations and a reported safety threshold of zero.
+- Updated the history archive hasher to `@withobsrvr/stellar-history-archive-hasher` 0.11.0 and fixed
+  the service image build, which could no longer be rebuilt because `python-sat==1.8.dev13` has been
+  removed from PyPI.
+- Added Playwright end-to-end coverage driving the real UI: the analysis tool running, each verdict
+  explainer opening, and the main pages rendering.
+
+#### UI Cleanup and Ongoing Maintenance
+
+Proof of completion:
+
+Q3 deliverables PR: https://github.com/withObsrvr/stellarbeat/pull/65
+
+Navigation styling fix: https://github.com/withObsrvr/stellarbeat/pull/61
+
+Completed work:
+
+- Settled a single design token set. Three palettes had been live at once; the canonical set is now
+  surface, border and text tokens for the neutral ground, an accent family for brand, and a signal
+  family reserved for severity so that green, amber and red consistently mean safe, fragile and at
+  risk.
+- Removed Bootstrap, jQuery, popper.js, Bootstrap Icons, and the `@types` packages for jQuery and
+  Bootstrap.
+- Removed the vendored Tabler UI theme, 63 stylesheet files.
+- Reduced CSS from 345 kB to 127 kB. The application used roughly 60 class names from those
+  stylesheets, which are now reimplemented on Radar's tokens in about 340 lines, so the remaining
+  per-component migration can proceed incrementally.
+- Converted the quorum set dialogs from raw Bootstrap markup to the shared modal component. They
+  could not open, because Bootstrap's JavaScript was never loaded.
+- Deleted roughly 7,400 lines of unreachable code after verifying unreachability, including the
+  orphaned node sidebar chain, a 1,360-line unused compatibility layer, and a globally registered
+  icon component whose font was never imported.
+- Fixed inert controls left behind by the earlier Bootstrap migration, including four information
+  buttons in the network analysis tool that set state nothing read.
+- Added accessible names to icon-only controls that previously had none.
+- Verified with 1,143 unit tests across 243 suites, a clean production build, and Playwright coverage
+  of the main pages.
 
 ### 2026 Q2
 
