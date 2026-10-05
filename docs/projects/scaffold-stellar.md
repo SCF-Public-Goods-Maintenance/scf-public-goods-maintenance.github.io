@@ -580,7 +580,9 @@ promise. The work is polish, stability, and extensibility rather than new workst
   tracking every release.
 - **Deeper Registry integration.** The v2 config already names Registry contracts and Wasms as
   contract sources; Q4 wires them through `build`, so using a published contract is one line of
-  `scaffold.yml`.
+  `scaffold.yml`. [Registry's UI](https://github.com/stellar-registry/ui) becomes a consumer of
+  Scaffold, enabled by Scaffold's support for non-Rust projects. Scaffold adopts Registry's
+  `import_contract!` macro.
 - **Passkey login for every app.** Nido, The Aha Company's passkey smart-account wallet, becomes a
   built-in wallet option, so any Scaffold app can offer passkey-secured smart accounts with no custom
   wallet code.
