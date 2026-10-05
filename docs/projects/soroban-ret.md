@@ -70,7 +70,7 @@ sure of all our users, however we have worked with the rumblefish team directly 
 their [Soroscan.io](https://soroscan.io/) block explorer tool.
 
 Additionally it was used by a community pilot Tupui to build a python to WASM sdk (comment
-[here](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/150#issuecomment-5886527294)).
+[Tupui's integration comment](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/150#issuecomment-5886527294)).
 
 These are just 2 examples where the tool is useful on different levels. For those curious about WASM
 dissasembly it is available on the Security Portal and Soroscan, and for serious developers they can
@@ -78,12 +78,12 @@ use it to fit their specific project goals.
 
 The following section is about the technical changes that occured which can be measured directly.
 
-#### Technical Overview
+### Technical Overview
 
 _(this section of techincal overview was written with AI assistance but was reviewed & edited
 manually)_
 
-1. Release v0.0.4 — the correctness-first release
+#### 1. Release v0.0.4 — the correctness-first release
 
 The headline of this period is the release of
 **[v0.0.4](https://github.com/Inferara/soroban-ret/releases/tag/v0.0.4)** (July 26, 2026) with many
@@ -100,7 +100,7 @@ improvements made such as:
 - **First contract recovered completely, with no gaps:** the `num_list` function in `test_alloc` now
   decompiles perfectly and behaves identically to the original on every tested input.
 
-2. What was improved
+#### 2. What was improved
 
 #### Guessing eliminated in favor of honesty
 
@@ -142,7 +142,7 @@ Per-contract recovery quality is now measured and reported, and the README and p
 documentation were re-measured against the actual state of the tool so the docs reflect reality
 ([#70](https://github.com/Inferara/soroban-ret/pull/70)).
 
-3. Retroactive assessment
+#### 3. Retroactive assessment
 
 The work in the last 3 months goes well beyond what was needed to pass the final tranche review. It
 made the tool meaningfully more useful. Decompiled output is now far more likely to compile as valid
@@ -177,7 +177,7 @@ Building on the retroactive technical overview above, the Q4 deliverables focus 
 measurable backlog the verification suite has already mapped, keeping the tool current with the
 Soroban toolchain, and broadening the contract coverage it is tested against.
 
-#### 1. Backlog burn-down: hard errors and behavioral divergences
+### 1. Backlog burn-down: hard errors and behavioral divergences
 
 The verification suite currently reports **326 hard errors** across the 24-contract mainnet corpus
 and **4 behavioral divergences** (all in `digicus`), each itemized with reproducing inputs.
@@ -192,7 +192,7 @@ recompilable Rust instead of failing; every divergence closed means one fewer ca
 developers must fall back to manual bytecode reading. This directly raises the floor of what anyone
 can inspect on-chain.
 
-#### 2. Ongoing maintenance: soroban-rs compatibility
+### 2. Ongoing maintenance: soroban-rs compatibility
 
 The tool is currently pinned to `soroban-spec`/`soroban-meta` **26.0.0-rc.1**. As the Soroban SDK and
 protocol evolve, decompilation accuracy degrades unless the tool tracks upstream changes.
@@ -206,7 +206,7 @@ and future collaborations) and CLI users depend on the tool understanding contra
 current SDK versions. Keeping pace with soroban-rs keeps the whole inspection pipeline usable as the
 network upgrades.
 
-#### Bonus goals
+### Bonus goals
 
 Additional partnerships or usage of the tool through collaboration initiatives.
 <!-- markdownlint-enable MD034 -->
