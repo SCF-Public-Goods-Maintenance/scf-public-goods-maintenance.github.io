@@ -211,10 +211,10 @@ replacement for any of the Q3 commitments below.
    validate the API end to end. Orion is finished only when it is usable and continuously
    synchronized—not simply when an import completes or a sample test passes. It is listed here as
    extra Q3 progress, not as a completed Q3 commitment.
-   
+
    [https://www.youtube.com/watch?v=yJd3HBujqhg](https://www.youtube.com/watch?v=yJd3HBujqhg)
 
-7. **StellarKey wallet, merchant tools, and Private Payments — Public release; privacy protocol
+6. **StellarKey wallet, merchant tools, and Private Payments — Public release; privacy protocol
    remains Testnet-only** [https://stellarkey.io/](https://stellarkey.io/)
 
    We released StellarKey publicly as an open-source, self-custodial Stellar wallet. Users keep
