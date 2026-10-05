@@ -633,7 +633,7 @@ and SDF documentation to point at.
   integrates it into the shared `app-lib` wallet module as an opt-in wallet and publishes a guide for
   enabling passkey login in a Scaffold app. Labeled experimental until Nido launches on mainnet.
 - Measure: Nido selectable in both official templates when enabled; guide published.
-- Issue: https://github.com/stellar-scaffold/cli/issues/447 (_TODO: update for Nido_)
+- Issue: https://github.com/stellar-scaffold/cli/issues/447
 - Ecosystem value: passkey-secured smart accounts become a configuration option for every Scaffold
   app, giving builders a modern login experience on Stellar with no custom wallet code.
 
