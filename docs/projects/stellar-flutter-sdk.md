@@ -11,7 +11,7 @@ budget: "15000"
 # stellar-flutter-sdk
 
 _The Stellar SDK for Flutter, providing transaction building, Horizon and Soroban RPC access,
-high-level Soroban smart contract support, and implements 18 Stellar Ecosystem Proposals (SEPs)
+high-level Soroban smart contract support, and implements 21 Stellar Ecosystem Proposals (SEPs)
 across iOS, Android, and web._
 
 |                      |                                                 |
@@ -27,7 +27,7 @@ across iOS, Android, and web._
 
 The Flutter Stellar SDK is a Dart library for building Stellar applications on iOS, Android, and web
 using Flutter. It provides transaction building, account management, Horizon API access, Soroban RPC
-support, high-level Soroban smart contract support, and implements 18 Stellar Ecosystem Proposals
+support, high-level Soroban smart contract support, and implements 21 Stellar Ecosystem Proposals
 (SEPs). The SDK is listed on the official Stellar developer documentation and is used by wallets and
 applications including Beans App, Stack Wallet, Defindex, Meru, and others.
 
@@ -53,42 +53,198 @@ Previous SCF participation:
 
 ## Retroactive Impact
 
-In Q2 2026 the Flutter SDK shipped three releases. The SDK is used by wallets and applications
-including Beans App, Stack Wallet, Defindex, and Meru. At the close of the quarter: 85 stars, 36
-forks, 110 total releases, pub.dev downloads of 2,013 (30-day, up from 837 at Q1 close) and 15,279
-(52-week), 0 open issues, 87 dependent GitHub repositories and 5 dependent packages, a median
-first-response time of 1.3 hours, a median time-to-close of 1.3 days, and a 100% response rate. Unit
-test coverage is tracked on Codecov with 80% project / 70% patch thresholds enforced, currently at
-90%.
+In Q3 2026 the SDK shipped six releases, 3.3.0 through 3.8.0. Users include Stack Wallet, Beans App,
+and Meru. At the close of the quarter: 88 stars, 36 forks, 116 releases, 2,326 downloads on pub.dev
+in the last 30 days, 0 open issues, and 0 open pull requests. Over the last 90 days every community
+issue got a first maintainer response within 48 hours. Unit test coverage is tracked on Codecov and
+enforced in CI with a 90% project target, currently at 94.36%.
 
-The headline delivery is OpenZeppelin smart account support, shipped in v3.1.0 and published to
-pub.dev. It uses a two-layer design: a contract-agnostic core layer with an OpenZeppelin layer on
-top, so third parties can support other smart-account contract families without rewriting the
-cryptographic foundations (e.g. WebAuthn COSE public-key extraction, secp256r1 handling). It covers
-wallet lifecycle via passkeys, context rules and policies, automatic auth-entry signing, multi-signer
-authorization (passkey, delegated G-address, Ed25519), relayer-sponsored fees, and indexer-based
-credential discovery, across iOS, Android, and web. Smart account documentation comprises an
-onboarding guide, an API reference, and per-platform WebAuthn guides.
+SEP-51 (XDR-JSON) shipped in 3.5.0. Apps can now convert any Stellar XDR data, the binary format of
+transactions and ledger data, to readable JSON and back. The format is the SEP-51 standard, which the
+Python and PHP SDKs use as well. Developers can inspect and debug transactions and contract data in
+that form and exchange it with other tools.
 
-A cross-platform demo builds on iOS, Android, and web exercising the smart-account features: wallet
-creation and connection, single- and multi-signer token transfers, on-chain context-rule management
-with expiry, signers, policies. The demo repo also includes an agent-signer flow: a reference agent
-that runs headlessly against the SDK, a coordination server, and an approval inbox — the complete
-flow where a user delegates scoped authority to an agent, the agent acts within scope, over-scope
-calls are rejected on-chain and surfaced to the user for approval in the demo app, and the approved
-call is re-submitted via the relayer.
+Native ScVal Conversion shipped in 3.7.0. When an app calls a smart contract, the answer comes back
+in Stellar's binary format, which the app had to take apart by hand. The new helper turns such a
+value into a plain Dart value with one call, so apps can use contract results directly and with less
+code. Bence ([ngybnc][ngybnc]), a Soneso team member, returned to the Flutter SDK work this quarter
+and authored this deliverable.
 
-Protocol 26 was tracked and Protocol 27 support has been added, with ADDRESS_V2 and
-ADDRESS_WITH_DELEGATES authorization support and an end-to-end testnet integration test (v3.2.0).
-Release 3.2.1 added a headless connectToContract path for smart accounts and hardened SEP-10 by
-rejecting challenges without finite time bounds. A SEP-11 TxRep escaping bug was fixed. CI stays
-hardened — Actions pinned to commit SHAs, least-privilege permissions, Codecov thresholds, a daily
-upstream XDR change-detection workflow, and monthly Dependabot updates — and compatibility matrices
-were regenerated to Horizon/RPC v27.0.0. SBOM submission to PG Atlas continues on every push to
-master, and daily statistics collection continues via soneso-sdk-stats, providing the responsiveness
-and adoption metrics above (see: [soneso.github.io/soneso-sdk-stats][statsdash]).
+The Contract Bindings Update keeps the Dart output of the community code generator, which the Stellar
+CLI points developers to, in step with the SDK. Developers can generate ready-to-use Dart code for
+talking to a smart contract with one command. That code builds and runs on the current SDK, including
+contracts that use external-reference executables (Protocol 28).
+
+The SDK supported every network upgrade of the quarter ahead of time. Protocol 27, the upgrade the
+proposal named, was tracked through its mainnet activation on 2026-07-08, and the SDK now uses the
+new authorization format it introduced (CAP-71) by default. Support for Protocol 28 followed in 3.6.0
+on 2026-08-24, 23 days before the network switched on 2026-09-16. App developers had time to update
+for its main new feature, contracts that share code through external references (CAP-85), before it
+went live.
+
+Maintenance made the SDK safer and easier to maintain. By default the SDK now checks before
+submitting whether a receiving account requires a memo (SEP-29), a feature the proposal did not name.
+A payment to an exchange that needs a memo is stopped before it goes out without one. Keys,
+addresses, amounts, and binary data are validated more strictly, so a mistyped address or an
+out-of-range amount is caught early. The request and operation builders now share common code, as the
+proposal promised, which leaves less duplicated code to maintain.
+
+Smart accounts became easier to build into wallets. A wallet can now install policies, such as a
+spending limit, at the moment it creates an account, an addition the proposal did not name. Input the
+contract would reject, such as an overlong rule name or too many policies on one rule, is caught
+before sending, so the wallet learns of it without paying a fee. And every error the OpenZeppelin
+smart-account contracts can return is translated into a named error the wallet can explain to its
+user.
+
+Documentation kept pace: the [SEP guides][sepguides] index covers all 21 implemented SEPs, and
+migration guides for 3.6.0 and 3.8.0 walk developers through those releases' breaking changes. The
+compatibility matrices show full coverage of Horizon and Soroban RPC through v28.0.1, and every SEP
+matrix is at 100%. CI stays hardened with pinned Actions, Dependabot updates, and tests on the
+minimum, previous, and latest stable Flutter. SBOM submission to PG Atlas continues on every push to
+the default branch, and daily statistics collection continues through [soneso-sdk-stats][statsdash],
+which tracks maintenance and usage of the SDK.
 
 ## Past Deliverables
+
+### 2026 Q3
+
+#### 1. Continuous Maintenance and Improvement (2026 Q3)
+
+Description from last quarter:
+
+> Regular SDK updates addressing Horizon, Soroban RPC, and protocol updates (tracking Protocol 27
+> through its mainnet activation), bug fixes, feature requests, and documentation updates. Maintain
+> existing SEP implementations and update as needed. Harden the smart-account feature as the network
+> advances and reduce code duplication in the Horizon request builders and operation builders. Keep
+> compatibility matrices, CI pipelines, statistics dashboard, and SBOM workflow up to date.
+
+Proof of completion:
+
+- Release notes: [3.3.0][rel330], [3.4.0][rel340], [3.5.0][rel350], [3.6.0][rel360], [3.7.0][rel370],
+  [3.8.0][rel380]
+- Protocol 27 tracked through its mainnet activation: CAP-71 `useUpgradedAuth` simulation flag and
+  RPC v27.1 fields (3.3.0), ADDRESS_V2 credentials as the default (3.6.0): [PR #159][pr159],
+  [PR #178][pr178]
+- Support for Protocol 28 ahead of its mainnet activation: CAP-85 external-reference executables in
+  XDR (3.5.0), external-reference resolution, deployment from an external reference, and contract id
+  derivation (3.6.0): [PR #167][pr167], [PR #174][pr174], [PR #175][pr175],
+  [protocol delivery ledger][protoledger]
+- Feature requests, both answered in about 1.5 hours: the CAP-71 simulation flag, available since
+  3.3.0, and Protocol 28 compatibility, shipped in 3.6.0: [issue #172][is172], [issue #176][is176]
+- Horizon and XDR updates: diagnostic events decoded in simulation responses (3.4.0), ids in the form
+  Horizon serves (3.6.0, 3.8.0), XDR definitions at the current upstream stellar-xdr (3.7.0):
+  [PR #161][pr161], [PR #173][pr173], [PR #197][pr197], [PR #186][pr186]
+- Soroban submission: fee-bump base fee and automatic state restore (3.3.0), pending and duplicate
+  results polled to an outcome (3.5.0): [PR #158][pr158], [commit 9776935][c9776935]
+- Stricter input validation: ids, key lengths, amounts, and prices, with prices rendered and parsed
+  exactly (3.4.0 to 3.8.0): [PR #161][pr161], [PR #173][pr173], [PR #177][pr177], [PR #187][pr187],
+  [PR #196][pr196]
+- XDR decoding hardened: every read bounded, malformed and unknown XDR rejected (3.8.0):
+  [PR #195][pr195], [PR #197][pr197]
+- SEP-10 challenge validation: nonce and operation values checked (3.3.0): [PR #158][pr158]
+- SEP-6, SEP-7, SEP-11, SEP-23, SEP-24, and SEP-45 updates: strict strkeys, fixed-width TxRep values,
+  and fee amounts as plain decimals (3.6.0), entry-count bounds and union checks (3.8.0):
+  [PR #173][pr173], [PR #177][pr177], [PR #195][pr195]
+- Smart-account hardening: contract limits and error catalog (3.4.0), external-reference guard and
+  deployment polling (3.5.0), ADDRESS_V2 defaults (3.6.0), demo app kept on the current SDK:
+  [PR #162][pr162], [PR #167][pr167], [commit 9776935][c9776935], [PR #178][pr178],
+  [demo app commit][c2c4f1ba]
+- Request and operation builders deduplicated: one shared base for 26 operation builders and 17
+  request builders, 1,294 net lines removed (3.4.0): [commit 5a41c90][c5a41c90], [PR #161][pr161]
+- Documentation: Soroban guide sections for external references and the new credentials, SEP-23 guide
+  revised, examples corrected, migration guides for 3.6.0 and 3.8.0: [Soroban guide][sorobanguide],
+  [SEP-23 guide][sep23doc], [PR #179][pr179], [PR #194][pr194], [3.6.0 guide][mig360],
+  [3.8.0 guide][mig380]
+- Compatibility matrices regenerated every release, Horizon and RPC at 100% through v28.0.1 and every
+  SEP matrix at 100% (3.8.0): [Horizon][q3horizon], [RPC][q3rpc], [SEP][q3sep]
+- CI, SBOM, and dashboard: Codecov 90% project target as a required check, tests on the minimum,
+  previous, and latest stable Flutter, XDR generator on a patched xdrgen fork with the fix proposed
+  upstream, SBOM submitted to PG Atlas on every push to the default branch, statistics dashboard
+  rebuilt with the SDK's maintenance profile: [commit 1235028][c1235028], [commit e6c2c3a][ce6c2c3a],
+  [commit 5a976d0][c5a976d0], [stellar/xdrgen PR #231][xdrgen231], [SBOM runs][sbomruns],
+  [dashboard][statsdash]
+
+Six releases shipped this quarter. Protocol 27 was tracked through its mainnet activation, and
+support for Protocol 28 followed in 3.6.0 on 2026-08-24, 23 days before the network switched on
+2026-09-16. Compatibility matrices were regenerated for every release: Horizon and RPC report 100%
+through v28.0.1, and every SEP matrix reports 100%.
+
+#### 2. SEP-51 (XDR-JSON)
+
+Description from last quarter:
+
+> Implement bi-directional XDR/JSON conversion via the XDR generator, with round-trip unit tests and
+> documentation, for cross-SDK parity with the Python and PHP SDKs.
+
+Delivered in 3.5.0 (2026-08-11).
+
+Proof of completion:
+
+- GitHub release: [3.5.0][rel350]
+- PR with implementation and round-trip tests (3.5.0): [PR #171][pr171], [test suite][testsuite]
+- SEP-51 compatibility matrix, 39 of 39 fields: [SEP-51 matrix][sep51matrix]
+- Documentation: [SEP-51 guide][sep51doc]
+- Conformance checked against stored reference data on every pull request that changes the XDR code
+  and against the reference implementation weekly: [conformance workflow][conformanceworkflow]
+
+Every XDR type converts to and from the SEP-51 JSON form with `toXdrJson()` and `fromXdrJson()`.
+Round-trip tests run in CI, including three browser suites on Chrome.
+
+#### 3. Native ScVal Conversion
+
+Description from last quarter:
+
+> Add a helper that converts a smart-contract value (XdrSCVal) to a native Dart value, so contract
+> invocation and simulation results can be consumed directly instead of parsing the raw XDR union by
+> hand. This matches the JS and Python SDKs.
+
+Delivered in 3.7.0 (2026-09-15).
+
+Proof of completion:
+
+- GitHub release: [3.7.0][rel370]
+- PR with implementation and tests (3.7.0): [PR #180][pr180]
+- Documentation: [PR #181][pr181], [guide section][guidesection]
+
+`XdrSCVal.toNative()` turns contract values into plain Dart values with one call and never throws.
+64-bit and wider integers come back as `BigInt`, and values without a Dart counterpart, such as
+contract errors, come back unchanged. The helper is documented in the Soroban guide and the agent
+skill reference.
+
+#### 4. Contract Bindings Update
+
+Description from last quarter:
+
+> Update the Dart contract-bindings implementation that Soneso contributed to the community
+> stellar-contract-bindings generator (linked from the Stellar CLI) so its generated Dart code is
+> compatible with the current SDK.
+
+Delivered in stellar-contract-bindings 0.6.0b0 (2026-09-02). The generator PR merged on 2026-07-21.
+
+Proof of completion:
+
+- Pull request to stellar-contract-bindings, Dart output updated for the current SDK:
+  [PR #22][scb22], [Flutter commit][scb22flutter]
+- Follow-up, spec-text escaping for multi-line contract docs: [PR #36][scb36]
+- Follow-up, CAP-85 external-reference resolution in the generator: [PR #37][scb37]
+- Generator release: [0.6.0b][scbrel]
+- Generated Dart clients tested against testnet in the SDK repository, two added in 3.3.0, all
+  regenerated with the released generator (3.7.0): [generated clients][generatedclients],
+  [PR #157][pr157], [PR #183][pr183]
+- The Stellar CLI command `stellar contract bindings flutter` points to this generator:
+  [flutter.rs][clibind]
+
+Six generated clients run as testnet integration tests in the SDK repository, two of them added this
+quarter. The generator's Dart output requires SDK 3.3.0 or later and covers contracts that share code
+through external references.
+
+#### Beyond the committed scope (2026 Q3)
+
+The following work was not named in the Q3 proposal.
+
+- SEP-29 memo-required check on every submission, with a SEP-29 compatibility matrix, authored by
+  Bence ([ngybnc][ngybnc]) (3.8.0): [PR #190][pr190], [SEP-29 guide][sep29doc]
+- Constructor-time smart-account policies (3.4.0): [PR #162][pr162]
 
 ### 2026 Q2
 
@@ -267,17 +423,85 @@ Proof: pull request to the stellar-contract-bindings repository.
 
 [agflow]:
   https://github.com/Soneso/flutter-oz-smartaccount-demo/blob/main/documentation/agent-flow.md
+[c1235028]: https://github.com/Soneso/stellar_flutter_sdk/commit/1235028
+[c2c4f1ba]: https://github.com/Soneso/flutter-oz-smartaccount-demo/commit/2c4f1ba
+[c5a41c90]: https://github.com/Soneso/stellar_flutter_sdk/commit/5a41c90
+[c5a976d0]: https://github.com/Soneso/stellar_flutter_sdk/commit/5a976d0
+[c9776935]: https://github.com/Soneso/stellar_flutter_sdk/commit/9776935
+[ce6c2c3a]: https://github.com/Soneso/stellar_flutter_sdk/commit/e6c2c3a
+[clibind]:
+  https://github.com/stellar/stellar-cli/blob/main/cmd/soroban-cli/src/commands/contract/bindings/flutter.rs
+[conformanceworkflow]:
+  https://github.com/Soneso/stellar_flutter_sdk/blob/3.5.0/.github/workflows/sep-51-conformance.yml
 [deleg]:
   https://github.com/Soneso/flutter-oz-smartaccount-demo/blob/main/documentation/smart-accounts/agent-delegation-demo.md
 [demopr1]: https://github.com/Soneso/flutter-oz-smartaccount-demo/pull/1
+[generatedclients]: https://github.com/Soneso/stellar_flutter_sdk/tree/3.8.0/test/contract_bindings
+[guidesection]:
+  https://github.com/Soneso/stellar_flutter_sdk/blob/3.7.0/documentation/soroban.md#converting-to-native-dart-values
+[is172]: https://github.com/Soneso/stellar_flutter_sdk/issues/172
+[is176]: https://github.com/Soneso/stellar_flutter_sdk/issues/176
+[mig360]: https://github.com/Soneso/stellar_flutter_sdk/blob/3.6.0/documentation/migration/3.6.0.md
+[mig380]: https://github.com/Soneso/stellar_flutter_sdk/blob/3.8.0/documentation/migration/3.8.0.md
+[ngybnc]: https://github.com/ngybnc
 [pr140]: https://github.com/Soneso/stellar_flutter_sdk/pull/140
 [pr148]: https://github.com/Soneso/stellar_flutter_sdk/pull/148
 [pr150]: https://github.com/Soneso/stellar_flutter_sdk/pull/150
 [pr151]: https://github.com/Soneso/stellar_flutter_sdk/pull/151
 [pr152]: https://github.com/Soneso/stellar_flutter_sdk/pull/152
+[pr157]: https://github.com/Soneso/stellar_flutter_sdk/pull/157
+[pr158]: https://github.com/Soneso/stellar_flutter_sdk/pull/158
+[pr159]: https://github.com/Soneso/stellar_flutter_sdk/pull/159
+[pr161]: https://github.com/Soneso/stellar_flutter_sdk/pull/161
+[pr162]: https://github.com/Soneso/stellar_flutter_sdk/pull/162
+[pr167]: https://github.com/Soneso/stellar_flutter_sdk/pull/167
+[pr171]: https://github.com/Soneso/stellar_flutter_sdk/pull/171
+[pr173]: https://github.com/Soneso/stellar_flutter_sdk/pull/173
+[pr174]: https://github.com/Soneso/stellar_flutter_sdk/pull/174
+[pr175]: https://github.com/Soneso/stellar_flutter_sdk/pull/175
+[pr177]: https://github.com/Soneso/stellar_flutter_sdk/pull/177
+[pr178]: https://github.com/Soneso/stellar_flutter_sdk/pull/178
+[pr179]: https://github.com/Soneso/stellar_flutter_sdk/pull/179
+[pr180]: https://github.com/Soneso/stellar_flutter_sdk/pull/180
+[pr181]: https://github.com/Soneso/stellar_flutter_sdk/pull/181
+[pr183]: https://github.com/Soneso/stellar_flutter_sdk/pull/183
+[pr186]: https://github.com/Soneso/stellar_flutter_sdk/pull/186
+[pr187]: https://github.com/Soneso/stellar_flutter_sdk/pull/187
+[pr190]: https://github.com/Soneso/stellar_flutter_sdk/pull/190
+[pr194]: https://github.com/Soneso/stellar_flutter_sdk/pull/194
+[pr195]: https://github.com/Soneso/stellar_flutter_sdk/pull/195
+[pr196]: https://github.com/Soneso/stellar_flutter_sdk/pull/196
+[pr197]: https://github.com/Soneso/stellar_flutter_sdk/pull/197
 [pr44resp]:
   https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/pull/44#issuecomment-4274930402
+[protoledger]: https://github.com/Soneso/soneso-sdk-stats/blob/main/curated/protocol-delivery.json
+[q3horizon]:
+  https://github.com/Soneso/stellar_flutter_sdk/blob/3.8.0/compatibility/horizon/HORIZON_COMPATIBILITY_MATRIX.md
+[q3rpc]:
+  https://github.com/Soneso/stellar_flutter_sdk/blob/3.8.0/compatibility/rpc/RPC_COMPATIBILITY_MATRIX.md
+[q3sep]: https://github.com/Soneso/stellar_flutter_sdk/tree/3.8.0/compatibility/sep
 [rel310]: https://github.com/Soneso/stellar_flutter_sdk/releases/tag/3.1.0
 [rel320]: https://github.com/Soneso/stellar_flutter_sdk/releases/tag/3.2.0
+[rel330]: https://github.com/Soneso/stellar_flutter_sdk/releases/tag/3.3.0
+[rel340]: https://github.com/Soneso/stellar_flutter_sdk/releases/tag/3.4.0
+[rel350]: https://github.com/Soneso/stellar_flutter_sdk/releases/tag/3.5.0
+[rel360]: https://github.com/Soneso/stellar_flutter_sdk/releases/tag/3.6.0
+[rel370]: https://github.com/Soneso/stellar_flutter_sdk/releases/tag/3.7.0
+[rel380]: https://github.com/Soneso/stellar_flutter_sdk/releases/tag/3.8.0
 [sadocs]: https://github.com/Soneso/stellar_flutter_sdk/tree/master/documentation/smart-accounts
+[sbomruns]: https://github.com/Soneso/stellar_flutter_sdk/actions/workflows/sbom.yml
+[scb22]: https://github.com/lightsail-network/stellar-contract-bindings/pull/22
+[scb22flutter]: https://github.com/lightsail-network/stellar-contract-bindings/commit/6c987d94e
+[scb36]: https://github.com/lightsail-network/stellar-contract-bindings/pull/36
+[scb37]: https://github.com/lightsail-network/stellar-contract-bindings/pull/37
+[scbrel]: https://github.com/lightsail-network/stellar-contract-bindings/releases/tag/0.6.0b
+[sep23doc]: https://github.com/Soneso/stellar_flutter_sdk/blob/3.8.0/documentation/sep/sep-23.md
+[sep29doc]: https://github.com/Soneso/stellar_flutter_sdk/blob/3.8.0/documentation/sep/sep-29.md
+[sep51doc]: https://github.com/Soneso/stellar_flutter_sdk/blob/3.5.0/documentation/sep/sep-51.md
+[sep51matrix]:
+  https://github.com/Soneso/stellar_flutter_sdk/blob/3.5.0/compatibility/sep/SEP-0051_COMPATIBILITY_MATRIX.md
+[sepguides]: https://github.com/Soneso/stellar_flutter_sdk/blob/master/documentation/sep/README.md
+[sorobanguide]: https://github.com/Soneso/stellar_flutter_sdk/blob/3.8.0/documentation/soroban.md
 [statsdash]: https://soneso.github.io/soneso-sdk-stats/
+[testsuite]: https://github.com/Soneso/stellar_flutter_sdk/tree/3.5.0/test/unit/xdr/json_generated
+[xdrgen231]: https://github.com/stellar/xdrgen/pull/231
