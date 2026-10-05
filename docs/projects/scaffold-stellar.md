@@ -642,7 +642,7 @@ and SDF documentation to point at.
 - Stabilize the extension system that shipped earlier this year and extend it to long-running dev
   tools:
   - Freeze the hook API (`stellar-scaffold-ext-types` 1.0) under semver.
-  - Let extensions opt in to blocking hooks that can fail a build.
+  - Let extensions opt into blocking hooks that can fail a build.
   - Add long-running "service" extensions: a port and lifecycle managed by `stellar scaffold watch`.
   - Bring the extension docs fully up to date.
 - Ship the Contract Explorer as the first service extension. The explorer began inside the original
