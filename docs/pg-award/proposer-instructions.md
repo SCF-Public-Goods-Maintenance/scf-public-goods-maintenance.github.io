@@ -146,10 +146,29 @@ is mostly self-explanatory. A few things to keep in mind:
   Explorer" → `stellarexpert-explorer`). Choose a clear, recognizable name.
 - **PG Intake Form** — link to your approved intake issue. If you submitted through Airtable during
   the soft-launch period, write "soft-launch".
+- **Budget Requested** — up to $50,000 in XLM per quarter. Your budget should be reasonable relative
+  to your retroactive impact and planned deliverables.
+- **Legal Acknowledgements** — you must agree to the
+  [Legal Acknowledgements](https://stellar.gitbook.io/scf-handbook/supporting-programs/public-goods-award/legal-acknowledgements){:target="⚡"}
+  provided by SDF. This is required to proceed.
+
+**Tip:** Links in the form open in your current browser tab by default. Draft your answers in a
+separate file first, or copy them as a backup before submitting.
+
+There are a [couple of changes](#additions-to-make-before-dr-starts) you should make immedately after
+the Proposal Form issue is closed.
+
+## Discussion & Revisions (D&R)
+
+After you submit the Proposal Form, automation creates a Pull Request containing your project page
+and closes the issue with a link to the PR. From that point on, **the PR is your proposal**.
+
+### Additions to Make Before D&R Starts
+
 - **Public Git Repository** — the form takes one repository, which becomes the **Repository** row in
-  your project page table. If your project spans more than one repository, add a row for each to that
-  table during Discussion & Revisions. PG Atlas reads this table, so any repository left out is
-  missing from your project's metrics.
+  your project page table. If your project spans more than one repository, add a row for each
+  additional repo to the table. PG Atlas reads this table, so any repository left out is missing from
+  your project's metrics.
 - **Health endpoint** — if your project runs a hosted service, add a `health_endpoint` line to your
   project page front matter, pointing at a public URL that returns a success response while the
   service is up. The program polls it, so you never have to report uptime yourself. The endpoint does
@@ -161,19 +180,6 @@ is mostly self-explanatory. A few things to keep in mind:
   your quarter is actually measured in. The program polls it, so your progress is visible without you
   having to assemble it. As with the health endpoint, the URL does not need to resolve yet when your
   PR is merged.
-- **Budget Requested** — up to $50,000 in XLM per quarter. Your budget should be reasonable relative
-  to your retroactive impact and planned deliverables.
-- **Legal Acknowledgements** — you must agree to the
-  [Legal Acknowledgements](https://stellar.gitbook.io/scf-handbook/supporting-programs/public-goods-award/legal-acknowledgements){:target="⚡"}
-  provided by SDF. This is required to proceed.
-
-**Tip:** Links in the form open in your current browser tab by default. Draft your answers in a
-separate file first, or copy them as a backup before submitting.
-
-## Discussion & Revisions (D&R)
-
-After you submit the Proposal Form, automation creates a Pull Request containing your project page
-and closes the issue with a link to the PR. From that point on, **the PR is your proposal**.
 
 ### How to Make Revisions
 
