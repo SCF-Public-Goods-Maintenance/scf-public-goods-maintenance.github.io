@@ -153,8 +153,8 @@ is mostly self-explanatory. A few things to keep in mind:
 - **Health endpoint** — if your project runs a hosted service, add a `health_endpoint` line to your
   project page front matter, pointing at a public URL that returns a success response while the
   service is up. The program polls it, so you never have to report uptime yourself. The endpoint does
-  not need to be live when you add it to your proposal: the first 2xx data point marks the
-  beginning of the uptime calculation.
+  not need to be live when you add it to your proposal: the first 2xx data point marks the beginning
+  of the uptime calculation.
 - **Budget Requested** — up to $50,000 in XLM per quarter. Your budget should be reasonable relative
   to your retroactive impact and planned deliverables.
 - **Legal Acknowledgements** — you must agree to the
