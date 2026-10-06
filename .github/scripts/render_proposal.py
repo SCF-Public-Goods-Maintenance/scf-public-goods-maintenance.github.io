@@ -68,11 +68,12 @@ def total_budget(maintenance: str, other: str) -> str:
     total.
     """
 
-    parsed = [parse_money(maintenance), parse_money(other)]
-    if any(amount is None for amount in parsed):
+    maintenance_amount = parse_money(maintenance)
+    other_amount = parse_money(other)
+    if maintenance_amount is None or other_amount is None:
         return " + ".join(part for part in (maintenance, other) if part)
 
-    return f"${sum(parsed):,}"
+    return f"${maintenance_amount + other_amount:,}"
 
 
 def unwrap_dropdown(value):
