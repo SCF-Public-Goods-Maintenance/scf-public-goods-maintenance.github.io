@@ -212,9 +212,19 @@ update your existing project page directly:
    [`docs/projects/`](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/tree/main/docs/projects){:target="⚡"}
    directory on the `main` branch.
 2. Click the **Edit** (pencil) icon on your project page.
-3. Update the relevant sections: next-quarter goals and updated budget. Retroactive impact and
-   deliverable evidence are not part of a renewal — they go in that quarter's
-   [deliverables submission](#quarterly-deliverables).
+3. Update the relevant sections: next-quarter goals and updated budget. Give the budget as three rows
+   in the summary table, so a renewal carries the same split as a new proposal:
+
+   ```text
+   | **Budget Requested**    | $15,000 |
+   | **Maintenance Reserve** | $12,000 |
+   | **Other**               | $3,000  |
+   ```
+
+   The two halves sum to the total; see [Budget Allocation](#budget-allocation) for where the line
+   sits. Retroactive impact and deliverable evidence are not part of a renewal — they go in that
+   quarter's [deliverables submission](#quarterly-deliverables).
+
 4. Choose **"Create a new branch for this commit and start a pull request."**
 5. Name your branch following the convention: `proposals/{slug}-{quarter}` (e.g.,
    `proposals/stellar-sdk-2026q3`).
