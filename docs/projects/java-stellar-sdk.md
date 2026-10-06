@@ -253,19 +253,27 @@ building on Stellar with the SDK, lowering the barrier for developers using AI t
 
 ## Proposed Impact
 
-In Q3, Protocol 28 support and SEP-48 binding generation came up mid-quarter and took much of the time we had planned for refactoring. In Q4 2026, we want to get back to that plan: refactor the SDK and pay down technical debt, so it stays easy to maintain and reliable for JVM and Android developers as the protocol keeps growing. We will keep up routine maintenance of the SDK and the Java generator in stellar-contract-bindings in parallel.
+In Q3, Protocol 28 support and SEP-48 binding generation came up mid-quarter and took much of the
+time we had planned for refactoring. In Q4 2026, we want to get back to that plan: refactor the SDK
+and pay down technical debt, so it stays easy to maintain and reliable for JVM and Android developers
+as the protocol keeps growing. We will keep up routine maintenance of the SDK and the Java generator
+in stellar-contract-bindings in parallel.
 
 ## Proposed Deliverables
 
 ### P1. Refactoring and Technical Debt Reduction
 
-We will pick up the refactoring we planned for Q3: go through the codebase and test suite, pay down technical debt, and simplify code that has grown over many releases. We will decide on specific changes as we work through the code, and any breaking change will be noted in the release notes.
+We will pick up the refactoring we planned for Q3: go through the codebase and test suite, pay down
+technical debt, and simplify code that has grown over many releases. We will decide on specific
+changes as we work through the code, and any breaking change will be noted in the release notes.
 
 Proof: Commits or PRs, or release notes.
 
 ### P2. Continuous Maintenance and Improvement
 
-The usual upkeep: respond to community issues and pull requests, follow Soroban RPC changes, keep Android compatibility current, and keep CI/CD and dependencies up to date. This also covers the Java generator in stellar-contract-bindings.
+The usual upkeep: respond to community issues and pull requests, follow Soroban RPC changes, keep
+Android compatibility current, and keep CI/CD and dependencies up to date. This also covers the Java
+generator in stellar-contract-bindings.
 
 Proof: Commits or PRs, or release notes.
 
