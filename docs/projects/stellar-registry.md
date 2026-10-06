@@ -638,7 +638,7 @@ Description from last quarter:
 > for all community projects.
 >
 > Proof:
-> [Registry Tansu Manager contract](https://github.com/stellar-registry/contracts/tree/main/contracts/registry-tansu-manager)
+> [Registry Tansu Manager contract](https://github.com/stellar-registry/contracts/tree/41013ac87f35ce025879b598e199cf5f477dc5c7/contracts/registry-tansu-manager)
 > either migrates out of the stellar-registry repository to Tansu, becoming easier to use for all
 > ecosystem projects, or becomes altogether unnecessary.
 
@@ -964,7 +964,7 @@ community projects.
 Issue: https://github.com/stellar-scaffold/cli/issues/527
 
 Proof:
-[Registry Tansu Manager contract](https://github.com/stellar-registry/contracts/tree/main/contracts/registry-tansu-manager)
+[Registry Tansu Manager contract](https://github.com/stellar-registry/contracts/tree/41013ac87f35ce025879b598e199cf5f477dc5c7/contracts/registry-tansu-manager)
 either migrates out of the stellar-registry repository to Tansu, becoming easier to use for all
 ecosystem projects, or becomes altogether unnecessary.
 
