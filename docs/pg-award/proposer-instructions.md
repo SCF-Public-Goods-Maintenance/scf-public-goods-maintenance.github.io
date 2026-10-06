@@ -146,8 +146,11 @@ is mostly self-explanatory. A few things to keep in mind:
   Explorer" → `stellarexpert-explorer`). Choose a clear, recognizable name.
 - **PG Intake Form** — link to your approved intake issue. If you submitted through Airtable during
   the soft-launch period, write "soft-launch".
-- **Budget Requested** — up to $50,000 in XLM per quarter. Your budget should be reasonable relative
-  to your retroactive impact and planned deliverables.
+- **Maintenance Reserve** and **Other** — the two halves of your ask, together capped at $50,000 in
+  XLM per quarter. The maintenance reserve is capacity you are holding for work that arrives during
+  the quarter; **Other** covers your named deliverables. See [Budget Allocation](#budget-allocation)
+  for where the line sits. Your total should be reasonable relative to your retroactive impact and
+  planned deliverables.
 - **Legal Acknowledgements** — you must agree to the
   [Legal Acknowledgements](https://stellar.gitbook.io/scf-handbook/supporting-programs/public-goods-award/legal-acknowledgements){:target="⚡"}
   provided by SDF. This is required to proceed.
@@ -233,8 +236,8 @@ directly:
 3. Update `## Retroactive Impact` to cover the quarter you are reporting on. This section is
    rewritten each quarter rather than added to; previous versions remain in the page history.
 4. Under `## Past Deliverables`, add a new `### {Year} Q{N}` subsection. Start it with the budget
-   allocation table described below, then give evidence for each deliverable you committed to in
-   that quarter's proposal, as `####` subheadings. Leave previous quarters in place.
+   allocation table described below, then give evidence for each deliverable you committed to in that
+   quarter's proposal, as `####` subheadings. Leave previous quarters in place.
 5. Choose **"Create a new branch for this commit and start a pull request."**
 6. Name your branch following the convention: `deliverables/{slug}-{quarter}` (e.g.,
    `deliverables/stellar-sdk-2026q3`).
@@ -246,27 +249,49 @@ approval by a supermajority of reviewers releases Tranche 2.
 
 ### Budget Allocation
 
-Each quarter's deliverables begin with a table splitting the award between maintenance and new
-features, so that the program can track maintenance funding consistently from quarter to quarter:
+Maintenance is funded as **reserved capacity**, not as a task list. Most of it arrives during the
+quarter — bug reports, security fixes, toolchain breaks, late changes to a protocol release — so it
+cannot be costed in advance the way a named deliverable can. What you set in advance is how much of
+the award you are holding for it.
 
-| Budget allocation | Amount  |
-| ----------------- | ------- |
-| Maintenance       | $12,000 |
-| New features      | $3,000  |
+Your proposal declares that reserve. Each quarter's deliverables then open with a table comparing
+what was reserved against what was actually spent:
 
-Use dollar amounts rather than percentages. The two rows should sum to the amount you were awarded
-for that quarter. If all of your work fell into one bucket, enter `$0` for the other.
+| Budget allocation | Reserved | Actual  |
+| ----------------- | -------- | ------- |
+| Maintenance       | $12,000  | $11,200 |
+| Other             | $3,000   | $3,800  |
 
-The test for which bucket work belongs in is whether it **adds capability or preserves it**:
+Use dollar amounts rather than percentages. Each column should sum to the award for that quarter.
+Enter `$0` rather than leaving a cell blank. Where your proposal predates this table, leave
+**Reserved** empty and fill in **Actual** only.
 
-- **Maintenance** — bug fixes, security patches, dependency updates, protocol-compatibility work,
-  documentation of existing behaviour, release engineering, issue triage, and user support.
-- **New features** — capability that did not exist before, such as new APIs, new integrations, or
-  new tooling.
+Coming in under your maintenance reserve is not something to hide. The two columns exist so that an
+efficient quarter reads as an efficient quarter, rather than being rounded to match the reserve.
 
-Two cases are easy to get wrong. Supporting a new protocol version is **maintenance**, even though
-it is entirely new code, because it keeps the project compatible rather than adding capability. A
-rewrite is also **maintenance**, however large, if it leaves the project doing the same things.
+#### What counts as maintenance
+
+Maintenance is work that would still be needed if nobody asked for anything new. That sentence is the
+test. The list below is examples of it, not a closed set:
+
+- bug fixes, security patches, and dependency updates;
+- protocol-compatibility work;
+- platform and toolchain updates that keep the package installable and building;
+- fixes to specifications you already implement, and updates when one of those is revised;
+- compatibility matrices, CI and test upkeep, and release engineering;
+- documentation of existing behaviour, issue triage, and user support.
+
+**Other** is the remainder of the award: anything the definition above does not cover. It is a
+complement rather than a category, so the only question to settle is whether something is
+maintenance.
+
+Three cases are easy to get wrong:
+
+- Supporting a **new protocol version is maintenance**, even when it is entirely new code. An SDK
+  that cannot load a contract deployed under the active protocol is broken, not feature-poor.
+- A **rewrite is maintenance**, however large, if it leaves the project doing the same things.
+- **Implementing a specification you did not previously support is Other**, even though maintaining
+  it afterwards is maintenance.
 
 ## Access & Permissions
 

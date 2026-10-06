@@ -161,12 +161,25 @@ body:
       required: true
 
   - type: input
-    id: budget-ask
+    id: budget-maintenance
     attributes:
-      label: Budget Requested
+      label: Maintenance Reserve
       description:
-        Max. $50,000 in XLM. Budget needs to be reasonable based on retroactive impact and planned
-        deliverables for the next three months.
+        Capacity you are reserving for work that arrives during the quarter — bug reports, security
+        fixes, toolchain breaks, protocol compatibility. Declared in advance rather than itemised,
+        because most of it is not knowable yet. Enter $0 if you are reserving none.
+      placeholder: $[...] in XLM
+    validations:
+      required: true
+
+  - type: input
+    id: budget-other
+    attributes:
+      label: Other
+      description:
+        The rest of your ask, covering the named deliverables above. Together with the maintenance
+        reserve this may not exceed $50,000 in XLM, and the total needs to be reasonable based on
+        retroactive impact and planned deliverables for the next three months.
       placeholder: $[...] in XLM
     validations:
       required: true
