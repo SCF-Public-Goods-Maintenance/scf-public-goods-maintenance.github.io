@@ -137,8 +137,8 @@ network as it runs today.
 [`9440e88e`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/9440e88e) on `main` (2026-10-03).
 It sits one commit above [`51cc50c4`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/51cc50c4)
 (2026-10-02, the last deliverable merged) and changes only the CHANGELOG, version numbers, matrix
-headers and one publish-workflow flag, not code or tests · CI on the tag commit: green: Pack and
-Test ([run 37089117259](https://github.com/Beans-BV/dotnet-stellar-sdk/actions/runs/37089117259)),
+headers and one publish-workflow flag, not code or tests · CI on the tag commit: green: Pack and Test
+([run 37089117259](https://github.com/Beans-BV/dotnet-stellar-sdk/actions/runs/37089117259)),
 Integration Tests against live Testnet
 ([run 37089117283](https://github.com/Beans-BV/dotnet-stellar-sdk/actions/runs/37089117283), 56/56),
 XDR Generator Tests
