@@ -225,45 +225,29 @@ shift from design discussion to a planned firmware task makes Soroban the top pr
 
 ## Proposed Impact
 
-The primary goal for Q3 2026 is Soroban. Now that the Trezor team has added Soroban support to their
-roadmap, delivering Soroban transaction signing on Trezor is the highest-priority workstream, working
-alongside the Trezor firmware team to drive the integration forward. In parallel, we will add
-Protocol 27 support to the Stellar Ledger app and its associated SDK/libraries, and continue ongoing
-maintenance of both the Ledger and Trezor integrations. Together these keep Stellar first-class on
-the two most widely used secure-hardware ecosystems as the network evolves.
+In Q4 2026, we will focus on the Ledger app: adding Protocol 28 support so Ledger users can keep signing as the network upgrades, and showing any Stellar Asset Contract in a readable form, not just the tokens on a fixed list. Since the app was audited in September, we won't release these updates on their own this quarter. They will ship with future updates after the next audit. We will keep maintaining the Ledger and Trezor integrations in parallel.
+
+Note. Ledger has also changed how the Stellar Ledger app is developed. Development now happens in a private repository, and Ledger syncs the code to the public repository from time to time. This is Ledger's decision. As a result, we may not be able to share PR links or release notes for Ledger work, and changes will only show up in the public repository after each sync.
 
 ## Proposed Deliverables
 
-### 1. Soroban Support for Trezor
+### P1. Protocol 28 Support for the Ledger App
 
-Advance Soroban transaction signing on Trezor in collaboration with the Trezor firmware team,
-building on the `StellarInvokeHostFunctionOp` implementation already submitted upstream. With Soroban
-now on the Trezor team's roadmap, the quarter's focus is integration: iterating on review feedback,
-aligning the on-device confirmation UX, passing CI, and driving the work toward merge. This brings
-hardware-secured Soroban smart contract interactions to Trezor users, a first for the ecosystem.
-Because firmware team priorities can shift, merge within the quarter is not guaranteed, but the
-implementation will be actively driven and review/CI/community-interest metrics tracked to guide next
-steps.
+Add Protocol 28 support to the Stellar Ledger app, so it can parse, display, and sign transactions that use the new protocol features. We will finish this work this quarter, and it will be released with future updates after the next audit.
 
-Proof: Development activity and review progress on the Soroban firmware implementation, tracked via
-the development branch and CI results.
+Proof: The changes in the public Stellar Ledger app repository once Ledger syncs them, which may be several months after the work is done. PR links and release notes may not be available.
 
-### 2. Protocol 27 Support for the Ledger App and SDK
+### P2. Readable Display for Any Stellar Asset Contract on Ledger
 
-Add Protocol 27 support to the Stellar Ledger app and its associated SDK/integration libraries,
-ensuring transactions built under the upcoming protocol upgrade continue to parse, display, and sign
-correctly on Ledger devices. Keeping hardware signing current with each protocol upgrade prevents
-breakage for security-conscious users and integrators when the network transitions.
+Right now, the Ledger app only shows SAC token operations in a readable form for tokens on a fixed list. We will extend this to any SAC, so every SAC in a contract call is shown in a readable form. We will also provide a JavaScript library that helps wallets look up the SACs in a transaction. As with P1, we will finish the Ledger app work this quarter, and it will be released with future updates after the next audit.
 
-Proof: Release/changelog for the Stellar Ledger app and SDK covering Protocol 27 support.
+Proof: The JavaScript library repository, and the Ledger app changes in the public repository once Ledger syncs them, which may be several months after the work is done.
 
-### 3. Ongoing Maintenance
+### P3. Ongoing Maintenance
 
-Regular upkeep of the Stellar Ledger app and Trezor integrations in coordination with the Ledger and
-Trezor teams: responding to community issues and pull requests, keeping SDK and firmware dependencies
-current, and ensuring Stellar assets and protocol features remain fully supported.
+Regular upkeep of the Stellar Ledger app and Trezor integrations in coordination with the Ledger and Trezor teams: responding to community issues and pull requests, keeping SDK and firmware dependencies current, and ensuring Stellar assets and protocol features remain fully supported.
 
-Proof: Release tags and updated changelogs on GitHub.
+Proof: Commits or PRs, or release notes.
 
 ## Metrics loaded from PG Atlas
 
