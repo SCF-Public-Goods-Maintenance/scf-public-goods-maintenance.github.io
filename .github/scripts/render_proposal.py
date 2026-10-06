@@ -43,6 +43,39 @@ def slugify(name: str, max_len: int = 64) -> str:
     return s[:max_len].rstrip("-")
 
 
+def parse_money(value: str) -> int | None:
+    """
+    Read whole currency units out of a free-text budget field.
+
+    Proposers write things like "$12,000 in XLM", so anything that is not a digit
+    before the decimal point is dropped. Returns None when nothing numeric is
+    present, which the caller must handle rather than treating as zero.
+    """
+
+    digits = re.sub(r"[^\d]", "", value.split(".")[0])
+
+    return int(digits) if digits else None
+
+
+def total_budget(maintenance: str, other: str) -> str:
+    """
+    Sum the two parts of the ask for the `budget` front matter field.
+
+    That field is the project's total and has downstream consumers, so it keeps
+    holding one number even though the form now collects two. When either part
+    cannot be parsed the raw text is passed through rather than guessing, so a
+    malformed entry is visible on the page instead of silently becoming a wrong
+    total.
+    """
+
+    maintenance_amount = parse_money(maintenance)
+    other_amount = parse_money(other)
+    if maintenance_amount is None or other_amount is None:
+        return " + ".join(part for part in (maintenance, other) if part)
+
+    return f"${maintenance_amount + other_amount:,}"
+
+
 def unwrap_dropdown(value):
     """Parser returns dropdown values as '["Value"]'; extract the string."""
     if isinstance(value, list):
@@ -114,7 +147,9 @@ def main():
     retro_deliverable = str(parsed.get("pg-retroactive-deliverable", ""))
     proposal_impact = str(parsed.get("pg-proposal-impact", ""))
     proposal_deliverable = str(parsed.get("pg-proposal-deliverable", ""))
-    budget_ask = str(parsed.get("budget-ask", ""))
+    budget_maintenance = str(parsed.get("budget-maintenance", "")).strip()
+    budget_other = str(parsed.get("budget-other", "")).strip()
+    budget_total = total_budget(budget_maintenance, budget_other)
     legal = format_checkboxes(parsed.get("legal-acknowledgements", ""))
 
     # basic input sanitation on project name
@@ -133,7 +168,7 @@ def main():
         proposal_issue: {issue_number}
         proposer: {issue_author}
         category: "{category.replace('"', '\\"')}"
-        budget: "{budget_ask.replace('"', '\\"')}"
+        budget: "{budget_total.replace('"', '\\"')}"
         ---
     """)
 
@@ -154,7 +189,9 @@ def main():
         f"| **Repository** | {md_url(git_repo)} |",
         f"| **First Released** | {release_date} |",
         f"| **Intake** | {md_url(intake_link)} |",
-        f"| **Budget Requested** | {budget_ask} |",
+        f"| **Budget Requested** | {budget_total} |",
+        f"| **Maintenance Reserve** | {budget_maintenance} |",
+        f"| **Other** | {budget_other} |",
         "",
         "## Project Description\n",
         wrap_with_md_lint(description, MarkdownLinterFlag.MD034),

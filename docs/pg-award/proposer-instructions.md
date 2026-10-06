@@ -146,8 +146,11 @@ is mostly self-explanatory. A few things to keep in mind:
   Explorer" → `stellarexpert-explorer`). Choose a clear, recognizable name.
 - **PG Intake Form** — link to your approved intake issue. If you submitted through Airtable during
   the soft-launch period, write "soft-launch".
-- **Budget Requested** — up to $50,000 in XLM per quarter. Your budget should be reasonable relative
-  to your retroactive impact and planned deliverables.
+- **Maintenance Reserve** and **Other** — the two parts of your ask, together capped at $50,000 in
+  XLM per quarter. The maintenance reserve is capacity you are holding for work that arrives during
+  the quarter; **Other** covers your named deliverables. See [Budget Allocation](#budget-allocation)
+  for where the line sits. Your total should be reasonable relative to your retroactive impact and
+  planned deliverables.
 - **Legal Acknowledgements** — you must agree to the
   [Legal Acknowledgements](https://stellar.gitbook.io/scf-handbook/supporting-programs/public-goods-award/legal-acknowledgements){:target="⚡"}
   provided by SDF. This is required to proceed.
@@ -209,9 +212,20 @@ update your existing project page directly:
    [`docs/projects/`](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/tree/main/docs/projects){:target="⚡"}
    directory on the `main` branch.
 2. Click the **Edit** (pencil) icon on your project page.
-3. Update the relevant sections: next-quarter goals and updated budget. Retroactive impact and
+3. Update the relevant sections: next-quarter goals and updated budget. Give the budget as three rows
+   in the summary table, so a renewal carries the same split as a new proposal:
+
+   ```text
+   | **Budget Requested**    | $15,000 |
+   | **Maintenance Reserve** | $12,000 |
+   | **Other**               | $3,000  |
+   ```
+
+   The two parts sum to the total; see [Budget Allocation](#budget-allocation) for where the line
+   sits. Update the `budget:` front matter value with your new total. Retroactive impact and
    deliverable evidence are not part of a renewal — they go in that quarter's
    [deliverables submission](#quarterly-deliverables).
+
 4. Choose **"Create a new branch for this commit and start a pull request."**
 5. Name your branch following the convention: `proposals/{slug}-{quarter}` (e.g.,
    `proposals/stellar-sdk-2026q3`).
@@ -232,8 +246,9 @@ directly:
 2. Click the **Edit** (pencil) icon on your project page.
 3. Update `## Retroactive Impact` to cover the quarter you are reporting on. This section is
    rewritten each quarter rather than added to; previous versions remain in the page history.
-4. Under `## Past Deliverables`, add a new `### {Year} Q{N}` subsection with evidence for each
-   deliverable you committed to in that quarter's proposal. Leave previous quarters in place.
+4. Under `## Past Deliverables`, add a new `### {Year} Q{N}` subsection. Start it with the budget
+   allocation table described below, then give evidence for each deliverable you committed to in that
+   quarter's proposal, as `####` subheadings. Leave previous quarters in place.
 5. Choose **"Create a new branch for this commit and start a pull request."**
 6. Name your branch following the convention: `deliverables/{slug}-{quarter}` (e.g.,
    `deliverables/stellar-sdk-2026q3`).
@@ -242,6 +257,52 @@ Because the sync automation triggers on any PR that modifies files in `docs/proj
 description will automatically populate with the content of your updated project page. The
 deliverables PR is reviewed against the deliverables you committed to in that quarter's proposal;
 approval by a supermajority of reviewers releases Tranche 2.
+
+### Budget Allocation
+
+Maintenance is funded as **reserved capacity**, not as a task list. Most of it arrives during the
+quarter — bug reports, security fixes, toolchain breaks, late changes to a protocol release — so it
+cannot be costed in advance the way a named deliverable can. What you set in advance is how much of
+the award you are holding for it.
+
+Your proposal declares that reserve. Each quarter's deliverables then open with a table comparing
+what was reserved against what was actually spent:
+
+| Budget allocation | Reserved | Actual  |
+| ----------------- | -------- | ------- |
+| Maintenance       | $12,000  | $11,200 |
+| Other             | $3,000   | $3,800  |
+
+Use dollar amounts rather than percentages. Each column should sum to the award for that quarter.
+Enter `$0` rather than leaving a cell blank. Where your proposal predates this table, leave
+**Reserved** empty and fill in **Actual** only.
+
+Coming in under your maintenance reserve is not something to hide. The two columns exist so that an
+efficient quarter reads as an efficient quarter, rather than being rounded to match the reserve.
+
+#### What counts as maintenance
+
+Maintenance is work that would still be needed if nobody asked for anything new. That sentence is the
+test. The list below is examples of it, not a closed set:
+
+- bug fixes, security patches, and dependency updates;
+- protocol-compatibility work;
+- platform and toolchain updates that keep the package installable and building;
+- fixes to specifications you already implement, and updates when one of those is revised;
+- compatibility matrices, CI and test upkeep, and release engineering;
+- documentation of existing behaviour, issue triage, and user support.
+
+**Other** is the remainder of the award: anything the definition above does not cover. It is a
+complement rather than a category, so the only question to settle is whether something is
+maintenance.
+
+Three cases are easy to get wrong:
+
+- Supporting a **new protocol version is maintenance**, even when it is entirely new code. An SDK
+  that cannot load a contract deployed under the active protocol is broken, not feature-poor.
+- A **rewrite is maintenance**, however large, if it leaves the project doing the same things.
+- **Implementing a specification you did not previously support is Other**, even though maintaining
+  it afterwards is maintenance.
 
 ## Access & Permissions
 
