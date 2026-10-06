@@ -497,10 +497,10 @@ Description from last quarter:
 **✅ Complete:**
 
 Tracking issue: https://github.com/stellar-registry/ui/issues/51 (context; still open for follow-up
-work, the delivery is the merged PRs below). A new Governance section on
-rgstry.xyz hosts one form per operation. On testnet, a form builds the on-chain outcome transaction,
-pins `proposal.md` to IPFS, and creates a Tansu proposal signed with the user's wallet. On mainnet,
-the form opens a prefilled issue in https://github.com/stellar-registry/gov.
+work, the delivery is the merged PRs below). A new Governance section on rgstry.xyz hosts one form
+per operation. On testnet, a form builds the on-chain outcome transaction, pins `proposal.md` to
+IPFS, and creates a Tansu proposal signed with the user's wallet. On mainnet, the form opens a
+prefilled issue in https://github.com/stellar-registry/gov.
 
 - https://github.com/stellar-registry/ui/pull/67, add contract to root registry
   (https://github.com/stellar-registry/ui/issues/53)
