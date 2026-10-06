@@ -454,7 +454,12 @@ Description from last quarter:
 
 **✅ Complete:**
 
-- stellar-registry/indexer#24
+- https://github.com/stellar-registry/indexer/pull/24, trigram index and full-text search on the
+  contracts table
+- https://github.com/stellar-registry/ui/pull/22, fix search results updating as the query changes
+- https://github.com/stellar-registry/ui/pull/29, common search component; contracts wired to
+  server-side search
+- https://github.com/stellar-registry/ui/pull/34, fix stale results leaking into search
 - See every mainnet contract matching `kal`: https://stellar.rgstry.xyz/contracts?query=kal
 
 #### ✅ D5: Contract Explorer, Deploy Button & Verified-Build Badges (carried from Q2)
@@ -491,7 +496,8 @@ Description from last quarter:
 
 **✅ Complete:**
 
-Tracking issue: https://github.com/stellar-registry/ui/issues/51. A new Governance section on
+Tracking issue: https://github.com/stellar-registry/ui/issues/51 (context; still open for follow-up
+work, the delivery is the merged PRs below). A new Governance section on
 rgstry.xyz hosts one form per operation. On testnet, a form builds the on-chain outcome transaction,
 pins `proposal.md` to IPFS, and creates a Tansu proposal signed with the user's wallet. On mainnet,
 the form opens a prefilled issue in https://github.com/stellar-registry/gov.
@@ -570,7 +576,8 @@ Description from last quarter:
 **✅ Complete:**
 
 Scope was narrowed during Q3 to foundational contract-level support; see tracking issue
-https://github.com/stellar-registry/cli/issues/51.
+https://github.com/stellar-registry/cli/issues/51 (context; stays open for the Q4 follow-up work, the
+delivery is the merged PRs below).
 
 - https://github.com/stellar-registry/contracts/pull/37, register named G-addresses: new `account`
   namespace in the registry contract with `register_account` and
@@ -637,7 +644,7 @@ Description from last quarter:
 
 **✅ Complete:**
 
-- Tansu merged the manager into its own repo:
+- The delivery: Tansu merged the manager into its own repo:
   [`841dd84`](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/commits/841dd84790f3b8f2c8ae4fbf65ca10d5a9adab69),
   "Add the registry manager to tansu itself", merged to Tansu `main` on 2026-09-02 (Radicle tracking
   issue
@@ -645,7 +652,8 @@ Description from last quarter:
 - Tansu's copy builds against the real Tansu contract rather than our `tansu-stub`
 - Documented in Tansu's governance docs:
   https://github.com/Consulting-Manao/tansu/blob/main/website/docs/developers/governance.mdx#acting-on-other-contracts
-- Remove the now-duplicate `registry-tansu-manager` and `tansu-stub` from stellar-registry/contracts:
+- Follow-up cleanup (context; merged October 1, just after the quarter closed): remove the
+  now-duplicate `registry-tansu-manager` and `tansu-stub` from stellar-registry/contracts,
   https://github.com/stellar-registry/contracts/pull/55
 
 #### ✅ D11: Registry GH Workflow to publish Wasms and upgrade contracts
@@ -676,11 +684,12 @@ Description from last quarter:
 
 - New [stellar-registry/actions](https://github.com/stellar-registry/actions) repo shipped along with
   [stellar-registry/actions-demo](https://github.com/stellar-registry/actions-demo) showing how to
-  use it.
+  use it. These two repos are the in-quarter delivery.
 - https://github.com/stellar-registry/contracts/pull/53 updates Registry's own contract to
   auto-publish Wasm on commits to `main`,
   https://stellar.expert/explorer/testnet/tx/5793597e4fce5cc536d22263d57bd583d06da2d8e4a648e3b268bc29c0a52cbc
-  demonstrates that it works
+  demonstrates that it works. (Opened September 30; merged, with its first publish, on October 1,
+  just after the quarter closed.)
 - **Secure on-GitHub keys**: accomplished via new product,
   [Perch](https://github.com/stellar-registry/perch), a "composable policy layer for Soroban smart
   accounts", which we designed and shipped this quarter.
