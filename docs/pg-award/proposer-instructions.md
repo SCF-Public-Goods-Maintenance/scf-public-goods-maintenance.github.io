@@ -146,7 +146,7 @@ is mostly self-explanatory. A few things to keep in mind:
   Explorer" → `stellarexpert-explorer`). Choose a clear, recognizable name.
 - **PG Intake Form** — link to your approved intake issue. If you submitted through Airtable during
   the soft-launch period, write "soft-launch".
-- **Maintenance Reserve** and **Other** — the two halves of your ask, together capped at $50,000 in
+- **Maintenance Reserve** and **Other** — the two parts of your ask, together capped at $50,000 in
   XLM per quarter. The maintenance reserve is capacity you are holding for work that arrives during
   the quarter; **Other** covers your named deliverables. See [Budget Allocation](#budget-allocation)
   for where the line sits. Your total should be reasonable relative to your retroactive impact and
@@ -221,9 +221,10 @@ update your existing project page directly:
    | **Other**               | $3,000  |
    ```
 
-   The two halves sum to the total; see [Budget Allocation](#budget-allocation) for where the line
-   sits. Retroactive impact and deliverable evidence are not part of a renewal — they go in that
-   quarter's [deliverables submission](#quarterly-deliverables).
+   The two parts sum to the total; see [Budget Allocation](#budget-allocation) for where the line
+   sits. Update the `budget:` front matter value with your new total. Retroactive impact and
+   deliverable evidence are not part of a renewal — they go in that quarter's
+   [deliverables submission](#quarterly-deliverables).
 
 4. Choose **"Create a new branch for this commit and start a pull request."**
 5. Name your branch following the convention: `proposals/{slug}-{quarter}` (e.g.,

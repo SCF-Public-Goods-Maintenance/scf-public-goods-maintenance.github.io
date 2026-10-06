@@ -59,10 +59,10 @@ def parse_money(value: str) -> int | None:
 
 def total_budget(maintenance: str, other: str) -> str:
     """
-    Sum the two halves of the ask for the `budget` front matter field.
+    Sum the two parts of the ask for the `budget` front matter field.
 
     That field is the project's total and has downstream consumers, so it keeps
-    holding one number even though the form now collects two. When either half
+    holding one number even though the form now collects two. When either part
     cannot be parsed the raw text is passed through rather than guessing, so a
     malformed entry is visible on the page instead of silently becoming a wrong
     total.
