@@ -270,19 +270,27 @@ Stellar with the SDK, lowering the barrier for developers using AI tools.
 
 ## Proposed Impact
 
-In Q3, Protocol 28 support and SEP-48 binding generation came up mid-quarter and took much of the time we had planned for refactoring. In Q4 2026, we want to get back to that plan: refactor the SDK and pay down technical debt, so it stays easy to maintain and reliable as the protocol keeps growing. We will keep up routine maintenance of the SDK and stellar-contract-bindings in parallel.
+In Q3, Protocol 28 support and SEP-48 binding generation came up mid-quarter and took much of the
+time we had planned for refactoring. In Q4 2026, we want to get back to that plan: refactor the SDK
+and pay down technical debt, so it stays easy to maintain and reliable as the protocol keeps growing.
+We will keep up routine maintenance of the SDK and stellar-contract-bindings in parallel.
 
 ## Proposed Deliverables
 
 ### P1. Refactoring and Technical Debt Reduction
 
-We will pick up the refactoring we planned for Q3: go through the codebase, pay down technical debt, and simplify code that has grown over many releases. We will decide on specific changes as we work through the code. The unit test suite we restructured in Q3 will catch behavior changes, and any breaking change will be noted in the release notes.
+We will pick up the refactoring we planned for Q3: go through the codebase, pay down technical debt,
+and simplify code that has grown over many releases. We will decide on specific changes as we work
+through the code. The unit test suite we restructured in Q3 will catch behavior changes, and any
+breaking change will be noted in the release notes.
 
 Proof: Commits or PRs, or release notes.
 
 ### P2. Continuous Maintenance and Improvement
 
-The usual upkeep: respond to community issues and pull requests, follow Soroban RPC changes, and keep CI/CD, the SBOM workflow, and dependencies up to date. This also covers stellar-contract-bindings: keeping the Python generator in step with SDK changes and fixing issues users report.
+The usual upkeep: respond to community issues and pull requests, follow Soroban RPC changes, and keep
+CI/CD, the SBOM workflow, and dependencies up to date. This also covers stellar-contract-bindings:
+keeping the Python generator in step with SDK changes and fixing issues users report.
 
 Proof: Commits or PRs, or release notes.
 
