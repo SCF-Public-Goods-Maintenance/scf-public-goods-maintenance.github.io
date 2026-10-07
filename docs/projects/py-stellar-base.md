@@ -21,7 +21,9 @@ RPC, with implementations of several Stellar Ecosystem Proposals._
 | **stellar-contract-bindings** | <https://github.com/lightsail-network/stellar-contract-bindings> |
 | **First Released**            | October 2016                                                     |
 | **Intake**                    | soft-launch                                                      |
-| **Budget Requested**          | 15000                                                            |
+| **Budget Requested**          | $15,000                                                          |
+| **Maintenance Reserve**       | $15,000                                                          |
+| **Other**                     | $0                                                               |
 
 ## Project Description
 
