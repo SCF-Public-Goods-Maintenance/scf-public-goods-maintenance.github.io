@@ -17,16 +17,16 @@ plain-language network health insights._
 
 <!-- markdownlint-enable MD036 -->
 
-|                      |                                                                                                    |
-| -------------------- | -------------------------------------------------------------------------------------------------- |
-| **Category**         | Infrastructure Monitoring                                                                          |
-| **Website**          | <https://radar.withobsrvr.com>                                                                     |
-| **Repository**       | <https://github.com/withObsrvr/stellarbeat>                                                        |
-| **First Released**   | June 2025                                                                                          |
-| **Intake**           | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/85> |
-| **Budget Requested** | 20000                                                                                              |
-| **Maintenance Reserve ** | 13000                                                                                          |
-| **Other**            | 7000                                                                                               |
+|                          |                                                                                                    |
+| ------------------------ | -------------------------------------------------------------------------------------------------- |
+| **Category**             | Infrastructure Monitoring                                                                          |
+| **Website**              | <https://radar.withobsrvr.com>                                                                     |
+| **Repository**           | <https://github.com/withObsrvr/stellarbeat>                                                        |
+| **First Released**       | June 2025                                                                                          |
+| **Intake**               | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/85> |
+| **Budget Requested**     | 20000                                                                                              |
+| **Maintenance Reserve ** | 13000                                                                                              |
+| **Other**                | 7000                                                                                               |
 
 ## Project Description
 
@@ -312,7 +312,11 @@ Completed work:
 
 Q4 focuses on making Radar's judgments defensible and its scans dependable.\
 
-These deliverables will make Radar’s network-health reporting faster, more accurate, and easier for operators to act on. Scans will reliably complete within the five-minute window, archive restrictions caused by Radar’s hosting environment will no longer create false warnings, and validator pages will explain detected issues with practical remediation guidance. Together, these improvements strengthen Radar as a trustworthy public resource for monitoring Stellar validator and quorum health.
+These deliverables will make Radar’s network-health reporting faster, more accurate, and easier for
+operators to act on. Scans will reliably complete within the five-minute window, archive restrictions
+caused by Radar’s hosting environment will no longer create false warnings, and validator pages will
+explain detected issues with practical remediation guidance. Together, these improvements strengthen
+Radar as a trustworthy public resource for monitoring Stellar validator and quorum health.
 
 <!-- markdownlint-enable MD034 -->
 
@@ -322,39 +326,55 @@ These deliverables will make Radar’s network-health reporting faster, more acc
 
 ### D1: Prevent Radar’s hosting provider or egress network from producing false archive-health warnings.
 
-After making updates to the network scanner package, we have found that 401s and 403s can produce "History archive behind" warnings. This happens at times if the IP address of the scanner is being blocked and the current way the scanner works marks the failure as the history archive being behind. This issue has been observed with Moneygram nodes by SDF internal.
-*Scope:*
-  - Build/Deploy an authenticated archive probe outside DigitalOcean.
-  - Retry HTTP 401/403 archive checks through the independent probe.
-  - Display “access restricted for Radar scanner” rather than incorrectly reporting the archive as unavailable or behind.
+After making updates to the network scanner package, we have found that 401s and 403s can produce
+"History archive behind" warnings. This happens at times if the IP address of the scanner is being
+blocked and the current way the scanner works marks the failure as the history archive being behind.
+This issue has been observed with Moneygram nodes by SDF internal. _Scope:_
 
-*Measure:*
-  - MoneyGram’s three validators no longer receive false “archive unreachable” or “archive behind” warnings when the external probe can verify them.
-  - Staging demonstration with direct DigitalOcean failure and successful independent verification.
-  - Probe latency bounded so it does not endanger the five-minute scan target.
-  
+- Build/Deploy an authenticated archive probe outside DigitalOcean.
+- Retry HTTP 401/403 archive checks through the independent probe.
+- Display “access restricted for Radar scanner” rather than incorrectly reporting the archive as
+  unavailable or behind.
+
+_Measure:_
+
+- MoneyGram’s three validators no longer receive false “archive unreachable” or “archive behind”
+  warnings when the external probe can verify them.
+- Staging demonstration with direct DigitalOcean failure and successful independent verification.
+- Probe latency bounded so it does not endanger the five-minute scan target.
+
 ### D2: Continued network scanner performance, correctness, and maintenance
 
-Make every network scan finish reliably within its operating window without sacrificing validator or quorum evidence. A migration to the endpoint-candidate subsystem backfilled ~152,000 rows and caused the scanner to record each connection attempt once per historical identity at that address — about 96,000 database writes per crawl, pushing scans from 5.0 minutes past 20.
-*Scope:*
-  - Restore scans to below five minutes.
-  - Add stage-level timing for endpoint preparation, overlay crawl, node enrichment, organization scanning, FBAS analysis, and persistence.
-  - Reduce repeated connection attempts against known-dead gossip addresses.
+Make every network scan finish reliably within its operating window without sacrificing validator or
+quorum evidence. A migration to the endpoint-candidate subsystem backfilled ~152,000 rows and caused
+the scanner to record each connection attempt once per historical identity at that address — about
+96,000 database writes per crawl, pushing scans from 5.0 minutes past 20. _Scope:_
 
-*Measure:*
-  - Before-and-after scan duration table.
-  - Production or staging logs demonstrating several consecutive sub-five-minute scans.
-  - Crawl attempts, successful connections, validator counts, and scan duration compared across releases.
-  
+- Restore scans to below five minutes.
+- Add stage-level timing for endpoint preparation, overlay crawl, node enrichment, organization
+  scanning, FBAS analysis, and persistence.
+- Reduce repeated connection attempts against known-dead gossip addresses.
+
+_Measure:_
+
+- Before-and-after scan duration table.
+- Production or staging logs demonstrating several consecutive sub-five-minute scans.
+- Crawl attempts, successful connections, validator counts, and scan duration compared across
+  releases.
+
 ### D3: Evidence-based validator diagnostics and status explanations
 
-Let operators understand exactly why Radar assigned a status and what they can do about it. We will start with issues related to verifying if the history archive is up to date and expand to other errors in the future. The main requests that come in to Radar are asking how to remediate specific errors.
-*Scope:*
+Let operators understand exactly why Radar assigned a status and what they can do about it. We will
+start with issues related to verifying if the history archive is up to date and expand to other
+errors in the future. The main requests that come in to Radar are asking how to remediate specific
+errors. _Scope:_
+
 - Provide suggested remediations for:
-    - archive access restriction
+  - archive access restriction
 - Expose the evidence through Radar’s public API.
-    
-*Measure:*
+
+_Measure:_
+
 - Archive access restriction warnings shown on a validator page includes a reason and remediation.
 
 <!-- markdownlint-enable MD034 -->
