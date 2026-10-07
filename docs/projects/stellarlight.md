@@ -345,7 +345,8 @@ list: a data layer has to adapt to what the ecosystem asks of it, so we pick the
 measured need (raven's findings, our own improvement ledger, what sdf and scf ask for). the
 measurable lines are the commitment.
 
-the maintenance reserve of $20,000 covers the work that arrives during the quarter whether or not we
+the maintenance reserve of
+$20,000 covers the work that arrives during the quarter whether or not we
 add anything: keeping the 55 data lanes and the api contract raven builds on working, bug and
 security fixes, dependency updates, releases, uptime and user support. the new work in the
 deliverables below (new data, new operations, models brought into the loop) makes up the other
