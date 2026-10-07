@@ -496,11 +496,11 @@ Description from last quarter:
 
 **✅ Complete:**
 
-Tracking issue: https://github.com/stellar-registry/ui/issues/51 (context; still open for follow-up
-work, the delivery is the merged PRs below). A new Governance section on rgstry.xyz hosts one form
-per operation. On testnet, a form builds the on-chain outcome transaction, pins `proposal.md` to
-IPFS, and creates a Tansu proposal signed with the user's wallet. On mainnet, the form opens a
-prefilled issue in https://github.com/stellar-registry/gov.
+Tracking issue: https://github.com/stellar-registry/ui/issues/51 (context; closed October 7 once
+every sub-issue was complete; the delivery is the merged PRs below). A new Governance section on
+rgstry.xyz hosts one form per operation. On testnet, a form builds the on-chain outcome transaction,
+pins `proposal.md` to IPFS, and creates a Tansu proposal signed with the user's wallet. On mainnet,
+the form opens a prefilled issue in https://github.com/stellar-registry/gov.
 
 - https://github.com/stellar-registry/ui/pull/67, add contract to root registry
   (https://github.com/stellar-registry/ui/issues/53)
@@ -576,8 +576,8 @@ Description from last quarter:
 **✅ Complete:**
 
 Scope was narrowed during Q3 to foundational contract-level support; see tracking issue
-https://github.com/stellar-registry/cli/issues/51 (context; stays open for the Q4 follow-up work, the
-delivery is the merged PRs below).
+https://github.com/stellar-registry/cli/issues/51 (context; closed after the quarter, with remaining
+G-address work moving to new Q4 issues; the delivery is the merged PRs below).
 
 - https://github.com/stellar-registry/contracts/pull/37, register named G-addresses: new `account`
   namespace in the registry contract with `register_account` and
