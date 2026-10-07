@@ -109,8 +109,8 @@ wallet, an anonymous relay writes the ballot on chain, ballot status follows the
 devices, the pilot roster can be read straight from the scf voting contract, and the round manifest
 and the published results get anchored on tansu (rehearsed end to end on a mock round). 34 nominees
 and 76 pilots are loaded; the nominations round opens to pilots on sdf's go. the rfp section carries
-the q3 briefs and scf round #46 as an open row, the 10 scf skills live in the marketplace, and
-builder profiles show hackathon submissions.
+the q3 briefs and scf round 46 as an open row, the 10 scf skills live in the marketplace, and builder
+profiles show hackathon submissions.
 
 **the partner layer.** the directory, the concierge and matching on stellar.toml fields are live and
 in use (43 published partners, 21 anchors, 12 with toml-verified assets, seps and ramp types); this
@@ -136,46 +136,66 @@ documented in the openapi spec, answering a defined question set with sourced re
 delivered:
 
 - **repo code facts, pinned to commits.** every scanned repo serves `codeVerified.scannedRef` (facts
-  tied to the commit they were read from, #830), `contractInterface` (exported functions, #796),
-  `stellarDeps`, `sdkCapabilities` including x402 and mpp (#808, #817), a toolchain dimension with ci
-  and tests presence (#864), `codeInUse` (live mainnet usage of the repo's contracts, #863),
-  language-frontier capabilities and calibrated depth for python, go, kotlin and java (#868, #869),
-  an audit-drift signal on project rows (#862) and usage-aware ranking (#871). the index grew from
-  about 2,300 to 13,437 scored repos.
-- **contracts as first-class entities.** `GET /api/contracts` (operation `listContracts`, #891): 122
-  mainnet contracts with events, subinvocations, wasm verification and the project that owns them;
-  #1279 stopped calling other people's contracts "verified".
-- **claims get verdicts.** `GET /api/verify` (operation `verifyClaim`, #1057): a claim in ("is blend
-  audited by certora", "is X live", "is X maintained", "is EURC issued by circle"), a supported /
-  unsupported / unresolved verdict with evidence and confidence out.
-- **the trust composite.** `GET /api/repos/trust` (#901) folds scan depth, usage, audit state and
+  tied to the commit they were read from, https://github.com/Stellar-Light/stellarlight/pull/830),
+  `contractInterface` (exported functions, https://github.com/Stellar-Light/stellarlight/pull/796),
+  `stellarDeps`, `sdkCapabilities` including x402 and mpp
+  (https://github.com/Stellar-Light/stellarlight/pull/808,
+  https://github.com/Stellar-Light/stellarlight/pull/817), a toolchain dimension with ci and tests
+  presence (https://github.com/Stellar-Light/stellarlight/pull/864), `codeInUse` (live mainnet usage
+  of the repo's contracts, https://github.com/Stellar-Light/stellarlight/pull/863), language-frontier
+  capabilities and calibrated depth for python, go, kotlin and java
+  (https://github.com/Stellar-Light/stellarlight/pull/868,
+  https://github.com/Stellar-Light/stellarlight/pull/869), an audit-drift signal on project rows
+  (https://github.com/Stellar-Light/stellarlight/pull/862) and usage-aware ranking
+  (https://github.com/Stellar-Light/stellarlight/pull/871). the index grew from about 2,300 to 13,437
+  scored repos.
+- **contracts as first-class entities.** `GET /api/contracts` (operation `listContracts`,
+  https://github.com/Stellar-Light/stellarlight/pull/891): 122 mainnet contracts with events,
+  subinvocations, wasm verification and the project that owns them;
+  https://github.com/Stellar-Light/stellarlight/pull/1279 stopped calling other people's contracts
+  "verified".
+- **claims get verdicts.** `GET /api/verify` (operation `verifyClaim`,
+  https://github.com/Stellar-Light/stellarlight/pull/1057): a claim in ("is blend audited by
+  certora", "is X live", "is X maintained", "is EURC issued by circle"), a supported / unsupported /
+  unresolved verdict with evidence and confidence out.
+- **the trust composite.** `GET /api/repos/trust`
+  (https://github.com/Stellar-Light/stellarlight/pull/901) folds scan depth, usage, audit state and
   activity into one score a consumer can read.
 - **knowledge notes.** the note pool went from 419 to 899 noted repos and closed to zero unnoted
   (served as `knowledgeNotes` on repo rows), with audit-drift and live-usage facts inside the notes
-  (#865, the 2026-09-14 waves).
+  (https://github.com/Stellar-Light/stellarlight/pull/865, the 2026-09-14 waves).
 - **protocol history.** CAP crosswalk facts and a committed cap registry in the research corpus
-  (#764), plus stored truth for every cap document row (#793), so "which CAP added this host
+  (https://github.com/Stellar-Light/stellarlight/pull/764), plus stored truth for every cap document
+  row (https://github.com/Stellar-Light/stellarlight/pull/793), so "which CAP added this host
   function" resolves to a sourced document. `/api/repos/explain` answers from our own scan when
-  deepwiki has no page (#697).
+  deepwiki has no page (https://github.com/Stellar-Light/stellarlight/pull/697).
 - **the defined question set.** `scripts/eval/code-truth-probes.ts` freezes what the serve paths must
   answer about scanned code (interfaces, domains, dependencies, usage, depth, contracts, the vet-idea
   and scf-pitch composites) and exits 1 on any miss; since 2026-09-30 it runs on the daily eval lane
-  (#1743, 10 of 10 passing). a code-question battery is wired into the routing and consumer
-  evaluations (#696) and mirrors raven's soroban battery topics (#844). the content-freshness guard
-  fails ci when a published stellar cli command goes stale (#351).
+  (https://github.com/Stellar-Light/stellarlight/pull/1743, 10 of 10 passing). a code-question
+  battery is wired into the routing and consumer evaluations
+  (https://github.com/Stellar-Light/stellarlight/pull/696) and mirrors raven's soroban battery topics
+  (https://github.com/Stellar-Light/stellarlight/pull/844). the content-freshness guard fails ci when
+  a published stellar cli command goes stale
+  (https://github.com/Stellar-Light/stellarlight/pull/351).
 - **for raven, the contract it routes on.** the openapi spec went from 1.2 at the start of july to
   1.9.54 (38 operations, 244 changelog entries), every discovery operation carrying the routing
   guidance raven's catalog indexes; a scorer replica of raven's own routing math
   (`scripts/eval/raven-scorer-replica.ts`) and a routing eval that asks raven real builder questions
-  and checks it lands on the right operation (#689, #692) let us classify every routing miss from our
+  and checks it lands on the right operation (https://github.com/Stellar-Light/stellarlight/pull/689,
+  https://github.com/Stellar-Light/stellarlight/pull/692) let us classify every routing miss from our
   side. `/api/changelog` is the consumption contract, gated so its newest entry can never name a
   field the schema lacks; the installable skill is served live and kept byte-identical with the
-  mirror raven pins, checked daily (#708, #717). `@stellar-light/scout-mcp` had 9 releases and
-  `@stellar-light/api-client` 14.
+  mirror raven pins, checked daily (https://github.com/Stellar-Light/stellarlight/pull/708,
+  https://github.com/Stellar-Light/stellarlight/pull/717). `@stellar-light/scout-mcp` had 9 releases
+  and `@stellar-light/api-client` 14.
 - **for raven, what it asked for in production.** a metered partner tier (1,200 requests per minute,
-  200,000 per day, #1714) and the matching client release the same day; after its team's two-day load
-  test, the three problems they reported were fixed within a day: stalls bounded by database and
-  embedding timeouts and a connection-pool cap (#1721, #1728, #1729), `Retry-After` on every 503,
+  200,000 per day, https://github.com/Stellar-Light/stellarlight/pull/1714) and the matching client
+  release the same day; after its team's two-day load test, the three problems they reported were
+  fixed within a day: stalls bounded by database and embedding timeouts and a connection-pool cap
+  (https://github.com/Stellar-Light/stellarlight/pull/1721,
+  https://github.com/Stellar-Light/stellarlight/pull/1728,
+  https://github.com/Stellar-Light/stellarlight/pull/1729), `Retry-After` on every 503,
   `X-Scout-Match-Mode` and `Server-Timing` headers on every research response, and `meta.warnings`
   stating why a fallback happened, so an agent can tell a slow answer from a degraded one.
 
@@ -200,29 +220,41 @@ delivered:
   findings with the evidence behind each, the consumer findings raven filed, the miss funnel, the
   lane scoreboard, and the phase plan from QUALITY.md with what shipped against each phase. the same
   data is served as json at /api/quality so an agent can read our health the way we do.
-- **one backlog for every detector.** the improvement ledger (#683 to #686) normalizes every engine's
-  findings into one status-tracked file, feeds raven's real questions through the gateway (#684,
-  #687) and closes findings only through waves that re-check them (#685).
-- **daily and per-deploy gates.** guard d, a daily rotating truth battery over the live api (#1047;
-  108 of 108 on 2026-08-29); golden evaluations after every production deploy (post-deploy-eval, 51
-  of 53 on 2026-09-26); the daily raven parity lane (51 pass both, 0 raven-only failures on
-  2026-09-29); the api-drift guard asserting the api, the openapi spec and the docs agree; the
-  self-audit lane at 69 checks passing, 0 failures on 2026-09-29.
-- **invariants in ci.** QUALITY.md (#1058) names the recurring defect classes and the closure rule;
-  three invariants run in `contract:check`: schema opacity (47 open maps paid down to zero, #1092),
-  honesty-layer conformance (#1060) and enum literals; plus the contract gate (spec snapshot,
-  generated client types, changelog coupling, #372) and the routing-surface check.
-- **agent lanes.** the repair lane (#1559) and the task lane (#1569) pick one ledger row a day and
+- **one backlog for every detector.** the improvement ledger
+  (https://github.com/Stellar-Light/stellarlight/pull/683 to
+  https://github.com/Stellar-Light/stellarlight/pull/686) normalizes every engine's findings into one
+  status-tracked file, feeds raven's real questions through the gateway
+  (https://github.com/Stellar-Light/stellarlight/pull/684,
+  https://github.com/Stellar-Light/stellarlight/pull/687) and closes findings only through waves that
+  re-check them (https://github.com/Stellar-Light/stellarlight/pull/685).
+- **daily and per-deploy gates.** guard d, a daily rotating truth battery over the live api
+  (https://github.com/Stellar-Light/stellarlight/pull/1047; 108 of 108 on 2026-08-29); golden
+  evaluations after every production deploy (post-deploy-eval, 51 of 53 on 2026-09-26); the daily
+  raven parity lane (51 pass both, 0 raven-only failures on 2026-09-29); the api-drift guard
+  asserting the api, the openapi spec and the docs agree; the self-audit lane at 69 checks passing, 0
+  failures on 2026-09-29.
+- **invariants in ci.** QUALITY.md (https://github.com/Stellar-Light/stellarlight/pull/1058) names
+  the recurring defect classes and the closure rule; three invariants run in `contract:check`: schema
+  opacity (47 open maps paid down to zero, https://github.com/Stellar-Light/stellarlight/pull/1092),
+  honesty-layer conformance (https://github.com/Stellar-Light/stellarlight/pull/1060) and enum
+  literals; plus the contract gate (spec snapshot, generated client types, changelog coupling,
+  https://github.com/Stellar-Light/stellarlight/pull/372) and the routing-surface check.
+- **agent lanes.** the repair lane (https://github.com/Stellar-Light/stellarlight/pull/1559) and the
+  task lane (https://github.com/Stellar-Light/stellarlight/pull/1569) pick one ledger row a day and
   open a pull request from a checkout with no production secrets; 52 scheduled workflows run (every
   file under .github/workflows with a cron), every writer with read-back and an idempotence gate.
 - **third-party grading, and the loop built around it.** raven's audit filed 16 findings against
   stellar light this quarter; 12 are closed at the root (examples: count instability on wallet
-  queries #1064, rfp fundability and stablecoin counts #955, enum drift and rwa issuer coverage
-  #1532), 4 remain open with evidence attached. two guards exist only because of how raven consumes
-  us: cross-surface consistency (the same fact must agree across every operation that serves it) and
-  honest absence (an empty result must say whether it was checked); engine d mines raven's real
-  questions and our api logs for the queries we miss (#452, #687); and our `meta.generatedAt`,
-  `matchMode` and `counts` became judge-visible evidence in raven's own evaluation (#1062).
+  queries https://github.com/Stellar-Light/stellarlight/pull/1064, rfp fundability and stablecoin
+  counts https://github.com/Stellar-Light/stellarlight/pull/955, enum drift and rwa issuer coverage
+  https://github.com/Stellar-Light/stellarlight/pull/1532), 4 remain open with evidence attached. two
+  guards exist only because of how raven consumes us: cross-surface consistency (the same fact must
+  agree across every operation that serves it) and honest absence (an empty result must say whether
+  it was checked); engine d mines raven's real questions and our api logs for the queries we miss
+  (https://github.com/Stellar-Light/stellarlight/pull/452,
+  https://github.com/Stellar-Light/stellarlight/pull/687); and our `meta.generatedAt`, `matchMode`
+  and `counts` became judge-visible evidence in raven's own evaluation
+  (https://github.com/Stellar-Light/stellarlight/pull/1062).
 
 verify: <https://stellarlight.xyz/quality> · <https://stellarlight.xyz/api/quality> ·
 <https://github.com/Stellar-Light/stellarlight/blob/main/QUALITY.md> ·
@@ -237,32 +269,43 @@ structured fields, and freshness check-ins sending.
 delivered:
 
 - **out of beta.** the beta label came off the directory, the concierge and the portal on 2026-10-01
-  (#1749). what builders and raven use today: 43 published partners (21 anchors, 5 wallets, 5 audit
-  firms, 4 protocols, 3 infrastructure, 3 asset issuers, 2 tooling), each profile maintained from the
-  partner's own stellar.toml with provenance (`tomlSourceUrl`, `tomlFetchedAt`, #831) and aged daily
-  by the freshness lane (fresh, aging, stale, archived) so a stale listing is visibly stale and drops
-  out of ai matching; 12 of the 21 anchors carry toml-verified fields, the other 9 publish no
+  (https://github.com/Stellar-Light/stellarlight/pull/1749). what builders and raven use today: 43
+  published partners (21 anchors, 5 wallets, 5 audit firms, 4 protocols, 3 infrastructure, 3 asset
+  issuers, 2 tooling), each profile maintained from the partner's own stellar.toml with provenance
+  (`tomlSourceUrl`, `tomlFetchedAt`, https://github.com/Stellar-Light/stellarlight/pull/831) and aged
+  daily by the freshness lane (fresh, aging, stale, archived) so a stale listing is visibly stale and
+  drops out of ai matching; 12 of the 21 anchors carry toml-verified fields, the other 9 publish no
   stellar.toml at all (each domain checked 2026-09-30). raven exposes the directory through
   `get_partners`.
 - **concierge matching on structured fields.** the deterministic matchmaker and the concierge rank on
   assets, SEP-6/24/31, ramp types and country; official anchors missing from the directory were
-  seeded from anchors.stellar.org (#246).
+  seeded from anchors.stellar.org (https://github.com/Stellar-Light/stellarlight/pull/246).
 - **claim + ownership verification.** a claim is verified by construction: the claimant's mailbox has
   to sit on the listing's own domain (shared hosts excluded), and a verified claim sets the account
-  email without an admin in the loop (#1742, 2026-09-30). the sign-in link is the path a partner uses
-  to change anything.
+  email without an admin in the loop (https://github.com/Stellar-Light/stellarlight/pull/1742,
+  2026-09-30). the sign-in link is the path a partner uses to change anything.
 - **freshness check-ins sending.** the first quarterly check-in went out on 2026-10-01 to the 11
   published partners with a contact address on file, 10 of them in the default directory listing and
-  one below its quality bar (#1749, #1750; 11 delivered, 0 failed): "still active and taking work?
-  review your listing and update what changed", signed in with the address we mailed. the digest runs
-  every monday and bundles the check-in with builder-lead alerts so a partner is never mailed twice;
-  a partner with no address or a failed send is reported, not counted, and comes back the next week.
-- **the product passes.** portal v2 with login and ai-guided maintenance (#240), the public concierge
-  chat and weekly lead digest (#241), a real listing pipeline with claim requests (#244), directory
-  v5 (#326), personalized related partners (#345), partner logos fixed (#330); contract work in
-  august and september: `getPartner` declares its full 31-field profile (#1045), the asset-issuer
-  type (#1269), region as a typed enum with 400s instead of silent zeros (#1314, #1323), honest nulls
-  for facts never checked (#992, #1360).
+  one below its quality bar (https://github.com/Stellar-Light/stellarlight/pull/1749,
+  https://github.com/Stellar-Light/stellarlight/pull/1750; 11 delivered, 0 failed): "still active and
+  taking work? review your listing and update what changed", signed in with the address we mailed.
+  the digest runs every monday and bundles the check-in with builder-lead alerts so a partner is
+  never mailed twice; a partner with no address or a failed send is reported, not counted, and comes
+  back the next week.
+- **the product passes.** portal v2 with login and ai-guided maintenance
+  (https://github.com/Stellar-Light/stellarlight/pull/240), the public concierge chat and weekly lead
+  digest (https://github.com/Stellar-Light/stellarlight/pull/241), a real listing pipeline with claim
+  requests (https://github.com/Stellar-Light/stellarlight/pull/244), directory v5
+  (https://github.com/Stellar-Light/stellarlight/pull/326), personalized related partners
+  (https://github.com/Stellar-Light/stellarlight/pull/345), partner logos fixed
+  (https://github.com/Stellar-Light/stellarlight/pull/330); contract work in august and september:
+  `getPartner` declares its full 31-field profile
+  (https://github.com/Stellar-Light/stellarlight/pull/1045), the asset-issuer type
+  (https://github.com/Stellar-Light/stellarlight/pull/1269), region as a typed enum with 400s instead
+  of silent zeros (https://github.com/Stellar-Light/stellarlight/pull/1314,
+  https://github.com/Stellar-Light/stellarlight/pull/1323), honest nulls for facts never checked
+  (https://github.com/Stellar-Light/stellarlight/pull/992,
+  https://github.com/Stellar-Light/stellarlight/pull/1360).
 
 what i take from it: the value came from discovery, not from partners editing listings. no partner
 has maintained its own profile yet; stellar.toml stays the source of truth, and q4 treats partner
@@ -280,42 +323,61 @@ within about a week, drift guard green, /api/status freshness current.
 delivered:
 
 - **stablecoins on our own pipeline.** the stablecoin measurement service was rebuilt in four phases
-  (#957 to #960): own collections, a six-hourly writer, the api served from our own store, and the
-  explorer on our domain, with the full price history (3,763 rows, 18 assets, from november 2025)
-  carried over. 41 assets tracked; usdt0's september launch landed the same week. we are evaluating
-  pyth price feeds as a data source for a product test with sdf.
-- **a verified rwa registry.** `GET /api/rwa` (#1298): 113 rows, 97 rwa.xyz tokens, 52 issuers, each
-  verified on chain, from the issuer's stellar.toml outward where one exists, with the verification
-  level served per row, and re-measured every six hours (#1309), with on-chain control flags (#1305)
-  and a cross-vendor audit correction (#1302).
+  (https://github.com/Stellar-Light/stellarlight/pull/957 to
+  https://github.com/Stellar-Light/stellarlight/pull/960): own collections, a six-hourly writer, the
+  api served from our own store, and the explorer on our domain, with the full price history (3,763
+  rows, 18 assets, from november 2025) carried over. 41 assets tracked; usdt0's september launch
+  landed the same week. we are evaluating pyth price feeds as a data source for a product test with
+  sdf.
+- **a verified rwa registry.** `GET /api/rwa`
+  (https://github.com/Stellar-Light/stellarlight/pull/1298): 113 rows, 97 rwa.xyz tokens, 52 issuers,
+  each verified on chain, from the issuer's stellar.toml outward where one exists, with the
+  verification level served per row, and re-measured every six hours
+  (https://github.com/Stellar-Light/stellarlight/pull/1309), with on-chain control flags
+  (https://github.com/Stellar-Light/stellarlight/pull/1305) and a cross-vendor audit correction
+  (https://github.com/Stellar-Light/stellarlight/pull/1302).
 - **audits, hackathons, builders, dev activity.** the audit registry serves 64 reports with
-  per-auditor findings extraction (#603); hackathons run on the dorahacks v1 hub api across every
-  organizer plus curated events (#757, #914), with prior-art search over every build (#693); 233
-  builder profiles (2026-10-01) show hackathon submissions with placement (#931); electric capital
-  snapshots refresh weekly (as of 2026-09-21).
+  per-auditor findings extraction (https://github.com/Stellar-Light/stellarlight/pull/603);
+  hackathons run on the dorahacks v1 hub api across every organizer plus curated events
+  (https://github.com/Stellar-Light/stellarlight/pull/757,
+  https://github.com/Stellar-Light/stellarlight/pull/914), with prior-art search over every build
+  (https://github.com/Stellar-Light/stellarlight/pull/693); 233 builder profiles (2026-10-01) show
+  hackathon submissions with placement (https://github.com/Stellar-Light/stellarlight/pull/931);
+  electric capital snapshots refresh weekly (as of 2026-09-21).
 - **research corpus.** 10,893 documents across 16 sources on 2026-10-01 (seps, caps, dev docs, the
   sdf blog, lumenloop research and news, audits, incidents, the security program, releases, the ec
   developer report); the vector index gained a source filter so every source answers semantically
-  (#1728); exact-figure retrieval guaranteed on the vector path (#715).
+  (https://github.com/Stellar-Light/stellarlight/pull/1728); exact-figure retrieval guaranteed on the
+  vector path (https://github.com/Stellar-Light/stellarlight/pull/715).
 - **the directory stays true.** scf pages beyond the fund's 500-row listing cap recovered 112 rows
-  and 147 awards (#1397); 108 proven-broken links were routed into a repair queue (#1413); duplicate
-  records fold under a canonical with an operator veto (#1311); repositories that no longer exist are
-  stamped `gone`; one field, one writer ended the enrich and curate flip-flops (#1400). new facts
-  land within days: spectra's stellar launch was reported on 2026-09-26 and the row served live
-  status, structured products, tvl and nine contracts on 2026-09-28 (#1734).
+  and 147 awards (https://github.com/Stellar-Light/stellarlight/pull/1397); 108 proven-broken links
+  were routed into a repair queue (https://github.com/Stellar-Light/stellarlight/pull/1413);
+  duplicate records fold under a canonical with an operator veto
+  (https://github.com/Stellar-Light/stellarlight/pull/1311); repositories that no longer exist are
+  stamped `gone`; one field, one writer ended the enrich and curate flip-flops
+  (https://github.com/Stellar-Light/stellarlight/pull/1400). new facts land within days: spectra's
+  stellar launch was reported on 2026-09-26 and the row served live status, structured products, tvl
+  and nine contracts on 2026-09-28 (https://github.com/Stellar-Light/stellarlight/pull/1734).
 - **pipelines that report their own failures.** the on-chain lane had been hitting stellar.expert's
   rate limit at the end of every run and reporting success; it now backs off, retries and ends red if
-  a row stays stale (#1735); the toml parser keeps asset-code case (#1736).
+  a row stays stale (https://github.com/Stellar-Light/stellarlight/pull/1735); the toml parser keeps
+  asset-code case (https://github.com/Stellar-Light/stellarlight/pull/1736).
 - **uptime under load.** the database connection cap that caused stalls was found and fixed (pool
-  cap, fail-fast timeouts, an adapter crash trapped, #1721, #1728, #1729); every 503 carries
-  retry-after; measured on 2026-09-29: 600 requests per minute for a minute, 600 of 600 answered, p99
-  1.7 seconds. 52 scheduled workflows run; the api-drift guard is green and every /api/status source
-  updated on 2026-09-29.
+  cap, fail-fast timeouts, an adapter crash trapped,
+  https://github.com/Stellar-Light/stellarlight/pull/1721,
+  https://github.com/Stellar-Light/stellarlight/pull/1728,
+  https://github.com/Stellar-Light/stellarlight/pull/1729); every 503 carries retry-after; measured
+  on 2026-09-29: 600 requests per minute for a minute, 600 of 600 answered, p99 1.7 seconds. 52
+  scheduled workflows run; the api-drift guard is green and every /api/status source updated on
+  2026-09-29.
 - **the site.** /ask, the natural-language search over projects, research and partners, is public;
   /analytics shows usage in the open (all-time and 30-day calls, the last 7 days by endpoint);
   /entities and /builders give organizations and builders their own profiles with code activity and
-  link provenance (#911, #913); the stablecoin explorer was rebuilt on our domain with per-asset
-  pages, issuer drawers and a latest-updates rail (#962 to #965).
+  link provenance (https://github.com/Stellar-Light/stellarlight/pull/911,
+  https://github.com/Stellar-Light/stellarlight/pull/913); the stablecoin explorer was rebuilt on our
+  domain with per-asset pages, issuer drawers and a latest-updates rail
+  (https://github.com/Stellar-Light/stellarlight/pull/962 to
+  https://github.com/Stellar-Light/stellarlight/pull/965).
 - **discovery.** duplicate titles, missing canonicals and missing structured data fixed, 24 category
   landing pages added (2026-09-15), homepage payload cut from 566 kb to 356 kb.
 
@@ -335,28 +397,40 @@ delivered:
 - **the i³ awards.** sdf asked in july for a pilots-only voting system for the i³ awards; it is
   built, rehearsed end to end on a mock round, and open on a private ballot page: a pilot signs an
   authorization with their wallet and an anonymous relay writes the ballot on chain under a random id
-  (#1689 to #1695); a signed cross-device ballot status so a pilot is recognized on any device
-  (#1726); authorship proof kept per ballot (#1718) and, since 2026-09-30, an authorization memo that
-  commits to a server-issued nonce so a copy of a signed authorization reveals nothing (#1744); a
-  lane that reads the scf voting contract's eligible-voter list as import-ready csv (#1528); the
-  round manifest and the published results anchored on tansu (#1635 to #1639); a daily reconcile
-  between chain and record (#1630, #1632); an admin-only tally view of who voted for what, with the
-  standings the publish lane would count (2026-10-01). status on 2026-10-01: 34 nominees across 3
-  categories, 76 pilots whitelisted, and a rehearsal round open to any wallet for sdf's own testing
-  before the pilots get the link.
-- **rfps.** q3 rollover with the layerzero dvn and x402 bazaar briefs (#751); scf round #46 is served
-  as an open row with its 2026-11-08 deadline; 16 briefs (2 open, 14 closed) alongside the round row.
-  the scf public goods award is structured truth on project rows (#631) and per-round awards are
-  official records (#759, #811).
+  (https://github.com/Stellar-Light/stellarlight/pull/1689 to
+  https://github.com/Stellar-Light/stellarlight/pull/1695); a signed cross-device ballot status so a
+  pilot is recognized on any device (https://github.com/Stellar-Light/stellarlight/pull/1726);
+  authorship proof kept per ballot (https://github.com/Stellar-Light/stellarlight/pull/1718) and,
+  since 2026-09-30, an authorization memo that commits to a server-issued nonce so a copy of a signed
+  authorization reveals nothing (https://github.com/Stellar-Light/stellarlight/pull/1744); a lane
+  that reads the scf voting contract's eligible-voter list as import-ready csv
+  (https://github.com/Stellar-Light/stellarlight/pull/1528); the round manifest and the published
+  results anchored on tansu (https://github.com/Stellar-Light/stellarlight/pull/1635 to
+  https://github.com/Stellar-Light/stellarlight/pull/1639); a daily reconcile between chain and
+  record (https://github.com/Stellar-Light/stellarlight/pull/1630,
+  https://github.com/Stellar-Light/stellarlight/pull/1632); an admin-only tally view of who voted for
+  what, with the standings the publish lane would count (2026-10-01). status on 2026-10-01: 34
+  nominees across 3 categories, 76 pilots whitelisted, and a rehearsal round open to any wallet for
+  sdf's own testing before the pilots get the link.
+- **rfps.** q3 rollover with the layerzero dvn and x402 bazaar briefs
+  (https://github.com/Stellar-Light/stellarlight/pull/751); scf round 46 is served as an open row
+  with its 2026-11-08 deadline; 16 briefs (2 open, 14 closed) alongside the round row. the scf public
+  goods award is structured truth on project rows
+  (https://github.com/Stellar-Light/stellarlight/pull/631) and per-round awards are official records
+  (https://github.com/Stellar-Light/stellarlight/pull/759,
+  https://github.com/Stellar-Light/stellarlight/pull/811).
 - **ideas, skills, builders.** the ideas platform and `vet-idea` are live; the 10 scf skills sit in
-  the marketplace as one service offering with two reviewer skills (#672, #707); builder profiles
-  show hackathon submissions with placement (#931); the hackathon tracker is current (26 events,
-  hackmeridian listed as upcoming).
+  the marketplace as one service offering with two reviewer skills
+  (https://github.com/Stellar-Light/stellarlight/pull/672,
+  https://github.com/Stellar-Light/stellarlight/pull/707); builder profiles show hackathon
+  submissions with placement (https://github.com/Stellar-Light/stellarlight/pull/931); the hackathon
+  tracker is current (26 events, hackmeridian listed as upcoming).
 - **reports, not met.** the six thesis reports were refreshed on 2026-08-14 and the scf funding
-  analysis gained round-level data (41 rounds, #576), but no new report was published this quarter;
-  the blog now also syndicates ecosystem posts from sdf and tellus through the feed sync. the
-  quarter's writing went into the code-truth and quality work above, and reports are the shortfall in
-  this deliverable.
+  analysis gained round-level data (41 rounds,
+  https://github.com/Stellar-Light/stellarlight/pull/576), but no new report was published this
+  quarter; the blog now also syndicates ecosystem posts from sdf and tellus through the feed sync.
+  the quarter's writing went into the code-truth and quality work above, and reports are the
+  shortfall in this deliverable.
 
 verify: <https://stellarlight.xyz/api/rfps> · <https://stellarlight.xyz/ideas> ·
 <https://stellarlight.xyz/skills?source=stellarlight> · <https://stellarlight.xyz/hackathons> ·
@@ -557,17 +631,17 @@ every builder, institution, and agent — can rely on.
 repo.** none of these links are ours; they are the consumer's own code and process:
 
 - raven is live and queries stellar light through a dedicated adapter — verify:
-  https://github.com/kalepail/stellar-raven/blob/main/src/adapters/scout.ts
+  https://github.com/stellar-experimental/stellar-raven/blob/main/src/adapters/scout.ts
 - raven's routing catalog consumes stellar light's machine-routing metadata (the `x-routing`
   extension we shipped for it) as a scored input — verify:
-  https://github.com/kalepail/stellar-raven/commit/baabc06b13ef ("x-routing extension scored as lever
-  7")
+  https://github.com/stellar-experimental/stellar-raven/commit/baabc06b13ef ("x-routing extension
+  scored as lever 7")
 - raven's ci monitors stellar light's live contract and automatically files a drift review on every
-  release we ship — verify: https://github.com/kalepail/stellar-raven/issues/21
+  release we ship — verify: https://github.com/stellar-experimental/stellar-raven/issues/215
 - raven's maintainer runs a public, 53-item quality ledger on stellar light — the most-audited data
   service in his program — and his own tooling marks our fixes `fixed-upstream`, most closed within
   days of filing — verify:
-  https://github.com/kalepail/stellar-raven/tree/main/improvements/stellar-light-scout
+  https://github.com/stellar-experimental/stellar-raven/tree/main/improvements/stellar-light-scout
 - on our side, every release is eval-gated before it reaches raven (recall floors, answer-correctness
   golden set, contract-honesty probes), and scf award data itself is verdict-verified weekly against
   communityfund.stellar.org — verify: https://stellarlight.xyz/api/changelog
