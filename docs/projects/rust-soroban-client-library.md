@@ -58,12 +58,12 @@ https://www.linkedin.com/in/rahul-s-138133ba/
 
 <!-- markdownlint-disable MD034 -->
 
-In Q3 2026 the two crates shipped two releases each, and both went to keeping up with the protocol
-rather than to new API surface. 0.5.9, on 2026-08-26, added the `useUpgradedAuth` simulation flag for
-CAP-71 v2 auth credentials, ahead of the protocol that uses it. 0.6.0, on 2026-09-05, added Protocol
-28 support including the CAP-85 external-reference contract operations, and was verified end to end
-against testnet before release. Protocol 28 activated on mainnet on 2026-09-16, so the release landed
-eleven days ahead of activation. The SDK has never missed a protocol activation.
+In Q3 2026 the SDK shipped two releases, and both went to keeping up with the protocol rather than to
+new API surface. 0.5.9, on 2026-08-26, added the `useUpgradedAuth` simulation flag for CAP-71 v2 auth
+credentials, ahead of the protocol that uses it. 0.6.0, on 2026-09-05, added Protocol 28 support
+including the CAP-85 external-reference contract operations, and was verified end to end against
+testnet before release. Protocol 28 activated on mainnet on 2026-09-16, so the release landed eleven
+days ahead of activation. The SDK has never missed a protocol activation.
 
 Being straight about the rest of the quarter: protocol work took priority and no new features
 shipped.
