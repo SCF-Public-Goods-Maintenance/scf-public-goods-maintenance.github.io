@@ -219,9 +219,7 @@ as in Q2. The suite also passes on `net10.0` (3,766) and on the `netstandard2.1`
 
 ---
 
-#### 1. Evidence per deliverable
-
-##### Deliverable 1: SEP Expansion (SEP-7, SEP-12, SEP-38, with matrices)
+#### Deliverable 1: SEP Expansion (SEP-7, SEP-12, SEP-38, with matrices)
 
 **Status: delivered and released.** All three PRs were opened on 2026-09-30 and merged on 2026-10-02,
 after maintainer review and green CI, and shipped in
@@ -295,7 +293,7 @@ var quote = await quotes.PostQuoteAsync(new QuoteRequest
 
 ---
 
-##### Deliverable 2: MAUI Validation (incl. environment setup)
+#### Deliverable 2: MAUI Validation (incl. environment setup)
 
 **Status: delivered.** Two PRs:
 
@@ -349,7 +347,7 @@ trim mode and NativeAOT on iOS not run, and the Android runs not repeated agains
 
 ---
 
-##### Non-deliverable 1: Developer Support & Maintenance Responsiveness
+#### Non-deliverable 1: Developer Support & Maintenance Responsiveness
 
 Operational metrics for the activity window (2026-07-03 → 2026-10-02), reproducible via `gh` and
 `git`:
@@ -373,7 +371,7 @@ was fixed 15 days after it was filed (2026-08-28).
 
 ---
 
-##### Non-deliverable 2: Capacity Buffer
+#### Non-deliverable 2: Capacity Buffer
 
 The buffer, and more than the buffer, went to unplanned work, so SEP-30 (what an unused buffer would
 have funded) was not started. About half of it fixed SDK features that did not work for users; the
