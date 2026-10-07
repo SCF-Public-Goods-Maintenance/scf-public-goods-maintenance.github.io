@@ -24,7 +24,7 @@ devices._
 | **strledger**           | <https://github.com/lightsail-network/strledger> |
 | **First Released**      | July 2021                                        |
 | **Intake**              | soft-launch                                      |
-| **Budget Requested**    | $15,000                                            |
+| **Budget Requested**    | $15,000                                          |
 | **Maintenance Reserve** | $12,000                                          |
 | **Other**               | $3,000                                           |
 
