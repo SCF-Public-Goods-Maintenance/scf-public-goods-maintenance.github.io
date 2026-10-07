@@ -13,18 +13,20 @@ budget: "15000"
 _Hardware wallet integration for Stellar, enabling secure transaction signing on Ledger and Trezor
 devices._
 
-|                        |                                                  |
-| ---------------------- | ------------------------------------------------ |
-| **Category**           | Wallet Support                                   |
-| **Website**            | <https://lightsail.network>                      |
-| **Ledger Stellar App** | <https://github.com/LedgerHQ/app-stellar>        |
-| **Ledger Live**        | <https://github.com/ledgerhq/ledger-live>        |
-| **Trezor Firmware**    | <https://github.com/trezor/trezor-firmware>      |
-| **Trezor Suite**       | <https://github.com/trezor/trezor-suite>         |
-| **strledger**          | <https://github.com/lightsail-network/strledger> |
-| **First Released**     | July 2021                                        |
-| **Intake**             | soft-launch                                      |
-| **Budget Requested**   | 15000                                            |
+|                         |                                                  |
+| ----------------------- | ------------------------------------------------ |
+| **Category**            | Wallet Support                                   |
+| **Website**             | <https://lightsail.network>                      |
+| **Ledger Stellar App**  | <https://github.com/LedgerHQ/app-stellar>        |
+| **Ledger Live**         | <https://github.com/ledgerhq/ledger-live>        |
+| **Trezor Firmware**     | <https://github.com/trezor/trezor-firmware>      |
+| **Trezor Suite**        | <https://github.com/trezor/trezor-suite>         |
+| **strledger**           | <https://github.com/lightsail-network/strledger> |
+| **First Released**      | July 2021                                        |
+| **Intake**              | soft-launch                                      |
+| **Budget Requested**    | $15,000                                            |
+| **Maintenance Reserve** | $12,000                                          |
+| **Other**               | $3,000                                           |
 
 ## Project Description
 
