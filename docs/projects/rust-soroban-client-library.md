@@ -72,9 +72,10 @@ Stellar's official documentation lists `soroban-client` as the Rust client SDK:
 https://developers.stellar.org/docs/tools/sdks/client-sdks#rust
 
 Known downstream projects include Laina's liquidation bot, Templar Protocol, HOT DAO's validation
-SDK, Credence, stellar-ibc-eureka, and Soneso's `stellar-agent-wallet`, which pins `stellar-baselib`
-0.6.0. On crates.io, `soroban-client` is past 74,000 downloads and `stellar-baselib` past 86,000 as
-of 2026-10-06. It is still the only maintained Rust client SDK for Soroban.
+SDK, Credence, stellar-ibc-eureka, LumAgg's DEX aggregator, and Soneso's `stellar-agent-wallet`,
+which pins `stellar-baselib` 0.6.0. On crates.io, `soroban-client` is past 74,000 downloads and
+`stellar-baselib` past 86,000 as of 2026-10-06. It is still the only maintained Rust client SDK for
+Soroban.
 <!-- markdownlint-enable MD034 -->
 
 ## Past Deliverables
