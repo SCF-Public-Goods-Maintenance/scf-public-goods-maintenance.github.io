@@ -14,14 +14,16 @@ _The Stellar SDK for Flutter, providing transaction building, Horizon and Soroba
 high-level Soroban smart contract support, and implements 21 Stellar Ecosystem Proposals (SEPs)
 across iOS, Android, and web._
 
-|                      |                                                 |
-| -------------------- | ----------------------------------------------- |
-| **Category**         | SDKs                                            |
-| **Website**          | <https://github.com/Soneso/stellar_flutter_sdk> |
-| **Repository**       | <https://github.com/Soneso/stellar_flutter_sdk> |
-| **First Released**   | June 2020                                       |
-| **Intake**           | soft-launch                                     |
-| **Budget Requested** | 15000                                           |
+|                         |                                                 |
+| ----------------------- | ----------------------------------------------- |
+| **Category**            | SDKs                                            |
+| **Website**             | <https://github.com/Soneso/stellar_flutter_sdk> |
+| **Repository**          | <https://github.com/Soneso/stellar_flutter_sdk> |
+| **First Released**      | June 2020                                       |
+| **Intake**              | soft-launch                                     |
+| **Budget Requested**    | $15,000                                         |
+| **Maintenance Reserve** | $12,500                                         |
+| **Other**               | $2,500                                          |
 
 ## Project Description
 
