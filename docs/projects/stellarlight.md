@@ -7,6 +7,7 @@ proposer: theboycoder
 category: "Ecosystem Visibility"
 budget: "$40,000"
 health_endpoint: "https://stellarlight.xyz/api/status"
+metrics_endpoint: "https://stellarlight.xyz/api/status"
 ---
 
 # Stellarlight
