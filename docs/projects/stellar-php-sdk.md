@@ -13,14 +13,16 @@ budget: "15000"
 _The Stellar SDK for PHP, providing transaction building, Horizon and Soroban RPC access, high-level
 Soroban smart contract support, and implements 23 Stellar Ecosystem Proposals (SEPs)._
 
-|                      |                                             |
-| -------------------- | ------------------------------------------- |
-| **Category**         | SDKs                                        |
-| **Website**          | <https://github.com/Soneso/stellar-php-sdk> |
-| **Repository**       | <https://github.com/Soneso/stellar-php-sdk> |
-| **First Released**   | May 2022                                    |
-| **Intake**           | soft-launch                                 |
-| **Budget Requested** | 15000                                       |
+|                         |                                             |
+| ----------------------- | ------------------------------------------- |
+| **Category**            | SDKs                                        |
+| **Website**             | <https://github.com/Soneso/stellar-php-sdk> |
+| **Repository**          | <https://github.com/Soneso/stellar-php-sdk> |
+| **First Released**      | May 2022                                    |
+| **Intake**              | soft-launch                                 |
+| **Budget Requested**    | $15,000                                     |
+| **Maintenance Reserve** | $12,500                                     |
+| **Other**               | $2,500                                      |
 
 ## Project Description
 
