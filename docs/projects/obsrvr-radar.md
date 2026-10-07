@@ -25,7 +25,7 @@ plain-language network health insights._
 | **First Released**       | June 2025                                                                                          |
 | **Intake**               | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/85> |
 | **Budget Requested**     | 20000                                                                                              |
-| **Maintenance Reserve ** | 13000                                                                                              |
+| **Maintenance Reserve**  | 13000                                                                                              |
 | **Other**                | 7000                                                                                               |
 
 ## Project Description
@@ -310,7 +310,7 @@ Completed work:
 
 <!-- markdownlint-disable MD034 -->
 
-Q4 focuses on making Radar's judgments defensible and its scans dependable.\
+Q4 focuses on making Radar's judgments defensible and its scans dependable.
 
 These deliverables will make Radar’s network-health reporting faster, more accurate, and easier for
 operators to act on. Scans will reliably complete within the five-minute window, archive restrictions
