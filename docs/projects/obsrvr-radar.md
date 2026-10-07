@@ -17,16 +17,16 @@ plain-language network health insights._
 
 <!-- markdownlint-enable MD036 -->
 
-|                          |                                                                                                    |
-| ------------------------ | -------------------------------------------------------------------------------------------------- |
-| **Category**             | Infrastructure Monitoring                                                                          |
-| **Website**              | <https://radar.withobsrvr.com>                                                                     |
-| **Repository**           | <https://github.com/withObsrvr/stellarbeat>                                                        |
-| **First Released**       | June 2025                                                                                          |
-| **Intake**               | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/85> |
-| **Budget Requested**     | 20000                                                                                              |
-| **Maintenance Reserve**  | 13000                                                                                              |
-| **Other**                | 7000                                                                                               |
+|                         |                                                                                                    |
+| ----------------------- | -------------------------------------------------------------------------------------------------- |
+| **Category**            | Infrastructure Monitoring                                                                          |
+| **Website**             | <https://radar.withobsrvr.com>                                                                     |
+| **Repository**          | <https://github.com/withObsrvr/stellarbeat>                                                        |
+| **First Released**      | June 2025                                                                                          |
+| **Intake**              | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/85> |
+| **Budget Requested**    | 20000                                                                                              |
+| **Maintenance Reserve** | 13000                                                                                              |
+| **Other**               | 7000                                                                                               |
 
 ## Project Description
 
