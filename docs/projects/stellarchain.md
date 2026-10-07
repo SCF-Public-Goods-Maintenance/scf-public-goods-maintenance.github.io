@@ -143,7 +143,7 @@ Evidence:
 and
 [sponsored placement rules](https://github.com/stellarchain/v4/blob/21c663ac42f393d9916198e399e0363dfc52ee9a/UX-CONTRACT.md).
 
-#### Contract intelligence, SAC balances, and verification — Delivered for current coverage; deeper verification continues
+#### Contract intelligence, SAC balances, and verification — Delivered for current coverage
 
 We expanded contract indexing and explorer pages for transactions, events, storage, argument usage,
 balances, and holder balances. We also improved SAC event parsing and metadata, added RPC fallback,
@@ -179,7 +179,7 @@ Evidence: [network metrics API](https://github.com/stellarchain/v4-api/commit/71
 
 ### Additional work during Q3
 
-**Orion full-history infrastructure — In progress and not released**
+### Orion full-history infrastructure — In progress and not released
 
 We continued building Orion as a storage-efficient, Horizon-compatible service for Stellar's history.
 XDR remains the authoritative source, with compact Parquet history and indexes for account activity
@@ -187,7 +187,7 @@ and transaction lookups. Full-history integration, account-history publication, 
 end-to-end API validation remain unfinished. Orion has no public repository yet and is not counted as
 a completed Q3 commitment. Its release and historical coverage checks are proposed for Q4 below.
 
-**StellarKey wallet and merchant tools — Public release; Private Payments remains Testnet-only**
+### StellarKey — Public wallet release; Private Payments remains Testnet-only
 
 We also released StellarKey publicly as an open-source, self-custodial Stellar wallet. Users keep
 control of their keys and encrypted records. The wallet supports sending, receiving, Stellar DEX
