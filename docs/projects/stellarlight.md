@@ -550,14 +550,14 @@ keep the 55 scheduled data lanes running (sdf airtable, github, dorahacks, defil
 stellar.expert, partners' stellar.toml and more) and repair them when a source changes under them.
 keep the api, the mcp server and metered partner keys up, with dependency and security updates, a
 bounded wait on the database ([pr 1756](https://github.com/Stellar-Light/stellarlight/pull/1756)),
-and a clear 503 instead of an empty answer when a read fails. turn on the dependency graph and run pg
-atlas's sbom action on all three repositories in the table above, so pg atlas reads their
-dependencies.
+and a clear 503 instead of an empty answer when a read fails. the dependency graph is on and pg
+atlas's sbom action runs on the main repository (since 2026-10-07); add the same to the mcp server,
+the other repository with dependencies, so pg atlas reads both.
 
 ecosystem value: data is only useful while it is fresh and correct. measurable: uptime from the
 health endpoint in this page's front matter, which the program polls; the pg atlas sbom action
-running on all three repositories; new projects, stablecoins and repos reflected within a week; the
-state of every lane reported at quarter end.
+running on both repositories that have dependencies; new projects, stablecoins and repos reflected
+within a week; the state of every lane reported at quarter end.
 
 <!-- markdownlint-enable MD034 -->
 
