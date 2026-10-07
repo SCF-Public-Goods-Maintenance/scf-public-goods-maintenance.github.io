@@ -6,6 +6,8 @@ proposal_issue: 74
 proposer: theboycoder
 category: "Ecosystem Visibility"
 budget: "$40,000"
+health_endpoint: "https://stellarlight.xyz/api/status"
+metrics_endpoint: "https://stellarlight.xyz/api/status"
 ---
 
 # Stellarlight
@@ -18,21 +20,22 @@ tools, and ai agents._
 
 <!-- markdownlint-enable MD036 -->
 
-|                      |                                                  |
-| -------------------- | ------------------------------------------------ |
-| **Category**         | Ecosystem Visibility                             |
-| **Website**          | <https://stellarlight.xyz>                       |
-| **Repository**       | <https://github.com/Stellar-Light/stellarlight>  |
-| **MCP server**       | <https://github.com/Stellar-Light/scout-mcp>     |
-| **Agent skill**      | <https://github.com/Stellar-Light/stellar-scout> |
-| **First Released**   | Jan 2026                                         |
-| **Intake**           | renewal (2026q3)                                 |
-| **Budget Requested** | $40,000                                          |
+|                         |                                                  |
+| ----------------------- | ------------------------------------------------ |
+| **Category**            | Ecosystem Visibility                             |
+| **Website**             | <https://stellarlight.xyz>                       |
+| **Repository**          | <https://github.com/Stellar-Light/stellarlight>  |
+| **MCP server**          | <https://github.com/Stellar-Light/scout-mcp>     |
+| **Agent skill**         | <https://github.com/Stellar-Light/stellar-scout> |
+| **First Released**      | Jan 2026                                         |
+| **Intake**              | renewal (2026q4)                                 |
+| **Budget Requested**    | $40,000                                          |
+| **Maintenance Reserve** | $20,000                                          |
+| **Other**               | $20,000                                          |
 
-**Repository note:** the codebase has migrated to the Stellar-Light organization; the MCP server and
-agent-skill repos are already public, and the main repo's public flip lands this quarter
-(full-history secrets audit already clean). The packages are live on npm today:
-`@stellar-light/scout-mcp` and `@stellar-light/api-client`.
+**Repository note:** the main repository, the MCP server and the agent skill are all public under the
+Stellar-Light organization, and the packages are live on npm: `@stellar-light/scout-mcp` and
+`@stellar-light/api-client`.
 
 ## Project Description
 
@@ -309,75 +312,46 @@ launch interview: <https://x.com/lumenloop/status/2069451377223536659>.
 
 <!-- markdownlint-disable MD034 -->
 
-the ecosystem is going ai-native, and stellar light is positioned to be the data layer it runs on.
-tyler van der hoeven (kalepail) at SDF is building **raven** — an ai agent designed to become the way
-the _entire_ stellar ecosystem asks questions: builders scoping a project, institutions doing due
-diligence, scf reviewers evaluating grants, newcomers finding their footing. raven doesn't hold the
-data itself; it sits on top of data layers and surfaces them. two of those layers are **stellar
-light** and **lumenloop** (raph's research/media layer). stellar light is the authoritative source
-for the hard, structured stuff — projects, code, repos, funding, partners, builders, and live
-activity. that is the position this quarter set up, and it's why q3 matters: **as the ecosystem's ai
-layer takes off, stellar light becomes load-bearing infrastructure underneath it.** the north star
-for q3 is to make stellar light the deepest, freshest, and most correct data layer that raven — and
-every builder, institution, and agent — can rely on.
+stellar light is the data layer under stellar's ai agents. sdf's raven agent queries it through a
+dedicated adapter, builds its routing catalog from our openapi spec, and reviews our contract in its
+own repo whenever it changes. that dependence is public and checkable there:
 
-**that dependence is no longer a plan — it is externally verifiable today, in raven's own public
-repo.** none of these links are ours; they are the consumer's own code and process:
+- the adapter raven queries us through:
+  https://github.com/stellar-experimental/stellar-raven/blob/main/src/adapters/scout.ts
+- our `x-routing` metadata scored as an input to raven's catalog:
+  https://github.com/stellar-experimental/stellar-raven/commit/baabc06b13ef
+- a drift review on stellar light, filed by raven's ci and closed:
+  https://github.com/stellar-experimental/stellar-raven/issues/215
+- raven's open quality ledger on stellar light:
+  https://github.com/stellar-experimental/stellar-raven/tree/main/improvements/stellar-light-scout
 
-- raven is live and queries stellar light through a dedicated adapter — verify:
-  https://github.com/kalepail/stellar-raven/blob/main/src/adapters/scout.ts
-- raven's routing catalog consumes stellar light's machine-routing metadata (the `x-routing`
-  extension we shipped for it) as a scored input — verify:
-  https://github.com/kalepail/stellar-raven/commit/baabc06b13ef ("x-routing extension scored as lever
-  7")
-- raven's ci monitors stellar light's live contract and automatically files a drift review on every
-  release we ship — verify: https://github.com/kalepail/stellar-raven/issues/21
-- raven's maintainer runs a public, 53-item quality ledger on stellar light — the most-audited data
-  service in his program — and his own tooling marks our fixes `fixed-upstream`, most closed within
-  days of filing — verify:
-  https://github.com/kalepail/stellar-raven/tree/main/improvements/stellar-light-scout
-- on our side, every release is eval-gated before it reaches raven (recall floors, answer-correctness
-  golden set, contract-honesty probes), and scf award data itself is verdict-verified weekly against
-  communityfund.stellar.org — verify: https://stellarlight.xyz/api/changelog
+today the layer holds 1,133 projects, 13,602 repos, 130 contracts, 50 partners and 16,908 research
+documents, and its api has answered 515,278 calls. q3 made it deep and correct. q4 keeps it that way
+and makes it measurably better where people actually use it: the answers raven gives, the hackathon
+and builder research teams do before they build, the scf and ecosystem project records reviewers rely
+on, the code and contract facts agents cite, and the rfps builders apply to.
 
-this two-way loop — his ci reviewing our contract, our evals gating what he consumes — is the working
-model for how agent data layers should hold each other honest, and stellar light is its reference
-implementation. funding this quarter funds the load-bearing half of that loop.
+how q4 is built: foundations, not patches. every fact is stored once, with its evidence and the date
+it was read, and every surface (the api, the mcp server, raven) reads that same stored fact.
+questions are answered by one engine over those facts, so a new question becomes a new facet, not a
+new endpoint with its own math. "unknown" and "none" are different answers everywhere. and any
+decision a model makes is scored against human labels, and carries its probability, before it is
+allowed to change a record. the hackathon data in deliverable 2 is the first piece built this way (a
+facts layer, a facet registry and one analysis engine, live since 2026-10-06), and the rest of q4
+follows it.
 
-**1. be the data + code layer raven and the ecosystem depend on.** this quarter i already worked
-directly with tyler to make stellar light more consumable by raven — hardening the api and openapi
-spec, fixing how our data routes and answers, and reconciling the contract so raven can trust it. q3
-goes deeper. the hardest, highest-value ecosystem questions are code-level and current-state ("which
-crate and version is right," "which CAP added this host function," "what's the current cli path to
-scaffold a contract"), and no data source answers them well today. i'm extending stellar light to —
-scoring live soroban repo code, matching it against the docs and CAP/protocol history, layered on top
-of the projects/funding/partner/repo data already indexed — so that when raven (or any agent)
-surfaces an answer, it's grounded in a source that's correct and current, not a guess. tyler has
-explicitly flagged this code-truth layer as the piece that makes stellar light irreplaceable rather
-than duplicative. it's not a side project — it's the same data-layer mission, going one level deeper.
+none of this starts from zero. each deliverable below says what is already shipped or in review, what
+is next on the roadmap, and what we commit to measure. the roadmap items are examples, not a closed
+list: a data layer has to adapt to what the ecosystem asks of it, so we pick the next piece by
+measured need (raven's findings, our own improvement ledger, what sdf and scf ask for). the
+measurable lines are the commitment.
 
-**2. a continuous eval + improvement loop.** the game once the plumbing is in place is: run a large,
-growing question set against our data (from raven's evals, from real questions builders ask across
-the ecosystem, from anywhere), find the low-scoring answers, diagnose _why_, fix the data or the
-endpoint, and repeat. i'll institutionalize this so stellar light measurably improves every cycle
-instead of drifting — the only way a data layer stays trustworthy as the ecosystem grows around it.
-
-**3. the partner portal as a real product.** finish the partner layer: the anchor / on-off-ramp /
-infrastructure / tooling / audit-firm directory with the ai concierge for builders, partner
-self-service maintenance, and quarterly freshness check-ins. this gives builders a trustworthy "who
-do i integrate with" answer, gives institutions a real map of stellar's on/off-ramp and infra
-providers, and gives partners a reason to keep their own data accurate — a self-sustaining data loop
-that also feeds raven.
-
-**4. maintain, grow, and integrate.** keep stellar light healthy and expanding: data-freshness
-pipelines, ranking and relevance quality, new data sources, uptime, and the discovery surfaces
-(directory, leaderboard, stablecoin explorer, research corpus, hackathon + rfp pipelines) that
-builders and scf use directly.
-
-the bet is simple: stellar's ecosystem is becoming measurable and queryable through ai, and the
-agents doing it — starting with raven — need a data layer that is fresh, structured, deep, and
-correct. that layer is stellar light. this quarter proved the direction; q3 makes it the
-indispensable foundation the ecosystem's ai layer is built on.
+the maintenance reserve of
+$20,000 covers the work that arrives during the quarter whether or not we
+add anything: keeping the 55 data lanes and the api contract raven builds on working, bug and
+security fixes, dependency updates, releases, uptime and user support. the new work in the
+deliverables below (new data, new operations, models brought into the loop) makes up the other
+$20,000.
 
 <!-- markdownlint-enable MD034 -->
 
@@ -385,60 +359,206 @@ indispensable foundation the ecosystem's ai layer is built on.
 
 <!-- markdownlint-disable MD034 -->
 
-### 1. code + current-state intelligence layer — the raven dependency
+### 1. supporting raven, and better answers through it
 
-build the code-truth layer: score live soroban/stellar repo code and match it against the docs and
-CAP/protocol history, layered on top of the repo/project/funding/partner data already indexed, so
-that agents (raven and any other) get grounded, current answers to code-level questions — which crate
-and version is right, which CAP added a host function, the current cli path to scaffold a contract —
-instead of guesses. expose it through the existing api / openapi / mcp / skill surfaces so it's
-consumed the same way as everything else. ecosystem value: the highest-value ecosystem questions are
-code-level and current-state, and no data source answers them well today; tyler has explicitly
-flagged this as the piece that makes stellar light irreplaceable rather than duplicative. measurable:
-code-truth endpoint live and documented in the openapi spec, answering a defined set of
-code/current-state questions with sourced references.
+raven keeps changing: it moved to the stellar-experimental organization this year, and its catalog of
+our operations is rebuilt from our openapi spec as it evolves. q4 keeps stellar light working through
+every rewrite and release, and keeps improving what raven gets from us.
 
-### 2. continuous eval + improvement loop
+already moving: every route raven reads reports its own timing
+([pr 1753](https://github.com/Stellar-Light/stellarlight/pull/1753)) and a failure an agent can act
+on: a 503 with a retry time, partial results said as a field, one policy for unknown parameters
+([pr 1755](https://github.com/Stellar-Light/stellarlight/pull/1755),
+[pr 1783](https://github.com/Stellar-Light/stellarlight/pull/1783)); research answers pull from
+several sources in one call, ranked against raven's own golden cards
+([pr 1787](https://github.com/Stellar-Light/stellarlight/pull/1787)); and two research changes are in
+review: jev scoring passages against raven's cards
+([pr 1786](https://github.com/Stellar-Light/stellarlight/pull/1786)), and stellar.org's learn and
+use-case pages joining the corpus
+([pr 1788](https://github.com/Stellar-Light/stellarlight/pull/1788)).
 
-institutionalize a repeatable evaluation cycle: run a large, growing question set — from raven's
-evals, from real questions builders ask across the ecosystem, and from our own golden set — against
-the live data layer, score the answers, diagnose the low-scoring ones, and fix the data or the
-endpoint. ecosystem value: a data layer only stays trustworthy if it measurably improves as the
-ecosystem grows around it, rather than drifting. measurable: eval harness running on a regular
-cadence with a tracked answer-quality score that improves over the quarter, and regressions caught
-before they ship (drift guard + golden evals in CI).
+next: fix raven's 9 open findings on stellar light (for example tvl history for projects, listing
+wallets by type, soroswap's contract roles, horizon's product and contract records, and a project
+search that reported zero results when a read failed); get every operation we ship into raven's
+catalog with routing that lands (it carries our spec 1.9.61 today while we serve 1.9.71); measure
+routing changes on a replica of raven's scorer before they ship; and close every drift review raven's
+ci files on us.
 
-### 3. partner portal to general availability
+ecosystem value: raven is how a growing share of the ecosystem asks questions about stellar, and its
+answers about projects, code and funding are only as good as this layer. baseline (2026-10-07): 9
+open findings, 1 open drift review, and raven's catalog on spec 1.9.61. measurable: every drift
+review filed during q4 closed; fewer than 9 findings open at quarter end; raven's catalog on our
+current spec at quarter end (conditional on raven's own sync schedule; failing that, our routing
+measured on the replica); truth battery and golden-set pass rates published at the start and end of
+the quarter.
 
-take the partner layer out of beta: onboard real anchors, on/off-ramps, infrastructure, tooling, and
-audit-firm partners onto the self-service portal, ship the claim + ownership-verification flow, keep
-the ai concierge matching on real stellar.toml data (assets, SEP-6/24/31, on/off-ramp, jurisdiction),
-and run the quarterly freshness check-ins so listings stay current. ecosystem value: builders get a
-trustworthy "who do i integrate with" answer, institutions get a real map of stellar's on/off-ramp
-and infra providers, and partners get a reason to keep their own data accurate — a self-sustaining
-loop that also feeds raven. measurable: portal out of beta, partners live with maintained profiles,
-concierge matching on structured fields, and freshness check-ins sending.
+### 2. hackathon and builder data v2: know the landscape before you build
 
-### 4. data pipelines, freshness + ranking quality — ongoing
+the second version of our hackathon and builder data, built on stellar's own sources and open to any
+agent with no sign-in. it covers 1,400 submissions from 20 dorahacks events, each stored with the
+team's full write-up and refreshed daily. already live
+([pr 1797](https://github.com/Stellar-Light/stellarlight/pull/1797),
+[pr 1800](https://github.com/Stellar-Light/stellarlight/pull/1800),
+[pr 1801](https://github.com/Stellar-Light/stellarlight/pull/1801)):
 
-maintain and harden every automated pipeline (sdf airtable, github, goldsky, defillama, rwa.xyz,
-dorahacks, stellar passport, electric capital, and partners' stellar.toml) and keep ranking/relevance
-quality high across project search, repo search, and clusters. add new data sources where they
-strengthen the layer, and keep the api ⇄ openapi ⇄ docs drift guard green so the contract never lies.
-ecosystem value: data is only useful if it's fresh and correct; this keeps stellar light load-bearing
-infrastructure rather than a stale directory. measurable: pipelines running with no significant
-downtime, new projects/stablecoins/repos reflected within ~1 week, drift guard green, and /api/status
-freshness current.
+- see what's been built: search every stellar hackathon submission by meaning or keyword, filtered by
+  event, track, category, library and placement, winners first.
+- categories with confidence: a submission gets a category only where that category's measured
+  precision is at least 0.7, and every assignment carries its precision.
+- built with: the stack each submission actually uses, read from its repo's manifests, so "what do
+  winners build with" has counted answers.
+- spot trends: any facet counted by event or year, winners against everyone else, and what shifted
+  between events.
+- get feedback on your own project: from a github or dorahacks link, its facts, the closest earlier
+  submissions and what is missing for scf or mainnet, with sources.
+- know the event: prize tiers, rules, judging criteria and submission requirements for each
+  hackathon.
+- see what happened after: which teams kept shipping, which became projects, and their status and scf
+  funding today.
 
-### 5. scf program support, rfp + hackathon maintenance, and reporting — ongoing
+next: linking submissions to projects through team members and deployed contracts, not just repos and
+websites; outcomes per event (submitted, won, became a project, scf funded, on mainnet, active after
+180 days); builder profiles with every submission, placement and what shipped after; categories read
+by jev from each full write-up, kept only if they beat today's method on the same human labels; scf
+program answers; [stretch] tool picks from skills and partner profiles inside the hackathon brief;
+and [conditional on organizers sharing them] lists from events outside dorahacks.
 
-keep the rfp section populated with the current (q2) round of scf rfps and surface them to builders
-(also mirrored to the scf gitbook); maintain the ideas platform, the hackathon tracker with
-post-hackathon project status (built / in progress / abandoned), and builder profiles; and publish
-data-grounded ecosystem reports over the quarter. ecosystem value: stellar light feeds builders
-directly into scf programs and gives the ecosystem visibility into what's being built, funded, and
-shipped. measurable: q2 rfps live and current, ideas + hackathon trackers current, and a set of
-ecosystem reports published over the quarter.
+ecosystem value: teams start from what was already built and what happened to it, and sdf and
+organizers can see which hackathons produce lasting projects. baseline (2026-10-07): 30 submissions
+linked to directory projects. measurable: the analysis and review operations in raven's catalog; a
+21-question hackathon benchmark asked through raven at the start and end of the quarter, with both
+results published; more submissions linked to projects at quarter end than the 30 today.
+
+### 3. scf and ecosystem project data quality
+
+keep every project record correct: scf awards per round verified weekly against
+communityfund.stellar.org, project status backed by dated evidence (mainnet contracts, recent repo
+activity, a live product), broken links repaired, duplicates merged under one canonical record, and
+hackathon builds linked to the projects they became.
+
+already moving: a daily status snapshot of every project, so "still alive 180 days after launch"
+becomes measurable from dated history, with the first survival reading on 2027-03-31
+([pr 1780](https://github.com/Stellar-Light/stellarlight/pull/1780)); shutdown evidence that holds
+up: a hijacked or lapsed domain counts, an off-origin redirect does not
+([pr 1625](https://github.com/Stellar-Light/stellarlight/pull/1625),
+[pr 1626](https://github.com/Stellar-Light/stellarlight/pull/1626)); verification packets that put
+weak-basis live rows in front of a human; scf award records repaired at the source: awards read from
+submission records, false identity matches removed, and nine awarded projects the directory was
+missing now served ([pr 1598](https://github.com/Stellar-Light/stellarlight/pull/1598),
+[pr 1599](https://github.com/Stellar-Light/stellarlight/pull/1599),
+[pr 1608](https://github.com/Stellar-Light/stellarlight/pull/1608)); and jev, typesafe ai's
+typed-decision model, with evals built for three tasks: whether a project's website shows the product
+or is shut down, parked, unrelated or a placeholder; which project types fit; and whether a repo
+really builds on stellar ([pr 1781](https://github.com/Stellar-Light/stellarlight/pull/1781)). every
+jev answer carries a calibrated probability, and below 0.9 it reads unknown and changes nothing.
+
+next: jev's page verdicts on the weak-basis live rows; product and on-chain evidence for launched
+projects with no public code (wallets, anchors, payment apps); and the open duplicate review queue.
+
+ecosystem value: scf reviewers, sdf and builders use these records to judge what was funded and what
+shipped, and a wrong status or a missing award misleads all of them. baseline (live api, 2026-10-02):
+597 scf-awarded projects, 544 marked live, 256 of those live only because their website answers, and
+219 with no activity data; the pattern-based page reader catches 57% of bad sites at 73% precision on
+178 human-labelled pages. measurable: the weekly award verification running all quarter; jev's page
+verdicts serving only where they beat that reader on the same labels; every scf-awarded project
+carrying a dated status with the evidence behind it, and fewer than 256 resting on a website check
+alone; a shorter broken-link queue at quarter end than at the start.
+
+### 4. code and contract knowledge
+
+the facts agents cite when they answer code questions: what each stellar repo is, how deep its
+stellar use goes, which contracts it deploys, and whether they are used on mainnet.
+
+already moving: every repo in the curated pool carries a public note read from its code, since
+2026-09-14 ([pr 1593](https://github.com/Stellar-Light/stellarlight/pull/1593)), and a freshness lane
+flags a note when its repo moves or is archived; code depth is graded by the kind of repo it is, so a
+library no longer reads as a shallow contract
+([pr 1572](https://github.com/Stellar-Light/stellarlight/pull/1572)), and the eval fixtures are
+pinned to the commit their labels describe; repos that no longer exist are detected and no longer
+served ([pr 1594](https://github.com/Stellar-Light/stellarlight/pull/1594)); contracts are
+first-class records with live mainnet usage on repo rows; and a code-truth probe set runs on the
+daily eval lane ([pr 1743](https://github.com/Stellar-Light/stellarlight/pull/1743)).
+
+next: repos whose stellar use is not yet proven, checked by their code or by jev instead of assumed;
+mainnet contract evidence joined to the projects that own it; and depth calibration re-measured as
+the scanner reaches more languages.
+
+ecosystem value: the hardest questions builders and agents ask are code-level and current-state, and
+the answer is only as good as the facts under it. baseline (2026-10-07): 13,602 repos and 130
+contracts. measurable: the code-truth probe set passing daily, with any regression fixed or reported;
+repo-note coverage and contract counts reported at the start and end of the quarter; no repo served
+after it stops existing.
+
+### 5. a quality system that finds and fixes its own problems
+
+the engine behind "foundations, not patches": every detector writes to one improvement ledger, and a
+finding closes only when a re-check shows it fixed.
+
+already moving: a repair lane that works one open ledger row a day and delivers it as a pull request
+([pr 1559](https://github.com/Stellar-Light/stellarlight/pull/1559)); a task lane (repo notes,
+claims, verification packets, gap reports) that opens one pull request per weekday
+([pr 1569](https://github.com/Stellar-Light/stellarlight/pull/1569)); data lanes promoted to stage 2
+only after they read back every row they write, proven twice
+([pr 1577](https://github.com/Stellar-Light/stellarlight/pull/1577)); a daily rotating truth battery
+over the live api; and a quality board that tells a catch from a breakage.
+
+next: more lanes promoted to stage 2 on proven read-backs, and every detector's findings flowing into
+the same ledger.
+
+ecosystem value: a data layer this size stays correct only if it finds its own errors before its
+users do. baseline (2026-10-07): 5 lanes at stage 2, 12 more eligible, 62 at stage 1. measurable:
+more lanes at stage 2 at quarter end than the 5 today, each on a proven read-back; the repair and
+task lanes running all quarter; the quality board current.
+
+### 6. rfps, scf programs and partners (ongoing)
+
+keep the rfp section current with each scf rfp round. the first job is the q4 rollover (the section
+still shows the q3 briefs today); after that, each new brief is added when it is published, closed
+ones are marked, and the round row stays current (scf round 46 submissions close 2026-11-08). support
+the scf programs that run on stellar light data: the i³ awards 2026, whose final round is open now
+and whose results are published and anchored on tansu this quarter; the scf skills in the
+marketplace; and past scf proposals, searchable in the research corpus
+([pr 1762](https://github.com/Stellar-Light/stellarlight/pull/1762)). keep the partner directory
+current: claims verified by domain
+([pr 1742](https://github.com/Stellar-Light/stellarlight/pull/1742)), stellar.toml re-reads and the
+quarterly check-in ([pr 1749](https://github.com/Stellar-Light/stellarlight/pull/1749)).
+
+ecosystem value: builders find open rfps and their deadlines where they find everything else, and
+raven can answer "what can i apply for" correctly. measurable: the q4 rollover live within a week of
+the q4 briefs' publication; each later brief live within a week; the round row and deadlines current
+all quarter; the i³ results anchored on tansu, with the anchor recomputing to the same digest; the q4
+partner check-in sent.
+
+### 7. our skills, mcp server and api client (ongoing)
+
+keep our own skills current with the api they teach: the stellar-scout agent skill and the 15 stellar
+light skills in our skills registry, updated when an operation changes so an agent never follows a
+stale instruction. the skill raven pins stays byte-identical with the one we serve, checked daily
+([pr 717](https://github.com/Stellar-Light/stellarlight/pull/717),
+[pr 1769](https://github.com/Stellar-Light/stellarlight/pull/1769)), and every listed skill resolves
+instead of answering an error ([pr 1752](https://github.com/Stellar-Light/stellarlight/pull/1752)).
+keep the mcp server (`@stellar-light/scout-mcp`) and the typed api client
+(`@stellar-light/api-client`) released in step with the spec.
+
+ecosystem value: agents learn stellar light through these skills and tools, and a stale skill sends
+them to the wrong call. measurable: every skill we publish resolving and matching the current spec at
+quarter end; the served skill byte-identical with raven's mirror, checked daily; the mcp server and
+api client released with each spec change that touches them.
+
+### 8. data pipelines, freshness and uptime (ongoing)
+
+keep the 55 scheduled data lanes running (sdf airtable, github, dorahacks, defillama, rwa.xyz,
+stellar.expert, partners' stellar.toml and more) and repair them when a source changes under them.
+keep the api, the mcp server and metered partner keys up, with dependency and security updates, a
+bounded wait on the database ([pr 1756](https://github.com/Stellar-Light/stellarlight/pull/1756)),
+and a clear 503 instead of an empty answer when a read fails. the dependency graph is on and pg
+atlas's sbom action runs on the main repository (since 2026-10-07); add the same to the mcp server,
+the other repository with dependencies, so pg atlas reads both.
+
+ecosystem value: data is only useful while it is fresh and correct. measurable: uptime from the
+health endpoint in this page's front matter, which the program polls; the pg atlas sbom action
+running on both repositories that have dependencies; new projects, stablecoins and repos reflected
+within a week; the state of every lane reported at quarter end.
 
 <!-- markdownlint-enable MD034 -->
 
