@@ -21,6 +21,7 @@ upgrade._
 | **Category**            | SDKs                                                                                                |
 | **Website**             | <https://docs.rs/soroban-client/latest/soroban_client/>                                             |
 | **Repository**          | <https://github.com/rahul-soshte/rs-soroban-client>                                                 |
+| **stellar-baselib**     | <https://github.com/rahul-soshte/rs-stellar-base>                                                   |
 | **First Released**      | November 2024                                                                                       |
 | **Intake**              | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/141> |
 | **Budget Requested**    | $15,000                                                                                             |
