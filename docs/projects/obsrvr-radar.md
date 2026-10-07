@@ -22,7 +22,7 @@ plain-language network health insights._
 | **Category**            | Infrastructure Monitoring                                                                          |
 | **Website**             | <https://radar.withobsrvr.com>                                                                     |
 | **Repository**          | <https://github.com/withObsrvr/stellarbeat>                                                        |
-| **Repository**          | <https://github.com/withObsrvr/rs-stellar-history-archive-hasher>                                                        |
+| **Repository**          | <https://github.com/withObsrvr/rs-stellar-history-archive-hasher>                                  |
 | **First Released**      | June 2025                                                                                          |
 | **Intake**              | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/85> |
 | **Budget Requested**    | 20000                                                                                              |
