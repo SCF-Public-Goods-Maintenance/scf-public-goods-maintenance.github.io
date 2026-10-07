@@ -117,7 +117,7 @@ checked against a published version and a passing test.
 
 Three deliverables, in the order they will be taken, and the maintenance that runs alongside them.
 
-#### Deliverable 1 — SEP-46, SEP-47, SEP-48: contract interfaces and a typed contract client
+### Deliverable 1 — SEP-46, SEP-47, SEP-48: contract interfaces and a typed contract client
 
 The point of this one is simple: let someone call a Soroban contract from Rust by naming the function
 and passing ordinary values, and get an ordinary value back.
@@ -161,7 +161,7 @@ its own schedule.
 - **Proof:** the merged pull requests, the crates.io release that adds SEP-46, SEP-47 and SEP-48, the
   testnet test, and a worked example under `examples/`.
 
-#### Deliverable 2 — SEP-1, SEP-23, SEP-29, SEP-53: the smaller standards
+### Deliverable 2 — SEP-1, SEP-23, SEP-29, SEP-53: the smaller standards
 
 Four standards that are small individually and add up to a noticeable difference, taken in this
 order.
@@ -194,7 +194,7 @@ a service can check that someone controls an account without putting a transacti
 - **Time-bound:** released on crates.io inside the quarter, in the order listed.
 - **Proof:** the merged pull requests, the crates.io release for each item, and its tests.
 
-#### Deliverable 3 — Fee-bump transactions
+### Deliverable 3 — Fee-bump transactions
 
 Fee bumps do not work at all today. `to_envelope` refuses a fee-bump transaction and
 `from_xdr_envelope` panics if handed one, so nobody using this SDK can raise the fee on a transaction
@@ -225,7 +225,7 @@ construction time instead of being discovered when the network rejects the trans
 - **Proof:** the merged pull requests, the crates.io release that adds fee-bump support, and the
   testnet and parsing tests.
 
-#### Ongoing maintenance
+### Ongoing maintenance
 
 Alongside the deliverables, part of the quarter goes to work that cannot be listed in advance:
 protocol releases and support across both repositories, dependency and security updates, and cutting
