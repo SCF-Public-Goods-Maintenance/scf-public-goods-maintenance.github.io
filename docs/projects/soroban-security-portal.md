@@ -71,21 +71,16 @@ approved.
 
 ## Retroactive Impact
 
-Over the past 3 months we have added many new features, quality of life improvements and opened up
-more ways for community members to contribute. You can see more details in our two recent Medium
-Articles:
+Over the past 3 months we have continued with report logging and general maintenance for the Security
+Portal. Dominik also participated in a Drips interview alongside the StellarRoute team. There is not
+much to report besides small we are still working on things as expected!
 
-- How the Portal is Evolving:
-  <https://medium.com/@inferara/how-the-soroban-security-portal-is-evolving-5a37cb674217>
-- June Update:
-  <https://medium.com/@inferara/stellar-security-portal-update-whats-new-in-june-2026-f4b4f19fd953>
+Current State of the Portal as of Oct 1st 2026
 
-The total # of vulnerability findings has reached **840** (+253 since last quarter).
-
-The Stellar Security Portal is now fully up to date on publicly available reports & findings from the
-Public Audit Bank: <https://airtable.com/appsrXm5Q0whX3mo5/shrLR1E1CV08RZV7s/tblnU4iDhJR614Beh>
-
-If you notice any missing reports or findings on the Portal please let us know.
+**Vulnerabilities**: 954 \
+**Reports**: 66 \
+**Protocols**: 57 \
+**Auditors**: 15
 
 ## Most notable changes since our last application
 
@@ -228,6 +223,47 @@ Done. All additions have been made and we are fully up to date.
 
 Done. <https://github.com/Inferara/soroban-ret>. You can access it from the Dev Tools button on the
 menu.
+
+### 2026 Q3
+
+<!-- Commitment titles intentionally match Proposed Deliverables for automatic pairing. -->
+<!-- markdownlint-configure-file { "MD024": { "siblings_only": true } } -->
+
+#### Ongoing maintenance budget (100%)
+
+As stated in our previous application for Q3
+[#104](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/pull/104)
+we have focused on ongoing maintenance exclusively. This meant that we ensured that the Portal was
+running and delivered details of publicly available audit reports.
+
+**Reports**: As audits were reported via the audit bank (or other sources) we have added them to the
+database to match the
+[Public Audit Bank list](https://airtable.com/appsrXm5Q0whX3mo5/shrLR1E1CV08RZV7s/tblnU4iDhJR614Beh).
+
+**Audits/vuln logging**: From the audits we have added detailed and individual additions of each
+audit finding. These include all original details from the reports, enhanced with public links, clean
+code blocks and status updates on the finding where relevant.
+
+Recently added reports:
+
+| Protocol / report name                                                              | Auditor              | # of findings | Original PDF pages |
+| ----------------------------------------------------------------------------------- | -------------------- | ------------- | ------------------ |
+| [Moonlight (Moonlight core)](https://stellarsecurityportal.com/report/78)           | Runtime Verification | 15            | 66                 |
+| [Matrixdock (RWA Audit)](https://stellarsecurityportal.com/report/80)               | Runtime Verification | 9             | 89                 |
+| [Matrixdock (Gold / xUAM)](https://stellarsecurityportal.com/report/79)             | Ottersec             | 5             | 14                 |
+| [Centiiv (Protocol Contracts V1)](https://stellarsecurityportal.com/report/81)      | Veridise             | 11            | 24                 |
+| [Sodax (Soroban Smart Contract Audit)](https://stellarsecurityportal.com/report/82) | Hashlock             | 8             | 33                 |
+| [Peridot Finance (Peridot Protocol)](https://stellarsecurityportal.com/report/83)   | Halborn              | 67            | 242                |
+
+It should be noted that as always some reports require more effort and scrutiny to review than
+others. From these reports the Peridot Finance audit required the most review and edits. With 67
+findings and 242 pages in the report it was the most time consuming to review and prepare for
+submitting to the portal.
+
+#### New Features
+
+There have been other small improvements but the most notable is that we have removed the log-in
+requirements for accessing & downloading audit reports.
 
 ## Proposed Impact
 
