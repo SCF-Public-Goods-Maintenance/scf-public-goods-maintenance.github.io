@@ -226,6 +226,9 @@ menu.
 
 ### 2026 Q3
 
+<!-- Commitment titles intentionally match Proposed Deliverables for automatic pairing. -->
+<!-- markdownlint-configure-file { "MD024": { "siblings_only": true } } -->
+
 #### Ongoing maintenance budget (100%)
 
 As stated in our previous application for Q3
