@@ -6,6 +6,7 @@ proposal_issue: 105
 proposer: tupui
 category: "Governance Tools"
 budget: "$50,000 in XLM"
+health_endpoint: https://app.tansu.dev
 ---
 
 # Tansu - Decentralized project governance on Stellar
@@ -17,15 +18,17 @@ projects._
 
 <!-- markdownlint-enable MD036 -->
 
-|                      |                                                                                                    |
-| -------------------- | -------------------------------------------------------------------------------------------------- |
-| **Category**         | Governance Tools                                                                                   |
-| **Website**          | <https://tansu.dev>                                                                                |
-| **Repository**       | <https://github.com/Consulting-Manao/tansu>                                                        |
-| **Membership**       | <https://radicle.network/nodes/radicle.consulting-manao.com/rad:z4KRDyBiL6kP6n5FWP6kJWga6BXJV>     |
-| **First Released**   | October 2025                                                                                       |
-| **Intake**           | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/88> |
-| **Budget Requested** | 50000                                                                                              |
+|                         |                                                                                                    |
+| ----------------------- | -------------------------------------------------------------------------------------------------- |
+| **Category**            | Governance Tools                                                                                   |
+| **Website**             | <https://tansu.dev>                                                                                |
+| **Repository**          | <https://github.com/Consulting-Manao/tansu>                                                        |
+| **Membership**          | <https://radicle.network/nodes/radicle.consulting-manao.com/rad:z4KRDyBiL6kP6n5FWP6kJWga6BXJV>     |
+| **First Released**      | October 2025                                                                                       |
+| **Intake**              | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/88> |
+| **Budget Requested**    | $50,000                                                                                            |
+| **Maintenance Reserve** | $10,000                                                                                            |
+| **Other**               | $40,000                                                                                            |
 
 ## Project Description
 
@@ -364,6 +367,10 @@ is ready, coordinate on NQG/Tansu per their [roadmap](https://hackmd.io/@dan13ra
 ## Proposed Deliverables
 
 <!-- markdownlint-disable MD034 -->
+
+The maintenance reserve of $10,000 covers the work that arrives during the quarter: bug and security
+fixes, dependencies, releases, the operation of the contract on mainnet and user support. The
+deliverables below that add something new make up the **Other** share of $40,000.
 
 ### D1: Public Goods Award
 
