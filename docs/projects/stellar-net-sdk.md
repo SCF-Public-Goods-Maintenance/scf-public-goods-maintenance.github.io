@@ -442,32 +442,36 @@ mapping).
 
 <!-- markdownlint-disable MD034 -->
 
-Over the next three months Q3 2026, our goals are to close the SDK's most-used SEP gaps and to
-validate the newly multi-targeted SDK on iOS and Android, while keeping the SDK reliable for its
-existing production users.
+In Q4 2026 we want to keep the SDK correct for the people already running it in production, finish
+the work our Q3 report moved to this quarter, and have Protocol 30 on NuGet before it reaches
+Mainnet. Every item below is an issue on our [2026 Q4 milestone][milestone], so anyone can follow the
+progress during the quarter.
 
-**1. SEP expansion: SEP-7, SEP-12, SEP-38** The base SDK implements six SEPs today (SEP-1, 6, 9, 10,
-24, 45). This quarter we implement three more: SEP-12 (KYC API) and SEP-38 (anchor RFQ/quotes), which
-build directly on the SEP-10/45 WebAuth infrastructure already in the SDK and together complete the
-anchor deposit/withdraw/quote flows that SEP-6 and SEP-24 integrators need in practice, and SEP-7,
-the standard URI scheme for payment requests and delegated signing. Each ships with unit tests and a
-per-SEP compatibility matrix in the format we established in Q2, taking the SDK from 6 to 9
-implemented SEPs and giving .NET developers complete client-side coverage of the standard anchor
-integration flows.
+**1. Fix what breaks real integrations first.** 16.0.0 has two known bugs. Our SEP-45 client rejects
+the `ADDRESS_V2` challenges that servers built on the Java and Python SDKs now issue by default
+([#240][i240]). Following a Horizon page link drops the caller's authentication, headers and retry
+settings ([#193][i193]); our Q3 report moved this bug to Q4. We also found that liquidity pool
+parameters reject the asset order the network requires ([#257][i257]), a bug the JS and Go SDKs fixed
+recently. All three ship as a 16.0.x patch in October.
 
-**2. Validate the SDK on iOS and Android via .NET MAUI** With the multi-target packages published, we
-validate the SDK on iOS and Android via .NET MAUI: crypto (libsodium), the HTTP/SSE stack, and linker
-trimming. The first week of July includes a short desk check of the one risk we already know is
-concrete: neither NSec nor Sodium.Core ships iOS/Android native libsodium binaries in its standard
-runtime packages, so the fallback choice (build libsodium for those targets, or a managed Ed25519
-path) gets decided before dependent work starts. Validation runs Release builds with trimming
-enabled, on iOS simulator and Android emulator plus at least one physical Android device; we add an
-iOS device smoke test if the provisioning set up in this deliverable allows it, and if it does not,
-the compatibility report states plainly that physical-iOS behavior (where AOT is enforced and there
-is no JIT) remains unvalidated risk. This includes standing up the MAUI development and test
-environment itself (Xcode + iOS simulators, Android SDK + emulators, MAUI workloads,
-signing/provisioning), planned as its own work item from prior MAUI experience. This is a validation
-milestone, not a sample app.
+**2. Ship Protocol 30 to NuGet before the Mainnet vote.** Protocol 27 and 28 support was ready weeks
+before Mainnet, but it only reached NuGet with 16.0.0, because we tied it to a major release. That's
+on us. From now on, protocol support ships in a minor release of the current major, before the
+Mainnet vote. Protocol 30 is the first test: CAP-84 adds a new contract address type and a `W...`
+strkey, and CAP-88 adds ledger header variants that older XDR fails to decode from the first ledger
+after the upgrade.
+
+**3. Finish the integration test suite.** Our Q3 report moved the Priority-2 integration tests
+([#156][i156]) to Q4. They cover the Horizon endpoints, operations and RPC methods that the 56
+current Testnet tests don't reach yet. Mocked unit tests missed real bugs twice this year: the Q2
+integration tests found two broken Soroban operations, and in Q3 the RPC client sent requests that
+stellar-rpc rejects.
+
+We sized this plan for one senior developer, with a buffer for Protocol 30 and privately reported
+security issues. The Soroban developer layer is scoped and planned for Q1 2027: transaction lifecycle
+helpers ([#259][ilifecycle]) and contract metadata and specs ([#260][iintro]). Cancellation tokens on
+the core clients ([#262][icancel]) and the remaining HTTP and SEP client hardening ([#237][i237],
+[#245][i245], [#205][i205]) follow in the same quarter.
 
 <!-- markdownlint-enable MD034 -->
 
@@ -475,79 +479,125 @@ milestone, not a sample app.
 
 <!-- markdownlint-disable MD034 -->
 
-### Deliverable 1 — SEP Expansion: SEP-7, SEP-12, SEP-38 (+ matrices)
+Each deliverable has an ID. Its issues are on the [2026 Q4 milestone][milestone], and its PRs carry
+the ID in the title (for example `D2: regenerate XDR for Protocol 30`), so at the end of the quarter
+one search finds the evidence.
 
-- **Specific:** Implement SEP-7 (URI scheme for payment requests and delegated signing), SEP-12 (KYC
-  API), and SEP-38 (anchor RFQ/quotes), each with unit tests and a per-SEP compatibility matrix in
-  `StellarDotnetSdk/Compatibility/sep/`, following the 100%-field-coverage format established in Q2.
-  SEP-12 and SEP-38 build on the SEP-10/45 WebAuth infrastructure already in the SDK; SEP-7 is
-  standalone and the smallest of the three.
-- **Measurable:** 3 new SEP namespaces with passing unit tests; SEP matrix count grows from 6 to 9;
-  SDK goes from 6 to 9 implemented SEPs.
-- **Achievable:** All three SEP specifications are stable, two of the three reuse the SEP-10/45
-  WebAuth infrastructure already in the SDK, and the matrix format is established practice from Q2.
-- **Relevant:** SEP-12 and SEP-38 complete the anchor flow story: KYC and quotes are what
-  SEP-6/SEP-24 integrations need alongside the deposit/withdraw support the SDK already ships. SEP-7
-  gives wallets the standard URI scheme for payment requests and delegated signing. Together they are
-  the three SEPs that unlock the most integrations for .NET developers today. SEP-30 (account
-  recovery) stays at the top of the backlog (see ROADMAP.md); deferring it costs the least because
-  its ecosystem adoption is the thinnest.
-- **Time-bound:** Complete by end of the 3-month period, shipped in one or more 16.x minors as they
-  complete.
+### D1: Fixes for bugs that break integrations today
 
-### Deliverable 2 — MAUI Validation (incl. environment setup)
+- **Specific:** Accept `ADDRESS_V2` SEP-45 challenges ([#240][i240]). Make page links reuse the
+  caller's configured `HttpClient` ([#193][i193], carried over from Q3). Order assets by issuer key
+  bytes, as stellar-core does ([#257][i257]). Fix any privately reported security issues under our
+  [security policy][secpolicy].
+- **Measurable:** A merged PR closes each issue, with a regression test that fails on 16.0.0. All
+  three fixes ship in a 16.0.x patch release.
+- **Achievable:** All three bugs are diagnosed. The SEP-45 fix is written and tested on a branch,
+  #193 has a known root cause and fix, and we reproduced #257 with a small probe before we filed it.
+- **Relevant:** #240 breaks SEP-45 sign-in against anchors that use the Java or Python SDK. #193
+  silently drops authentication on paginated reads from hosted Horizon providers. For some asset
+  pairs, #257 makes the SDK refuse a valid liquidity pool and accept the invalid one.
+- **Time-bound:** The patch release in October.
 
-- **Specific:** Three parts. **Part 0, desk check (week 1 of July):** confirm whether the crypto
-  backends (NSec, Sodium.Core) load on iOS/Android at all, given that neither ships native libsodium
-  for those targets in its standard runtime packages, and pick the fallback (build libsodium for
-  ios-arm64 and the Android ABIs, or a managed Ed25519 path) so the decision lands before dependent
-  work starts. **Part A, environment:** stand up a reproducible MAUI development and test environment
-  (macOS host with Xcode and iOS simulators, Android SDK with emulator images, .NET MAUI workloads,
-  signing/provisioning configuration), documented with pinned workload and Xcode versions so it can
-  be rebuilt on demand. **Part B, validation:** validate the multi-target SDK via a minimal .NET MAUI
-  validation app, built in Release with trimming enabled: Ed25519 crypto (native library loading),
-  HTTP/SSE stack behavior, and linker/trimming compatibility, on iOS simulator, Android emulator, and
-  at least one physical Android device, plus an iOS device smoke test if provisioning allows. Produce
-  a documented compatibility report with any required workarounds (e.g. linker descriptors). If
-  physical iOS is not exercised, the report says so explicitly, because iOS devices enforce AOT with
-  no JIT and a green simulator run does not cover that condition.
-- **Measurable:** Desk-check decision recorded in week 1; environment setup documented and
-  reproducible; validation app builds and runs core SDK flows (keypair generation/signing, Horizon
-  query, transaction submit, Soroban simulate) on the platforms listed above; findings and any
-  residual unvalidated risk documented in-repo.
-- **Achievable:** Scoped strictly to validation, not a product sample; the crypto abstraction from PR
-  #195 was designed for exactly this portability. Environment setup is planned as its own work item
-  from prior MAUI experience, not overhead absorbed elsewhere. If the desk check forces building
-  native libsodium for iOS/Android, that work draws on the capacity buffer, and the validation scope
-  (not the SEP or release work) is what shrinks if the buffer is exhausted.
-- **Relevant:** The multi-target packages make the SDK installable on iOS and Android for the first
-  time; this deliverable turns "it should work there" into a tested, documented answer. Mobile
-  developers get a compatibility report with known workarounds instead of discovering platform
-  blockers themselves, and the native-crypto question — the single most likely blocker — is answered
-  in week 1. This is the quarter's highest-uncertainty item, which the capacity buffer is sized for.
-- **Time-bound:** Desk check in week 1 of July; environment and validation in the second half of the
-  quarter, after the multi-target package is published.
+### D2: Protocol 30 before Mainnet, and a written release policy
 
-### Non-deliverable 1 — Developer Support & Maintenance Responsiveness
+- **Specific:** Regenerate XDR for Protocol 30 and add CAP-84 muxed contract addresses with the new
+  `W...` strkey ([issue][ip30]). Add a scheduled CI check that flags when upstream `stellar-xdr`
+  moves past the version we generate from, so new XDR doesn't surprise us again. Publish a release
+  policy ([issue][ipolicy]) that says which target frameworks we ship and why, what happens when a
+  .NET version reaches end of support, and that protocol support lands in minor releases.
+- **Measurable:** A 16.x release with Protocol 30 support is on NuGet before the Mainnet vote. If no
+  vote is scheduled this quarter, we publish a pre-release built from the gated XDR instead. A test
+  decodes a post-upgrade Testnet ledger header. The policy is merged and linked from the README.
+- **Achievable:** We've done this three times this year (Protocols 26, 27 and 28) with our own XDR
+  generator. The new part is the release step.
+- **Relevant:** Without regenerated XDR, any .NET app that decodes ledger headers or close meta
+  breaks at the upgrade. A written policy lets users plan around .NET end-of-life dates instead of
+  finding out from a changelog.
+- **Time-bound:** Pinned to SDF's Protocol 30 dates, which aren't announced yet. The policy goes out
+  before .NET 8 reaches end of support on 2026-11-10.
 
-- **Specific:** Triage and respond to SDK-related GitHub issues, feature requests, and Discord
-  inquiries throughout the quarter. The two already-triaged bugs (#193, #197) are part of the Q2
-  carry-over, not this bucket.
-- **Measurable:** Issues acknowledged and either resolved, scoped, or explicitly deferred.
-- **Achievable:** Bounded strictly to SDK maintenance and usage; if support demand exceeds the
-  reservation, it draws on the capacity buffer before it touches deliverable scope.
-- **Relevant:** Maintains developer trust and reduces adoption friction.
-- **Time-bound:** Ongoing throughout the 3-month period.
+### D3: Priority-2 integration tests (carried over from Q3)
 
-### Non-deliverable 2 — Capacity Buffer
+- **Specific:** Add Testnet integration tests for the Priority-2 list in [#156][i156]: the remaining
+  Horizon query endpoints (assets, claimable balances, effects, ledgers, offers, order book, trades,
+  trade aggregations, fee stats, liquidity pools, strict-send and strict-receive paths, health), the
+  remaining operations (account merge, manage data, bump sequence, passive sell offers, claimable
+  balances, sponsorship, clawback, trustline flags, liquidity pool deposit and withdraw), the RPC
+  methods `getTransactions`, `getLedgers`, `getVersionInfo` and `getFeeStats`, and SEP-1, federation
+  and multi-operation transactions.
+- **Measurable:** Every area on the Priority-2 list has at least one test that runs in the
+  integration workflow on each push to `main`, and #156 is closed.
+- **Achievable:** The test infrastructure is in place since Q2: a base class, a Friendbot helper,
+  configurable endpoints and a CI workflow that runs 56 tests on every push to `main`. The new tests
+  follow the same pattern.
+- **Relevant:** These tests catch the gap between mocked JSON and the live network, where this year's
+  footprint and RPC bugs came from.
+- **Time-bound:** During the quarter, with the read-only endpoints first and the operations after.
 
-A contingency reserve sized for this quarter's specific risks: native-crypto or trimming surprises
-during MAUI validation, netstandard2.1 regressions surfacing after the multi-target package reaches
-real consumers, post-Mainnet-vote Protocol 27 follow-ups, and the external dependencies the
-integration suite leans on (a Testnet reset or an SDF test-anchor change would stall
-integration-gated releases for days). If the quarter runs clean and the buffer goes unused, it funds
-pulling the next backlog item (SEP-30, see ROADMAP.md) forward; it is never pre-spent on planned
-scope.
+### Non-deliverable 1: Developer support and maintenance responsiveness
+
+- **Specific:** Triage and answer SDK-related GitHub issues, pull requests and Discord questions
+  throughout the quarter. When we act on a request, we say so on the issue itself.
+- **Measurable:** Each issue is acknowledged, then resolved, scoped onto a milestone, or declined
+  with a reason.
+- **Achievable:** Limited to SDK maintenance and usage. If support takes more time than reserved, it
+  draws on the capacity buffer before it touches deliverable scope.
+- **Relevant:** In Q3, we acted on two requests from Stellar's SDK team but never answered on the
+  issues themselves.
+- **Time-bound:** Ongoing throughout the quarter.
+
+### Non-deliverable 2: Things with fixed dates
+
+Each of these has a date we can't move:
+
+- .NET 8 and .NET 9 reach end of support on 2026-11-10. The release policy in D2 records what happens
+  to our `net8.0` target. Our current plan is to keep it through 16.x and drop it in 17.0.
+- .NET 11 is expected in November 2026. We'll add it to the CI test matrix once it's out and repeat
+  the MAUI validation there, because MAUI on .NET 11 runs only on CoreCLR.
+- GitHub is moving `ubuntu-latest` runners to Ubuntu 26.04 between 2026-10-19 and 2026-11-19
+  ([announcement][runner2604]). All our workflows run on `ubuntu-latest`, so we'll check them before
+  the switch reaches us, including the live Testnet integration suite and the NuGet publish.
+
+### Non-deliverable 3: Capacity buffer
+
+The buffer covers this quarter's specific risks: Protocol 30 arriving with less notice than earlier
+upgrades, privately reported security fixes, and Testnet resets or test-anchor changes that stall the
+integration suite. If the quarter runs clean, the buffer goes to these items, in this order:
+
+1. SEP-53 message signing and verification ([#261][isep53]).
+2. The XDR decoding crashes on valid contract deployments ([#248][i248], [#249][i249]).
+3. SourceLink, symbols, an SBOM and build provenance for our packages ([#263][iprov]).
+4. The XDR codec's acceptance of non-canonical input ([#250][i250]).
+5. The lossy XDR string round-trips ([#246][i246], [#247][i247]).
+6. Size caps on the Horizon, RPC, stellar.toml and federation response bodies.
+7. Replacing the 2019 SSE dependency behind the Android streaming delay.
+8. Logging hooks ([#88][i88]).
+
+We never spend the buffer on planned scope in advance.
+
+[milestone]: https://github.com/Beans-BV/dotnet-stellar-sdk/milestone/1
+[runner2604]: https://github.com/actions/runner-images/issues/14748
+[secpolicy]: https://github.com/Beans-BV/dotnet-stellar-sdk/blob/main/SECURITY.md
+[i88]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/88
+[i156]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/156
+[i193]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/193
+[i205]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/205
+[i237]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/237
+[i240]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/240
+[i245]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/245
+[i246]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/246
+[i247]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/247
+[i248]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/248
+[i249]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/249
+[i250]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/250
+[i257]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/257
+[ip30]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/258
+[ipolicy]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/264
+[ilifecycle]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/259
+[iintro]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/260
+[isep53]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/261
+[icancel]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/262
+[iprov]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/263
 
 <!-- markdownlint-enable MD034 -->
 
