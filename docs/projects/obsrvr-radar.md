@@ -324,7 +324,7 @@ Radar as a trustworthy public resource for monitoring Stellar validator and quor
 
 <!-- markdownlint-disable MD034 -->
 
-### D1: Prevent Radar’s hosting provider or egress network from producing false archive-health warnings.
+### D1: Prevent Radar’s hosting provider or egress network from producing false archive-health warnings
 
 After making updates to the network scanner package, we have found that 401s and 403s can produce
 "History archive behind" warnings. This happens at times if the IP address of the scanner is being
