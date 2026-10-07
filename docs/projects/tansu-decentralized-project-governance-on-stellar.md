@@ -63,7 +63,7 @@ leverage 1 to 2 people from the team. Mostly, but not limited:
   [LinkedIn](https://www.linkedin.com/in/chadoh), Discord @chadoh) on the architecutre and general
   flow.
 - Willem Wyndham ([GitHub](https://github.com/willemneal),
-  [LinkedIn](https://www.linkedin.com/in/willem-wyndham), Discord @sirwillem), to review my work on
+  [LinkedIn](https://www.linkedin.com/in/willem-wyndham), Discord `@sirwillem`), to review my work on
   smart contracts.
 - Hugo Heer ([GitHub](https://github.com/hugo-heer),
   [LinkedIn](https://www.linkedin.com/in/hugo-heer-b29a0419b)), a frontend guru.
