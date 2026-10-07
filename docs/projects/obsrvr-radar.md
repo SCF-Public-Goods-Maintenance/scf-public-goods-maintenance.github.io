@@ -25,6 +25,8 @@ plain-language network health insights._
 | **First Released**   | June 2025                                                                                          |
 | **Intake**           | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/85> |
 | **Budget Requested** | 20000                                                                                              |
+| **Maintenance Reserve ** | 13000                                                                                          |
+| **Other**            | 7000                                                                                               |
 
 ## Project Description
 
@@ -308,24 +310,9 @@ Completed work:
 
 <!-- markdownlint-disable MD034 -->
 
-Q3 will continue the goal of making Radar easier to operate and easier to understand.
+Q4 focuses on making Radar's judgments defensible and its scans dependable.\
 
-The first priority is scanner reliability and observability related to both network scanning and
-history archive scanning. Radar needs to crawl nodes, check archive status, detect version drift, and
-explain failures clearly.
-
-The second priority is network analyzer updates and plain-language network analysis. There are issues
-with the current FBAS analysis tool in the UI. The main-page network analysis tool depends on this
-FBAS pipeline, so improving the plain-language network analysis also requires fixing and hardening
-the underlying analysis path.
-
-The third priority is frontend cleanup and product polish. This includes finishing Bootstrap removal,
-improving design-token usage, and making validator and organization views easier to understand.
-
-This benefits the Stellar ecosystem by giving validators, infrastructure operators, and ecosystem
-participants a clearer view of network health. Instead of requiring users to interpret raw quorum
-data themselves, Radar should surface practical explanations and let users drill into the technical
-details when needed.
+These deliverables will make Radar’s network-health reporting faster, more accurate, and easier for operators to act on. Scans will reliably complete within the five-minute window, archive restrictions caused by Radar’s hosting environment will no longer create false warnings, and validator pages will explain detected issues with practical remediation guidance. Together, these improvements strengthen Radar as a trustworthy public resource for monitoring Stellar validator and quorum health.
 
 <!-- markdownlint-enable MD034 -->
 
@@ -333,79 +320,42 @@ details when needed.
 
 <!-- markdownlint-disable MD034 -->
 
-Scanner Reliability and Readability
+### D1: Prevent Radar’s hosting provider or egress network from producing false archive-health warnings.
 
-Improve network and history scanner reliability by surfacing more silent errors and making scan
-results easier to understand.
+After making updates to the network scanner package, we have found that 401s and 403s can produce "History archive behind" warnings. This happens at times if the IP address of the scanner is being blocked and the current way the scanner works marks the failure as the history archive being behind. This issue has been observed with Moneygram nodes by SDF internal.
+*Scope:*
+  - Build/Deploy an authenticated archive probe outside DigitalOcean.
+  - Retry HTTP 401/403 archive checks through the independent probe.
+  - Display “access restricted for Radar scanner” rather than incorrectly reporting the archive as unavailable or behind.
 
-Scope:
+*Measure:*
+  - MoneyGram’s three validators no longer receive false “archive unreachable” or “archive behind” warnings when the external probe can verify them.
+  - Staging demonstration with direct DigitalOcean failure and successful independent verification.
+  - Probe latency bounded so it does not endanger the five-minute scan target.
+  
+### D2: Continued network scanner performance, correctness, and maintenance
 
-- Improve logs for cases where the scanner cannot connect to known peers.
-- Add alerting or notification paths for repeated scanner failures that currently only show in logs.
-- Improve operator docs for known peers, crawler rejection, and validator reachability.
-- Add additional scanning node resources.
+Make every network scan finish reliably within its operating window without sacrificing validator or quorum evidence. A migration to the endpoint-candidate subsystem backfilled ~152,000 rows and caused the scanner to record each connection attempt once per historical identity at that address — about 96,000 database writes per crawl, pushing scans from 5.0 minutes past 20.
+*Scope:*
+  - Restore scans to below five minutes.
+  - Add stage-level timing for endpoint preparation, overlay crawl, node enrichment, organization scanning, FBAS analysis, and persistence.
+  - Reduce repeated connection attempts against known-dead gossip addresses.
 
-Ecosystem value:
+*Measure:*
+  - Before-and-after scan duration table.
+  - Production or staging logs demonstrating several consecutive sub-five-minute scans.
+  - Crawl attempts, successful connections, validator counts, and scan duration compared across releases.
+  
+### D3: Evidence-based validator diagnostics and status explanations
 
-More reliable scanner operations give validators, ecosystem teams, and network observers a more
-dependable view of validator and archive health.
-
-Measure:
-
-Terraform/App Platform updates, scanner health or monitoring PRs, additional scanner resources where
-needed, and updated operational documentation.
-
-Plain-Language Network Analysis and FBAS Reliability
-
-Build a human-readable analysis layer for Radar and fix the underlying FBAS/network-analysis path it
-depends on. The network analysis tool on the main page currently depends on the FBAS analysis
-pipeline, so the plain-language verdict work has to include reliability and compatibility updates to
-that analysis layer.
-
-Scope:
-
-- Repair and harden the network analysis tool on the main page.
-- Add plain-language explanations to the main-page network analysis.
-- Update the FBAS analysis integration that powers liveness, safety, top-tier, blocking-set, and
-  splitting-set results.
-- Keep Stellar Core/protocol/overlay defaults current where they affect network analysis.
-- Complete and validate Protocol 27 archive hasher alignment where it affects Radar's scanner and
-  analysis path.
-
-Ecosystem value:
-
-This makes network safety and quorum information useful to more people. Validators and ecosystem
-teams should not need to be FBAS experts to understand whether the network is healthy, fragile, or at
-risk.
-
-Measure:
-
-Working main-page network analysis, updated FBAS-backed liveness and safety results, network verdict
-UI in Radar, plain-language interpretation backed by scan/FBAS results, updated copy and tooltips,
-archive hasher/protocol compatibility PRs where needed, screenshots or demo of the verdict flow, and
-passing CI.
-
-UI Cleanup and Ongoing Maintenance
-
-Finish frontend cleanup work that carried forward from Q2 and keep Radar current with Stellar
-protocol, dependency, and deployment changes.
-
-Scope:
-
-- Remove remaining Bootstrap usage where practical.
-- Normalize detail pages, warnings, badges, tooltips, and graph styling.
-- Continue polishing validator and organization detail pages.
-- Track Stellar SDK/base package and protocol changes.
-
-Ecosystem value:
-
-A cleaner and more consistent UI makes Radar easier to use and easier to maintain. Keeping
-dependencies and protocol settings current keeps Radar useful as the Stellar network evolves.
-
-Measure:
-
-Bootstrap removal PRs, maintenance PRs, dependency/protocol update PRs, and passing frontend
-build/tests.
+Let operators understand exactly why Radar assigned a status and what they can do about it. We will start with issues related to verifying if the history archive is up to date and expand to other errors in the future. The main requests that come in to Radar are asking how to remediate specific errors.
+*Scope:*
+- Provide suggested remediations for:
+    - archive access restriction
+- Expose the evidence through Radar’s public API.
+    
+*Measure:*
+- Archive access restriction warnings shown on a validator page includes a reason and remediation.
 
 <!-- markdownlint-enable MD034 -->
 
