@@ -13,14 +13,16 @@ budget: "15000"
 _The Stellar SDK for iOS and macOS, providing transaction building, Horizon and Soroban RPC access,
 high-level Soroban smart contract support, and implements 21 Stellar Ecosystem Proposals (SEPs)._
 
-|                      |                                                 |
-| -------------------- | ----------------------------------------------- |
-| **Category**         | SDKs                                            |
-| **Website**          | <https://github.com/Soneso/stellar-ios-mac-sdk> |
-| **Repository**       | <https://github.com/Soneso/stellar-ios-mac-sdk> |
-| **First Released**   | March 2018                                      |
-| **Intake**           | soft-launch                                     |
-| **Budget Requested** | 15000                                           |
+|                         |                                                 |
+| ----------------------- | ----------------------------------------------- |
+| **Category**            | SDKs                                            |
+| **Website**             | <https://github.com/Soneso/stellar-ios-mac-sdk> |
+| **Repository**          | <https://github.com/Soneso/stellar-ios-mac-sdk> |
+| **First Released**      | March 2018                                      |
+| **Intake**              | soft-launch                                     |
+| **Budget Requested**    | $15,000                                         |
+| **Maintenance Reserve** | $12,500                                         |
+| **Other**               | $2,500                                          |
 
 ## Project Description
 
