@@ -17,14 +17,16 @@ transactions, Stellar RPC and Horizon, smart contracts, OpenZeppelin smart accou
 
 <!-- markdownlint-enable MD036 -->
 
-|                      |                                                                                                    |
-| -------------------- | -------------------------------------------------------------------------------------------------- |
-| **Category**         | SDKs                                                                                               |
-| **Website**          | <https://developers.stellar.org/docs/tools/sdks/client-sdks#kotlin-multiplatform-sdk>              |
-| **Repository**       | <https://github.com/Soneso/kmp-stellar-sdk>                                                        |
-| **First Released**   | October 2025                                                                                       |
-| **Intake**           | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/86> |
-| **Budget Requested** | 15000                                                                                              |
+|                         |                                                                                                    |
+| ----------------------- | -------------------------------------------------------------------------------------------------- |
+| **Category**            | SDKs                                                                                               |
+| **Website**             | <https://developers.stellar.org/docs/tools/sdks/client-sdks#kotlin-multiplatform-sdk>              |
+| **Repository**          | <https://github.com/Soneso/kmp-stellar-sdk>                                                        |
+| **First Released**      | October 2025                                                                                       |
+| **Intake**              | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/86> |
+| **Budget Requested**    | $15,000                                                                                            |
+| **Maintenance Reserve** | $12,500                                                                                            |
+| **Other**               | $2,500                                                                                             |
 
 ## Project Description
 
