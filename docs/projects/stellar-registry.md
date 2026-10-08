@@ -873,8 +873,8 @@ identified by human-friendly names and versions, rather than opaque hashes and I
 
 Issues:
 
-- stellar-registry/indexer#TODO: Update Stellar.Expert to show Registry names/versions in place of
-  Wasm hashes and contract IDs, when available
+- stellar-registry/indexer#50: Update Stellar.Expert to show Registry names/versions in place of Wasm
+  hashes and contract IDs, when available
 
 Proof:
 
@@ -890,10 +890,9 @@ Value to ecosystem: help people learn about and onboard to Registry.
 
 Issues:
 
-- https://github.com/stellar-registry/cli/issues/34, Stellar Community Call
-- https://github.com/stellar-registry/ui#TODO: Present Registry at HackMeridian
-- https://github.com/stellar-registry/ui#TODO: Host monthly Office Hours to teach people about
-  Registry or answer their questions
+- stellar-registry/cli#34: Stellar Community Call
+- stellar-registry/ui#103: Present Registry at HackMeridian
+- stellar-registry/ui#104: Host monthly Office Hours to teach people about Registry or answer their questions
 
 Proof: links to recorded videos or event links
 
@@ -905,10 +904,10 @@ contract addresses with `NotAccountAddress`. Smart wallets such as [Nido](https:
 
 Issues:
 
-- stellar-registry/contracts#TODO: Accept smart-account contract addresses in `register_account` and
+- stellar-registry/contracts#60: Accept smart-account contract addresses in `register_account` and
   the account lifecycle functions, while keeping them distinct from entries in the `contract`
   namespace
-- nidohq/nido#TODO: Add wallet names to Stellar Registry
+- nidohq/nido#238: Add wallet names to Stellar Registry
 
 Value to ecosystem: one naming system for every kind of Stellar account, so passkey and other
 smart-wallet users get the same human-readable names as classic accounts.
@@ -926,15 +925,15 @@ smart account C-address) must be supported in all situations.
 
 Issues:
 
-- stellar-registry/ui#TODO: Display account names anywhere accounts appear (e.g. "Deployer" and
+- stellar-registry/ui#105: Display account names anywhere accounts appear (e.g. "Deployer" and
   "Admin" fields)
-- stellar-registry/ui#TODO: Governance form to request named account in root Registry
-- stellar-registry/cli#TODO: register, resolve, and manage named (G- or C-) accounts
-- stellar-scaffold/cli#TODO: Document Registry's named (G- and C-) account support
-- stellar-registry/ui#TODO: Work with partner network to register names for the (G- and C-) accounts
+- stellar-registry/ui#106: Governance form to request named account in root Registry
+- stellar-registry/cli#76: register, resolve, and manage named (G- or C-) accounts
+- stellar-scaffold/cli#613: Document Registry's named (G- and C-) account support
+- stellar-registry/ui#107: Work with partner network to register names for the (G- and C-) accounts
   listed in their Wasms & contracts
-- stellar-registry/indexer#TODO: Show Registry's (G- & C-) account names in Stellar.Expert
-- stellar-registry/contracts#TODO: Create a SEP for resolving named G-addresses, so wallets and other
+- stellar-registry/indexer#51: Show Registry's (G- & C-) account names in Stellar.Expert
+- stellar-registry/contracts#61: Create a SEP for resolving named G-addresses, so wallets and other
   tools can adopt the same names
 
 Value to ecosystem: human-readable names for accounts, not only contracts & Wasms; reduce copy-paste
@@ -987,16 +986,14 @@ new issues or PRs.
 
 Issues:
 
-- stellar-registry/actions#TODO: add "Contract `upgrade`" workflow step
-- stellar-registry/actions#TODO: add human-initiated "Mainnet publish/deploy" workflow step
-- stellar-scaffold/ui#TODO: adopt stellar-registry/actions for Wasm publish & contract upgrade
-- stellar-registry/oz-combined-wasms#TODO: adopt stellar-registry/actions for Wasm publish & contract
-  upgrade
-- Consulting-Manao/tansu#TODO: adopt stellar-registry/actions for Wasm publish & contract upgrade
-- nidohq/nido#TODO: adopt stellar-registry/actions for Wasm publish & contract upgrade
-- stellar-registry/perch#TODO: adopt stellar-registry/actions for Wasm publish & contract upgrade
-- Moonlight-Protocol/soroban-core#TODO: adopt stellar-registry/actions for Wasm publish & contract
-  upgrade
+- stellar-registry/actions#16: add "Contract `upgrade`" workflow step
+- stellar-registry/actions#17: add human-initiated "Mainnet publish/deploy" workflow step
+- stellar-scaffold/ui#280: adopt stellar-registry/actions for Wasm publish & contract upgrade
+- stellar-registry/oz-combined-wasms#4: adopt stellar-registry/actions for Wasm publish & contract upgrade
+- Consulting-Manao/tansu#255: adopt stellar-registry/actions for Wasm publish & contract upgrade
+- nidohq/nido#239: adopt stellar-registry/actions for Wasm publish & contract upgrade
+- stellar-registry/perch#113: adopt stellar-registry/actions for Wasm publish & contract upgrade
+- Moonlight-Protocol/soroban-core#51: adopt stellar-registry/actions for Wasm publish & contract upgrade
 
 Value to ecosystem: maturation of `stellar-registry/actions` ahead of Q1 rollout to partner teams and
 broader ecosystem; simplified & automatic best-practices publishing of Wasms with associated contract
