@@ -751,7 +751,7 @@ Description from last quarter:
     [SDF Slack](https://theahaco.slack.com/archives/C04B02ABF37/p1783975268185649?thread_ts=1783975086.044619&cid=C04B02ABF37);
     no one responded
   - @chadoh to raise again in Stellar Community Call when presenting Registry (see
-    [D7](#d7-registry-documentation--education-carried-from-q2))
+    [D7](#-d7-registry-documentation--education-carried-from-q2))
 
 #### ✅ D14: Extend `import_contract!` macro to support SAC and XLM
 
@@ -814,7 +814,7 @@ Extra details from
 
 - https://github.com/stellar-registry/ui/pull/57, Verified Build (SEP-55) badge from Stellar Expert
   data for _Contracts_ (done to satisfy
-  [D5](#d5-contract-explorer-deploy-button--verified-build-badges-carried-from-q2))
+  [D5](#-d5-contract-explorer-deploy-button--verified-build-badges-carried-from-q2))
   - prereq: https://github.com/stellar-registry/indexer/pull/40, Fetch data once-per-registered
     contract on the indexer side
 - stellar-registry/ui#38
