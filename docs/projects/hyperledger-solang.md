@@ -5,7 +5,7 @@ parent: Public Good Projects
 proposal_issue: 122
 proposer: salaheldinsoliman
 category: "Developer Experience"
-budget: "$25,000"
+budget: "$28,000"
 ---
 
 # Hyperledger Solang
@@ -16,14 +16,16 @@ _A Solidity compiler for Stellar_
 
 <!-- markdownlint-enable MD036 -->
 
-|                      |                                                                                                    |
-| -------------------- | -------------------------------------------------------------------------------------------------- |
-| **Category**         | Developer Experience                                                                               |
-| **Website**          | <https://solang.io/>                                                                               |
-| **Repository**       | <https://github.com/hyperledger-solang/solang>                                                     |
-| **First Released**   | November 2025                                                                                      |
-| **Intake**           | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/24> |
-| **Budget Requested** | $25,000                                                                                            |
+|                         |                                                                                                    |
+| ----------------------- | -------------------------------------------------------------------------------------------------- |
+| **Category**            | Developer Experience                                                                               |
+| **Website**             | <https://solang.io/>                                                                               |
+| **Repository**          | <https://github.com/hyperledger-solang/solang>                                                     |
+| **First Released**      | November 2025                                                                                      |
+| **Intake**              | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/24> |
+| **Budget Requested**    | $28,000                                                                                            |
+| **Maintenance Reserve** | $5,000                                                                                             |
+| **Other**               | $23,000                                                                                            |
 
 ## Project Description
 
@@ -208,18 +210,22 @@ The deliverables of Q2 were categorized as follows:
 
 <!-- markdownlint-disable MD034 -->
 
-- **Expand Solidity support via fuzzing.** Keep running and improving the
-  [Solang fuzzer](https://github.com/salaheldinsoliman/fuzzer) to harden the compiler and widen
-  Solidity coverage — triaging and fixing the crashes it surfaces.
+- **Cover more Solidity features:** At the end of `2026Q3`, Testing with `Sorobench` against `solc`
+  semantic tests produced a `pass` result on `25.7%` of the tests. The proposed impact is raising
+  `pass` to reach `50%` in `2026Q4`. The ultimate goal is full Solidity support on Soroban, except
+  where a Solidity feature is impossible in Soroban; According to this
+  [report](https://github.com/Islam-Imad/sorobench/blob/main/report/summary.md), the ultimate support
+  count is `~90%`.
 
-- **Announce the new "Luxor" release.** Publish and announce Solang
-  [v0.3.5 "Luxor"](https://github.com/hyperledger-solang/solang/releases/tag/v0.3.5), which adds new
-  Soroban examples (e.g. `events`) and a batch of Solidity/compiler fixes, so the Stellar ecosystem
-  can build on the latest compiler.
+- **Address the wider open-source ecosystem:** Most of Solang's development has been discussed and
+  carried out internally. We propose a more open discussion and planning, thus engaging more
+  open-source contributors. This way, we utilize Solang's popularity, to: Get more contributions, and
+  further increase Solang's popularity Have a bigger developer base that have either contributed to
+  or used the compiler
 
-- **Gather another round of feedback.** Put the new release, the Playground, and the language server
-  in front of users and collect feedback on the compiler and its tooling to prioritize the next round
-  of work.
+- **Expand the existing Solang developer community in Egypt and Arabic speaking countries** Put the
+  newer releases, the Playground, and the language server in front of users and collect feedback on
+  the compiler and its tooling to prioritize the next round of work.
 
 - **Complete the LFDT mentorship.** Finish the ongoing
   [mentorship](https://github.com/LF-Decentralized-Trust-Mentorships/mentorship-program/issues/74),
@@ -234,69 +240,89 @@ The deliverables of Q2 were categorized as follows:
 
 <!-- markdownlint-disable MD034 -->
 
-### 1. Extend Solidity support via fuzzing — harden the compiler
+### 1. Reach 45-50% Solidity coverage
 
-Continue running and improving the [Solang fuzzer](https://github.com/salaheldinsoliman/fuzzer),
-triaging and fixing the compiler crashes it surfaces. Robustness is the gating requirement to bring
-Solang to production, so fewer compiler crashes directly de-risk deploying Solidity contracts on
-Soroban.
+Solang's Soroban support is measured on every commit: the
+[Sorobench](https://github.com/Islam-Imad/sorobench) CI job runs the 1,503 `solc` v0.8.22 semantic
+tests on Solang for Soroban, and compares with the EVM result. **386 of the 1,235 applicable tests
+pass (31.3%)**. **382** of the failures can be fixed by implementing the following Solidity features:
 
-- **SMART alignment:** specific and measurable — fix ≥ 20 of the ~25 open fuzzer-found crashes (plus
-  any new ones), keep the fuzzer running continuously with triaged issue reports, and extend its
-  coverage (mutators / target passes) to reach different compiler paths; achievable, as the fuzzer
-  already exists and a wave of fixes is already in flight (e.g. #1884–#1894, #1915, #1924); relevant
-  to bringing Solang to production; and time-bound to the next three months.
+- **[Returning multiple values](https://docs.soliditylang.org/en/v0.8.22/contracts.html#returning-multiple-values)**
+  from public functions, encoded as a Soroban `Vec` the way Rust contracts return tuples.
+- **[Small integer types](https://docs.soliditylang.org/en/v0.8.22/types.html#integers)** (`uint8`,
+  `int16`, …) computed at their declared width, so overflow checks, casts and sign extension behave
+  as in Solidity. Currently, 38 tests return fail because of this.
+- **[User-defined value types](https://docs.soliditylang.org/en/v0.8.22/types.html#user-defined-value-types)**
+  and **[contract types](https://docs.soliditylang.org/en/v0.8.22/types.html#contract-types)** passed
+  across the contract boundary, which currently crash the Soroban encoder (42 tests).
+- **[Function modifiers](https://docs.soliditylang.org/en/v0.8.22/contracts.html#function-modifiers)**,
+  which crash Soroban's function dispatch (19 tests).
+- **[External calls returning `bytes`, `string` and dynamic arrays](https://docs.soliditylang.org/en/v0.8.22/control-structures.html#external-function-calls)**,
+  which crash codegen (25 tests).
+- **Correctness bugs** in [enum](https://docs.soliditylang.org/en/v0.8.22/types.html#enums) and
+  [`bool`](https://docs.soliditylang.org/en/v0.8.22/types.html#booleans) range checks and
+  [shifts](https://docs.soliditylang.org/en/v0.8.22/types.html#shifts) by the full bit width (14
+  tests).
 
-### 2. Differential tester — first working version (via the LFDT mentorship)
+**SMART alignment:** specific and measurable — raise the Sorobench pass rate from 386 to **≥ 618 of
+1,235 applicable tests (31.3% → 45-50%)**, as reported by the Sorobench CI run on Solang `main` at a
+pinned Sorobench commit, so changes to the tool cannot move the number; achievable, as the failures
+behind this target trace to six root causes, each already pinned to a location in the compiler;
+relevant, because every test that passes is a Solidity feature that behaves on Stellar as it does on
+Ethereum, which is what lets EVM developers port contracts with confidence; and time-bound to the
+quarter.
 
-Through the
-[LFDT mentorship](https://github.com/LF-Decentralized-Trust-Mentorships/mentorship-program/issues/74),
-build a differential tester — a separate tool from the fuzzer — that compiles and runs the same
-Solidity contract on `solc`+EVM and `solang`+Soroban and compares observable behavior to surface
-_miscompiles_ (semantic divergences), not just crashes. This catches correctness bugs a crash-fuzzer
-cannot, the next level of production-readiness assurance for Solidity on Stellar.
+### 2. Support Soroban custom `Account` Examples
 
-- **SMART alignment:** specific and measurable — deliver a first working version that runs a set of
-  Solidity contracts through both toolchains and reports behavioral divergences; achievable, as the
-  mentorship is already underway
-  ([#74](https://github.com/LF-Decentralized-Trust-Mentorships/mentorship-program/issues/74));
-  relevant to compiler correctness for Stellar; and time-bound to the next three months, when the
-  mentorship concludes.
+Solang supports 20 of the 25 language-feature examples in
+[stellar/soroban-examples](https://github.com/stellar/soroban-examples) (80%), tracked in
+[#1901](https://github.com/hyperledger-solang/solang/issues/1901). The remaining 5 are custom account
+contracts: `simple_account`, `multisig_1_of_n_account`, `bls_signature`, `account` and
+`modular_account`.
 
-### 3. Grow developer reach and run a structured feedback round
+A custom account is a contract with a `__check_auth` function. When a contract calls `requireAuth()`
+on the account's address, the Soroban host calls `__check_auth` with the signed payload, the
+account's signature and `Vec<Context>`, the list of calls being authorized. `Context` is a Rust enum
+whose variants carry data, while Solidity enums only support integers. The examples also use
+signature-verification builtins and contract error codes that Solang currently doesn't support.
 
-Produce Solidity-on-Stellar developer content — blog posts, a video walkthrough, and a live workshop
-— centered on the new **Luxor (v0.3.5)** release and the Playground, then collect and triage
-feedback. This lowers the onboarding barrier for Solidity/EVM developers to Stellar, grows adoption,
-and creates a prioritized feedback loop that steers future work.
+We aim to support:
 
-- **SMART alignment:** specific and measurable — publish ≥ 2 blog posts and ≥ 1 video, run ≥ 1
-  workshop/live session, gather feedback from ≥ 25 developers, and convert it into ≥ 15 prioritized
-  GitHub issues; achievable given our ~20 monthly active users and prior launch reach; relevant to
-  adoption and onboarding; and time-bound to the next three months.
+1. **`ed25519_verify(bytes32 key, bytes32 message, bytes signature)`**, using the host function
+   `verify_sig_ed25519`.
+2. **`bls12_381_hash_to_g2(bytes message, bytes dst)`**, using the existing host function.
+3. **A `Context` struct provided by Solang** for the `__check_auth` parameter. It says which kind of
+   call is being authorized, which contract and function are called, and holds the call's arguments
+   as `bytes`, read with `abi.decode`. Contracts that do not read it pay nothing for it. We will
+   agree the exact design with the maintainers in a public issue before building it.
+4. **Contract error codes from Solidity custom errors**: `revert UnknownSigner()` returns
+   `Error(Contract, 1)`, as the Rust examples do, instead of aborting the call.
 
-### 4. Support the remaining Soroban examples (carried over from Q2)
+**SMART alignment:** specific and measurable — merge `simple_account`, `multisig_1_of_n_account`,
+`bls_signature` and `account` as Solidity examples with tests that run through the host's
+authorization flow, raising coverage from 20 of 25 (80%) to 25 of 25 (100%).
 
-Complete the remaining feasible upstream
-[soroban-examples](https://github.com/stellar/soroban-examples), fixing the compiler gaps they expose
-along the way — this quarter showed that most "example" work is really compiler work (array
-allocation, ABI returns, arrays of structs as parameters). Progress is tracked per example, with
-coverage percentages and the calculation shown, in
-[#1901](https://github.com/hyperledger-solang/solang/issues/1901).
+### 3. Grow developer reach and run another feedback round
 
-- **SMART alignment:** specific and measurable — raise **merged** coverage from 40% (10/25) to ≥ 68%
-  (17/25) by landing the five examples currently in open PRs
-  ([#1983](https://github.com/hyperledger-solang/solang/pull/1983),
-  [#1985](https://github.com/hyperledger-solang/solang/pull/1985),
-  [#1986](https://github.com/hyperledger-solang/solang/pull/1986),
-  [#1968](https://github.com/hyperledger-solang/solang/pull/1968),
-  [#1977](https://github.com/hyperledger-solang/solang/pull/1977)) and adding `eth_abi` and
-  `merkle_distribution`; the 8 examples requiring new host-function support (custom accounts,
-  deploy/upgrade, BLS/ZK) are explicitly out of scope for this quarter and tracked separately in
-  #1901; achievable, as the blocking compiler fixes are already in review; relevant to
-  Solidity-on-Stellar parity; and time-bound to the next three months.
+Produce Solidity-on-Stellar developer content — blog posts, video walkthroughs, and a live workshops
+then collect and triage feedback. This lowers the onboarding barrier for Solidity/EVM developers to
+Stellar, grows adoption, and creates a prioritized feedback loop that steers future work.
 
-<!-- markdownlint-enable MD034 -->
+**SMART alignment:** specific and measurable — publish ≥ 2 blog posts and ≥ 1 video, run ≥ 1
+workshop/live session; achievable given our ~40 monthly active users and prior launch reach; relevant
+to adoption and onboarding; and time-bound to the next three months.
+
+### 4. Make Solang development process more open
+
+Currently, most of the work and design decisions in Solang are made internally by ABS GmbH. We intend
+to make the development process more open, that is to attract more contributions from the open-source
+ecosystem. This achieves two goals: 1- Attract more developers wanting to contribute to open-source,
+giving them an intro to the Stellar ecosystem. 2- Solang gains more popularity.
+
+**SMART alignment:** specific and measurable — a public design issue for each new language feature in
+this proposal before it is built, and ~10 `good first issue` issues; achievable, as the tracker and
+Sorobench reports are already public; relevant, as it brings in new contributors and community
+review; and time-bound to the quarter.
 
 ## Metrics loaded from PG Atlas
 
