@@ -368,7 +368,8 @@ is ready, coordinate on NQG/Tansu per their [roadmap](https://hackmd.io/@dan13ra
 
 <!-- markdownlint-disable MD034 -->
 
-The maintenance reserve of $12,000 covers the work that arrives during the quarter: bug and security
+The maintenance reserve of
+$12,000 covers the work that arrives during the quarter: bug and security
 fixes, dependencies, releases, the operation of the contract on mainnet and user support. The
 deliverables below that add something new make up the **Other** share of $38,000.
 
