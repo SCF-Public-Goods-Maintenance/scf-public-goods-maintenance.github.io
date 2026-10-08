@@ -27,8 +27,8 @@ projects._
 | **First Released**      | October 2025                                                                                       |
 | **Intake**              | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/88> |
 | **Budget Requested**    | $50,000                                                                                            |
-| **Maintenance Reserve** | $10,000                                                                                            |
-| **Other**               | $40,000                                                                                            |
+| **Maintenance Reserve** | $12,000                                                                                            |
+| **Other**               | $38,000                                                                                            |
 
 ## Project Description
 
@@ -368,10 +368,9 @@ is ready, coordinate on NQG/Tansu per their [roadmap](https://hackmd.io/@dan13ra
 
 <!-- markdownlint-disable MD034 -->
 
-The maintenance reserve of
-$10,000 covers the work that arrives during the quarter: bug and security
+The maintenance reserve of $12,000 covers the work that arrives during the quarter: bug and security
 fixes, dependencies, releases, the operation of the contract on mainnet and user support. The
-deliverables below that add something new make up the **Other** share of $40,000.
+deliverables below that add something new make up the **Other** share of $38,000.
 
 ### D1: Public Goods Award
 
