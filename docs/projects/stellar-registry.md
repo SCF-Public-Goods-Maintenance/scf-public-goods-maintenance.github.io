@@ -892,7 +892,8 @@ Issues:
 
 - stellar-registry/cli#34: Stellar Community Call
 - stellar-registry/ui#103: Present Registry at HackMeridian
-- stellar-registry/ui#104: Host monthly Office Hours to teach people about Registry or answer their questions
+- stellar-registry/ui#104: Host monthly Office Hours to teach people about Registry or answer their
+  questions
 
 Proof: links to recorded videos or event links
 
@@ -989,11 +990,13 @@ Issues:
 - stellar-registry/actions#16: add "Contract `upgrade`" workflow step
 - stellar-registry/actions#17: add human-initiated "Mainnet publish/deploy" workflow step
 - stellar-scaffold/ui#280: adopt stellar-registry/actions for Wasm publish & contract upgrade
-- stellar-registry/oz-combined-wasms#4: adopt stellar-registry/actions for Wasm publish & contract upgrade
+- stellar-registry/oz-combined-wasms#4: adopt stellar-registry/actions for Wasm publish & contract
+  upgrade
 - Consulting-Manao/tansu#255: adopt stellar-registry/actions for Wasm publish & contract upgrade
 - nidohq/nido#239: adopt stellar-registry/actions for Wasm publish & contract upgrade
 - stellar-registry/perch#113: adopt stellar-registry/actions for Wasm publish & contract upgrade
-- Moonlight-Protocol/soroban-core#51: adopt stellar-registry/actions for Wasm publish & contract upgrade
+- Moonlight-Protocol/soroban-core#51: adopt stellar-registry/actions for Wasm publish & contract
+  upgrade
 
 Value to ecosystem: maturation of `stellar-registry/actions` ahead of Q1 rollout to partner teams and
 broader ecosystem; simplified & automatic best-practices publishing of Wasms with associated contract
