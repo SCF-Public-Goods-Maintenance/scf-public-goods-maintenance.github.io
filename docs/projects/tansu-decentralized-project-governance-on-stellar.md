@@ -6,6 +6,7 @@ proposal_issue: 105
 proposer: tupui
 category: "Governance Tools"
 budget: "$50,000 in XLM"
+health_endpoint: https://app.tansu.dev
 ---
 
 # Tansu - Decentralized project governance on Stellar
@@ -17,14 +18,17 @@ projects._
 
 <!-- markdownlint-enable MD036 -->
 
-|                      |                                                                                                    |
-| -------------------- | -------------------------------------------------------------------------------------------------- |
-| **Category**         | Governance Tools                                                                                   |
-| **Website**          | <https://tansu.dev>                                                                                |
-| **Repository**       | <https://github.com/Consulting-Manao/tansu>                                                        |
-| **First Released**   | October 2025                                                                                       |
-| **Intake**           | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/88> |
-| **Budget Requested** | 50000                                                                                              |
+|                         |                                                                                                    |
+| ----------------------- | -------------------------------------------------------------------------------------------------- |
+| **Category**            | Governance Tools                                                                                   |
+| **Website**             | <https://tansu.dev>                                                                                |
+| **Repository**          | <https://github.com/Consulting-Manao/tansu>                                                        |
+| **Membership**          | <https://radicle.network/nodes/radicle.consulting-manao.com/rad:z4KRDyBiL6kP6n5FWP6kJWga6BXJV>     |
+| **First Released**      | October 2025                                                                                       |
+| **Intake**              | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/88> |
+| **Budget Requested**    | $50,000                                                                                            |
+| **Maintenance Reserve** | $12,000                                                                                            |
+| **Other**               | $38,000                                                                                            |
 
 ## Project Description
 
@@ -62,7 +66,7 @@ leverage 1 to 2 people from the team. Mostly, but not limited:
   [LinkedIn](https://www.linkedin.com/in/chadoh), Discord @chadoh) on the architecutre and general
   flow.
 - Willem Wyndham ([GitHub](https://github.com/willemneal),
-  [LinkedIn](https://www.linkedin.com/in/willem-wyndham), Discord @sirwillem), to review my work on
+  [LinkedIn](https://www.linkedin.com/in/willem-wyndham), Discord `@sirwillem`), to review my work on
   smart contracts.
 - Hugo Heer ([GitHub](https://github.com/hugo-heer),
   [LinkedIn](https://www.linkedin.com/in/hugo-heer-b29a0419b)), a frontend guru.
@@ -334,24 +338,29 @@ Proof of completion:
 
 <!-- markdownlint-disable MD034 -->
 
-Q3's objective is about making Tansu reliable and usable for our first users. The main goals are:
+Q3 made Tansu reliable for its first users. Q4's objective is real use on mainnet. The main goals
+are:
 
-1. **PG Award Q3 on Tansu:** same testnet stack as Q2, we are going to run the Q3 program on Tansu
-   and there are lots of things to figure out.
+1. **PG Award on mainnet:** the first two rounds ran on testnet. The Q4 round runs on Tansu on
+   mainnet, and the Q1 2027 round is set up there too. The Q4 vote takes place at the start of the
+   quarter, so part of this work is funded retroactively. We also take over from SDF and SCF the
+   running of NQG for Public Goods.
 
-2. **Stellar Registry:** this is our second use case, the registry has it's own set of constraints
-   and we need to see how to effectively support the project.
+2. **Membership on mainnet:** this is the largest item of the quarter. We bring `stellar-membership`
+   and its promotions to mainnet with SCF's member data, keep that data in sync, and push the updates
+   to Discord, so that roles and voting weights come from one contract.
 
-3. **Governance:** there are many things to improve, from the collateral system overall to new
-   features around supply chain. Now that we have the first set of users, we have a better
-   understanding of the scope and what we should do and not.
+3. **Governance:** new ways to take part in a vote: delegation, veto, voting on several proposals at
+   once and finalizing on a quorum. They need design and UX work first, together with the integration
+   of memberships.
 
-4. **Maintenance:** from the preparation to an audit, the migration to Radicle to many small code
-   adjustments, there is a lot of continuous work.
+4. **Security and maintenance:** close the remaining findings of our pre-audit, get an external
+   audit, operate the new version of the contract on mainnet, and move our releases from GitHub to
+   Radicle.
 
 **Conditional:** If
 [Nouns Builder on Stellar](https://communityfund.stellar.org/dashboard/submissions/recinNIkq2DGjZ8Hq)
-is funded, coordinate on NQG/Tansu per their [roadmap](https://hackmd.io/@dan13ram/r123BqdJMl).
+is ready, coordinate on NQG/Tansu per their [roadmap](https://hackmd.io/@dan13ram/r123BqdJMl).
 
 <!-- markdownlint-enable MD034 -->
 
@@ -359,73 +368,103 @@ is funded, coordinate on NQG/Tansu per their [roadmap](https://hackmd.io/@dan13r
 
 <!-- markdownlint-disable MD034 -->
 
+The maintenance reserve of
+$12,000 covers the work that arrives during the quarter: bug and security
+fixes, dependencies, releases, the operation of the contract on mainnet and user support. The
+deliverables below that add something new make up the **Other** share of $38,000.
+
 ### D1: Public Goods Award
 
-Tansu hosts the PG Award program.
+Tansu hosts the PG Award program, now on mainnet.
 
-- **Program NQG score:** with SDF engineering and SCF team on PG Award-specific scoring
-  [e07f96daae8e8bc9075dbe128b16e54357838f48](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/e07f96daae8e8bc9075dbe128b16e54357838f48);
-- **SCF NFT:** workflow to sync the data with the source of truth and work on Neurons
-  [33d6cff5b33baf6171b686f51167eeb302407cd4](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/33d6cff5b33baf6171b686f51167eeb302407cd4);
-- **Mid-grant reviews:** tranche-2 review flow can be moved to GitHub and Tansu (template, outcome
-  hooks);
-- **Q3 round:** intake, D&R, on-chain vote, open office hours, execution with SDF Community;
-- [Conditional **Nouns:**] Nouns Builder NQG alignment if their grant is approved
-  [32e2f0739c61e8b739fc45053848b0b59f74a19d](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/32e2f0739c61e8b739fc45053848b0b59f74a19d).
+- **Q4 round on mainnet:** intake, D&R, on-chain vote on mainnet, open office hours, execution with
+  SDF Community;
+- **Q1 2027 round:** the project and its voting weights set up on mainnet for the next round;
+- **NQG for Public Goods:** handover from SDF and SCF. We run the NQG that gives the Pilots their
+  voting weights in the program, and the round's project reads it on mainnet;
+- [Conditional **Nouns:**] Nouns Builder NQG alignment if their work is ready
+  [32e2f07](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/32e2f0739c61e8b739fc45053848b0b59f74a19d).
 
-Measure: Q3 vote on testnet at https://testnet.tansu.dev/project/?name=stellarpgq3 ; (conditional on
-SDF) mainnet NFT/NQG populated; mid-grant template shipped or new process proposal documented.
+Measure: Q4 vote executed on Tansu on mainnet, with the link to the round; the mainnet project of the
+Q1 2027 round created, with its NQG contract set; the NQG for Public Goods run by us, with the
+handover and its operation documented.
 
-### D2: Stellar Registry
+### D2: Stellar membership
 
-Registry Security Council vote on Tansu and further support
-[3111b944792c0b5da9f6c8f88e52cdeebd1a3d82](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/3111b944792c0b5da9f6c8f88e52cdeebd1a3d82).
+The membership of the Stellar community,
+[`stellar-membership`](https://radicle.network/nodes/radicle.consulting-manao.com/rad:z4KRDyBiL6kP6n5FWP6kJWga6BXJV),
+goes to mainnet. This is the largest deliverable of the quarter.
 
-- **`registry-tansu-manager` factory:** authorization contracts governed via Tansu
-  ([stellar-registry/contracts](https://github.com/stellar-registry/contracts/tree/main/contracts/registry-tansu-manager));
-- **Proposal and outcome templates:** registry publish, flag, namespace, etc.
-- **Registry name to address:** outcome contracts reference registry names; dApp resolves at
-  creation/execution;
-- **Contract lifecycle:** document register, propose, vote, deploy, version with Tansu in the loop;
+- **Mainnet deployment:** the membership contract and its app, with SDF;
+- **Member data:** existing members moved from the current source of truth, and SCF's data kept in
+  sync with the contract afterwards;
+- **Discord:** changes of a membership, such as a new role, pushed to Discord;
+- **Promotions:** role promotions voted by the Pilots on Tansu, weighed by their NQG;
+- **Neurons:** decide whether the contract holds the individual neurons of a member next to their NQG
+  score
+  [33d6cff](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/33d6cff5b33baf6171b686f51167eeb302407cd4).
 
-Measure: Testnet demo: Tansu vote executes a registry action; templates in dApp; name resolution
-works.
+Measure: (conditional on SDF) contract deployed on mainnet with members minted; SCF's data in sync
+with the contract, with the sync documented; a role change on the contract reflected on Discord; one
+promotion voted on Tansu and applied by the contract; the decision on neurons documented. Failing the
+mainnet deployment, the same on testnet.
 
 ### D3: Governance features
 
-- **Evidence in dApp:** SBOM/CVE/Attestation usable
-  [#204](https://github.com/Consulting-Manao/tansu/issues/204)[#196](https://github.com/Consulting-Manao/tansu/issues/196)
-- **Governance configuration:** rethink a per-project configuration for membership, weight mode,
-  rethink the outcome flow;
-- **Collateral rework:** Merkle-based collateral or other mechanism to alleviate the contract
-  constraints
-  [c6a71ed20bd6bfd9af5f34c838135919c21ac2f4]([https://github.com/Consulting-Manao/tansu/issues/111)[#112](<https://github.com/Consulting-Manao/tansu/issues/112](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/c6a71ed20bd6bfd9af5f34c838135919c21ac2f4)>);
-- **Endorsement:** mechanism to attest a specific commit
-  [8dea8085473cec6026e3a5c1126011fc4071e96a](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/8dea8085473cec6026e3a5c1126011fc4071e96a).
-- **Discussions:** improve the integration on Tansu of the discussions from GitHub
-  [850a9420a6a4ac1fc0f091677455764fce3ab5b0](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/850a9420a6a4ac1fc0f091677455764fce3ab5b0)
+Delegation, veto, batch voting and quorum change how people take part in a vote. They need design and
+UX work before code, together with the integration of memberships.
 
-Measure: Evidence on project pages and management in the dApp itself; Nido support with a transparent
-on-boarding and usage of Tansu; per-project config documented; yes/no approach documented; better
-management of discussions and other artifacts.
+- **Delegation:** a member delegates their voting weight to another member, with a cap on the weight
+  one member can receive and no re-delegation
+  [159e843](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/159e843c44e7bbf3619422e43b7f3a861f26544c);
+- **Veto:** a way to stop a proposal before it executes. A veto can only reject a proposal, never
+  pass one, and has its own event
+  [4ba4877](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/4ba4877b0867f5e97033b3821d9a913507eb3c65);
+- **Batch voting:** vote on several proposals at once, as a PG Award round needs. This takes a router
+  contract
+  [5e66d44](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/5e66d444403b940e78213acf9dbecb789dde49de);
+- **Quorum:** a proposal can be finalized before the end of its voting period once a quorum is
+  reached, with limits so that this does not become an attack vector
+  [ac49183](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/ac49183173e1d1c2246a19b5658a0b1bb0b1546a);
+- **Membership integration:** roles and voting weights of `stellar-membership` shown and used in the
+  dApp;
+- **Governance settings in the dApp:** voting period and execution delay of a project
+  [0f54f01](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/0f54f017a2f2a0c508fb9c8a0a7c5c18ac56e4ca);
+- **Proposal page:** outcome calls simulated while the form is filled, so that a wrong call is caught
+  before the vote and not at execution
+  [026f31d](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/026f31d802030870ae4fa81d1161db106fe96461);
+- [Stretch **Redesign:**] a UX/UI audit of the whole dApp with help from the community, and a global
+  redesign from its findings.
+
+Measure: a design for delegation, veto, batch voting and quorum, each with its UX and its link with
+memberships, published and discussed; at least one of the four usable on testnet from the dApp; the
+two settings editable in the dApp; outcome simulation in the form live on the dApp. Stretch: the
+UX/UI audit published, with the redesign it leads to.
 
 ### D4: Maintenance, Security and Operations
 
-- **Nido wallet support:** passkey smart accounts with [nido.fyi](https://nido.fyi)
-  [62fa73dfad0c043a58c90feb9ad92ea7310656b7](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/62fa73dfad0c043a58c90feb9ad92ea7310656b7)
-  and considering to use Blux;
-- **Result types** across contract, SDK, and dApp. Evaluate the change from panics;
-- **Storage / TTL:** rent bump and TTL policy for Soroban storage
-  [40170febe4f792b0c802c79130e9d778f1cea7c4](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/40170febe4f792b0c802c79130e9d778f1cea7c4);
-- **Audit-bank prep**: perimeter map, risk notes, runbook;
+- **Token-weighted votes removed:** every project takes its voting weights from badges or from its
+  own NQG contract. A project that wants token weight points to a contract that locks the tokens and
+  answers a weight. Tansu then never handles assets for governance: only the deposits against spam
+  transit through the contract;
+- **Anonymous ballots:** a validity proof per ballot, or a documented operating rule;
+- **External audit:** submission to the Audit Bank;
+- **Mainnet:** operate the new version of the contract, with its first projects registered and
+  voting, and extend the TTL of its entries before they lapse;
 - **Dependencies:** Soroban SDK, Stellar JS, CI deps kept current;
 - **Drips Wave:** continue to promote Stellar and the Drips Wave platform;
-- **Radicle:** assess gaps and use more
-  ([radicle.consulting-manao.com](https://radicle.network/nodes/radicle.consulting-manao.com)).
+- **Releases from Radicle:** publishing is tied to GitHub today. The release jobs move to our Radicle
+  CI, and releases are published on Radicle with their artifacts
+  [d6f5bd9](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/d6f5bd9103d5b6eb84e0269c469ad1aec885e12c);
+- **Stellar Registry:** each release of the contract is published on the Stellar Registry by the
+  release job
+  [c28ee8f](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/c28ee8fc7fe83d514e5a67024a6f35d779364649).
 
-Measure: UX improved with passkey based account supported, result types consistency documented; TTL
-strategy documented and applied; runbook published; audit assessment addendum; dependencies
-up-to-date; Radicle usage with some patches and issues.
+Measure: token-weighted proposals removed from the contract and the dApp, with a documented example
+of an NQG contract backed by locked tokens; the anonymous ballot finding closed, or accepted in
+writing; Audit Bank submission made; mainnet transactions of a project registration and of a vote
+linked; TTL extension transactions linked; dependencies up-to-date; one release published from the
+Radicle CI with its artifacts, and present on the Stellar Registry.
 
 <!-- markdownlint-enable MD034 -->
 
