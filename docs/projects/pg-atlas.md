@@ -6,25 +6,31 @@ proposer: aolieman
 category: "Ecosystem Visibility"
 budget: "$37,000"
 ---
+
 # PG Atlas
 
 <!-- markdownlint-disable MD036 -->
-_An open data platform for the Stellar software ecosystem that provides transparency into ecosystem health, project criticality, adoption signals, and contributor activity — helping voters, maintainers, and builders make data-driven decisions._
+
+_An open data platform for the Stellar software ecosystem that provides transparency into ecosystem
+health, project criticality, adoption signals, and contributor activity — helping voters,
+maintainers, and builders make data-driven decisions._
 <!-- markdownlint-enable MD036 -->
-| | |
-| --- | --- |
-| **Category** | Ecosystem Visibility |
-| **Website** | <https://pgatlas.xyz> |
-| **Repository** | <https://github.com/SCF-Public-Goods-Maintenance/> |
-| **First Released** | April 2026 |
-| **Intake** | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/140> |
-| **Budget Requested** | $37,000 |
-| **Maintenance Reserve** | $16,000 |
-| **Other** | $21,000 |
+
+|                         |                                                                                                     |
+| ----------------------- | --------------------------------------------------------------------------------------------------- |
+| **Category**            | Ecosystem Visibility                                                                                |
+| **Website**             | <https://pgatlas.xyz>                                                                               |
+| **Repository**          | <https://github.com/SCF-Public-Goods-Maintenance/>                                                  |
+| **First Released**      | April 2026                                                                                          |
+| **Intake**              | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/140> |
+| **Budget Requested**    | $37,000                                                                                             |
+| **Maintenance Reserve** | $16,000                                                                                             |
+| **Other**               | $21,000                                                                                             |
 
 ## Project Description
 
 <!-- markdownlint-disable MD034 -->
+
 PG Atlas is an open data platform and metrics service for understanding the Stellar software
 ecosystem. Our primary aim is to show how Stellar-specific public goods are embedded in the broader
 ecosystem, consisting of projects, people, and the software that they build.
@@ -41,6 +47,7 @@ Tansu-based governance.
 ## Team & Experience
 
 <!-- markdownlint-disable MD034 -->
+
 **Alex Olieman**, based in the Netherlands
 
 - Role: Project maintainer
@@ -76,6 +83,7 @@ voluntarily and without compensation. We'll refer to Christian's work in our del
 ## Retroactive Impact
 
 <!-- markdownlint-disable MD034 -->
+
 PG Atlas is operational and has supported the SCF Public Goods Award process since Q2. In the Q3
 round, we added headline metrics to all proposals as dynamic badges. The criticality score is missing
 from the row of badges, because of systematic coverage gaps that we address in this proposal. More
@@ -96,12 +104,14 @@ Tansu and the Public Goods Award program itself are continuing their integration
 ## Past Deliverables
 
 <!-- markdownlint-disable MD034 -->
+
 N/A
 <!-- markdownlint-enable MD034 -->
 
 ## Proposed Impact
 
 <!-- markdownlint-disable MD034 -->
+
 Over the next three months, our goal is to make PG Atlas a more complete, accurate, and operationally
 reliable source of evidence about public goods in the Stellar ecosystem.
 
@@ -131,6 +141,7 @@ goals.
 ## Proposed Deliverables
 
 <!-- markdownlint-disable MD034 -->
+
 ## Maintenance: focused on data quality improvements
 
 Much of our maintenance capacity is reserved to remove data quality issues as they are discovered.
@@ -282,4 +293,3 @@ outages on the status page.
 ## Legal Acknowledgements
 
 - [x] As the project representative, I agree to the Legal Acknowledgements.
-
