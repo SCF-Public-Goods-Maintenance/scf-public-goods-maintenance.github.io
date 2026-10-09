@@ -451,7 +451,7 @@ Description from last quarter:
 
 - We deliberately waited until the v2 schema landed at the end of the quarter, so the guide documents
   the final format and not one that was about to be replaced. It's in review now
-  (https://github.com/stellar-scaffold/cli/pull/613).
+  (https://github.com/stellar-scaffold/cli/pull/615).
 
 #### ✅ D6: Documentation consolidation & redesign
 
