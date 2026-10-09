@@ -174,49 +174,46 @@ design).
 
 ##### Deliverable 1 — Protocol 26 "Yardstick" Support
 
-**Closing issue:**
-[#155 — SDK Updates for Protocol 26 Compatibility](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/155)
-(closed 2026-06-07, together with the 15.1.0 stable release).
+**Closing issue:** [#155 — SDK Updates for Protocol 26 Compatibility][i155] (closed 2026-06-07,
+together with the 15.1.0 stable release).
 
 **Delivery PRs:**
 
-| PR                                                                                                                              | Commit                                                                       | Magnitude                       |
-| ------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ------------------------------- |
-| [#169](https://github.com/Beans-BV/dotnet-stellar-sdk/pull/169) migrate XDR generator from xdrgen                               | [`67ca1e48`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/67ca1e48) | 82 files, +8,305 / −34          |
-| [#170](https://github.com/Beans-BV/dotnet-stellar-sdk/pull/170) regenerate XDR classes with the new generator                   | [`80761a3e`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/80761a3e) | **478 files, +17,043 / −3,176** |
-| [#176](https://github.com/Beans-BV/dotnet-stellar-sdk/pull/176) bump stellar-xdr to v26                                         | [`945633a2`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/945633a2) | 29 files, +559 / −56            |
-| [#177](https://github.com/Beans-BV/dotnet-stellar-sdk/pull/177) SDK types for v26 frozen ledger keys + trustline-frozen results | [`80ae353c`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/80ae353c) | 43 files, +1,109 / −59          |
+| PR                                                                           | Commit                                                                       | Magnitude                       |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ------------------------------- |
+| [#169][p169] migrate XDR generator from xdrgen                               | [`67ca1e48`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/67ca1e48) | 82 files, +8,305 / −34          |
+| [#170][p170] regenerate XDR classes with the new generator                   | [`80761a3e`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/80761a3e) | **478 files, +17,043 / −3,176** |
+| [#176][p176] bump stellar-xdr to v26                                         | [`945633a2`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/945633a2) | 29 files, +559 / −56            |
+| [#177][p177] SDK types for v26 frozen ledger keys + trustline-frozen results | [`80ae353c`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/80ae353c) | 43 files, +1,109 / −59          |
 
 **Plan scorecard** (every Protocol 26 item from the submission, verified in code at `f065324f`):
 
-| Planned item                                   | Status               | Where                                                                                                                                                                                                                                                            |
-| ---------------------------------------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 5 new frozen-ledger-key XDR types (CAP-77)     | ✅ 5/5               | `EncodedLedgerKey`, `FreezeBypassTxs`, `FreezeBypassTxsDelta`, `FrozenLedgerKeys`, `FrozenLedgerKeysDelta` (all in `StellarDotnetSdk.Xdr/`, added by #176)                                                                                                       |
-| 4 new ConfigSettingID values                   | ✅ 4/4               | `ConfigSettingID.cs` — values 17–20 (`CONFIG_SETTING_FROZEN_LEDGER_KEYS` … `FREEZE_BYPASS_TXS_DELTA`)                                                                                                                                                            |
-| 16 new BN254 ContractCostType entries (CAP-80) | ✅ 16/16             | `ContractCostType.cs` — `Bn254EncodeFp`=70 … `Bn254G1Msm`=85                                                                                                                                                                                                     |
-| 4 new result codes                             | ✅ 4/4               | `txFROZEN_KEY_ACCESSED`, `CLAIM_CLAIMABLE_BALANCE_TRUSTLINE_FROZEN`, `LIQUIDITY_POOL_DEPOSIT_TRUSTLINE_FROZEN`, `LIQUIDITY_POOL_WITHDRAW_TRUSTLINE_FROZEN` (XDR enums + SDK result wrappers + tests)                                                             |
-| 7 contract-spec unbounded-array changes        | ✅ 7/7               | `SCSpecEventV0`, `SCSpecFunctionV0`, `SCSpecUDTEnumV0`, `SCSpecUDTErrorEnumV0`, `SCSpecUDTStructV0`, `SCSpecUDTUnionCaseTupleV0`, `SCSpecUDTUnionV0` (all touched by #176)                                                                                       |
-| Matrices updated to v26                        | ✅ Done (2026-07-02) | `horizon_matrix.md` pins Horizon v27.0.0, `rpc_matrix.md` pins RPC v26.0.1 — verified against upstream release notes: no new endpoints or RPC methods in either version (Horizon v26/v27 changes are result codes + effects the SDK already ships via #177/#179) |
-| `getLatestLedger` v26 response fields          | ✅ Done (2026-07-02) | `CloseTime` / `HeaderXdr` / `MetadataXdr` added to `GetLatestLedgerResponse` (6/6 response fields, verified against the `stellar-rpc` v26.0.1 handler source) with unit tests                                                                                    |
+| Planned item                                   | Status               | Where                                                                                                                                                                                                                                                                            |
+| ---------------------------------------------- | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 5 new frozen-ledger-key XDR types (CAP-77)     | ✅ 5/5               | `EncodedLedgerKey`, `FreezeBypassTxs`, `FreezeBypassTxsDelta`, `FrozenLedgerKeys`, `FrozenLedgerKeysDelta` (all in `StellarDotnetSdk.Xdr/`, added by [#176][p176])                                                                                                               |
+| 4 new ConfigSettingID values                   | ✅ 4/4               | `ConfigSettingID.cs` — values 17–20 (`CONFIG_SETTING_FROZEN_LEDGER_KEYS` … `FREEZE_BYPASS_TXS_DELTA`)                                                                                                                                                                            |
+| 16 new BN254 ContractCostType entries (CAP-80) | ✅ 16/16             | `ContractCostType.cs` — `Bn254EncodeFp`=70 … `Bn254G1Msm`=85                                                                                                                                                                                                                     |
+| 4 new result codes                             | ✅ 4/4               | `txFROZEN_KEY_ACCESSED`, `CLAIM_CLAIMABLE_BALANCE_TRUSTLINE_FROZEN`, `LIQUIDITY_POOL_DEPOSIT_TRUSTLINE_FROZEN`, `LIQUIDITY_POOL_WITHDRAW_TRUSTLINE_FROZEN` (XDR enums + SDK result wrappers + tests)                                                                             |
+| 7 contract-spec unbounded-array changes        | ✅ 7/7               | `SCSpecEventV0`, `SCSpecFunctionV0`, `SCSpecUDTEnumV0`, `SCSpecUDTErrorEnumV0`, `SCSpecUDTStructV0`, `SCSpecUDTUnionCaseTupleV0`, `SCSpecUDTUnionV0` (all touched by [#176][p176])                                                                                               |
+| Matrices updated to v26                        | ✅ Done (2026-07-02) | `horizon_matrix.md` pins Horizon v27.0.0, `rpc_matrix.md` pins RPC v26.0.1 — verified against upstream release notes: no new endpoints or RPC methods in either version (Horizon v26/v27 changes are result codes + effects the SDK already ships via [#177][p177]/[#179][p179]) |
+| `getLatestLedger` v26 response fields          | ✅ Done (2026-07-02) | `CloseTime` / `HeaderXdr` / `MetadataXdr` added to `GetLatestLedgerResponse` (6/6 response fields, verified against the `stellar-rpc` v26.0.1 handler source) with unit tests                                                                                                    |
 
 **Timeline vs plan:** 15.1.0-beta with full Protocol 26 support shipped **2026-04-22** — six days
 after the Testnet upgrade (Apr 16) and two weeks **before** the Mainnet vote (May 6). No .NET
 integrator broke on the Mainnet upgrade. Stable
 [15.1.0](https://github.com/Beans-BV/dotnet-stellar-sdk/releases/tag/15.1.0) (2026-06-07) contains
-exactly #169, #170, #176, #177 (verified via release notes).
+exactly [#169][p169], [#170][p170], [#176][p176], [#177][p177] (verified via release notes).
 
-**Bonus — Protocol 27 "Zipper" (CAP-71), pulled forward from Q3/Q4:**
-[PR #187](https://github.com/Beans-BV/dotnet-stellar-sdk/pull/187) (merged **2026-06-18, the day of
-the Protocol 27 Testnet upgrade**; commit
+**Bonus — Protocol 27 "Zipper" (CAP-71), pulled forward from Q3/Q4:** [PR #187][p187] (merged
+**2026-06-18, the day of the Protocol 27 Testnet upgrade**; commit
 [`deb388b7`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/deb388b7), 18 files, +3,277 /
 −165) delivers `SorobanAddressCredentialsV2`, delegated credentials
 (`SOROBAN_CREDENTIALS_ADDRESS_WITH_DELEGATES`), and signing helpers (`AuthorizeEntry`,
 `AuthorizeEntryWithDelegates`, `BuildAuthorizationEntryPreimageHash`), KAT-verified against
 `@stellar/stellar-sdk` 16.0.0-rc.1. Shipped in
 [16.0.0-beta](https://github.com/Beans-BV/dotnet-stellar-sdk/releases/tag/16.0.0-beta) (2026-06-25).
-Tracking issues
-[#186](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/186)/[#188](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/188)
-stay open until the stable 16.0.0 release closes out the remaining RPC-flag follow-up.
+Tracking issues [#186][i186]/[#188][i188] stay open until the stable 16.0.0 release closes out the
+remaining RPC-flag follow-up.
 
 ---
 
@@ -231,10 +228,10 @@ stay open until the stable 16.0.0 release closes out the remaining RPC-flag foll
 
 **Delivery PRs:**
 
-| PR                                                                                               | Commit                                                                       | Magnitude              |
-| ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------- | ---------------------- |
-| [#185](https://github.com/Beans-BV/dotnet-stellar-sdk/pull/185) integration test suite (phase 1) | [`539530e4`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/539530e4) | 14 files, +647 / −4    |
-| [#196](https://github.com/Beans-BV/dotnet-stellar-sdk/pull/196) integration test suite (phase 2) | [`f065324f`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/f065324f) | 30 files, +1,258 / −15 |
+| PR                                            | Commit                                                                       | Magnitude              |
+| --------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------- |
+| [#185][p185] integration test suite (phase 1) | [`539530e4`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/539530e4) | 14 files, +647 / −4    |
+| [#196][p196] integration test suite (phase 2) | [`f065324f`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/f065324f) | 30 files, +1,258 / −15 |
 
 **All 17 Priority-1 MUST areas, each with a named test class** in
 [`StellarDotnetSdk.IntegrationTests/`](https://github.com/Beans-BV/dotnet-stellar-sdk/tree/main/StellarDotnetSdk.IntegrationTests):
@@ -264,7 +261,7 @@ The CI workflow
 typical wall clock ~9 min) uses env-configurable endpoints with public-Testnet defaults and
 secrets-based tokens, and uploads a TRX result artifact.
 
-Writing the tests also surfaced and fixed **2 real SDK bugs** shipped inside #196:
+Writing the tests also surfaced and fixed **2 real SDK bugs** shipped inside [#196][p196]:
 `ExtendFootprintOperation.cs` and `RestoreFootprintOperation.cs` — exactly the class of "mocked tests
 pass while production breaks" defect this deliverable was funded to catch.
 
@@ -275,30 +272,25 @@ not completed in Q2 move to Q3"), the full SHOULD list carries into Q3.
 
 ##### Deliverable 3 — Multi-Platform Preparation: Multi-Target + .NET Modernization
 
-**Part B — Modern .NET APIs: all 6 PRs merged** (closing issues
-[#164](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/164),
-[#165](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/165),
-[#166](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/166),
-[#167](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/167),
-[#168](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/168) — all closed):
+**Part B — Modern .NET APIs: all 6 PRs merged** (closing issues [#164][i164], [#165][i165],
+[#166][i166], [#167][i167], [#168][i168] — all closed):
 
-| PR                                                                                                                                                                        | Commit                                                                       | Magnitude               | Landed at                                                                                 |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ----------------------- | ----------------------------------------------------------------------------------------- |
-| [#180](https://github.com/Beans-BV/dotnet-stellar-sdk/pull/180) `FrozenDictionary` for static lookup tables                                                               | [`360e040f`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/360e040f) | 6 files, +464 / −279    | `OperationResponseJsonConverter`, `EffectResponseJsonConverter`, 2 enum converters        |
-| [#181](https://github.com/Beans-BV/dotnet-stellar-sdk/pull/181) `AllowDuplicateProperties = false`                                                                        | [`1cadace0`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/1cadace0) | 3 files, +108 / −0      | `Converters/JsonOptions.cs:51`                                                            |
-| [#182](https://github.com/Beans-BV/dotnet-stellar-sdk/pull/182) `RespectNullableAnnotations`                                                                              | [`e03da676`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/e03da676) | 2 files, +75 / −0       | `Converters/JsonOptions.cs:54`                                                            |
-| [#183](https://github.com/Beans-BV/dotnet-stellar-sdk/pull/183) `JsonSerializerOptions.MakeReadOnly()`                                                                    | [`f0eb9987`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/f0eb9987) | 2 files, +94 / −33      | `Converters/JsonOptions.cs:85`                                                            |
-| [#189](https://github.com/Beans-BV/dotnet-stellar-sdk/pull/189) `Stream.ReadExactly()` in XDR decoding                                                                    | [`f33f13f2`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/f33f13f2) | 22 files, +688 / −752   | `XdrDataInputStream.cs` (7 call sites) + generator template                               |
-| [#184](https://github.com/Beans-BV/dotnet-stellar-sdk/pull/184) HTTP retry overhaul (`ForSoroban`/`ForHorizon` presets, POST retry on 408/429/5xx, `Retry-After` honored) | [`d72fa82c`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/d72fa82c) | 20 files, +2,591 / −370 | `Requests/HttpResilienceOptions.cs`, new `RetryingHttpMessageHandler`, `RetryAfterParser` |
+| PR                                                                                                                     | Commit                                                                       | Magnitude               | Landed at                                                                                 |
+| ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ----------------------- | ----------------------------------------------------------------------------------------- |
+| [#180][p180] `FrozenDictionary` for static lookup tables                                                               | [`360e040f`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/360e040f) | 6 files, +464 / −279    | `OperationResponseJsonConverter`, `EffectResponseJsonConverter`, 2 enum converters        |
+| [#181][p181] `AllowDuplicateProperties = false`                                                                        | [`1cadace0`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/1cadace0) | 3 files, +108 / −0      | `Converters/JsonOptions.cs:51`                                                            |
+| [#182][p182] `RespectNullableAnnotations`                                                                              | [`e03da676`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/e03da676) | 2 files, +75 / −0       | `Converters/JsonOptions.cs:54`                                                            |
+| [#183][p183] `JsonSerializerOptions.MakeReadOnly()`                                                                    | [`f0eb9987`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/f0eb9987) | 2 files, +94 / −33      | `Converters/JsonOptions.cs:85`                                                            |
+| [#189][p189] `Stream.ReadExactly()` in XDR decoding                                                                    | [`f33f13f2`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/f33f13f2) | 22 files, +688 / −752   | `XdrDataInputStream.cs` (7 call sites) + generator template                               |
+| [#184][p184] HTTP retry overhaul (`ForSoroban`/`ForHorizon` presets, POST retry on 408/429/5xx, `Retry-After` honored) | [`d72fa82c`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/d72fa82c) | 20 files, +2,591 / −370 | `Requests/HttpResilienceOptions.cs`, new `RetryingHttpMessageHandler`, `RetryAfterParser` |
 
 Every planned Part B item from the submission (FrozenDictionary, ReadExactly,
 AllowDuplicateProperties, RespectNullableAnnotations, MakeReadOnly) is merged and verifiable by
 `grep` at the file/line references above.
 
-**Part A — Multi-target `net10.0 + net8.0 + netstandard2.1`: merged as
-[PR #195](https://github.com/Beans-BV/dotnet-stellar-sdk/pull/195)** (merged 2026-07-02, commit
-[`56671eb4`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/56671eb4), closing issue
-[#162](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/162)):
+**Part A — Multi-target `net10.0 + net8.0 + netstandard2.1`: merged as [PR #195][p195]** (merged
+2026-07-02, commit [`56671eb4`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/56671eb4),
+closing issue [#162][i162]):
 
 | Criterion                          | Status                                                                                                                                                                                           |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -309,32 +301,27 @@ AllowDuplicateProperties, RespectNullableAnnotations, MakeReadOnly) is merged an
 | Dedicated netstandard2.1 test host | new `StellarDotnetSdk.NetStandard21.Tests` project; CI packs and tests all three TFMs                                                                                                            |
 | CI on merge commit                 | green ([run 28589757927](https://github.com/Beans-BV/dotnet-stellar-sdk/actions/runs/28589757927))                                                                                               |
 
-With #195 merged, every planned D3 item — Part A and Part B — landed on `main` inside the Q2 window.
-The multi-target package ships to NuGet with the stable 16.0.0 release early in Q3.
+With [#195][p195] merged, every planned D3 item — Part A and Part B — landed on `main` inside the Q2
+window. The multi-target package ships to NuGet with the stable 16.0.0 release early in Q3.
 
 ---
 
 ##### Deliverable 4 — SEP-45 Implementation + SEP Compatibility Matrices
 
-**Closing issues:**
-[#160 — SEP-45 Implementation](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/160) (closed
-2026-06-25),
-[#161 — SEP Compatibility Matrices](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/161)
-(closed 2026-06-24).
+**Closing issues:** [#160 — SEP-45 Implementation][i160] (closed 2026-06-25), [#161 — SEP
+Compatibility Matrices][i161] (closed 2026-06-24).
 
-**Delivery PRs:** [#190](https://github.com/Beans-BV/dotnet-stellar-sdk/pull/190) SEP-45
-implementation (merged 2026-06-24, commit
+**Delivery PRs:** [#190][p190] SEP-45 implementation (merged 2026-06-24, commit
 [`32f72f11`](https://github.com/Beans-BV/dotnet-stellar-sdk/commit/32f72f11), 39 files, +5,540 / −0)
-and [#191](https://github.com/Beans-BV/dotnet-stellar-sdk/pull/191) SEP matrices (6 files, +1,320,
-merged into the feature branch 2026-06-23 and landed on `main` via #190 — the two PRs' line counts
-overlap and must not be summed).
+and [#191][p191] SEP matrices (6 files, +1,320, merged into the feature branch 2026-06-23 and landed
+on `main` via [#190][p190] — the two PRs' line counts overlap and must not be summed).
 
 | Criterion           | Evidence                                                                                                                                                                           |
 | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Implementation      | `StellarDotnetSdk.Sep.Sep0045` — 28 files: `ClientWebAuthContract` (toml discovery, challenge, validation, auth-entry signing, JWT), `Sep45Challenge` helpers, 22 typed exceptions |
 | Security hardening  | 512 KiB response cap, https-only auth endpoint, no cross-origin credential forwarding, network-passphrase fail-fast                                                                |
 | Unit tests          | **82 passed / 0 failed** (`dotnet test --filter "FullyQualifiedName~Sep0045"`)                                                                                                     |
-| Peer-SDK gap closed | Flutter, iOS, and Java all shipped SEP-45 before us (issue #158's own framing: "we are the only SDK without it") — no longer true                                                  |
+| Peer-SDK gap closed | Flutter, iOS, and Java all shipped SEP-45 before us (issue [#158][i158]'s own framing: "we are the only SDK without it") — no longer true                                          |
 | Matrices            | 6 published in [`StellarDotnetSdk/Compatibility/sep/`](https://github.com/Beans-BV/dotnet-stellar-sdk/tree/main/StellarDotnetSdk/Compatibility/sep) — exactly the promised set     |
 
 | Matrix   | Coverage                                                                                                                                                      |
@@ -375,8 +362,7 @@ string jwt = await webAuth.JwtTokenAsync(
 | Endpoint matrices            | Horizon 100.0% (50/50), RPC 100% — parity maintained                                                                                                                                                                                                                                                                                                                                                              |
 
 Stable **16.0.0** (Protocol 27 + SEP-45 + modernization + multi-target, all now on `main`) is staged
-as a draft and ships early Q3 — tracked in
-[#159](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/159).
+as a draft and ships early Q3 — tracked in [#159][i159].
 
 ---
 
@@ -384,54 +370,49 @@ as a draft and ships early Q3 — tracked in
 
 Operational metrics across the Q2 '26 window (2026-04-01 → 2026-07-02), reproducible via `gh`/`git`:
 
-| Metric              | Count                                                                                                                                                                                                                                                                                                                                                                                                                | Command                                                                                                                                                            |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Commits on `main`   | **27**                                                                                                                                                                                                                                                                                                                                                                                                               | `git rev-list --count --since=2026-04-01 main`                                                                                                                     |
-| PRs merged          | **22**                                                                                                                                                                                                                                                                                                                                                                                                               | `gh pr list --state merged --search "merged:2026-04-01..2026-07-02"`                                                                                               |
-| Issues closed       | **16**                                                                                                                                                                                                                                                                                                                                                                                                               | `gh issue list --state closed --search "closed:2026-04-01..2026-07-02"` (13 via search; #157/#158/#163 verified via direct API — GitHub's search index omits them) |
-| Goal-closing issues | 10 — [#155](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/155), [#160](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/160), [#161](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/161), [#162](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/162), [#164](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/164)–[#168](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/168) |                                                                                                                                                                    |
-| Bug fixes           | 2 ([#179](https://github.com/Beans-BV/dotnet-stellar-sdk/pull/179) missing `contract_credited`/`contract_debited` handling, closing [#172](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/172); [#178](https://github.com/Beans-BV/dotnet-stellar-sdk/pull/178) docs build)                                                                                                                                   |                                                                                                                                                                    |
-| Releases shipped    | **4** (2 stable, 2 beta)                                                                                                                                                                                                                                                                                                                                                                                             | `gh release list`                                                                                                                                                  |
-| Author split        | cuongph87: 18 commits · jopmiddelkamp: 8 commits · michaelpham-rgb: 1 commit                                                                                                                                                                                                                                                                                                                                         | `git shortlog -sn --since=2026-04-01`                                                                                                                              |
+| Metric              | Count                                                                                                                   | Command                                                                                                                                                                                    |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Commits on `main`   | **27**                                                                                                                  | `git rev-list --count --since=2026-04-01 main`                                                                                                                                             |
+| PRs merged          | **22**                                                                                                                  | `gh pr list --state merged --search "merged:2026-04-01..2026-07-02"`                                                                                                                       |
+| Issues closed       | **16**                                                                                                                  | `gh issue list --state closed --search "closed:2026-04-01..2026-07-02"` (13 via search; [#157][i157]/[#158][i158]/[#163][i163] verified via direct API — GitHub's search index omits them) |
+| Goal-closing issues | 10 — [#155][i155], [#160][i160], [#161][i161], [#162][i162], [#164][i164]–[#168][i168]                                  |                                                                                                                                                                                            |
+| Bug fixes           | 2 ([#179][p179] missing `contract_credited`/`contract_debited` handling, closing [#172][i172]; [#178][p178] docs build) |                                                                                                                                                                                            |
+| Releases shipped    | **4** (2 stable, 2 beta)                                                                                                | `gh release list`                                                                                                                                                                          |
+| Author split        | cuongph87: 18 commits · jopmiddelkamp: 8 commits · michaelpham-rgb: 1 commit                                            | `git shortlog -sn --since=2026-04-01`                                                                                                                                                      |
 
-**Continuity backlog already scoped for Q3:**
-[#188](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/188) Protocol 27 close-out,
-[#156](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/156) integration-test umbrella
-(Priority-2), [PR #198](https://github.com/Beans-BV/dotnet-stellar-sdk/pull/198) `getLatestLedger`
-fields + matrix re-pins (in review), plus newly triaged bugs
-[#193](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/193) (pagination drops auth/resilience
-config) and [#197](https://github.com/Beans-BV/dotnet-stellar-sdk/issues/197) (RPC error-response
-mapping).
+**Continuity backlog already scoped for Q3:** [#188][i188] Protocol 27 close-out, [#156][i156]
+integration-test umbrella (Priority-2), [PR #198][p198] `getLatestLedger` fields + matrix re-pins (in
+review), plus newly triaged bugs [#193][i193] (pagination drops auth/resilience config) and
+[#197][i197] (RPC error-response mapping).
 
 ---
 
 #### 2. Cross-reference: Q1 reviewer expectations → Q2 evidence
 
-| Expectation from Q1 review                             | Addressed by                                                                                                                                                               |
-| ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Explicit proof links per deliverable                   | Every deliverable above lists PRs with merge commits and +/− magnitudes                                                                                                    |
-| Quantitative before/after                              | Tests 1,663 → 1,927; SEPs 5 → 6; SEP matrices 0 → 6 (all 100% field coverage); integration tests 0 → 52; targets net8.0 → net10.0 + net8.0 + netstandard2.1 (merged, #195) |
-| Concrete issue/PR links per objective                  | Closing issues cited per deliverable (#155, #160, #161, #164–#168)                                                                                                         |
-| SEP compatibility matrices (peers have them, we had 0) | Deliverable 4 — 6 matrices published in-tree                                                                                                                               |
-| Automated test evidence                                | Unit suite + live-Testnet integration suite in CI ([run 28585099826](https://github.com/Beans-BV/dotnet-stellar-sdk/actions/runs/28585099826))                             |
+| Expectation from Q1 review                             | Addressed by                                                                                                                                                                       |
+| ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Explicit proof links per deliverable                   | Every deliverable above lists PRs with merge commits and +/− magnitudes                                                                                                            |
+| Quantitative before/after                              | Tests 1,663 → 1,927; SEPs 5 → 6; SEP matrices 0 → 6 (all 100% field coverage); integration tests 0 → 52; targets net8.0 → net10.0 + net8.0 + netstandard2.1 (merged, [#195][p195]) |
+| Concrete issue/PR links per objective                  | Closing issues cited per deliverable ([#155][i155], [#160][i160], [#161][i161], [#164][i164]–[#168][i168])                                                                         |
+| SEP compatibility matrices (peers have them, we had 0) | Deliverable 4 — 6 matrices published in-tree                                                                                                                                       |
+| Automated test evidence                                | Unit suite + live-Testnet integration suite in CI ([run 28585099826](https://github.com/Beans-BV/dotnet-stellar-sdk/actions/runs/28585099826))                                     |
 
 ---
 
 #### 3. Honest gaps & carry-over (pre-empting follow-ups)
 
-- **Two D1 sub-items landed at window close, via
-  [PR #198](https://github.com/Beans-BV/dotnet-stellar-sdk/pull/198) (in review).** The Horizon/RPC
+- **Two D1 sub-items landed at window close, via [PR #198][p198] (in review).** The Horizon/RPC
   matrix version bump (v27.0.0 / v26.0.1) and the `getLatestLedger` response fields (`closeTime`,
   `headerXdr`, `metadataXdr`) were completed on 2026-07-02, after the rest of this evidence was
   gathered. The research confirmed Horizon v26/v27 added no new endpoints (result codes and effects
-  were already covered by #177/#179), so endpoint coverage remains 50/50.
+  were already covered by [#177][p177]/[#179][p179]), so endpoint coverage remains 50/50.
 - **Priority-2 SHOULD integration tests: 0 of the stretch list.** Priority 1 landed 17/17; the SHOULD
   list moves to Q3 exactly as the submission's overflow rule specified.
 - **16.0.0 stable not yet published.** Protocol 27, SEP-45, and multi-target are all merged on `main`
   (multi-target since 2026-07-02); the stable major ships early Q3 rather than cutting a same-day
   release at window close.
-- **Protocol 27 tracking issues (#186/#188) still open** although the CAP-71 code is merged and
-  beta-shipped — they close with the stable release.
+- **Protocol 27 tracking issues ([#186][i186]/[#188][i188]) still open** although the CAP-71 code is
+  merged and beta-shipped — they close with the stable release.
 - **~175 non-CS1591 build warnings remain** (CS1572/1573/1574 doc-tag hygiene, some in the new SEP-45
   files). The CS1591 missing-doc gate from Q1 stays at zero; tag hygiene continues under the capacity
   buffer.
@@ -492,10 +473,12 @@ one search finds the evidence.
 - **Measurable:** A merged PR closes each issue, with a regression test that fails on 16.0.0. All
   three fixes ship in a 16.0.x patch release.
 - **Achievable:** All three bugs are diagnosed. The SEP-45 fix is written and tested on a branch,
-  #193 has a known root cause and fix, and we reproduced #257 with a small probe before we filed it.
-- **Relevant:** #240 breaks SEP-45 sign-in against anchors that use the Java or Python SDK. #193
-  silently drops authentication on paginated reads from hosted Horizon providers. For some asset
-  pairs, #257 makes the SDK refuse a valid liquidity pool and accept the invalid one.
+  [#193][i193] has a known root cause and fix, and we reproduced [#257][i257] with a small probe
+  before we filed it.
+- **Relevant:** [#240][i240] breaks SEP-45 sign-in against anchors that use the Java or Python SDK.
+  [#193][i193] silently drops authentication on paginated reads from hosted Horizon providers. For
+  some asset pairs, [#257][i257] makes the SDK refuse a valid liquidity pool and accept the invalid
+  one.
 - **Time-bound:** The patch release in October.
 
 ### D2: Protocol 30 before Mainnet, and a written release policy
@@ -526,7 +509,7 @@ one search finds the evidence.
   methods `getTransactions`, `getLedgers`, `getVersionInfo` and `getFeeStats`, and SEP-1, federation
   and multi-operation transactions.
 - **Measurable:** Every area on the Priority-2 list has at least one test that runs in the
-  integration workflow on each push to `main`, and #156 is closed.
+  integration workflow on each push to `main`, and [#156][i156] is closed.
 - **Achievable:** The test infrastructure is in place since Q2: a base class, a Friendbot helper,
   configurable endpoints and a CI workflow that runs 56 tests on every push to `main`. The new tests
   follow the same pattern.
@@ -598,6 +581,42 @@ We never spend the buffer on planned scope in advance.
 [isep53]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/261
 [icancel]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/262
 [iprov]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/263
+[i155]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/155
+[i157]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/157
+[i158]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/158
+[i159]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/159
+[i160]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/160
+[i161]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/161
+[i162]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/162
+[i163]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/163
+[i164]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/164
+[i165]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/165
+[i166]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/166
+[i167]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/167
+[i168]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/168
+[i172]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/172
+[i186]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/186
+[i188]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/188
+[i197]: https://github.com/Beans-BV/dotnet-stellar-sdk/issues/197
+[p169]: https://github.com/Beans-BV/dotnet-stellar-sdk/pull/169
+[p170]: https://github.com/Beans-BV/dotnet-stellar-sdk/pull/170
+[p176]: https://github.com/Beans-BV/dotnet-stellar-sdk/pull/176
+[p177]: https://github.com/Beans-BV/dotnet-stellar-sdk/pull/177
+[p178]: https://github.com/Beans-BV/dotnet-stellar-sdk/pull/178
+[p179]: https://github.com/Beans-BV/dotnet-stellar-sdk/pull/179
+[p180]: https://github.com/Beans-BV/dotnet-stellar-sdk/pull/180
+[p181]: https://github.com/Beans-BV/dotnet-stellar-sdk/pull/181
+[p182]: https://github.com/Beans-BV/dotnet-stellar-sdk/pull/182
+[p183]: https://github.com/Beans-BV/dotnet-stellar-sdk/pull/183
+[p184]: https://github.com/Beans-BV/dotnet-stellar-sdk/pull/184
+[p185]: https://github.com/Beans-BV/dotnet-stellar-sdk/pull/185
+[p187]: https://github.com/Beans-BV/dotnet-stellar-sdk/pull/187
+[p189]: https://github.com/Beans-BV/dotnet-stellar-sdk/pull/189
+[p190]: https://github.com/Beans-BV/dotnet-stellar-sdk/pull/190
+[p191]: https://github.com/Beans-BV/dotnet-stellar-sdk/pull/191
+[p195]: https://github.com/Beans-BV/dotnet-stellar-sdk/pull/195
+[p196]: https://github.com/Beans-BV/dotnet-stellar-sdk/pull/196
+[p198]: https://github.com/Beans-BV/dotnet-stellar-sdk/pull/198
 
 <!-- markdownlint-enable MD034 -->
 
