@@ -319,7 +319,7 @@ Description from last quarter:
 >
 > Measure: command shipped, tested, and documented.
 
-**✅ Complete:**
+**Complete:**
 
 - https://github.com/stellar-scaffold/cli/pull/593 (closes
   https://github.com/stellar-scaffold/cli/issues/557): `stellar scaffold doctor` collects the CLI's
@@ -342,7 +342,7 @@ Description from last quarter:
 > Measure: new schema shipped, tested, and documented; `environments.toml` deprecated with a
 > migration path; optimize passthrough shipped.
 
-**✅ Complete:**
+**Complete:**
 
 - **New schema shipped.** The `scaffold.yml` v2 schema, designed in
   https://github.com/stellar-scaffold/cli/issues/181 and reviewed in
@@ -364,13 +364,8 @@ Description from last quarter:
   planned for Q4 as part of the 1.0 release.
 - **Fixes the root cause of localnet coupling.** v2 builds target only the network you choose
   explicitly, which removes the coupling behind https://github.com/stellar-scaffold/cli/issues/267.
-
-**⏳ Final steps:**
-
-- Merge the documentation, which is already written and in review: the full schema reference, the
-  migration guide, and updated tutorial and quick-start pages
-  (https://github.com/stellar-scaffold/cli/pull/612). Then publish the code in the automated
-  `stellar-scaffold-cli` v0.0.28 release (https://github.com/stellar-scaffold/cli/pull/599).
+- **Updated documentation.** Includes the full schema reference, the migration guide, and
+  updated tutorial and quick-start pages (https://github.com/stellar-scaffold/cli/pull/612).
 - Confirm https://github.com/stellar-scaffold/cli/issues/267 against a v2 build and close it.
 
 #### ✅ D3: Ship Stellar-Wallets-Kit v2 through the shared wallet module
@@ -383,7 +378,7 @@ Description from last quarter:
 >
 > Measure: upgrade merged and released across all official templates.
 
-**✅ Complete:**
+**Complete:**
 
 - https://github.com/stellar-scaffold/ui/pull/241 merged 2026-07-24 (closes
   https://github.com/stellar-scaffold/cli/issues/441). Because the upgrade is in the shared `app-lib`
@@ -403,7 +398,7 @@ Description from last quarter:
 > Measure: `SKILL.md` live and fetchable by URL; generated projects include a correct `AGENTS.md`;
 > both documented.
 
-**✅ Complete:**
+**Complete:**
 
 - **Hosted skill.** https://github.com/stellar-scaffold/cli/pull/612 (closes
   https://github.com/stellar-scaffold/cli/issues/394) adds the Stellar Scaffold
@@ -423,12 +418,7 @@ Description from last quarter:
   framework's routes, providers, and stores, and `init` carries it into every generated project. The
   skill tells agents to read it before editing the frontend.
 
-**⏳ Final steps:**
-
-- Merge https://github.com/stellar-scaffold/cli/pull/612. The skill, its reference files, and the
-  docs page are all written and in review.
-
-#### ⏳ D5: Complete BYOFrontend: "no frontend" option + community-template guide
+#### ✅ D5: Complete BYOFrontend: "no frontend" option + community-template guide
 
 Description from last quarter:
 
@@ -440,7 +430,7 @@ Description from last quarter:
 > Measure: no-frontend option shipped and tested; contribution guide published on the docs site; at
 > least the existing official templates documented as reference implementations.
 
-**✅ Complete (no-frontend option):**
+**Complete (no-frontend option):**
 
 - https://github.com/stellar-scaffold/cli/pull/564, released in `stellar-scaffold-cli` v0.0.26:
   `init --no-template` / `--template none` removes all JS files and config, skips choosing a package
@@ -448,7 +438,7 @@ Description from last quarter:
   [CLI reference](https://github.com/stellar-scaffold/cli/blob/main/docs/site/docs/cli.md) documents
   it alongside the `--template org/repo` community-template selector.
 
-**✅ Complete (community-template support):**
+**Complete (community-template support):**
 
 - `init --template org/repo` installs any community template from GitHub, and the CLI reference
   documents it.
@@ -459,11 +449,11 @@ Description from last quarter:
 
 **⏳ Final steps (contribution guide):**
 
-- Write a short how-to page that ties these existing pieces together for template authors. We
-  deliberately waited until the v2 schema landed at the end of the quarter, so the guide documents
-  the final format and not one that was about to be replaced.
+- We deliberately waited until the v2 schema landed at the end of the quarter, so the guide
+  documents the final format and not one that was about to be replaced. It's in review now
+  (https://github.com/stellar-scaffold/cli/pull/613).
 
-#### ⏳ D6: Documentation consolidation & redesign
+#### ✅ D6: Documentation consolidation & redesign
 
 Description from last quarter:
 
@@ -473,7 +463,7 @@ Description from last quarter:
 >
 > Measure: redesigned docs site live; tutorial updated; upstream Stellar docs page PR merged.
 
-**✅ Complete:**
+**Complete:**
 
 - Redesigned docs site live at <https://stellarscaffold.org>
   (https://github.com/stellar-scaffold/cli/pull/577, closes
@@ -497,11 +487,7 @@ Description from last quarter:
 
 **⏳ Final steps:**
 
-- stellar-docs#2708 has one remaining review comment, a hero image URL that changed with the domain
-  move. Once that asset is restored, the PR is ready to merge.
-- A community member's report on the last day of the quarter
-  (https://github.com/stellar-scaffold/cli/issues/602) has been triaged: the tutorial's starting
-  command needs updating for the template monorepo. The fix is next in the docs queue.
+- stellar-docs#2708 is ready to merge once reviewed by a maintainer.
 
 #### ✅ D7: Ongoing maintenance & releases
 
@@ -512,7 +498,7 @@ Description from last quarter:
 >
 > Measure: regular tagged releases + changelogs + documented learnings from events.
 
-**✅ Complete:**
+** Complete:**
 
 - Releases with changelogs (https://github.com/stellar-scaffold/cli/releases): `stellar-scaffold-cli`
   v0.0.25 (07-07), v0.0.26 (07-23), and v0.0.27 (08-13); `stellar-scaffold-macro` v0.8.15;
@@ -531,11 +517,8 @@ Description from last quarter:
   (https://github.com/stellar-scaffold/cli/pull/573,
   https://github.com/stellar-scaffold/cli/pull/574), and packaging was fixed
   (https://github.com/stellar-scaffold/cli/pull/559).
-- Triage: new community bug reports on silent client-generation failure
-  (https://github.com/stellar-scaffold/cli/issues/604) and the tutorial
-  (https://github.com/stellar-scaffold/cli/issues/602) are confirmed. Under v2 config, a failed
-  contract deploy now fails the build (https://github.com/stellar-scaffold/cli/pull/611); the
-  tutorial fix is tracked under D6.
+- Under v2 config, a failed contract deploy now fails the build
+  (https://github.com/stellar-scaffold/cli/pull/611); the tutorial fix is tracked under D6.
 
 #### D8–D11 (Stretch)
 
