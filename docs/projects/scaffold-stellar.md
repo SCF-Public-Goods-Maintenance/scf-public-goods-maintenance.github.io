@@ -364,8 +364,8 @@ Description from last quarter:
   planned for Q4 as part of the 1.0 release.
 - **Fixes the root cause of localnet coupling.** v2 builds target only the network you choose
   explicitly, which removes the coupling behind https://github.com/stellar-scaffold/cli/issues/267.
-- **Updated documentation.** Includes the full schema reference, the migration guide, and
-  updated tutorial and quick-start pages (https://github.com/stellar-scaffold/cli/pull/612).
+- **Updated documentation.** Includes the full schema reference, the migration guide, and updated
+  tutorial and quick-start pages (https://github.com/stellar-scaffold/cli/pull/612).
 - Confirm https://github.com/stellar-scaffold/cli/issues/267 against a v2 build and close it.
 
 #### ✅ D3: Ship Stellar-Wallets-Kit v2 through the shared wallet module
@@ -449,8 +449,8 @@ Description from last quarter:
 
 **⏳ Final steps (contribution guide):**
 
-- We deliberately waited until the v2 schema landed at the end of the quarter, so the guide
-  documents the final format and not one that was about to be replaced. It's in review now
+- We deliberately waited until the v2 schema landed at the end of the quarter, so the guide documents
+  the final format and not one that was about to be replaced. It's in review now
   (https://github.com/stellar-scaffold/cli/pull/613).
 
 #### ✅ D6: Documentation consolidation & redesign
