@@ -498,7 +498,7 @@ Description from last quarter:
 >
 > Measure: regular tagged releases + changelogs + documented learnings from events.
 
-** Complete:**
+**Complete:**
 
 - Releases with changelogs (https://github.com/stellar-scaffold/cli/releases): `stellar-scaffold-cli`
   v0.0.25 (07-07), v0.0.26 (07-23), and v0.0.27 (08-13); `stellar-scaffold-macro` v0.8.15;
