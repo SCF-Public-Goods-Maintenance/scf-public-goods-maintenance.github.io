@@ -14,6 +14,7 @@ budget: "$37,000"
 _An open data platform for the Stellar software ecosystem that provides transparency into ecosystem
 health, project criticality, adoption signals, and contributor activity — helping voters,
 maintainers, and builders make data-driven decisions._
+
 <!-- markdownlint-enable MD036 -->
 
 |                         |                                                                                                     |
@@ -42,6 +43,10 @@ adoption, then publishes them through a public REST API and dashboard. Maintaine
 members can inspect project details, dependencies, contributors, score breakdowns, and interactive
 subgraphs. The data also provides structured context for SCF Public Goods Award review and
 Tansu-based governance.
+
+A high-level explanation of how it works is in our
+[architecture documentation](https://scf-public-goods-maintenance.github.io/pg-atlas/).
+
 <!-- markdownlint-enable MD034 -->
 
 ## Team & Experience
@@ -78,6 +83,7 @@ metrics engine. He will be brought on as needed, for the work where his expertis
 
 **Christian Rogobete** (Soneso) has contributed several big features to PG Atlas. He has done so
 voluntarily and without compensation. We'll refer to Christian's work in our deliverables.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Retroactive Impact
@@ -99,6 +105,7 @@ dependents crawler authored by Christian. We released API and SDK
 September. In the frontend, we fixed a user-reported bug and updated the PG Award round pages.
 
 Tansu and the Public Goods Award program itself are continuing their integrations with PG Atlas.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Past Deliverables
@@ -106,6 +113,7 @@ Tansu and the Public Goods Award program itself are continuing their integration
 <!-- markdownlint-disable MD034 -->
 
 N/A
+
 <!-- markdownlint-enable MD034 -->
 
 ## Proposed Impact
@@ -136,13 +144,14 @@ activity, and service reliability, supporting more informed quarterly Award disc
 (TBD) maintenance-retainer and SLO checkpoints. PG Atlas metrics remain evidence for human review,
 not automatic funding decisions, and this quarter's work is a step toward the program's longer-term
 goals.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Proposed Deliverables
 
 <!-- markdownlint-disable MD034 -->
 
-## Maintenance: focused on data quality improvements
+### Maintenance: focused on data quality improvements
 
 Much of our maintenance capacity is reserved to remove data quality issues as they are discovered.
 
@@ -187,7 +196,7 @@ Priority will be given to issues that affect the evolution of the Public Goods A
 the green-lane renewals for stable projects (hinted at in
 [PGM#142](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/pull/142)).
 
-## D1: Expand support for the SBOM Action
+### D1: Expand support for the SBOM Action
 
 Budget: $4,000
 
@@ -205,7 +214,7 @@ Test the workflows end to end using per-ecosystem repositories or a combined mon
 each demo with dependencies chosen to produce known outcomes, then verify that the expected
 dependency data is visible in PG Atlas. The results are your proof.
 
-## D2: Integrate the GitHub dependents observations
+### D2: Integrate the GitHub dependents observations
 
 Budget: $3,000
 
@@ -218,7 +227,7 @@ observations from submitted SBOMs override any GitHub-observed dependents.
 Proof: a merged PR, and `/repos/{canonical_id}/has-dependents` feeding into
 `/repos/{canonical_id}/github-dependents` API responses.
 
-## D3: Validate maintenance signals
+### D3: Validate maintenance signals
 
 Budget: $4,000
 
@@ -239,7 +248,7 @@ maintainers were active enough, this should be consistent with the profiles.
 No conclusions can be drawn from the signals by themselves: this is an enabler for each maintainer to
 decide if they want to set any service level objectives in 2027.
 
-## D4: Read declared maintainers
+### D4: Read declared maintainers
 
 Budget: $3,000
 
@@ -255,7 +264,7 @@ own issues and PRs, and who respond to those opened by their users and external 
 Stretch goal: join declaired maintainers with git-derived contributors on their email address hashes
 and show membership token metadata on contributor pages.
 
-## D5: Task queue monitoring
+### D5: Task queue monitoring
 
 Budget: $2,000
 
@@ -270,7 +279,7 @@ and what is still scheduled in the task queues, we will:
   window.
 - A frontend page that shows metrics and current queue sizes.
 
-## D6: Basic uptime monitoring of PG services
+### D6: Basic uptime monitoring of PG services
 
 Budget: $5,000
 
@@ -288,6 +297,7 @@ Add a separate service-status page for each monitored project, linked from that 
 page. Extend the API to return the monitored health endpoint URL, latest observation state and time,
 90 daily uptime records, and historical outages. Display the daily records as uptime bars and list
 outages on the status page.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Legal Acknowledgements
