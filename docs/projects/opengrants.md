@@ -99,9 +99,9 @@ $10,000 of the Q3 award covers the maintenance completed in Q3. The other $10,00
 deliverables not completed within Q3, is carried into the Q4 request as agreed with SCF.
 
 1. **Ongoing hosting and maintenance — Completed.** Kept OpenGrants live with no outages and ingested
-   SCF #42–#45 as the rounds closed. 100% of finished SCF rounds (through SCF #44) are indexed in
-   DAOIP-5; SCF #45 is still in its notification and award-distribution phase, and its latest data is
-   indexed (last sync 2026-10-10). Fixed API key renewal
+   `SCF #42`–`SCF #45` as the rounds closed. 100% of finished SCF rounds (through `SCF #44`) are
+   indexed in DAOIP-5; `SCF #45` is still in its notification and award-distribution phase, and its
+   latest data is indexed (last sync 2026-10-10). Fixed API key renewal
    (https://github.com/metagov/Grants-Gateway-API/pull/4).
 
 1. **PG Atlas and dependency support — Completed.** Added the PG Atlas SBOM action to both
@@ -113,7 +113,7 @@ deliverables not completed within Q3, is carried into the Q4 request as agreed w
    (https://github.com/metagov/opengrants-platform/commit/cf1927c05cc096611ba75186f6530e67f077aba3).
    Alerting on failed runs moves to Q4.
 
-1. **SCF Intelligence Report — Completed after Q3, moved to Q4.** Covers SCF #42–#45:
+1. **SCF Intelligence Report — Completed after Q3, moved to Q4.** Covers `SCF #42`–`SCF #45`:
    https://github.com/metagov/opengrants-platform/blob/master/docs/reports/scf_42-45_intelligence_report.md
 
 1. **MCP server — Completed after Q3, moved to Q4.**
