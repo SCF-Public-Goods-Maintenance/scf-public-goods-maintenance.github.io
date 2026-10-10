@@ -101,12 +101,7 @@ This generated the following impact for the Stellar ecosystem:
 
 ### 2026 Q3
 
-| Budget allocation | Reserved | Actual  |
-| ----------------- | -------- | ------- |
-| Maintenance       |          | $10,000 |
-| Other             |          | $0      |
-
-$10,000 of the Q3 award covers the maintenance completed in Q3. The other $10,000, for the
+$10,000 of the Q3 award covers the deliverables completed in Q3. The other $10,000, for the
 deliverables not completed within Q3, is carried into the Q4 request as agreed with SCF.
 
 1. **Ongoing hosting and maintenance — Completed.** Kept OpenGrants live with no outages and ingested
