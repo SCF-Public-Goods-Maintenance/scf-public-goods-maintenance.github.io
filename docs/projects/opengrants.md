@@ -96,9 +96,10 @@ deliverables not completed within Q3, is carried into the Q4 request as agreed w
 Completed in Q3:
 
 1. **Ongoing hosting and maintenance.** Kept OpenGrants live with no outages and ingested SCF #42–#45
-   as the rounds closed. 100% of finished SCF rounds (through SCF #44) are indexed in DAOIP-5; SCF #45
-   is still in its notification and award-distribution phase, and its latest data is indexed (last
-   sync 2026-10-10). Fixed API key renewal (https://github.com/metagov/Grants-Gateway-API/pull/4).
+   as the rounds closed. 100% of finished SCF rounds (through SCF #44) are indexed in DAOIP-5; SCF
+   #45 is still in its notification and award-distribution phase, and its latest data is indexed
+   (last sync 2026-10-10). Fixed API key renewal
+   (https://github.com/metagov/Grants-Gateway-API/pull/4).
 2. **PG Atlas and dependency support.** Added the PG Atlas SBOM action to both repositories
    (https://github.com/metagov/opengrants-platform/pull/2,
    https://github.com/metagov/Grants-Gateway-API/pull/5).
@@ -136,8 +137,9 @@ Not completed, moved to Q4:
 
 <!-- markdownlint-disable MD034 -->
 
-Q4 is a maintenance quarter. OpenGrants keeps Stellar's funding data reliable and current, supports PG
-Atlas through the next SCF Build round, and completes the Q3 deliverables carried into this quarter.
+Q4 is a maintenance quarter. OpenGrants keeps Stellar's funding data reliable and current, supports
+PG Atlas through the next SCF Build round, and completes the Q3 deliverables carried into this
+quarter.
 
 1. **Reliable SCF data.** PG Atlas relies on OpenGrants for newly awarded SCF projects and status
    changes, and another SCF Build round is expected this quarter.
@@ -177,8 +179,8 @@ Already completed:
 To complete in Q4:
 
 1. **Failed-run alerting.** Alerts when an SCF pipeline run fails.
-2. **PG Award data integration.** Bring PG Award data into OpenGrants, coordinated with the
-   PG Maintenance team.
+2. **PG Award data integration.** Bring PG Award data into OpenGrants, coordinated with the PG
+   Maintenance team.
 
 <!-- markdownlint-enable MD034 -->
 
