@@ -5,7 +5,7 @@ parent: Public Good Projects
 proposal_issue: 78
 proposer: sam-mccarthy07
 category: "Other"
-budget: "$20,000"
+budget: "$15,000"
 ---
 
 # OpenGrants
@@ -17,15 +17,17 @@ funding data set, including all completed SCF rounds._
 
 <!-- markdownlint-enable MD036 -->
 
-|                      |                                                  |
-| -------------------- | ------------------------------------------------ |
-| **Category**         | Other                                            |
-| **Website**          | <https://opengrants.daostar.org/>                |
-| **Repository**       | <https://github.com/metagov/opengrants-platform> |
-| **Gateway-API**      | <https://github.com/metagov/Grants-Gateway-API>  |
-| **First Released**   | September 2025                                   |
-| **Intake**           | soft-launch                                      |
-| **Budget Requested** | $20,000                                          |
+|                         |                                                  |
+| ----------------------- | ------------------------------------------------ |
+| **Category**            | Other                                            |
+| **Website**             | <https://opengrants.daostar.org/>                |
+| **Repository**          | <https://github.com/metagov/opengrants-platform> |
+| **Gateway-API**         | <https://github.com/metagov/Grants-Gateway-API>  |
+| **First Released**      | September 2025                                   |
+| **Intake**              | soft-launch                                      |
+| **Budget Requested**    | $15,000                                          |
+| **Maintenance Reserve** | $5,000                                           |
+| **Other**               | $10,000                                          |
 
 ## Project Description
 
@@ -66,18 +68,17 @@ infrastructure featuring a gateway API, ecosystem funding dashboard, and SCF gra
 
 <!-- markdownlint-disable MD034 -->
 
-During the Q2 grant period, OpenGrants delivered on its maintenance mandate. We kept infrastructure
-live with zero downtime and ingested new SCF round data as it landed, maintaining the datasets and
-integrations built in prior quarters. This was a maintenance grant, and the work reflects that scope.
+During Q3, OpenGrants kept its infrastructure live and its SCF data current, repaired the automated
+ingestion, and supported PG Atlas. The remaining build work was completed in early October and, as
+agreed with SCF, is carried into Q4 with its budget.
 
 This generated the following impact for the Stellar ecosystem:
 
-- OpenGrants infrastructure remained available with zero downtime as the upstream data source PG
-  Atlas continues to build its dependency graph on.
-- OpenGrants maintained Stellar's 100% DAOIP-5 compliance rate throughout the period, including
-  ingestion of `SCF #43` data as it became available.
-- OpenGrants maintained its expanded ecosystem funding datasets, including the ENS integration
-  supporting cross-ecosystem comparative analysis.
+- SCF #42–#45 were ingested into DAOIP-5 as the rounds closed, keeping all 933 SCF applications
+  ($70.2M) current.
+- The SCF Airtable sensor was repaired in August, so new SCF data triggers the pipeline again.
+- API users can renew and revoke their keys after a user-reported bug was fixed.
+- PG Atlas can read OpenGrants' dependencies through the SBOM action in both repositories.
 
 <!-- markdownlint-enable MD034 -->
 
@@ -86,6 +87,37 @@ This generated the following impact for the Stellar ecosystem:
 ## Past Deliverables
 
 <!-- markdownlint-disable MD034 -->
+
+### 2026 Q3
+
+$10,000 of the Q3 award covers the deliverables completed in Q3. The other $10,000, for the
+deliverables not completed within Q3, is carried into the Q4 request as agreed with SCF.
+
+Completed in Q3:
+
+1. **Ongoing hosting and maintenance.** Kept OpenGrants live with no outages and ingested SCF #42–#45
+   as the rounds closed. 100% of finished SCF rounds (through SCF #44) are indexed in DAOIP-5; SCF #45
+   is still in its notification and award-distribution phase, and its latest data is indexed (last
+   sync 2026-10-10). Fixed API key renewal (https://github.com/metagov/Grants-Gateway-API/pull/4).
+2. **PG Atlas and dependency support.** Added the PG Atlas SBOM action to both repositories
+   (https://github.com/metagov/opengrants-platform/pull/2,
+   https://github.com/metagov/Grants-Gateway-API/pull/5).
+3. **Data integration automation (partly).** Repaired the SCF Airtable sensor, which had stopped
+   triggering the pipeline
+   (https://github.com/metagov/opengrants-platform/commit/cf1927c05cc096611ba75186f6530e67f077aba3).
+
+Completed after Q3, carried into Q4:
+
+1. **SCF Intelligence Report.** Covers SCF #42–#45:
+   https://github.com/metagov/opengrants-platform/blob/master/docs/reports/scf_42-45_intelligence_report.md
+2. **MCP server.** https://github.com/metagov/Grants-Gateway-API/pull/6
+3. **Stellar project view and About page.** https://opengrants.daostar.org/system/scf/projects,
+   https://opengrants.daostar.org/about
+
+Not completed, moved to Q4:
+
+1. **Data integration automation:** alerting on failed pipeline runs.
+2. **PG Award data integration:** not started.
 
 ### 2026 Q2
 
@@ -104,35 +136,19 @@ This generated the following impact for the Stellar ecosystem:
 
 <!-- markdownlint-disable MD034 -->
 
-For the next three months, OpenGrants will remain the reliable, up-to-date source of structured
-Stellar funding data while making targeted improvements to legibility, automation, and downstream
-usability. Alongside zero-downtime hosting and continued 100% DAOIP-5 compliance, Q3 focuses on
-reducing manual overhead in data ingestion, improving how Stellar-specific funding data is surfaced,
-and exposing OpenGrants data programmatically so agents and downstream tools can consume it directly.
+Q4 is a maintenance quarter. OpenGrants keeps Stellar's funding data reliable and current, supports PG
+Atlas through the next SCF Build round, and completes the Q3 deliverables carried into this quarter.
 
-1. **Data-driven SCF governance.** Recurring, per-round Intelligence Reports give delegates and the
-   community consistent funding and milestone analytics at decision time, building directly on the
-   SCF 41 report that informed community voting.
+1. **Reliable SCF data.** PG Atlas relies on OpenGrants for newly awarded SCF projects and status
+   changes, and another SCF Build round is expected this quarter.
 
-2. **Lower-friction, more reliable data infrastructure.** Polishing the SCF ingestion pipeline toward
-   full automation reduces manual steps and the risk of data gaps, keeping Stellar funding data
-   accurate and current using AI agents for automation.
+2. **Stable DAOIP-5 IDs.** Avoiding duplicate DAOIP-5 URIs keeps the links used by SCF project pages,
+   PG Atlas and API users working (#143).
 
-3. **Programmatic access for downstream tooling.** An MCP server exposes the OpenGrants dataset so
-   agents, researchers, and dependent projects (including PG Atlas) can query funding data directly,
-   strengthening OpenGrants as shared ecosystem infrastructure.
+3. **The Q3 work, delivered.** The Intelligence Report, MCP server, Stellar project view, About page
+   and failed-run alerting.
 
-4. **Improved legibility of Stellar funding data.** A dedicated Stellar project view and an About
-   page make OpenGrants easier to understand and navigate for community members, delegates, and
-   reviewers, directly supporting clearer user signal during evaluation.
-
-5. **Ongoing hosting, maintenance, and continued support for dependent projects.** Ongoing
-   operational support for PG Atlas and any new dependencies that build on OpenGrants data.
-
-6. **A source of truth for the Public Goods Award.** Consolidating fragmented PG Award data which is
-   currently scattered across SDF Airtables, community-maintained mappings, and Tansu on-chain
-   proposals into OpenGrants gives the community its first reliable, comparable record of award
-   history, ready to ingest binding on-chain funding decisions once they exist.
+4. **PG Award data in OpenGrants.** Coordinated with the PG Maintenance team.
 
 <!-- markdownlint-enable MD034 -->
 
@@ -140,53 +156,29 @@ and exposing OpenGrants data programmatically so agents and downstream tools can
 
 <!-- markdownlint-disable MD034 -->
 
-1. **SCF Intelligence Report.** OpenGrants generates and publishes a funding Intelligence Report to
-   the SCF community for the next round (`SCF #45`), which includes the following data: funding
-   distribution, category breakdowns, milestone and tranche completion trends, and comparison against
-   prior rounds. Builds on the `SCF #41` Intelligence Report that delegates used during community
-   voting, turning a one-off contribution into a repeatable governance input.
-   - _Ecosystem value: consistent, data-driven context for delegates and the community during the
-     decision-making and voting process of every SCF round._
+### Maintenance reserve ($5,000)
 
-2. **Data integration automation.** Polish and harden the ingestion pipeline toward fully automated
-   data ingestion, reducing manual steps (per PG Atlas team feedback).
-   - _Ecosystem value: more reliable, always-current Stellar funding data with less operational
-     overhead. Setting this base infra enables us to build towards more intelligent data points._
+1. **Hosting and data updates.** Keep OpenGrants and the Gateway API running, ingest the next SCF
+   Build round, and keep SCF at 100% DAOIP-5 compliance.
 
-3. **MCP server for OpenGrants.** Ship an MCP server exposing the OpenGrants dataset so agents and
-   downstream tools can query funding data directly.
-   - _Ecosystem value: makes OpenGrants data programmatically consumable by agents, researchers, and
-     dependent projects._
+2. **PG Atlas and dependency support.** Newly awarded projects, status changes, and data requests.
 
-4. **More legible data with greater signal**
+3. **DAOIP-5 ID stability.** Follow up the duplicate DAOIP-5 URI thread (#143).
 
-   4.a. **Stellar project view.** A dedicated, improved view surfacing SCF funded project's funding
-   data for easier navigation. For example: View OpenGrants and its funding history by SCF.
-   - _Ecosystem value: clearer, SCF-specific legibility for community members and reviewers._
+### Other ($10,000, carried over from Q3)
 
-     4.b. **About page for OpenGrants.** An About page documenting what OpenGrants is, its data
-     sources, and how to use the infrastructure.
+Already completed:
 
-   - _Ecosystem value: lowers the barrier to understanding and adopting OpenGrants._
+1. **SCF Intelligence Report.** Report for SCF #42–#45.
+2. **MCP server.** MCP server for OpenGrants data.
+3. **Stellar project view.** A page per SCF-funded project with its funding history.
+4. **About page.** What OpenGrants is, its data sources, and how to use it.
 
-5. **Ongoing hosting and maintenance.** Zero-downtime operation of OpenGrants infrastructure and
-   continuous SCF funding data updates, maintaining Stellar's 100% DAOIP-5 compliance rate.
+To complete in Q4:
 
-   _Ecosystem value: uninterrupted community access to structured funding data that eliminates data
-   loss and fragmentation._
-
-6. **PG Atlas and dependency support.** Continued operational support for the PG Atlas team and any
-   other new dependencies. _Ecosystem value: sustains downstream projects building on OpenGrants
-   data._
-
-7. **PG Award data integration.** Reconstruct and integrate a complete, comparable dataset for the
-   SCF Public Goods Award into OpenGrants, consolidating sources that are currently fragmented across
-   SDF Airtables, the community-maintained round mappings, and Tansu on-chain proposals. Delivers the
-   historical and current rounds as a best-effort dataset, with the pipeline structured to ingest
-   binding on-chain funding decisions once they exist (expected 2027).
-
-Ecosystem value: establishes the first reliable source of truth for the Public Goods Award, making
-award history legible and comparable alongside SCF grant data.
+1. **Failed-run alerting.** Alerts when an SCF pipeline run fails.
+2. **PG Award data integration.** Bring PG Award data into OpenGrants, coordinated with the
+   PG Maintenance team.
 
 <!-- markdownlint-enable MD034 -->
 
