@@ -66,6 +66,18 @@ infrastructure featuring a gateway API, ecosystem funding dashboard, and SCF gra
 
 <!-- markdownlint-disable MD034 -->
 
+During Q3, OpenGrants kept its infrastructure live and its SCF data current, repaired the automated
+ingestion, and supported PG Atlas. The remaining build work was completed in early October and, as
+agreed with SCF, is carried into Q4 with its budget.
+
+This generated the following impact for the Stellar ecosystem:
+
+- `SCF #42`–`SCF #45` were ingested into DAOIP-5 as the rounds closed, keeping all 933 SCF
+  applications ($70.2M) current.
+- The SCF Airtable sensor was repaired in August, so new SCF data triggers the pipeline again.
+- API users can renew and revoke their keys after a user-reported bug was fixed.
+- PG Atlas can read OpenGrants' dependencies through the SBOM action in both repositories.
+
 During the Q2 grant period, OpenGrants delivered on its maintenance mandate. We kept infrastructure
 live with zero downtime and ingested new SCF round data as it landed, maintaining the datasets and
 integrations built in prior quarters. This was a maintenance grant, and the work reflects that scope.
@@ -86,6 +98,37 @@ This generated the following impact for the Stellar ecosystem:
 ## Past Deliverables
 
 <!-- markdownlint-disable MD034 -->
+
+### 2026 Q3
+
+$10,000 of the Q3 award covers the deliverables completed in Q3. The other $10,000, for the
+deliverables not completed within Q3, is carried into the Q4 request as agreed with SCF.
+
+1. **Ongoing hosting and maintenance — Completed.** Kept OpenGrants live with no outages and ingested
+   `SCF #42`–`SCF #45` as the rounds closed. 100% of finished SCF rounds (through `SCF #44`) are
+   indexed in DAOIP-5; `SCF #45` is still in its notification and award-distribution phase, and its
+   latest data is indexed (last sync 2026-10-10). Fixed API key renewal
+   (https://github.com/metagov/Grants-Gateway-API/pull/4).
+
+1. **PG Atlas and dependency support — Completed.** Added the PG Atlas SBOM action to both
+   repositories (https://github.com/metagov/opengrants-platform/pull/2,
+   https://github.com/metagov/Grants-Gateway-API/pull/5).
+
+1. **Data integration automation — Partly completed.** Repaired the SCF Airtable sensor, which had
+   stopped triggering the pipeline
+   (https://github.com/metagov/opengrants-platform/commit/cf1927c05cc096611ba75186f6530e67f077aba3).
+   Alerting on failed runs moves to Q4.
+
+1. **SCF Intelligence Report — Completed after Q3, moved to Q4.** Covers `SCF #42`–`SCF #45`:
+   https://github.com/metagov/opengrants-platform/blob/master/docs/reports/scf_42-45_intelligence_report.md
+
+1. **MCP server — Completed after Q3, moved to Q4.**
+   https://github.com/metagov/Grants-Gateway-API/pull/6
+
+1. **Stellar project view and About page — Completed after Q3, moved to Q4.**
+   https://opengrants.daostar.org/system/scf/projects, https://opengrants.daostar.org/about
+
+1. **PG Award data integration — Not started, moved to Q4.**
 
 ### 2026 Q2
 
