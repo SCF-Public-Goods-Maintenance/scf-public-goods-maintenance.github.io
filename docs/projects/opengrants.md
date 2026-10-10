@@ -74,8 +74,8 @@ agreed with SCF, is carried into Q4 with its budget.
 
 This generated the following impact for the Stellar ecosystem:
 
-- 'SCF #42'–'SCF #45' were ingested into DAOIP-5 as the rounds closed, keeping all 933 SCF applications
-  ($70.2M) current.
+- 'SCF #42'–'SCF #45' were ingested into DAOIP-5 as the rounds closed, keeping all 933 SCF
+  applications ($70.2M) current.
 - The SCF Airtable sensor was repaired in August, so new SCF data triggers the pipeline again.
 - API users can renew and revoke their keys after a user-reported bug was fixed.
 - PG Atlas can read OpenGrants' dependencies through the SBOM action in both repositories.
@@ -95,10 +95,10 @@ deliverables not completed within Q3, is carried into the Q4 request as agreed w
 
 Completed in Q3:
 
-1. **Ongoing hosting and maintenance.** Kept OpenGrants live with no outages and ingested 'SCF #42' –'SCF #45'
-   as the rounds closed. 100% of finished SCF rounds (through 'SCF #44') are indexed in DAOIP-5; 'SCF
-   #45' is still in its notification and award-distribution phase, and its latest data is indexed
-   (last sync 2026-10-10). Fixed API key renewal
+1. **Ongoing hosting and maintenance.** Kept OpenGrants live with no outages and ingested 'SCF #42'
+   –'SCF #45' as the rounds closed. 100% of finished SCF rounds (through 'SCF #44') are indexed in
+   DAOIP-5; 'SCF #45' is still in its notification and award-distribution phase, and its latest data
+   is indexed (last sync 2026-10-10). Fixed API key renewal
    (https://github.com/metagov/Grants-Gateway-API/pull/4).
 2. **PG Atlas and dependency support.** Added the PG Atlas SBOM action to both repositories
    (https://github.com/metagov/opengrants-platform/pull/2,
