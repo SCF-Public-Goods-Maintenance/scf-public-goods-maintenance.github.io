@@ -137,8 +137,9 @@ Not completed, moved to Q4:
 
 <!-- markdownlint-disable MD034 -->
 
-Q4 is a maintenance quarter. OpenGrants keeps Stellar's funding data reliable and current, supports PG
-Atlas through the next SCF Build round, and completes the Q3 deliverables carried into this quarter.
+Q4 is a maintenance quarter. OpenGrants keeps Stellar's funding data reliable and current, supports
+PG Atlas through the next SCF Build round, and completes the Q3 deliverables carried into this
+quarter.
 
 1. **Reliable SCF data.** PG Atlas relies on OpenGrants for newly awarded SCF projects and status
    changes, and another SCF Build round is expected this quarter.
@@ -178,8 +179,8 @@ Already completed:
 To complete in Q4:
 
 1. **Failed-run alerting.** Alerts when an SCF pipeline run fails.
-2. **PG Award data integration.** Bring PG Award data into OpenGrants, coordinated with the
-   PG Maintenance team.
+2. **PG Award data integration.** Bring PG Award data into OpenGrants, coordinated with the PG
+   Maintenance team.
 
 <!-- markdownlint-enable MD034 -->
 
