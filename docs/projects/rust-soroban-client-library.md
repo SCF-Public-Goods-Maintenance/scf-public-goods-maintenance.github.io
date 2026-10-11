@@ -25,8 +25,8 @@ upgrade._
 | **First Released**      | November 2024                                                                                       |
 | **Intake**              | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/141> |
 | **Budget Requested**    | $15,000                                                                                             |
-| **Maintenance Reserve** | 4000                                                                                                |
-| **Other**               | 11000                                                                                               |
+| **Maintenance Reserve** | $4,000                                                                                              |
+| **Other**               | $11,000                                                                                             |
 
 ## Project Description
 
