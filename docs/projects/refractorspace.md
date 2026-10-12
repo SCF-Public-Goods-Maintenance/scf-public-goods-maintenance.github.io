@@ -95,13 +95,13 @@ backed by by Stellar.
 - Add a "Send test callback" function to the uploaded transaction so that users can check their
   server-side transaction handling code. ($1000)
 - Add interfaces for uploading and processing (signing) Soroban auth entries separately from
-  transactions. The interfaces will be significantly different, since an auth entry doesn't have 
+  transactions. The interfaces will be significantly different, since an auth entry doesn't have
   timebounds, cannot contain some signer types (like HashX), and cannot be submitted to the network.
   The unique auth entry ID will be derived from the hash of its contents. ($7000)
 - Display a detailed activity trail for a transaction: when it was uploaded to Refractor, when it was
   first signed, when the last signature was added, and when it was submitted to the network. ($3000)
-- Provide a more user-friendly description of transaction contents so that signers understand
-  exactly what they are signing: display the protocol name for known smart contract calls, highlight
+- Provide a more user-friendly description of transaction contents so that signers understand exactly
+  what they are signing: display the protocol name for known smart contract calls, highlight
   addresses that match signers (transfer to/from one of the signers), and mark potentially dangerous
   operations. Show a short summary of the transaction in the title instead of the hash. ($7000)
 - Display decoded transaction submission results: ledger, fee charged, and per-operation result
