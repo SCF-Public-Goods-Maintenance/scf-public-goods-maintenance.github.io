@@ -81,15 +81,33 @@ backed by by Stellar.
 
 ## Proposed Deliverables
 
-- Review the automatic signer scheme detection algorithm to fully account for:
-  - Soroban transaction authorization entries ($4000)
-  - CAP-0071-01 (delegated authentication for custom accounts) ($2000)
-  - CAP-0071-02 (address-bound Soroban address credentials, `SOROBAN_CREDENTIALS_ADDRESS_V2`) ($2000)
-  - Ledger entry sponsorship changes ($1000)
 - Allow adding signatures for `SIGNER_KEY_TYPE_HASH_X` and `SIGNER_KEY_TYPE_ED25519` directly from
   the interface without wallet invocation ($1000)
-- Add ability to sign not only transactions, but also Soroban Auth entries ($6000)
-- Improve signing flow on mobile devices ($2000)
+- Add a preview block to the "Upload transaction" page. It should display extended transaction
+  information before the transaction is uploaded and processed on the server side: whether all
+  potential signer accounts exist on-chain, whether the transaction is valid, whether it has already
+  been uploaded or executed, the expiration date and minimum execution date (if set), and the full
+  list of signers. ($2000)
+- In addition to pasting transaction XDR, allow uploading binary XDR files, as well as SEP-7 and
+  Stellar Lab-formatted links. ($600)
+- Add a new simulation interface that allows simulating signatures and checking whether a specific
+  set of signatures allows submitting a transaction to the network. ($3000)
+- Add a "Send test callback" function to the uploaded transaction so that users can check their
+  server-side transaction handling code. ($1000)
+- Add interfaces for uploading and processing (signing) Soroban auth entries separately from
+  transactions. The interfaces will be significantly different, since an auth entry doesn't have 
+  timebounds, cannot contain some signer types (like HashX), and cannot be submitted to the network.
+  The unique auth entry ID will be derived from the hash of its contents. ($7000)
+- Display a detailed activity trail for a transaction: when it was uploaded to Refractor, when it was
+  first signed, when the last signature was added, and when it was submitted to the network. ($3000)
+- Provide a more user-friendly description of transaction contents so that signers understand
+  exactly what they are signing: display the protocol name for known smart contract calls, highlight
+  addresses that match signers (transfer to/from one of the signers), and mark potentially dangerous
+  operations. Show a short summary of the transaction in the title instead of the hash. ($7000)
+- Display decoded transaction submission results: ledger, fee charged, and per-operation result
+  codes. ($500)
+- Add a sharing widget to the transaction page with a QR code and a direct link to copy. ($200)
+- Introduce additional transaction XDR actions: "Download", "Open in Stellar Lab". ($200)
 
 ## Metrics loaded from PG Atlas
 
