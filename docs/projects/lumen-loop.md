@@ -15,14 +15,16 @@ _An independent, always-current discovery layer for the Stellar ecosystem: news,
 events, media, jobs and governance, published free and machine-readable._
 <!-- markdownlint-enable MD036 -->
 
-|                      |                                                                                                     |
-| -------------------- | --------------------------------------------------------------------------------------------------- |
-| **Category**         | Ecosystem Visibility                                                                                |
-| **Website**          | <https://lumenloop.com>                                                                             |
-| **Repository**       | <https://github.com/lumenloop>                                                                      |
-| **First Released**   | March 2024                                                                                          |
-| **Intake**           | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/136> |
-| **Budget Requested** | 26000                                                                                               |
+|                         |                                                                                                     |
+| ----------------------- | --------------------------------------------------------------------------------------------------- |
+| **Category**            | Ecosystem Visibility                                                                                |
+| **Website**             | <https://lumenloop.com>                                                                             |
+| **Repository**          | <https://github.com/lumenloop>                                                                      |
+| **First Released**      | March 2024                                                                                          |
+| **Intake**              | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/136> |
+| **Budget Requested**    | $26,000                                                                                             |
+| **Maintenance Reserve** | $8,000                                                                                              |
+| **Other**               | $18,000                                                                                             |
 
 ## Project Description
 
@@ -205,15 +207,28 @@ current.
 
 ### Budget allocation
 
-| Allocation                                                                                             |  $/quarter |
-| ------------------------------------------------------------------------------------------------------ | ---------: |
-| Maintainer, 20 hrs/week: release and new capabilities (1 to 4)                                         |     18,200 |
-| Contributor, 13 hrs/week from onboarding (9 weeks): curation and oversight (5)                         |      5,850 |
-| Platform operation (6): hosting, ingestion, storage, backups, CDN, domains, calendar, AI and data APIs |      2,238 |
-| **Total**                                                                                              | **26,288** |
+#### Maintenance Reserve
+
+| Allocation                                                                                             | $/quarter |
+| ------------------------------------------------------------------------------------------------------ | --------: |
+| Contributor, 13 hrs/week from onboarding (9 weeks): curation and oversight (5)                         |     5,850 |
+| Platform operation (6): hosting, ingestion, storage, backups, CDN, domains, calendar, AI and data APIs |     2,238 |
+| **Subtotal**                                                                                           | **8,088** |
+
+#### Other
+
+| Allocation                                                     |  $/quarter |
+| -------------------------------------------------------------- | ---------: |
+| Maintainer, 20 hrs/week: release and new capabilities (1 to 4) |     18,200 |
+| **Subtotal**                                                   | **18,200** |
+
+**Total estimated cost: $26,288.**
 
 Running the platform costs under $750 a month, AI across thirteen agents included. The cost is
 people: shipping the release, and reviewing what agents and the ecosystem contribute.
+
+The requested split rounds Maintenance Reserve from 8,088 to 8,000 USD and Other from 18,200 to
+18,000 USD.
 
 Requested figure rounded down to $26,000. The legacy host is retired after the transition, reducing
 platform cost from next quarter.
