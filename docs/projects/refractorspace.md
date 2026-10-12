@@ -5,7 +5,7 @@ parent: Public Good Projects
 proposal_issue: 38
 proposer: orbitlens
 category: "Governance Tools"
-budget: "18,000"
+budget: "25,500"
 ---
 
 # RefractorSpace
@@ -19,7 +19,7 @@ _Pending transactions storage and multisig aggregator for Stellar Network._
 | **Repository**       | <https://github.com/stellar-expert/refractor>                                                      |
 | **First Released**   | March 2021                                                                                         |
 | **Intake**           | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/26> |
-| **Budget Requested** | 18,000                                                                                             |
+| **Budget Requested** | 25,500                                                                                             |
 
 ## Project Description
 
