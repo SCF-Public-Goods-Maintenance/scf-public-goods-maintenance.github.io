@@ -20,7 +20,9 @@ events, media, jobs and governance, published free and machine-readable._
 | ----------------------- | --------------------------------------------------------------------------------------------------- |
 | **Category**            | Ecosystem Visibility                                                                                |
 | **Website**             | <https://lumenloop.com>                                                                             |
-| **Repository**          | <https://github.com/lumenloop>                                                                      |
+| **Backend (private)**   | <https://github.com/lumenloop/lumenloop-backend>                                                    |
+| **Ecosystem DB**        | <https://github.com/lumenloop/stellar-ecosystem-db>                                                 |
+| **Agent Skills**        | <https://github.com/lumenloop/lumenloop-skills>                                                     |
 | **First Released**      | March 2024                                                                                          |
 | **Intake**              | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/136> |
 | **Budget Requested**    | $26,000                                                                                             |
