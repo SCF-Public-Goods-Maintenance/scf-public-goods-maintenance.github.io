@@ -5,6 +5,7 @@ proposal_issue: 173
 proposer: rawritude
 category: "Ecosystem Visibility"
 budget: "26000"
+health_endpoint: https://lumenloop.com/api/health
 ---
 
 # Lumen Loop
