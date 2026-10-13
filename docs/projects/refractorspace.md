@@ -12,14 +12,16 @@ budget: "25,500"
 
 _Pending transactions storage and multisig aggregator for Stellar Network._
 
-|                      |                                                                                                    |
-| -------------------- | -------------------------------------------------------------------------------------------------- |
-| **Category**         | Governance Tools                                                                                   |
-| **Website**          | <https://refractor.space>                                                                          |
-| **Repository**       | <https://github.com/stellar-expert/refractor>                                                      |
-| **First Released**   | March 2021                                                                                         |
-| **Intake**           | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/26> |
-| **Budget Requested** | 25,500                                                                                             |
+|                         |                                                                                                    |
+| ----------------------- | -------------------------------------------------------------------------------------------------- |
+| **Category**            | Governance Tools                                                                                   |
+| **Website**             | <https://refractor.space>                                                                          |
+| **Repository**          | <https://github.com/stellar-expert/refractor>                                                      |
+| **First Released**      | March 2021                                                                                         |
+| **Intake**              | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/26> |
+| **Budget Requested**    | 25,500                                                                                             |
+| **Maintenance Reserve** | 2,000                                                                                              |
+| **Other**               | 23,500                                                                                             |
 
 ## Project Description
 
@@ -91,7 +93,7 @@ backed by by Stellar.
 - In addition to pasting transaction XDR, allow uploading binary XDR files, as well as SEP-7 and
   Stellar Lab-formatted links. ($600)
 - Add a new simulation interface that allows simulating signatures and checking whether a specific
-  set of signatures allows submitting a transaction to the network. ($3000)
+  set of signatures allows submitting a transaction to the network. ($2000)
 - Add a "Send test callback" function to the uploaded transaction so that users can check their
   server-side transaction handling code. ($1000)
 - Add interfaces for uploading and processing (signing) Soroban auth entries separately from
@@ -103,11 +105,13 @@ backed by by Stellar.
 - Provide a more user-friendly description of transaction contents so that signers understand exactly
   what they are signing: display the protocol name for known smart contract calls, highlight
   addresses that match signers (transfer to/from one of the signers), and mark potentially dangerous
-  operations. Show a short summary of the transaction in the title instead of the hash. ($7000)
+  operations. Show a short summary of the transaction in the title instead of the hash. ($6000)
 - Display decoded transaction submission results: ledger, fee charged, and per-operation result
   codes. ($500)
 - Add a sharing widget to the transaction page with a QR code and a direct link to copy. ($200)
 - Introduce additional transaction XDR actions: "Download", "Open in Stellar Lab". ($200)
+
+**Maintenance Reserve: $2,000**. Covers hosting costs, protocol updates, and all on-going bug fixes.
 
 ## Metrics loaded from PG Atlas
 
