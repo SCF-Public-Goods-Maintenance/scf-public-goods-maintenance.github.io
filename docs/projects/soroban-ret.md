@@ -14,14 +14,16 @@ budget: "$20,000"
 _Compile Rust to WebAssembly, disassemble Soroban contracts, and inspect on-chain bytecode._
 <!-- markdownlint-enable MD036 -->
 
-|                      |                                                                                                     |
-| -------------------- | --------------------------------------------------------------------------------------------------- |
-| **Category**         | Security & Auditing Tools                                                                           |
-| **Website**          | <https://stellarsecurityportal.com/dev-tools>                                                       |
-| **Repository**       | <https://github.com/Inferara/soroban-ret>                                                           |
-| **First Released**   | July 2026                                                                                           |
-| **Intake**           | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/150> |
-| **Budget Requested** | $20,000                                                                                             |
+|                         |                                                                                                     |
+| ----------------------- | --------------------------------------------------------------------------------------------------- |
+| **Category**            | Security & Auditing Tools                                                                           |
+| **Website**             | <https://stellarsecurityportal.com/dev-tools>                                                       |
+| **Repository**          | <https://github.com/Inferara/soroban-ret>                                                           |
+| **First Released**      | July 2026                                                                                           |
+| **Intake**              | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/150> |
+| **Budget Requested**    | $20,000                                                                                             |
+| **Maintenance Reserve** | $20,000                                                                                             |
+| **Other**               | $0                                                                                                  |
 
 ## Project Description
 
