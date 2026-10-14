@@ -22,10 +22,17 @@ the ecosystem like packages._
 | -------------------- | -------------------------------------------------------------------------------------------------- |
 | **Category**         | Developer Experience                                                                               |
 | **Website**          | <https://rgstry.xyz>                                                                               |
-| **Repository**       | <https://github.com/stellar-registry>                                                              |
+| **CLI & Rust Macros**       | <https://github.com/stellar-registry/cli> |
+| **UI**       | <https://github.com/stellar-registry/ui> |
+| **Indexer & API**       | <https://github.com/stellar-registry/indexer> |
+| **Contract(s)**       | <https://github.com/stellar-registry/contracts> |
+| **OZ Wasms**       | <https://github.com/stellar-registry/oz-combined-wasms> |
+| **GH Actions**       | <https://github.com/stellar-registry/actions> |
 | **First Released**   | March 2026                                                                                         |
 | **Intake**           | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/23> |
-| **Budget Requested** | 50000                                                                                              |
+| **Budget Requested**    | $50,000 |
+| **Maintenance Reserve** | $12,500 |
+| **Other**               | $37,500 |
 
 ## Project Description
 
