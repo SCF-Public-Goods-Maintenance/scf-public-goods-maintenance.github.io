@@ -20,7 +20,9 @@ customizable, modern frontend._
 | **Repository**       | <https://github.com/stellar-scaffold/cli/> |
 | **First Released**   | May 2025                                   |
 | **Intake**           | soft-launch                                |
-| **Budget Requested** | 50000                                      |
+| **Budget Requested**    | $50,000 |
+| **Maintenance Reserve** | $12,500 |
+| **Other**               | $37,500 |
 
 ## Project Description
 
