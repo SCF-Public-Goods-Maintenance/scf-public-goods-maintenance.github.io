@@ -13,16 +13,16 @@ budget: "50000"
 _Go from idea to app faster with a custom, pluggable CLI; a multi-framework template system; and a
 customizable, modern frontend._
 
-|                      |                                            |
-| -------------------- | ------------------------------------------ |
-| **Category**         | Developer Experience                       |
-| **Website**          | <https://stellarscaffold.org/>             |
-| **Repository**       | <https://github.com/stellar-scaffold/cli/> |
-| **First Released**   | May 2025                                   |
-| **Intake**           | soft-launch                                |
-| **Budget Requested**    | $50,000 |
-| **Maintenance Reserve** | $12,500 |
-| **Other**               | $37,500 |
+|                         |                                            |
+| ----------------------- | ------------------------------------------ |
+| **Category**            | Developer Experience                       |
+| **Website**             | <https://stellarscaffold.org/>             |
+| **Repository**          | <https://github.com/stellar-scaffold/cli/> |
+| **First Released**      | May 2025                                   |
+| **Intake**              | soft-launch                                |
+| **Budget Requested**    | $50,000                                    |
+| **Maintenance Reserve** | $12,500                                    |
+| **Other**               | $37,500                                    |
 
 ## Project Description
 
