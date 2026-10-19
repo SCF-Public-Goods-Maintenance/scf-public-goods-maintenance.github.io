@@ -24,8 +24,8 @@ calls, CAP-67 events, and swaps into human-readable transaction views, on mainne
 | **First Released**      | 17 July 2026, interest form sent 03 September 2026                                                  |
 | **Intake**              | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/132> |
 | **Budget Requested**    | $4,000                                                                                              |
-| **Maintenance Reserve** | $4000 in XLM                                                                                      |
-| **Other**               | $0                                                                                      |
+| **Maintenance Reserve** | $4000 in XLM                                                                                        |
+| **Other**               | $0                                                                                                  |
 
 ## Project Description
 
@@ -68,11 +68,16 @@ basic auth to a public explorer on two networks.
 
 Network compatibility:
 
-- Protocol 27: stellar-xdr 26→27 so P27 ledgers decode ([PR#325](https://github.com/rumblefishdev/soroban-block-explorer/pull/325)). Galexie pinned durably, and the
-  ingestion-lag alarm reworked so it fires on a full stop ([PR#323](https://github.com/rumblefishdev/soroban-block-explorer/pull/323)).
-- Protocol 28: Galexie 28.0.1 and stellar-xdr 27→28 shipped before the 16 Sept pubnet vote ([PR#456](https://github.com/rumblefishdev/soroban-block-explorer/pull/456)).
-- Protocol 29: Galexie bumped to 29.0.0 ([PR#590](https://github.com/rumblefishdev/soroban-block-explorer/pull/590)). We then added a protocol watch that alerts us when a
-  Galexie with a newer captive core is released and ours is not on it ([PR#605](https://github.com/rumblefishdev/soroban-block-explorer/pull/605)).
+- Protocol 27: stellar-xdr 26→27 so P27 ledgers decode
+  ([PR#325](https://github.com/rumblefishdev/soroban-block-explorer/pull/325)). Galexie pinned
+  durably, and the ingestion-lag alarm reworked so it fires on a full stop
+  ([PR#323](https://github.com/rumblefishdev/soroban-block-explorer/pull/323)).
+- Protocol 28: Galexie 28.0.1 and stellar-xdr 27→28 shipped before the 16 Sept pubnet vote
+  ([PR#456](https://github.com/rumblefishdev/soroban-block-explorer/pull/456)).
+- Protocol 29: Galexie bumped to 29.0.0
+  ([PR#590](https://github.com/rumblefishdev/soroban-block-explorer/pull/590)). We then added a
+  protocol watch that alerts us when a Galexie with a newer captive core is released and ours is not
+  on it ([PR#605](https://github.com/rumblefishdev/soroban-block-explorer/pull/605)).
 
 Testnet: launched 5–6 October 2026 at testnet.sorobanscan.rumblefish.dev. It runs the same binaries,
 reads from SDF's public data lake, and has its own database and alarms. The Mainnet/Testnet switcher
@@ -84,7 +89,8 @@ Ecosystem integrations:
 - the Stellar Prices API uses the explorer's ClickHouse index (soroban_events / soroban_contracts)
   for its pool-coverage sweep.
 
-Feedback loop: a "Report a bug" link in the navigation opens a GitHub issue ([PR#353](https://github.com/rumblefishdev/soroban-block-explorer/pull/353)). Feature requests,
+Feedback loop: a "Report a bug" link in the navigation opens a GitHub issue
+([PR#353](https://github.com/rumblefishdev/soroban-block-explorer/pull/353)). Feature requests,
 including some from SCF Pilots, were triaged and shipped within the quarter.
 
 Engineering throughput (develop branch, 8 Jul – 8 Oct): 2,472 commits, 282 merged PRs, 167 tracked
@@ -99,36 +105,75 @@ tasks closed, 18 tagged production deploys.
 
 Protocol upgrades & ingestion reliability
 
-- Protocol 27 decode: [PR#325](https://github.com/rumblefishdev/soroban-block-explorer/pull/325) · Galexie
-  pin + full-stop alarm: [PR#323](https://github.com/rumblefishdev/soroban-block-explorer/pull/323)
-- Protocol 28 readiness: [PR#456](https://github.com/rumblefishdev/soroban-block-explorer/pull/456) · Protocol 29 Galexie: [PR#590](https://github.com/rumblefishdev/soroban-block-explorer/pull/590) · Galexie protocol watch:
-  [PR#605](https://github.com/rumblefishdev/soroban-block-explorer/pull/605)
-- Seconds-based ingestion-lag metric: [PR#345](https://github.com/rumblefishdev/soroban-block-explorer/pull/345) · Observability sweep: [PR#424](https://github.com/rumblefishdev/soroban-block-explorer/pull/424)
+- Protocol 27 decode: [PR#325](https://github.com/rumblefishdev/soroban-block-explorer/pull/325) ·
+  Galexie pin + full-stop alarm:
+  [PR#323](https://github.com/rumblefishdev/soroban-block-explorer/pull/323)
+- Protocol 28 readiness: [PR#456](https://github.com/rumblefishdev/soroban-block-explorer/pull/456) ·
+  Protocol 29 Galexie: [PR#590](https://github.com/rumblefishdev/soroban-block-explorer/pull/590) ·
+  Galexie protocol watch: [PR#605](https://github.com/rumblefishdev/soroban-block-explorer/pull/605)
+- Seconds-based ingestion-lag metric:
+  [PR#345](https://github.com/rumblefishdev/soroban-block-explorer/pull/345) · Observability sweep:
+  [PR#424](https://github.com/rumblefishdev/soroban-block-explorer/pull/424)
 
 Testnet environment
 
-- [PR#553](https://github.com/rumblefishdev/soroban-block-explorer/pull/553), [PR#558](https://github.com/rumblefishdev/soroban-block-explorer/pull/558), [PR#559](https://github.com/rumblefishdev/soroban-block-explorer/pull/559), [PR#562](https://github.com/rumblefishdev/soroban-block-explorer/pull/562), [PR#566](https://github.com/rumblefishdev/soroban-block-explorer/pull/566), [PR#567](https://github.com/rumblefishdev/soroban-block-explorer/pull/567), [PR#600](https://github.com/rumblefishdev/soroban-block-explorer/pull/600), [PR#603](https://github.com/rumblefishdev/soroban-block-explorer/pull/603), [PR#611](https://github.com/rumblefishdev/soroban-block-explorer/pull/611), [PR#636](https://github.com/rumblefishdev/soroban-block-explorer/pull/636) (and others). Live: https://testnet.sorobanscan.rumblefish.dev
+- [PR#553](https://github.com/rumblefishdev/soroban-block-explorer/pull/553),
+  [PR#558](https://github.com/rumblefishdev/soroban-block-explorer/pull/558),
+  [PR#559](https://github.com/rumblefishdev/soroban-block-explorer/pull/559),
+  [PR#562](https://github.com/rumblefishdev/soroban-block-explorer/pull/562),
+  [PR#566](https://github.com/rumblefishdev/soroban-block-explorer/pull/566),
+  [PR#567](https://github.com/rumblefishdev/soroban-block-explorer/pull/567),
+  [PR#600](https://github.com/rumblefishdev/soroban-block-explorer/pull/600),
+  [PR#603](https://github.com/rumblefishdev/soroban-block-explorer/pull/603),
+  [PR#611](https://github.com/rumblefishdev/soroban-block-explorer/pull/611),
+  [PR#636](https://github.com/rumblefishdev/soroban-block-explorer/pull/636) (and others). Live:
+  https://testnet.sorobanscan.rumblefish.dev
 
 Soroban decoding
 
-- Token-flow decode from Soroban events: [PR#332](https://github.com/rumblefishdev/soroban-block-explorer/pull/332)
-- Execution trace (nested call tree from diagnostic events): [PR#375](https://github.com/rumblefishdev/soroban-block-explorer/pull/375)
-- Events identified the way stellar-rpc identifies them: [PR#465](https://github.com/rumblefishdev/soroban-block-explorer/pull/465), [PR#473](https://github.com/rumblefishdev/soroban-block-explorer/pull/473), [PR#475](https://github.com/rumblefishdev/soroban-block-explorer/pull/475), [PR#579](https://github.com/rumblefishdev/soroban-block-explorer/pull/579), [PR#580](https://github.com/rumblefishdev/soroban-block-explorer/pull/580)
-- soroban-ret decompiled Code tab (with Inferara): [PR#384](https://github.com/rumblefishdev/soroban-block-explorer/pull/384), [PR#385](https://github.com/rumblefishdev/soroban-block-explorer/pull/385), [PR#388](https://github.com/rumblefishdev/soroban-block-explorer/pull/388)
+- Token-flow decode from Soroban events:
+  [PR#332](https://github.com/rumblefishdev/soroban-block-explorer/pull/332)
+- Execution trace (nested call tree from diagnostic events):
+  [PR#375](https://github.com/rumblefishdev/soroban-block-explorer/pull/375)
+- Events identified the way stellar-rpc identifies them:
+  [PR#465](https://github.com/rumblefishdev/soroban-block-explorer/pull/465),
+  [PR#473](https://github.com/rumblefishdev/soroban-block-explorer/pull/473),
+  [PR#475](https://github.com/rumblefishdev/soroban-block-explorer/pull/475),
+  [PR#579](https://github.com/rumblefishdev/soroban-block-explorer/pull/579),
+  [PR#580](https://github.com/rumblefishdev/soroban-block-explorer/pull/580)
+- soroban-ret decompiled Code tab (with Inferara):
+  [PR#384](https://github.com/rumblefishdev/soroban-block-explorer/pull/384),
+  [PR#385](https://github.com/rumblefishdev/soroban-block-explorer/pull/385),
+  [PR#388](https://github.com/rumblefishdev/soroban-block-explorer/pull/388)
 
 Value, assets, accounts, pools
 
-- Net-settled transaction value: [PR#355](https://github.com/rumblefishdev/soroban-block-explorer/pull/355) · lossless value-flow index: [PR#451](https://github.com/rumblefishdev/soroban-block-explorer/pull/451)
-- LP analytics (TVL, volume, fee revenue): [PR#380](https://github.com/rumblefishdev/soroban-block-explorer/pull/380) · Soroswap adapter: [PR#447](https://github.com/rumblefishdev/soroban-block-explorer/pull/447) · Soroban-AMM
-  completeness: [PR#518](https://github.com/rumblefishdev/soroban-block-explorer/pull/518), [PR#598](https://github.com/rumblefishdev/soroban-block-explorer/pull/598)
-- SEP-2 federated addresses: [PR#444](https://github.com/rumblefishdev/soroban-block-explorer/pull/444) · SAC → classic asset: [PR#387](https://github.com/rumblefishdev/soroban-block-explorer/pull/387) · trustlines + signers:
-  [PR#426](https://github.com/rumblefishdev/soroban-block-explorer/pull/426), [PR#432](https://github.com/rumblefishdev/soroban-block-explorer/pull/432)
+- Net-settled transaction value:
+  [PR#355](https://github.com/rumblefishdev/soroban-block-explorer/pull/355) · lossless value-flow
+  index: [PR#451](https://github.com/rumblefishdev/soroban-block-explorer/pull/451)
+- LP analytics (TVL, volume, fee revenue):
+  [PR#380](https://github.com/rumblefishdev/soroban-block-explorer/pull/380) · Soroswap adapter:
+  [PR#447](https://github.com/rumblefishdev/soroban-block-explorer/pull/447) · Soroban-AMM
+  completeness: [PR#518](https://github.com/rumblefishdev/soroban-block-explorer/pull/518),
+  [PR#598](https://github.com/rumblefishdev/soroban-block-explorer/pull/598)
+- SEP-2 federated addresses:
+  [PR#444](https://github.com/rumblefishdev/soroban-block-explorer/pull/444) · SAC → classic asset:
+  [PR#387](https://github.com/rumblefishdev/soroban-block-explorer/pull/387) · trustlines + signers:
+  [PR#426](https://github.com/rumblefishdev/soroban-block-explorer/pull/426),
+  [PR#432](https://github.com/rumblefishdev/soroban-block-explorer/pull/432)
 
 Security, privacy, performance
 
-- ClickHouse least-privilege grants: [PR#531](https://github.com/rumblefishdev/soroban-block-explorer/pull/531) · GTM custom-script blocklist: [PR#537](https://github.com/rumblefishdev/soroban-block-explorer/pull/537)
-- Privacy policy: [PR#486](https://github.com/rumblefishdev/soroban-block-explorer/pull/486) · analytics wait for consent: [PR#529](https://github.com/rumblefishdev/soroban-block-explorer/pull/529)
-- Read-path performance after load test: [PR#348](https://github.com/rumblefishdev/soroban-block-explorer/pull/348) · fewer DB round trips: [PR#393](https://github.com/rumblefishdev/soroban-block-explorer/pull/393)
+- ClickHouse least-privilege grants:
+  [PR#531](https://github.com/rumblefishdev/soroban-block-explorer/pull/531) · GTM custom-script
+  blocklist: [PR#537](https://github.com/rumblefishdev/soroban-block-explorer/pull/537)
+- Privacy policy: [PR#486](https://github.com/rumblefishdev/soroban-block-explorer/pull/486) ·
+  analytics wait for consent:
+  [PR#529](https://github.com/rumblefishdev/soroban-block-explorer/pull/529)
+- Read-path performance after load test:
+  [PR#348](https://github.com/rumblefishdev/soroban-block-explorer/pull/348) · fewer DB round trips:
+  [PR#393](https://github.com/rumblefishdev/soroban-block-explorer/pull/393)
+
 <!-- markdownlint-enable MD034 -->
 
 ## Proposed Impact
