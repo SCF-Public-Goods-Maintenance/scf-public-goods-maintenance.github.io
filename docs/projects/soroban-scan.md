@@ -23,8 +23,8 @@ calls, CAP-67 events, and swaps into human-readable transaction views, on mainne
 | **First Released**      | 17 July 2026, interest form sent 03 September 2026                                                  |
 | **Intake**              | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/132> |
 | **Budget Requested**    | $4,000                                                                                              |
-| **Maintenance Reserve** | $[2000] in XLM                                                                                      |
-| **Other**               | $[2000] in XLM                                                                                      |
+| **Maintenance Reserve** | $4000 in XLM                                                                                      |
+| **Other**               | $0                                                                                      |
 
 ## Project Description
 
