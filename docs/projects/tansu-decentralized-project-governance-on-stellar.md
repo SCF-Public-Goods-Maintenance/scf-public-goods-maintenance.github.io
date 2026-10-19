@@ -347,12 +347,12 @@ are:
    running of NQG for Public Goods.
 
 2. **Membership on mainnet:** this is the largest item of the quarter. We bring `stellar-membership`
-   and its promotions to mainnet with SCF's member data, keep that data in sync, and push the updates
-   to Discord, so that roles and voting weights come from one contract.
+   and its promotions to mainnet with SCF's member data, keep that data in sync, and, with SDF, push
+   the updates to Discord, so that roles and voting weights come from one contract.
 
 3. **Governance:** new ways to take part in a vote: delegation, veto, voting on several proposals at
-   once and finalizing on a quorum. They need design and UX work first, together with the integration
-   of memberships.
+   once and finalizing on a quorum. They need design and UX work first, and must work with
+   memberships.
 
 4. **Security and maintenance:** close the remaining findings of our pre-audit, get an external
    audit, operate the new version of the contract on mainnet, and move our releases from GitHub to
@@ -397,21 +397,25 @@ goes to mainnet. This is the largest deliverable of the quarter.
 - **Mainnet deployment:** the membership contract and its app, with SDF;
 - **Member data:** existing members moved from the current source of truth, and SCF's data kept in
   sync with the contract afterwards;
-- **Discord:** changes of a membership, such as a new role, pushed to Discord;
-- **Promotions:** role promotions voted by the Pilots on Tansu, weighed by their NQG;
+- [Conditional on SDF **Discord:**] changes of a membership, such as a new role, pushed to Discord;
+- **Promotions:** role promotions voted by the Pilots on Tansu, in the `stellarmembers` project,
+  weighed by their NQG;
+- **Membership integration:** the roles and voting weights of a member shown and used in the Tansu
+  dApp;
 - **Neurons:** decide whether the contract holds the individual neurons of a member next to their NQG
   score
   [33d6cff](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/33d6cff5b33baf6171b686f51167eeb302407cd4).
 
-Measure: (conditional on SDF) contract deployed on mainnet with members minted; SCF's data in sync
-with the contract, with the sync documented; a role change on the contract reflected on Discord; one
-promotion voted on Tansu and applied by the contract; the decision on neurons documented. Failing the
-mainnet deployment, the same on testnet.
+Measure: contract deployed on mainnet with members minted, with SDF; SCF's data in sync with the
+contract, with the sync documented; one promotion voted on Tansu in `stellarmembers` and applied by
+the contract; the roles and voting weights of members shown in the Tansu dApp; the decision on
+neurons documented; conditional on SDF, a role change on the contract reflected on Discord. Failing
+the mainnet deployment, the same on testnet.
 
 ### D3: Governance features
 
 Delegation, veto, batch voting and quorum change how people take part in a vote. They need design and
-UX work before code, together with the integration of memberships.
+UX work before code, and must work with the memberships of D2.
 
 - **Delegation:** a member delegates their voting weight to another member, with a cap on the weight
   one member can receive and no re-delegation
@@ -425,8 +429,6 @@ UX work before code, together with the integration of memberships.
 - **Quorum:** a proposal can be finalized before the end of its voting period once a quorum is
   reached, with limits so that this does not become an attack vector
   [ac49183](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/ac49183173e1d1c2246a19b5658a0b1bb0b1546a);
-- **Membership integration:** roles and voting weights of `stellar-membership` shown and used in the
-  dApp;
 - **Governance settings in the dApp:** voting period and execution delay of a project
   [0f54f01](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/0f54f017a2f2a0c508fb9c8a0a7c5c18ac56e4ca);
 - **Proposal page:** outcome calls simulated while the form is filled, so that a wrong call is caught
