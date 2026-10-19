@@ -368,8 +368,7 @@ is ready, coordinate on NQG/Tansu per their [roadmap](https://hackmd.io/@dan13ra
 
 <!-- markdownlint-disable MD034 -->
 
-The maintenance reserve of
-$12,000 covers the work that arrives during the quarter: bug and security
+The maintenance reserve of $12,000 covers the work that arrives during the quarter: bug and security
 fixes, dependencies, releases, the operation of the contract on mainnet and user support. The
 deliverables below that add something new make up the **Other** share of $38,000.
 
@@ -447,7 +446,10 @@ UX/UI audit published, with the redesign it leads to.
   own NQG contract. A project that wants token weight points to a contract that locks the tokens and
   answers a weight. Tansu then never handles assets for governance: only the deposits against spam
   transit through the contract;
-- **Anonymous ballots:** a validity proof per ballot, or a documented operating rule;
+- **Conflicts of interest:** the proposer of a proposal is added to its conflicts of interest
+  automatically, so they cannot vote on their own proposal;
+- **Tally:** a script runs the tally phase for all the proposals of a round, instead of one proposal
+  at a time by hand;
 - **External audit:** submission to the Audit Bank;
 - **Mainnet:** operate the new version of the contract, with its first projects registered and
   voting, and extend the TTL of its entries before they lapse;
@@ -461,10 +463,11 @@ UX/UI audit published, with the redesign it leads to.
   [c28ee8f](https://radicle.network/nodes/radicle.consulting-manao.com/rad:zssaAF91kxuquZmZCV2SiK2FNX6s/issues/c28ee8fc7fe83d514e5a67024a6f35d779364649).
 
 Measure: token-weighted proposals removed from the contract and the dApp, with a documented example
-of an NQG contract backed by locked tokens; the anonymous ballot finding closed, or accepted in
-writing; Audit Bank submission made; mainnet transactions of a project registration and of a vote
-linked; TTL extension transactions linked; dependencies up-to-date; one release published from the
-Radicle CI with its artifacts, and present on the Stellar Registry.
+of an NQG contract backed by locked tokens; proposers added to the conflicts of interest of their
+proposals without a manual step; the tally of a round run by the script; Audit Bank submission made;
+mainnet transactions of a project registration and of a vote linked; TTL extension transactions
+linked; dependencies up-to-date; one release published from the Radicle CI with its artifacts, and
+present on the Stellar Registry.
 
 <!-- markdownlint-enable MD034 -->
 
