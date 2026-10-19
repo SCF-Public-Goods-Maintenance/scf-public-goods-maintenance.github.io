@@ -106,8 +106,12 @@ In the latter half of 2026, the Stellar Registry team consists primarily of the 
 individuals, in order of involvement:
 
 - **Pam Selle** — @pselle • [LinkedIn](https://www.linkedin.com/in/pamelaselle/) • Registry Lead
-- **Willem Wyndham** — @willemneal • [LinkedIn](https://www.linkedin.com/in/willem-wyndham/) • PR review; co-architect; key research (such as on continued `stellar-registry/actions` maturation (D9), Secure Store upstream contributions (D8), and named accounts for both G- and C-addresses (D5))
-- **Chad Ostrowski** — @chadoh • [LinkedIn](https://www.linkedin.com/in/chadoh/) • PR review; co-architect; dev outreach & education (D3)
+- **Willem Wyndham** — @willemneal • [LinkedIn](https://www.linkedin.com/in/willem-wyndham/) • PR
+  review; co-architect; key research (such as on continued `stellar-registry/actions` maturation
+  (D9), Secure Store upstream contributions (D8), and named accounts for both G- and C-addresses
+  (D5))
+- **Chad Ostrowski** — @chadoh • [LinkedIn](https://www.linkedin.com/in/chadoh/) • PR review;
+  co-architect; dev outreach & education (D3)
 - **Zach Fedor** — @zachfedor • [LinkedIn](https://www.linkedin.com/in/zachfedor/) • UI Lead
 
 <!-- markdownlint-enable MD034 -->
