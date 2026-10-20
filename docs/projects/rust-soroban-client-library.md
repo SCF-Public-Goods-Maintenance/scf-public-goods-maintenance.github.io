@@ -1,5 +1,6 @@
 ---
 title: "Rust Soroban Client Library"
+canonical_id: daoip-5:scf:project:rust_soroban_client_library
 parent: Public Good Projects
 proposal_issue: 189
 proposer: rahul-soshte
