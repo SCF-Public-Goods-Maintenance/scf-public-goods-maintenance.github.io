@@ -1,5 +1,6 @@
 ---
 title: "Soroban-ret"
+canonical_id: daoip-5:scf:project:soroban_disassembler_(working_title)
 parent: Public Good Projects
 proposal_issue: 175
 proposer: SurfingBowser
