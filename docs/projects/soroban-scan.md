@@ -1,5 +1,6 @@
 ---
 title: "Soroban Scan"
+canonical_id: daoip-5:scf:project:rumble_fish_software_development_-_rfp
 parent: Public Good Projects
 proposal_issue: 194
 proposer: kowalski
