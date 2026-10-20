@@ -1,5 +1,6 @@
 ---
 title: "StellarAtlas"
+canonical_id: daoip-5:scf:project:stellaratlas
 parent: Public Good Projects
 proposal_issue: 202
 proposer: silence48
