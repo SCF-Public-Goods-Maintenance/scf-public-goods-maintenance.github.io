@@ -1,5 +1,6 @@
 ---
 title: "Lumen Loop"
+canonical_id: daoip-5:scf:project:lumen_loop
 parent: Public Good Projects
 proposal_issue: 173
 proposer: rawritude
