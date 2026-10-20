@@ -5,7 +5,7 @@ parent: Public Good Projects
 proposal_issue: 194
 proposer: kowalski
 category: "Data Support"
-budget: "$4,000"
+budget: "$6,600"
 health_endpoint: "https://api-sorobanscan.rumblefishdev.com/health"
 ---
 
@@ -24,9 +24,9 @@ calls, CAP-67 events, and swaps into human-readable transaction views, on mainne
 | **Repository**          | <https://github.com/rumblefishdev/soroban-block-explorer>                                           |
 | **First Released**      | 17 July 2026, interest form sent 03 September 2026                                                  |
 | **Intake**              | <https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/132> |
-| **Budget Requested**    | $4,000                                                                                              |
+| **Budget Requested**    | $6,600                                                                                              |
 | **Maintenance Reserve** | $4000 in XLM                                                                                        |
-| **Other**               | $0                                                                                                  |
+| **Other**               | $2600 in XLM                                                                                        |
 
 ## Project Description
 
@@ -197,6 +197,29 @@ Maintenance reserve (capacity, not itemised). Expected work:
 - Keeping both networks ingesting and the alarms honest. Dependency, toolchain and security updates.
 - Bug triage and fixes from GitHub issues. Known items include deployer attribution on fee-bump
   transactions and NFT completeness gaps. Reported next quarter as Reserved vs Actual.
+
+Other: move to a dedicated domain, `sorobanscan.com` ($2,600 in XLM)
+
+Soroban Scan currently runs on Rumble Fish company domains. We will move it to its own domain so
+links to the explorer and its APIs no longer depend on our agency's hostnames. Work involved:
+
+- Explorer frontends: mainnet to `sorobanscan.com` and testnet to `testnet.sorobanscan.com`.
+- Explorer APIs: mainnet and testnet APIs moved to `sorobanscan.com` subdomains, with CORS, Turnstile
+  widget hostnames and Cloudflare edge rules (WAF, bot settings, caching) reconfigured for each one.
+- Stellar Prices API: it is served from a Soroban Scan subdomain
+  (`prices-api.sorobanscan.rumblefish.dev`), so it moves to a `sorobanscan.com` subdomain as well.
+- DNS, TLS certificates and the public infrastructure-as-code updated for all of the above.
+- Redirect infrastructure: permanent, path-preserving redirects from every old URL (frontends, APIs
+  and Prices API), so existing links, bookmarks and integrations keep working.
+- Google Analytics and consent configuration updated for the new domain.
+- Monitoring: uptime checks and alarms moved to the new hostnames, and the `health_endpoint` on this
+  page updated.
+- Docs, OpenAPI spec and in-app links updated.
+- Communicating the change to the Stellar community, with migration notes for API and Prices API
+  users.
+
+Done when both networks and the Prices API are served from `sorobanscan.com`, old URLs redirect,
+and the change has been announced.
 
 <!-- markdownlint-enable MD034 -->
 
