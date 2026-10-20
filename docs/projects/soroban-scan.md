@@ -218,8 +218,8 @@ links to the explorer and its APIs no longer depend on our agency's hostnames. W
 - Communicating the change to the Stellar community, with migration notes for API and Prices API
   users.
 
-Done when both networks and the Prices API are served from `sorobanscan.com`, old URLs redirect,
-and the change has been announced.
+Done when both networks and the Prices API are served from `sorobanscan.com`, old URLs redirect, and
+the change has been announced.
 
 <!-- markdownlint-enable MD034 -->
 
