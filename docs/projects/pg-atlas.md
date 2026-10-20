@@ -1,5 +1,6 @@
 ---
 title: "PG Atlas"
+canonical_id: daoip-5:scf:project:pg_atlas
 parent: Public Good Projects
 proposal_issue: 197
 proposer: aolieman
@@ -155,7 +156,7 @@ Data quality backlog:
   criticality score accuracy.
 - Merge projects that have been fragmented across multiple canonical IDs (see [OpenGrants comment on
   PGM#143][pgm-143-opengrants-comment]).
-- improve within-ecosystem detection for projects without an explicit repo list
+- Improve within-ecosystem detection for projects without an explicit repo list.
 - Remove previously linked repos from projects. Impact: reduces clutter on project pages and improves
   the accuracy of project metrics.
 
@@ -213,7 +214,7 @@ dependency data is visible in PG Atlas. The results are your proof.
 
 Budget: $3,000
 
-Incorporate the data gathered with Christian's GitHub dependents crawler [#76][pr-76] into the
+Incorporate the data gathered with Christian's GitHub dependents crawler ([#76][pr-76]) into the
 dependency graph and the criticality metric. GitHub dependents have known issues, such as staying
 visible for long after a dependency has been removed. This deliverable includes the work needed to
 let negative observations from submitted SBOMs override any GitHub-observed dependents.
