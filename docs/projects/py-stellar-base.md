@@ -21,7 +21,9 @@ RPC, with implementations of several Stellar Ecosystem Proposals._
 | **stellar-contract-bindings** | <https://github.com/lightsail-network/stellar-contract-bindings> |
 | **First Released**            | October 2016                                                     |
 | **Intake**                    | soft-launch                                                      |
-| **Budget Requested**          | 15000                                                            |
+| **Budget Requested**          | $15,000                                                          |
+| **Maintenance Reserve**       | $15,000                                                          |
+| **Other**                     | $0                                                               |
 
 ## Project Description
 
@@ -270,42 +272,29 @@ Stellar with the SDK, lowering the barrier for developers using AI tools.
 
 ## Proposed Impact
 
-The primary goal for Q3 2026 is to ship py-stellar-base 15.0.0 as a stable release with full Protocol
-27 support, giving the ecosystem's large Python user base a supported path to the new protocol.
-CAP-71 Soroban authorization is already implemented in the 15.0.0 beta; the stable release is held
-until Protocol 27 is available on live test networks for end-to-end validation (issue #1187). Ongoing
-maintenance continues in parallel.
+In Q3, Protocol 28 support and SEP-48 binding generation came up mid-quarter and took much of the
+time we had planned for refactoring. In Q4 2026, we want to get back to that plan: refactor the SDK
+and pay down technical debt, so it stays easy to maintain and reliable as the protocol keeps growing.
+We will keep up routine maintenance of the SDK and stellar-contract-bindings in parallel.
 
 ## Proposed Deliverables
 
-### 1. Release py-stellar-base 15.0.0 with Full Protocol 27 Support
+### P1. Refactoring and Technical Debt Reduction
 
-Finalize the 15.0.0 beta into a stable release with complete Protocol 27 support, including CAP-71
-Soroban authorization (`ADDRESS_V2` and delegated `ADDRESS_WITH_DELEGATES` credentials). The
-implementation is already done in beta; the remaining work, validating against a live Protocol 27
-network, auth examples and a migration guide for the breaking auth changes, and the stable release to
-PyPI.
+We will pick up the refactoring we planned for Q3: go through the codebase, pay down technical debt,
+and simplify code that has grown over many releases. We will decide on specific changes as we work
+through the code. The unit test suite we restructured in Q3 will catch behavior changes, and any
+breaking change will be noted in the release notes.
 
-Proof: Stable 15.0.0 release on GitHub and PyPI, auth examples and migration notes, passing CI on
-main.
+Proof: Commits or PRs, or release notes.
 
-### 2. Continuous Maintenance and Improvement
+### P2. Continuous Maintenance and Improvement
 
-Beyond routine upkeep, responding to community issues and pull requests, tracking Horizon and Soroban
-RPC changes, and keeping CI/CD, the SBOM workflow, and dependencies current, we want to be candid
-about our intent for Q3: rather than adding new features, we plan to slow down and look inward. We
-will audit the codebase for accumulated technical debt, refactor rough edges, and optimize code that
-has grown organically across many releases, so the SDK stays maintainable and dependable for the long
-term.
+The usual upkeep: respond to community issues and pull requests, follow Soroban RPC changes, and keep
+CI/CD, the SBOM workflow, and dependencies up to date. This also covers stellar-contract-bindings:
+keeping the Python generator in step with SDK changes and fixing issues users report.
 
-This is a deliberate decision to consolidate, not to coast. For this SDK, "maintenance" has
-consistently produced meaningful improvements well beyond what we formally plan, Q2 is the clearest
-example, where full Protocol 27 support, the `stellar_sdk.auth` redesign, and a toolchain
-modernization all shipped under this same deliverable. We expect Q3 to be no different: as we dig
-into the code, concrete fixes and refinements will follow.
-
-Proof: Release notes on GitHub, updated CHANGELOG, refactoring and optimization PRs, passing CI on
-main.
+Proof: Commits or PRs, or release notes.
 
 ## Metrics loaded from PG Atlas
 
