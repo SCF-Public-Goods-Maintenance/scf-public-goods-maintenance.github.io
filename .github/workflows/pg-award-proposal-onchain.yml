@@ -55,11 +55,9 @@ jobs:
             --repo "${GITHUB_REPOSITORY}" \
             --json title,labels,files)"
 
-          # ponytail: trim so leading/trailing spaces don't silently skip submit
+          # ponytail: trim so stray spaces don't leak into the on-chain title
           PR_TITLE="$(jq -r '.title | gsub("^\\s+|\\s+$";"")' <<<"${PR_JSON}")"
           HAS_LABEL="$(jq -r 'any(.labels[]?; .name == "pg-award-proposal")' <<<"${PR_JSON}")"
-          HAS_TITLE_PREFIX="false"
-          [[ "${PR_TITLE}" == "PG Award Proposal:"* ]] && HAS_TITLE_PREFIX="true"
           mapfile -t PROJECT_FILES < <(
             jq -r \
               '.files[].path | select(startswith("docs/projects/") and endswith(".md") and (endswith("/index.md") | not))' \
@@ -71,11 +69,8 @@ jobs:
             echo "checkout_ref=refs/pull/${PR_NUMBER}/head"
           } >> "${GITHUB_OUTPUT}"
 
-          if [[ "${HAS_LABEL}" != "true" || "${HAS_TITLE_PREFIX}" != "true" ]]; then
-            REASONS=()
-            [[ "${HAS_LABEL}" != "true" ]] && REASONS+=("missing label pg-award-proposal")
-            [[ "${HAS_TITLE_PREFIX}" != "true" ]] && REASONS+=("title must start with 'PG Award Proposal:' (got: $(printf '%q' "${PR_TITLE}"))")
-            echo "Skipping on-chain submit: ${REASONS[*]}"
+          if [[ "${HAS_LABEL}" != "true" ]]; then
+            echo "Skipping on-chain submit: missing label pg-award-proposal"
             echo "eligible=false" >> "${GITHUB_OUTPUT}"
             exit 0
           fi
@@ -122,8 +117,9 @@ jobs:
         run: |
           set -euo pipefail
 
-          NORMALIZED_TITLE="$(printf '%s' "${PROPOSAL_TITLE}" | sed 's/^PG Award Proposal: //')"
-          NORMALIZED_TITLE="$(printf '%s' "${NORMALIZED_TITLE}" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+          # ponytail: titles are free-form, drop any leading "PG Award Proposal" whatever its case or separator
+          NORMALIZED_TITLE="$(printf '%s' "${PROPOSAL_TITLE}" \
+            | perl -pe 's/^\s*PG\s+Award\s+Proposals?\b\s*(?:[:\-]|\xe2\x80\x93|\xe2\x80\x94)*\s*//i; s/^\s+|\s+$//g')"
 
           OUTCOMES_FILE="${RUNNER_TEMP}/outcomes.json"
           printf '%s\n' \
