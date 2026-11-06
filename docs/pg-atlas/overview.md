@@ -55,8 +55,8 @@ decisions.
   pages with score breakdowns and dependency visualization
 - **Scheduled operations**: Weekly bootstrap (full ecosystem refresh), periodic git log processing
   (dormancy-based), hourly SBOM queue processing
-- **On-chain governance integration**: Soulbound SCF Pilot credentials with NQG-weighted voting in
-  Tansu, visible at [scf.pgatlas.xyz](https://scf.pgatlas.xyz)
+- **On-chain governance integration**: Soulbound Stellar Pilot credentials with NQG-weighted voting
+  in Tansu, visible at [scf.pgatlas.xyz](https://scf.pgatlas.xyz)
 - **Community feedback**: Active via Discord #verified-panel and Office Hours
 
 Explore the

@@ -51,7 +51,7 @@ is still accepting edits, last updated on 2026-01-16, and may not represent the 
 
 ## Get Involved
 
-This is a community-led initiative. All discussions remain open to SCF Pilots in the Stellar
+This is a community-led initiative. All discussions remain open to Stellar Pilots in the Stellar
 Developers Discord:
 
 - Maintenance of Public Goods - Working Group
