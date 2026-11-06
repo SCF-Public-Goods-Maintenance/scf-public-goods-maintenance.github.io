@@ -304,8 +304,8 @@ double-counting.
 **Budget: $20,000. Planned delivery: 31 December 2026.**
 
 Orion was in progress during Q3 and was not counted as a completed commitment. It remains in
-development. In Q4, we will release its full-history ingestion, versioned Parquet storage, account and
-transaction indexes, continuous synchronization, and native query APIs. The public source, setup
+development. In Q4, we will release its full-history ingestion, versioned Parquet storage, account
+and transaction indexes, continuous synchronization, and native query APIs. The public source, setup
 instructions, architecture, and validation and recovery tools are part of this deliverable. We will
 add the repository link when published.
 
@@ -414,10 +414,10 @@ the historical integration or the performance improvement.
 
 **Budget: $6,000. Planned delivery: 31 December 2026.**
 
-Q3 brought dedicated chart pages for supported metrics. In Q4, we will build on them with a searchable
-analytics workspace and extend the verified history behind them. Metrics will be grouped into network
-activity, accounts and retention, payments, assets and stablecoins, DEX and liquidity, market data,
-fees, and Soroban contracts.
+Q3 brought dedicated chart pages for supported metrics. In Q4, we will build on them with a
+searchable analytics workspace and extend the verified history behind them. Metrics will be grouped
+into network activity, accounts and retention, payments, assets and stablecoins, DEX and liquidity,
+market data, fees, and Soroban contracts.
 
 Users will be able to choose recent, one-year, multi-year, or all-history views where the data
 supports them, with suitable hourly, daily, weekly, and monthly buckets. Charts will have period
