@@ -10,7 +10,7 @@ nav_order: 2
 
 The SCF Public Goods Award uses [Tansu](https://tansu.dev) as the on-chain voting platform for
 proposal evaluation and funding decisions. Tansu integration enables anonymous NQG-weighted voting,
-transparent on-chain governance records, and composable SCF Pilot credentials.
+transparent on-chain governance records, and composable Stellar Pilot credentials.
 
 **Current status**: Operational for 2026 Q2 award round with NQG-weighted anonymous voting, SCF
 Governance space on Tansu, and soulbound credential framework.
@@ -29,7 +29,7 @@ The SCF operates as a dedicated organization on Tansu:
 
 ### NQG-Weighted Voting
 
-SCF Pilots vote using their reputation scores for sybil resistance and proportional voice:
+Stellar Pilots vote using their reputation scores for sybil resistance and proportional voice:
 
 **Voting mechanism**:
 
@@ -58,11 +58,11 @@ The 2026 Q2 award round follows this on-chain voting pattern:
 
 See [Proposer Instructions](proposer-instructions.md) for full timeline details.
 
-## SCF Pilot Credentials
+## Stellar Pilot Credentials
 
 ### Soulbound Credential Design
 
-The SCF Pilot credential system builds on NQG scores with dynamic NFT representation:
+The Stellar Pilot credential system builds on NQG scores with dynamic NFT representation:
 
 **Credential properties**:
 
