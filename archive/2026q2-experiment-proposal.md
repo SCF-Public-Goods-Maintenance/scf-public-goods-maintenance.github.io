@@ -70,7 +70,7 @@ several rounds, this structure has proven itself, and we are now ready to take t
 broader community participation.
 
 PG Atlas supports the first Public Goods Award round in Q2 (April) with an updated structure.
-Initially, it will be used by eligible public goods maintainers and all SCF Pilots to ensure that
+Initially, it will be used by eligible public goods maintainers and all Stellar Pilots to ensure that
 critical ecosystem components can receive sufficient funding. Later in the year, we expect to trial
 the first round with delegated community voting, similarly to the existing Build Award (Open track)
 process.
@@ -274,7 +274,7 @@ full processing logic.
 
 Build NQG scores as dynamic, soulbound NFTs following the
 [SEP-50](https://github.com/stellar/stellar-protocol/blob/master/ecosystem/sep-0050.md) spec for
-Freighter wallet compatibility. Each SCF Pilot gets a visible, on-chain representation of their
+Freighter wallet compatibility. Each Stellar Pilot gets a visible, on-chain representation of their
 governance reputation that updates as their NQG score changes.
 
 This has value beyond the PG Award: any Stellar ecosystem project could leverage this trust signal

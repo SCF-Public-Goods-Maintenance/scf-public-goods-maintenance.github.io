@@ -19,3 +19,4 @@ repos:
     rev: v0.24.0
     hooks:
       - id: markdownlint-cli2
+        language_version: 26.13.0

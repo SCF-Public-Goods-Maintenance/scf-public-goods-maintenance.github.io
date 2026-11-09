@@ -74,7 +74,7 @@ submit the proposal form. Ineligible use of the form is publicly visible.
 | 1️⃣ Proposal Submission            | Proposer fills out the [Proposal Form](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/new?template=pg-award-proposal-form.yml){:target="⚡"} (GitHub Issue). Automation validates the submission, generates a project page, and creates a Pull Request. The issue is closed with a link to the PR. For renewals, see [below](#renewals). | Quarterly window       |
 | 2️⃣ Discussion & Revisions (D&R)   | Community reviews the proposal PR on GitHub. Proposer edits the project page directly on the PR branch; the PR description auto-syncs on every commit. Previous deliverables are also reviewed during this phase. Early entrants have more time for revisions; late entrants have less.                                                                                                 | ~7 days                |
 | 3️⃣ On-chain Submission            | At the close of the D&R window, revised proposals are submitted to [Tansu](https://tansu.dev){:target="⚡"} for on-chain voting.                                                                                                                                                                                                                                                        | Within 2 business days |
-| 4️⃣ On-chain Vote                  | SCF Pilots vote on proposals using NQG-weighted scores on Tansu.                                                                                                                                                                                                                                                                                                                        | ~3 days                |
+| 4️⃣ On-chain Vote                  | Stellar Pilots vote on proposals using NQG-weighted scores on Tansu.                                                                                                                                                                                                                                                                                                                    | ~3 days                |
 | 5️⃣ SDF Compliance & Payout Setup  | After community approval, SDF performs a final compliance check. At SDF's discretion, if a community-approved proposal does not meet Award eligibility, the project is not awarded.                                                                                                                                                                                                     | ~1 week                |
 | 6️⃣ Award Distribution — Tranche 1 | First 50% of the award is distributed after approval and payment setup.                                                                                                                                                                                                                                                                                                                 | ~1 week                |
 | 7️⃣ Award Distribution — Tranche 2 | Second 50% is distributed after reviewers approve previous deliverables (supermajority required).                                                                                                                                                                                                                                                                                       | Next quarter           |
@@ -120,7 +120,7 @@ flowchart TD
     DiscRev --> |"D&R phase ends"| Finalized["Proposal finalized\n(D&R window closed)"]
 
     Finalized --> TansuVote["Proposal PR merged\nand automatically submitted to\nTansu for on-chain vote"]
-    TansuVote --> PilotsVote["SCF Pilots vote\n(NQG-weighted, ~3 days)"]
+    TansuVote --> PilotsVote["Stellar Pilots vote\n(NQG-weighted, ~3 days)"]
     PilotsVote --> VoteOutcome{"Approved?"}
 
     %% FINAL OUTCOMES
@@ -195,8 +195,8 @@ also clone the branch locally and push changes using git.
 
 ### Review Process
 
-- Community members and reviewers (SCF Pilots) leave feedback directly on the PR using comments and
-  GitHub's **Suggest Changes** feature.
+- Community members and reviewers (Stellar Pilots) leave feedback directly on the PR using comments
+  and GitHub's **Suggest Changes** feature.
 - When you accept a suggested change, it counts as a commit, so the PR description updates
   automatically.
 - All formal discussion and feedback happens on the PR. We encourage you to also post a thread in
@@ -307,8 +307,8 @@ Three cases are easy to get wrong:
 ## Access & Permissions
 
 Proposers need to be added to the GitHub team corresponding to their SCF membership role. Those that
-are not SCF Pilots are added to the `pg-maintainer` team to get the write permission needed to create
-and edit PRs without forking.
+are not Stellar Pilots are added to the `pg-maintainer` team to get the write permission needed to
+create and edit PRs without forking.
 
-If you do not have write access to this repository, contact an active SCF Pilot or SDF representative
-to be added to the appropriate team before submitting your proposal.
+If you do not have write access to this repository, contact an active Stellar Pilot or SDF
+representative to be added to the appropriate team before submitting your proposal.

@@ -15,7 +15,7 @@ Airtable and voting on Soroban Governor (testnet, snapshot proposals only). Awar
 XLM per proposal per quarter, distributed in two 50% tranches—the second contingent on deliverable
 completion review by a Council (currently Anke, Justin, Gemma). Proposal intake is not
 open-application; projects must be pre-approved by an SDF contact before submitting. Voting is open
-to SCF Pilots using NQG scores, with quorum and approval thresholds.
+to Stellar Pilots using NQG scores, with quorum and approval thresholds.
 
 This structure has been an important starting point, and we want to build on its strengths. The
 working group has identified limitations that the new model aims to address:
