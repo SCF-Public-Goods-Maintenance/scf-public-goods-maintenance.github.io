@@ -1,16 +1,16 @@
-name: SCF Public Goods Award - Service Levels Form
-description: Set the service levels and continuity obligations your project commits to
-title: "PG Award Service Levels: "
+name: SCF Public Goods Award - Service Level and Continuity Obligations Form
+description: Set the service level and continuity obligations your project commits to
+title: "PG Award Service Level and Continuity Obligations: "
 labels: ["pg-award-slo"]
 body:
   - type: markdown
     attributes:
       value: |
-        # SCF Public Goods Award: Service Levels Form
+        # SCF Public Goods Award: Service Level and Continuity Obligations Form
 
         Every quarterly deliverables pull request has two parts: a retroactive part for the impact you demonstrated, and a retainer part for ongoing maintenance, measured against the Service Level Objectives (SLOs) you set here.
 
-        Fill out this form **once**, after your intake form is accepted. Your SLOs stay in place from quarter to quarter; you do not resubmit them with each proposal or deliverables report. To change them later, edit your SLO file through a pull request. See [Service Levels](https://scf-public-goods-maintenance.github.io/pg-award/proposer-instructions/#service-levels) in the proposer instructions.
+        Fill out this form **once**, after your intake form is accepted. Your SLOs stay in place from quarter to quarter; you do not resubmit them with each proposal or deliverables report. To change them later, edit your SLO file through a pull request. See [Service Level and Continuity Obligations](https://scf-public-goods-maintenance.github.io/pg-award/proposer-instructions/#service-level-and-continuity-obligations) in the proposer instructions.
 
         _UX limitation:_ any links in this form will open in your current browser tab by default. You risk losing progress. It's always a good idea to draft your answers in a separate file, or copy them there as a backup.
 
@@ -126,4 +126,4 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you! After this form is validated, a pull request with your SLO file is created. Your SLOs apply from the next quarter and are reported in each deliverables pull request.
+        Thank you! After this form is validated, a pull request with your SLO file is created. Your SLOs apply from the quarter you submit them in (2027 Q1 at the earliest) and are reported in each deliverables pull request.

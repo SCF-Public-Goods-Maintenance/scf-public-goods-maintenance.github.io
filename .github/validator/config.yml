@@ -27,7 +27,7 @@ validators:
   - field: git-repo
     script: validate-url-loose.js
 
-  # Service levels form
+  # Service Level and Continuity Obligations form
   - field: intake-or-page
     script: validate-url-loose.js
   - field: runbook

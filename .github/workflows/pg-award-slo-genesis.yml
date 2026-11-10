@@ -1,6 +1,6 @@
-name: PG Award Service Levels - Genesis
+name: PG Award Service Level and Continuity Obligations - Genesis
 
-# Turns a Service Levels form into a pull request adding docs/slos/{slug}.md.
+# Turns a Service Level and Continuity Obligations form into a pull request adding docs/slos/{slug}.md.
 # Modelled on the proposal genesis workflow. There is no approval vote on SLO
 # pull requests yet: once the form validates and the project is eligible, the
 # pull request is ready to merge.
@@ -27,7 +27,7 @@ jobs:
         run: |
           gh issue comment ${{ github.event.issue.number }} \
             -R ${{ github.repository }} \
-            --body ":warning: A service levels PR was already created from this issue. Please edit your SLO file on the PR branch instead."
+            --body ":warning: A Service Level and Continuity Obligations PR was already created from this issue. Please edit your SLO file on the PR branch instead."
 
   genesis:
     # prettier-ignore
@@ -41,14 +41,14 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v7
 
-      - name: Parse service levels form
+      - name: Parse obligations form
         id: parse
         uses: issue-ops/parser@v5
         with:
           body: ${{ github.event.issue.body }}
           issue-form-template: pg-award-slo-form.yml
 
-      - name: Validate service levels form
+      - name: Validate obligations form
         id: validate
         uses: issue-ops/validator@v4
         with:
@@ -80,7 +80,7 @@ jobs:
       - name: Abort on validation failure
         if: steps.validate.outputs.result != 'success'
         run: |
-          echo "::error::Service levels form validation failed. See the issue comment for details."
+          echo "::error::Service Level and Continuity Obligations form validation failed. See the issue comment for details."
           exit 1
 
       - name: Ensure workflow labels exist
@@ -88,9 +88,9 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh label create "pg-slo:pr-created" -R "${{ github.repository }}" --color 0E8A16 \
-            --description "Service levels PR created from this issue" --force
+            --description "Service Level and Continuity Obligations PR created from this issue" --force
           gh label create "pg-slo:ineligible" -R "${{ github.repository }}" --color B60205 \
-            --description "Service levels form without an accepted intake or project page" --force
+            --description "Service Level and Continuity Obligations form without an accepted intake or project page" --force
 
       - name: Remove validation-error and ineligible labels
         uses: issue-ops/labeler@v4
@@ -138,7 +138,7 @@ jobs:
               if (accepted) {
                 result.eligible = true
               } else {
-                result.message = `:no_entry: The linked intake form (#${intake[1]}) was not (yet) accepted. You can submit service levels once your intake form is accepted.`
+                result.message = `:no_entry: The linked intake form (#${intake[1]}) was not (yet) accepted. You can submit the Service Level and Continuity Obligations Form once your intake form is accepted.`
               }
             } else {
               result.message = ':warning: Please link your accepted intake form issue, or your project page (for example `https://scf-public-goods-maintenance.github.io/projects/your-project/`). Edit the issue above to run the check again.'
@@ -174,7 +174,7 @@ jobs:
         run: |
           if git cat-file -e "HEAD:${FILE_PATH}" 2>/dev/null; then
             gh issue comment "${{ github.event.issue.number }}" -R "${{ github.repository }}" \
-              --body ":information_source: This project already has service levels in \`${FILE_PATH}\`. To change them, edit that file and open a pull request from a branch named \`slos/{slug}-{quarter}\`. See [Service Levels](https://scf-public-goods-maintenance.github.io/pg-award/proposer-instructions/#service-levels)."
+              --body ":information_source: This project already has service level and continuity obligations in \`${FILE_PATH}\`. To change them, edit that file and open a pull request from a branch named \`slos/{slug}-{quarter}\`. See [Service Level and Continuity Obligations](https://scf-public-goods-maintenance.github.io/pg-award/proposer-instructions/#service-level-and-continuity-obligations)."
             exit 1
           fi
 
@@ -196,7 +196,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -c "${{ steps.branch.outputs.name }}"
           git add "${{ steps.render.outputs.file_path }}"
-          git commit -m "Add service levels: $PROJECT_TITLE"
+          git commit -m "Add service level and continuity obligations: $PROJECT_TITLE"
           git push origin "${{ steps.branch.outputs.name }}"
 
       # ── Create PR and label issue ─────────────────────────────────────────
@@ -210,7 +210,7 @@ jobs:
           PR_URL=$(printf '%s' "${BODY:0:65536}" | gh pr create \
             --base main \
             --head "${{ steps.branch.outputs.name }}" \
-            --title "PG Award Service Levels: $PROJECT_TITLE" \
+            --title "PG Award Service Level and Continuity Obligations: $PROJECT_TITLE" \
             --body-file - \
             --label "pg-award-slo")
           gh issue edit "${{ github.event.issue.number }}" \
@@ -224,16 +224,16 @@ jobs:
         run: |
           gh issue close ${{ github.event.issue.number }} \
             -R ${{ github.repository }} \
-            --comment ":zap: Your service levels PR has been created: ${{ steps.pr.outputs.url }}
+            --comment ":zap: Your Service Level and Continuity Obligations PR has been created: ${{ steps.pr.outputs.url }}
 
           Anyone can comment on it. To make changes, edit \`${{ steps.render.outputs.file_path }}\` on the PR branch. Once merged, your SLOs apply each quarter and you report against them in your deliverables pull request.
 
-          See [Service Levels](https://scf-public-goods-maintenance.github.io/pg-award/proposer-instructions/#service-levels) for the full process."
+          See [Service Level and Continuity Obligations](https://scf-public-goods-maintenance.github.io/pg-award/proposer-instructions/#service-level-and-continuity-obligations) for the full process."
 
       - name: Write step summary
         env:
           SUMMARY: |
-            ## Service Levels Genesis
+            ## Service Level and Continuity Obligations Genesis
 
             | | |
             | --- | --- |

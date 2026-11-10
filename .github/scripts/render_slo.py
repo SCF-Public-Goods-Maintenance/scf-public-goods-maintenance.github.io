@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render a parsed PG Award service levels issue form into an SLO file.
+"""Render a parsed PG Award Service Level and Continuity Obligations issue form into an SLO file.
 
 Reads env vars set by the workflow:
   PARSED_JSON  — JSON string from the issue-ops/parser step
@@ -128,8 +128,8 @@ def main():
     # --- Front matter ---------------------------------------------------------
     fm = [
         "---",
-        f"title: {q('Service Levels: ' + project_title)}",
-        "parent: Service Levels",
+        f"title: {q('Service Level and Continuity Obligations: ' + project_title)}",
+        "parent: Service Level and Continuity Obligations",
         f"project: {slug}",
     ]
     if canonical_id:
@@ -170,7 +170,7 @@ def main():
 
     # --- Body -----------------------------------------------------------------
     body = [
-        f"# Service Levels: {project_title}\n",
+        f"# Service Level and Continuity Obligations: {project_title}\n",
         "| | |",
         "| --- | --- |",
         f"| **Project page** | [{project_title}](/projects/{slug}/) |",
