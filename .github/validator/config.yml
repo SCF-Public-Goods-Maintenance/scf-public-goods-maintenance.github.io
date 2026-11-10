@@ -26,3 +26,13 @@ validators:
     script: validate-url-loose.js
   - field: git-repo
     script: validate-url-loose.js
+
+  # Service levels form
+  - field: intake-or-page
+    script: validate-url-loose.js
+  - field: runbook
+    script: validate-url-loose.js
+  - field: repositories
+    script: validate-url-list.js
+  - field: slos
+    script: validate-slo-table.js

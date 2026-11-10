@@ -1,0 +1,246 @@
+name: PG Award Service Levels - Genesis
+
+# Turns a Service Levels form into a pull request adding docs/slos/{slug}.md.
+# Modelled on the proposal genesis workflow. There is no approval vote on SLO
+# pull requests yet: once the form validates and the project is eligible, the
+# pull request is ready to merge.
+
+on:
+  issues:
+    types: [opened, edited, reopened]
+
+concurrency: slo-genesis-${{ github.event.issue.number }}
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  retrigger:
+    if: contains(github.event.issue.labels.*.name, 'pg-slo:pr-created')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Point out that the PR was already created
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue comment ${{ github.event.issue.number }} \
+            -R ${{ github.repository }} \
+            --body ":warning: A service levels PR was already created from this issue. Please edit your SLO file on the PR branch instead."
+
+  genesis:
+    # prettier-ignore
+    if:
+      contains(github.event.issue.labels.*.name, 'pg-award-slo')
+      && ! contains(github.event.issue.labels.*.name, 'pg-slo:pr-created')
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── Parse & validate ──────────────────────────────────────────────────
+      - name: Checkout repo
+        uses: actions/checkout@v7
+
+      - name: Parse service levels form
+        id: parse
+        uses: issue-ops/parser@v5
+        with:
+          body: ${{ github.event.issue.body }}
+          issue-form-template: pg-award-slo-form.yml
+
+      - name: Validate service levels form
+        id: validate
+        uses: issue-ops/validator@v4
+        with:
+          issue-form-template: pg-award-slo-form.yml
+          parsed-issue-body: ${{ steps.parse.outputs.json }}
+          add-comment: false
+
+      - name: Label on validation failure
+        if: steps.validate.outputs.result != 'success'
+        uses: issue-ops/labeler@v4
+        with:
+          action: add
+          create: true
+          issue_number: ${{ github.event.issue.number }}
+          labels: |
+            issueops:validation-error
+
+      - name: Post validation failure comment
+        if: steps.validate.outputs.result != 'success'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMENT_ERRORS: ${{ steps.validate.outputs.errors }}
+        run: |
+          python .github/scripts/render_validation_failure.py | \
+            gh issue comment "${{ github.event.issue.number }}" \
+              -R "${{ github.repository }}" \
+              --body-file -
+
+      - name: Abort on validation failure
+        if: steps.validate.outputs.result != 'success'
+        run: |
+          echo "::error::Service levels form validation failed. See the issue comment for details."
+          exit 1
+
+      - name: Ensure workflow labels exist
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh label create "pg-slo:pr-created" -R "${{ github.repository }}" --color 0E8A16 \
+            --description "Service levels PR created from this issue" --force
+          gh label create "pg-slo:ineligible" -R "${{ github.repository }}" --color B60205 \
+            --description "Service levels form without an accepted intake or project page" --force
+
+      - name: Remove validation-error and ineligible labels
+        uses: issue-ops/labeler@v4
+        with:
+          action: remove
+          issue_number: ${{ github.event.issue.number }}
+          labels: |
+            issueops:validation-error
+            pg-slo:ineligible
+
+      # ── Eligibility: an accepted intake, or an existing project page ──────
+      - name: Check intake or project page
+        id: check
+        uses: actions/github-script@v9
+        env:
+          LINK: ${{ steps.parse.outputs.parsed_intake-or-page }}
+        with:
+          script: |
+            const { owner, repo } = context.repo
+            const link = (process.env.LINK || '').trim().replace(/^<|>$/g, '')
+            const result = { eligible: false, slug: '', message: '' }
+
+            const page = link.match(/^https:\/\/scf-public-goods-maintenance\.github\.io\/projects\/([a-z0-9-]+)\/?$/)
+              || link.match(new RegExp(`^https://github\\.com/${owner}/${repo}/blob/main/docs/projects/([a-z0-9-]+)\\.md$`))
+            const intake = link.match(new RegExp(`^https://github\\.com/${owner}/${repo}/issues/(\\d+)$`))
+
+            if (page) {
+              try {
+                await github.rest.repos.getContent({ owner, repo, path: `docs/projects/${page[1]}.md`, ref: 'main' })
+                result.eligible = true
+                result.slug = page[1]
+              } catch (error) {
+                if (error.status !== 404) throw error
+                result.message = `:no_entry: There is no project page at \`docs/projects/${page[1]}.md\`. If your project is new, link your accepted intake form instead.`
+              }
+            } else if (intake) {
+              let issue = null
+              try {
+                issue = await github.rest.issues.get({ owner, repo, issue_number: Number(intake[1]) })
+              } catch (error) {
+                if (error.status !== 404) throw error
+              }
+              const accepted = issue && issue.data.labels.some((label) =>
+                (typeof label === 'string' ? label : label.name) === 'pg-intake:accepted')
+              if (accepted) {
+                result.eligible = true
+              } else {
+                result.message = `:no_entry: The linked intake form (#${intake[1]}) was not (yet) accepted. You can submit service levels once your intake form is accepted.`
+              }
+            } else {
+              result.message = ':warning: Please link your accepted intake form issue, or your project page (for example `https://scf-public-goods-maintenance.github.io/projects/your-project/`). Edit the issue above to run the check again.'
+            }
+            return result
+
+      - name: Abort if not eligible
+        if: fromJSON(steps.check.outputs.result).eligible != true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MESSAGE: ${{ fromJSON(steps.check.outputs.result).message }}
+        run: |
+          gh issue edit "${{ github.event.issue.number }}" -R "${{ github.repository }}" --add-label "pg-slo:ineligible"
+          gh issue comment "${{ github.event.issue.number }}" -R "${{ github.repository }}" --body "$MESSAGE"
+          exit 1
+
+      # ── Render SLO file ───────────────────────────────────────────────────
+      - name: Render SLO file from parsed form
+        id: render
+        env:
+          PARSED_JSON: ${{ steps.parse.outputs.json }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+          PROJECT_SLUG: ${{ fromJSON(steps.check.outputs.result).slug }}
+          SUBMITTED_AT: ${{ github.event.issue.created_at }}
+        run: python .github/scripts/render_slo.py
+
+      # SLOs are submitted once. Changes go through a pull request on the file.
+      - name: Stop if the project already has SLOs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FILE_PATH: ${{ steps.render.outputs.file_path }}
+        run: |
+          if git cat-file -e "HEAD:${FILE_PATH}" 2>/dev/null; then
+            gh issue comment "${{ github.event.issue.number }}" -R "${{ github.repository }}" \
+              --body ":information_source: This project already has service levels in \`${FILE_PATH}\`. To change them, edit that file and open a pull request from a branch named \`slos/{slug}-{quarter}\`. See [Service Levels](https://scf-public-goods-maintenance.github.io/pg-award/proposer-instructions/#service-levels)."
+            exit 1
+          fi
+
+      # ── Create branch, commit, push ───────────────────────────────────────
+      - name: Determine branch name
+        id: branch
+        run: |
+          BRANCH="slos/${{ steps.render.outputs.slug }}"
+          if git ls-remote --heads origin "$BRANCH" | grep -q .; then
+            BRANCH="${BRANCH}-${{ github.event.issue.number }}"
+          fi
+          echo "name=${BRANCH}" >> "$GITHUB_OUTPUT"
+
+      - name: Commit and push SLO file
+        env:
+          PROJECT_TITLE: ${{ steps.render.outputs.project_title }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "${{ steps.branch.outputs.name }}"
+          git add "${{ steps.render.outputs.file_path }}"
+          git commit -m "Add service levels: $PROJECT_TITLE"
+          git push origin "${{ steps.branch.outputs.name }}"
+
+      # ── Create PR and label issue ─────────────────────────────────────────
+      - name: Create Pull Request
+        id: pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_TITLE: ${{ steps.render.outputs.project_title }}
+        run: |
+          BODY=$(sed '1{/^---$/!q}; 1,/^---$/d' "${{ steps.render.outputs.file_path }}")
+          PR_URL=$(printf '%s' "${BODY:0:65536}" | gh pr create \
+            --base main \
+            --head "${{ steps.branch.outputs.name }}" \
+            --title "PG Award Service Levels: $PROJECT_TITLE" \
+            --body-file - \
+            --label "pg-award-slo")
+          gh issue edit "${{ github.event.issue.number }}" \
+            -R "${{ github.repository }}" \
+            --add-label "pg-slo:pr-created"
+          echo "url=${PR_URL}" >> "$GITHUB_OUTPUT"
+
+      - name: Close issue and link to PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue close ${{ github.event.issue.number }} \
+            -R ${{ github.repository }} \
+            --comment ":zap: Your service levels PR has been created: ${{ steps.pr.outputs.url }}
+
+          Anyone can comment on it. To make changes, edit \`${{ steps.render.outputs.file_path }}\` on the PR branch. Once merged, your SLOs apply each quarter and you report against them in your deliverables pull request.
+
+          See [Service Levels](https://scf-public-goods-maintenance.github.io/pg-award/proposer-instructions/#service-levels) for the full process."
+
+      - name: Write step summary
+        env:
+          SUMMARY: |
+            ## Service Levels Genesis
+
+            | | |
+            | --- | --- |
+            | **Issue** | #${{ github.event.issue.number }} |
+            | **Project** | ${{ steps.render.outputs.project_title }} |
+            | **File** | `${{ steps.render.outputs.file_path }}` |
+            | **Branch** | `${{ steps.branch.outputs.name }}` |
+            | **PR** | ${{ steps.pr.outputs.url }} |
+        run: |
+          printf '%s\n' "$SUMMARY" >> "$GITHUB_STEP_SUMMARY"

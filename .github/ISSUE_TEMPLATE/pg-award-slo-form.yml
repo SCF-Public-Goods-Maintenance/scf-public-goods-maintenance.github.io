@@ -1,0 +1,129 @@
+name: SCF Public Goods Award - Service Levels Form
+description: Set the service levels and continuity obligations your project commits to
+title: "PG Award Service Levels: "
+labels: ["pg-award-slo"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # SCF Public Goods Award: Service Levels Form
+
+        Every quarterly deliverables pull request has two parts: a retroactive part for the impact you demonstrated, and a retainer part for ongoing maintenance, measured against the Service Level Objectives (SLOs) you set here.
+
+        Fill out this form **once**, after your intake form is accepted. Your SLOs stay in place from quarter to quarter; you do not resubmit them with each proposal or deliverables report. To change them later, edit your SLO file through a pull request. See [Service Levels](https://scf-public-goods-maintenance.github.io/pg-award/proposer-instructions/#service-levels) in the proposer instructions.
+
+        _UX limitation:_ any links in this form will open in your current browser tab by default. You risk losing progress. It's always a good idea to draft your answers in a separate file, or copy them there as a backup.
+
+  - type: input
+    id: project-name
+    attributes:
+      label: Project Name
+      description: As it appears on your intake form or project page. Max 128 characters
+      placeholder: e.g. StellarExpert Explorer
+    validations:
+      required: true
+
+  - type: input
+    id: intake-or-page
+    attributes:
+      label: Intake form or project page
+      description:
+        New projects link their accepted intake form. Projects that already have a project page link
+        that page instead.
+      placeholder: https://scf-public-goods-maintenance.github.io/projects/stellarexpert-explorer/
+    validations:
+      required: true
+
+  - type: textarea
+    id: repositories
+    attributes:
+      label: Repositories covered
+      description:
+        The repositories your SLOs are measured over, one URL per line. Add "(upstream)" after any
+        repository you contribute to but do not own; it is left out of measurement.
+      placeholder: |
+        https://github.com/owner/repo
+        https://github.com/vendor/repo (upstream)
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Service Level Objectives
+
+        Each SLO must say what is measured, the target, and where the evidence comes from, so it can be checked. "Remain a good steward" is not an SLO; "respond to new issues within 14 days" is. Choose targets you can hold through a holiday, an illness or a day job. Some examples:
+
+        | Obligation | Target | Evidence source |
+        | --- | --- | --- |
+        | Median first response on new issues | ≤ 14 days | GitHub issues |
+        | Releases | At least 1 per quarter | GitHub releases |
+        | Security vulnerabilities (CVEs) patched | Within 30 days of disclosure | Security advisories |
+        | Documentation updated after a breaking change | Within one release | Repository changes |
+
+  - type: textarea
+    id: slos
+    attributes:
+      label: Service Level Objectives
+      description: One row per SLO. Add rows as needed and delete empty ones.
+      value: |
+        | Obligation | Target | Evidence source |
+        | ---------- | ------ | --------------- |
+        |            |        |                 |
+        |            |        |                 |
+        |            |        |                 |
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Continuity obligations
+
+        Every project keeps a deploy and publish runbook, and all the code and configuration needed to build, deploy, and publish the project in its repository, so someone else could take it over.
+
+  - type: input
+    id: runbook
+    attributes:
+      label: Deploy and publish runbook
+      description:
+        Link to the runbook in your repository. It should let someone other than you build, deploy,
+        and publish the project.
+      placeholder: https://github.com/owner/repo/blob/main/RUNBOOK.md
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: continuity
+    attributes:
+      label: Code and configuration
+      options:
+        - label:
+            All code and configuration needed to build, deploy, and publish the project is in the
+            repositories listed above, except anything I list below.
+          required: true
+
+  - type: textarea
+    id: continuity-exceptions
+    attributes:
+      label: Exceptions (if applicable)
+      description:
+        Anything needed to build, deploy, or publish that is not in the repository, and why. Secrets
+        are the usual case; name them, but never paste their values.
+      placeholder: e.g. NPM_TOKEN and the Cloudflare API token, held in GitHub Actions secrets
+    validations:
+      required: false
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else we should know?
+      description:
+        For example, a repository about to move, a registry migration, or a maintainer on leave.
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        Thank you! After this form is validated, a pull request with your SLO file is created. Your SLOs apply from the next quarter and are reported in each deliverables pull request.
