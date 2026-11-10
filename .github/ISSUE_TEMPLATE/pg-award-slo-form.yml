@@ -126,4 +126,4 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you! After this form is validated, a pull request with your SLO file is created. Your SLOs apply from the next quarter and are reported in each deliverables pull request.
+        Thank you! After this form is validated, a pull request with your SLO file is created. Your SLOs apply from the quarter you submit them in (2027 Q1 at the earliest) and are reported in each deliverables pull request.
