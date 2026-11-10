@@ -1,0 +1,72 @@
+name: PG Award Deliverables - Service Level and Continuity Obligations
+
+# On a deliverables pull request, keep one comment up to date with the
+# project's SLO table pre-filled and anything missing from the report.
+# Advisory only: it never fails the pull request.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - "docs/projects/**.md"
+
+concurrency: deliverables-slo-${{ github.event.pull_request.number }}
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  obligations:
+    if: startsWith(github.head_ref, 'deliverables/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Find the project page and its SLO file
+        id: files
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PAGES=$(gh pr diff ${{ github.event.pull_request.number }} -R ${{ github.repository }} --name-only \
+            | grep '^docs/projects/.*\.md$' | grep -v '/index\.md$' || true)
+          if [[ $(echo "$PAGES" | grep -c .) -ne 1 ]]; then
+            echo "::notice::Not exactly one project page changed; skipping."
+            echo "page=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          SLUG=$(basename "$PAGES" .md)
+          SLO_PATH="${RUNNER_TEMP}/slo.md"
+          git fetch -q origin main
+          git show "origin/main:docs/slos/${SLUG}.md" > "$SLO_PATH" 2>/dev/null || rm -f "$SLO_PATH"
+          echo "page=${PAGES}" >> "$GITHUB_OUTPUT"
+          echo "slo=${SLO_PATH}" >> "$GITHUB_OUTPUT"
+
+      - name: Build obligations comment
+        id: report
+        if: steps.files.outputs.page != ''
+        env:
+          PAGE_PATH: ${{ steps.files.outputs.page }}
+          SLO_PATH: ${{ steps.files.outputs.slo }}
+          HEAD_REF: ${{ github.head_ref }}
+        run: python .github/scripts/slo_report.py
+
+      - name: Post or update the comment
+        if: steps.report.outputs.post == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          ID=$(gh api "repos/${REPO}/issues/${PR_NUMBER}/comments" --paginate \
+            --jq '.[] | select(.body | contains("<!-- pg-award-slo-report -->")) | .id' | head -1)
+          if [[ -n "$ID" ]]; then
+            gh api -X PATCH "repos/${REPO}/issues/comments/${ID}" -F body=@slo-comment.md > /dev/null
+          else
+            gh pr comment "$PR_NUMBER" -R "$REPO" --body-file slo-comment.md
+          fi
