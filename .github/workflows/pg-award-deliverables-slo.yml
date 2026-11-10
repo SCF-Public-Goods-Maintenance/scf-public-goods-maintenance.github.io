@@ -1,4 +1,4 @@
-name: PG Award Deliverables - Service Levels
+name: PG Award Deliverables - Service Level and Continuity Obligations
 
 # On a deliverables pull request, keep one comment up to date with the
 # project's SLO table pre-filled and anything missing from the report.
@@ -18,7 +18,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  service-levels:
+  obligations:
     if: startsWith(github.head_ref, 'deliverables/')
     runs-on: ubuntu-latest
     steps:
@@ -47,7 +47,7 @@ jobs:
           echo "page=${PAGES}" >> "$GITHUB_OUTPUT"
           echo "slo=${SLO_PATH}" >> "$GITHUB_OUTPUT"
 
-      - name: Build service levels comment
+      - name: Build obligations comment
         id: report
         if: steps.files.outputs.page != ''
         env:

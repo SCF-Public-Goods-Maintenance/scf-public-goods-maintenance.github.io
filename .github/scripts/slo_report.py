@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Build the service levels comment for a deliverables pull request.
+"""Build the Service Level and Continuity Obligations comment for a deliverables pull request.
 
-A deliverables report includes a `#### Service levels` table for the quarter,
+A deliverables report includes a `#### Service Level and Continuity Obligations` table for the quarter,
 reporting each SLO in the project's SLO file and the continuity obligations.
 This script gives the maintainer that table pre-filled with their own SLOs, and
 lists anything missing from the report. It is advisory: it never fails the PR.
@@ -86,13 +86,13 @@ def main():
         return
 
     label = f"{quarter[0]} Q{quarter[1]}"
-    lines = [MARKER, "### Service levels", ""]
+    lines = [MARKER, "### Service Level and Continuity Obligations", ""]
 
     if not slo_path or not os.path.exists(slo_path):
         lines += [
-            f"There are no service levels on file for `{slug}`. Every project reports against its "
-            f"SLOs from 2027 Q1, so please [submit the Service Levels Form]({FORM}) first. "
-            f"See [Service Levels]({INSTRUCTIONS}/#service-levels).",
+            f"There are no service level and continuity obligations on file for `{slug}`. Every project reports against its "
+            f"SLOs from 2027 Q1, so please [submit the Service Level and Continuity Obligations Form]({FORM}) first. "
+            f"See [Service Level and Continuity Obligations]({INSTRUCTIONS}/#service-level-and-continuity-obligations).",
         ]
     else:
         with open(slo_path) as f:
@@ -109,7 +109,7 @@ def main():
         width = max(len(r[0]) for r in rows)
         target_width = max(len("Target"), *(len(r[1]) for r in rows))
         table = [
-            "#### Service levels",
+            "#### Service Level and Continuity Obligations",
             "",
             f"| {'SLO'.ljust(width)} | {'Target'.ljust(target_width)} | Result | Evidence | Met |",
             f"| {'-' * width} | {'-' * target_width} | ------ | -------- | --- |",
@@ -120,14 +120,14 @@ def main():
         missing = []
         if section is None:
             missing.append(f"a `### {label}` section under `## Past Deliverables`")
-        elif not re.search(r"^#### Service levels", section, re.MULTILINE | re.IGNORECASE):
-            missing.append(f"a `#### Service levels` table in the `### {label}` section")
+        elif not re.search(r"^#### Service Level and Continuity Obligations", section, re.MULTILINE | re.IGNORECASE):
+            missing.append(f"a `#### Service Level and Continuity Obligations` table in the `### {label}` section")
         else:
             lowered = section.lower()
             missing += [f"a row for **{o}**" for o, _ in rows if o.lower() not in lowered]
 
         lines += [
-            f"Your {label} report includes a `#### Service levels` table after the budget table, "
+            f"Your {label} report includes a `#### Service Level and Continuity Obligations` table after the budget table, "
             f"reporting each of your SLOs from [`docs/slos/{slug}.md`]({REPO_URL}/blob/main/docs/slos/{slug}.md) "
             "and the continuity obligations. Copy this in and fill in **Result**, **Evidence** "
             "(links) and **Met** (Yes / No):",

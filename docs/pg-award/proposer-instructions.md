@@ -248,9 +248,11 @@ directly:
 3. Update `## Retroactive Impact` to cover the quarter you are reporting on. This section is
    rewritten each quarter rather than added to; previous versions remain in the page history.
 4. Under `## Past Deliverables`, add a new `### {Year} Q{N}` subsection. Start it with the budget
-   allocation table described below. From 2027 Q1, follow it with a `#### Service levels` table
-   reporting your [service levels](#service-levels). Then give evidence for each deliverable you
-   committed to in that quarter's proposal, as `####` subheadings. Leave previous quarters in place.
+   allocation table described below. From 2027 Q1, follow it with a
+   `#### Service Level and Continuity Obligations` table reporting your
+   [service level and continuity obligations](#service-level-and-continuity-obligations). Then give
+   evidence for each deliverable you committed to in that quarter's proposal, as `####` subheadings.
+   Leave previous quarters in place.
 5. Choose **"Create a new branch for this commit and start a pull request."**
 6. Name your branch following the convention: `deliverables/{slug}-{quarter}` (e.g.,
    `deliverables/stellar-sdk-2026q3`).
@@ -260,7 +262,7 @@ description will automatically populate with the content of your updated project
 deliverables PR is reviewed against the deliverables you committed to in that quarter's proposal;
 approval by a supermajority of reviewers releases Tranche 2.
 
-### Reporting Service Levels
+### Reporting Service Level and Continuity Obligations
 
 From 2027 Q1, each quarter's deliverables report the retainer part of the award against the SLOs in
 your SLO file, and the continuity obligations. A bot comment on your deliverables pull request gives
