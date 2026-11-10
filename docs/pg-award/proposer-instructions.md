@@ -34,7 +34,8 @@ projects can submit a proposal in the next available quarterly round.
    locked. If rejected, only Pilots can reopen the intake and discussion.
 
 Once accepted, you are eligible to submit a proposal in the next quarterly round. You also set your
-project's [service levels](#service-levels), once, separately from your proposal.
+project's [service level and continuity obligations](#service-level-and-continuity-obligations),
+once, separately from your proposal.
 
 ```mermaid
 flowchart TD
@@ -305,7 +306,7 @@ Three cases are easy to get wrong:
 - **Implementing a specification you did not previously support is Other**, even though maintaining
   it afterwards is maintenance.
 
-## Service Levels
+## Service Level and Continuity Obligations
 
 Every quarterly deliverables pull request has two parts: a retroactive part for the impact you
 demonstrated, evidenced on your project page, and a retainer part for ongoing maintenance, measured
@@ -345,7 +346,7 @@ reason, never with its value.
 ### How to Submit
 
 1. Once your intake form is accepted, or if you already have a project page, open a
-   [new Service Levels Form issue](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/new?template=pg-award-slo-form.yml){:target="⚡"}.
+   [new Service Level and Continuity Obligations Form issue](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/new?template=pg-award-slo-form.yml){:target="⚡"}.
 2. The form is validated automatically. If there are errors, the bot flags them and you can edit your
    issue to fix them.
 3. Automation creates a pull request adding your SLO file at `docs/slos/{slug}.md` and closes the
