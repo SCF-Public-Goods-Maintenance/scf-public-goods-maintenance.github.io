@@ -88,10 +88,10 @@ development on Stellar, including:
 
 Our team includes well-known ecosystem contributors. Several members hold key community roles (e.g.,
 **SCF Pilot**, **category delegates**) and actively build their own SCF projects (e.g., **Moonlight,
-Tansu, Stellar Merch Store, PG Atlas, Turbolong**). We contribute to protocol and tooling
-discussions, provide developer support at hackathons and conferences, and invest heavily in community
-outreach and education. We show up consistently at major events and actively communicate about
-Stellar, both its strengths and the practical realities builders need to know.
+Tansu, Stellar Merch Store, Turbolong**). We contribute to protocol and tooling discussions, provide
+developer support at hackathons and conferences, and invest heavily in community outreach and
+education. We show up consistently at major events and actively communicate about Stellar, both its
+strengths and the practical realities builders need to know.
 
 **Cross-ecosystem perspective (DevX benchmarking):**
 
@@ -756,7 +756,6 @@ Description from last quarter:
 **⚠️ Pending:**
 
 - domain move discussion: no public link. History of discussion:
-
   - @chadoh raised the issue in a thread within
     [SDF Slack](https://theahaco.slack.com/archives/C04B02ABF37/p1783975268185649?thread_ts=1783975086.044619&cid=C04B02ABF37);
     no one responded
@@ -847,6 +846,7 @@ adopts it. And: the more everyone adopts it, the more everyone benefits. In Q4 w
 gains.
 
 We'll also ship the stuff early adopters have already asked for.
+
 <!-- markdownlint-enable MD034 -->
 
 ## Proposed Deliverables

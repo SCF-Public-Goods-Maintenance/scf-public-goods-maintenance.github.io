@@ -87,10 +87,10 @@ tooling and reliability requirements.
 
 Our team includes well-known ecosystem contributors. Several members hold key community roles (e.g.,
 **SCF Pilot**, **category delegates**) and actively build their own SCF projects (e.g., **Moonlight,
-Tansu, Stellar Merch Store, PG Atlas**). We contribute to protocol and tooling discussions, provide
-developer support at hackathons and conferences, and invest heavily in community outreach and
-education. We show up consistently at major events and actively communicate about Stellar, both its
-strengths and the practical realities builders need to know.
+Tansu, Stellar Merch Store**). We contribute to protocol and tooling discussions, provide developer
+support at hackathons and conferences, and invest heavily in community outreach and education. We
+show up consistently at major events and actively communicate about Stellar, both its strengths and
+the practical realities builders need to know.
 
 ## Cross-ecosystem perspective (DevX benchmarking)
 
