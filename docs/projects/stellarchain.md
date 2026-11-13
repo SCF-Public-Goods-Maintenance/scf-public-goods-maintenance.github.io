@@ -304,10 +304,12 @@ double-counting.
 **Budget: $20,000. Planned delivery: 31 December 2026.**
 
 Orion was in progress during Q3 and was not counted as a completed commitment. It remains in
-progress. In Q4, we will release its full-history ingestion, versioned Parquet storage, account and
-transaction indexes, continuous synchronization, and native query APIs. The public source, setup
+development. In Q4, we will release its full-history ingestion, versioned Parquet storage, account
+and transaction indexes, continuous synchronization, and native query APIs. The public source, setup
 instructions, architecture, and validation and recovery tools are part of this deliverable. We will
 add the repository link when published.
+
+Ledgers, transactions, and contract IDs are already available in the current implementation.
 
 Orion will bring the original archive, intervening ranges, and new ledgers together. We will check
 which archive data is available, publish mainnet history from the earliest recoverable ledger to the
@@ -327,6 +329,8 @@ record will show the first and last ledger, source checksums, publication genera
 latest synchronized ledger. Missing archive intervals keep the work partial. Testnet and futurenet
 will have separate coverage notes, including their resets.
 
+The seven-day synchronization check will finish before the 31 December submission deadline.
+
 Evidence will include the public repository and release, coverage record, validation and recovery
 results, the seven-day synchronization record, and storage/query measurements with the dataset size,
 hardware, and workload stated. Sample storage savings will remain labeled as samples until the whole
@@ -341,9 +345,9 @@ record, and validation results described above.
 
 **Budget: $8,000. Planned delivery: 31 December 2026.**
 
-We will connect Orion to the account, transaction, and ledger pages so users can move through old
-history as naturally as recent activity. These pages already exist; the new work is the historical
-API and the integration behind them.
+We will build on the current implementation to connect Orion to the account, transaction, and ledger
+pages so users can move through old history as naturally as recent activity. These pages already
+exist; the Q4 work is the historical API and the integration behind them.
 
 The API will provide ledger lookup and its transactions, transaction lookup and its operations and
 effects, account state, and account transaction/operation history. A compatibility matrix against a
@@ -373,7 +377,7 @@ trace it back to the chain.
 
 **Budget: $8,000. Planned delivery: 31 December 2026.**
 
-We will refactor the main explorer views around the information people need first. The overview will
+We will refine the main explorer views around the information people need first. The overview will
 bring global identifier search, the selected network, recent ledgers and transactions, and links into
 accounts and historical data together in a more compact layout.
 
@@ -410,10 +414,10 @@ the historical integration or the performance improvement.
 
 **Budget: $6,000. Planned delivery: 31 December 2026.**
 
-Q3 brought dedicated chart pages for supported metrics. In Q4, we will bring them into a searchable
-analytics workspace and extend the verified history behind them. Metrics will be grouped into network
-activity, accounts and retention, payments, assets and stablecoins, DEX and liquidity, market data,
-fees, and Soroban contracts.
+Q3 brought dedicated chart pages for supported metrics. In Q4, we will build on them with a
+searchable analytics workspace and extend the verified history behind them. Metrics will be grouped
+into network activity, accounts and retention, payments, assets and stablecoins, DEX and liquidity,
+market data, fees, and Soroban contracts.
 
 Users will be able to choose recent, one-year, multi-year, or all-history views where the data
 supports them, with suitable hourly, daily, weekly, and monthly buckets. Charts will have period
@@ -446,7 +450,7 @@ chart includes. A long-range selector by itself does not prove that the history 
 
 **Budget: $3,000. Planned delivery: 31 December 2026.**
 
-We will add a clearer view of live activity and the data service behind the explorer. Recent ledgers,
+We will make live activity and the data service behind the explorer easier to check. Recent ledgers,
 transactions, and operations will come from the synchronized indexed tip, with pause, reconnect,
 stale, unavailable, and recovery states. The health view will show Orion's indexed and published
 ledger, synchronization lag, verified historical range, active generation, verification state, and
