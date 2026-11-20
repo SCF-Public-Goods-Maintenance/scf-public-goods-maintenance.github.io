@@ -89,9 +89,10 @@ At the same time, we kept working on Orion, our full-history data service. As th
 decided not to keep extending several fragmented import paths just to meet the short-term need. That
 would have left us with more duplication and maintenance work later. Instead, we chose the more
 ambitious route: a storage-efficient, Horizon-compatible service that can keep Stellar's full history
-synchronized with new ledgers. Orion made meaningful progress during Q3, but it is not released or
-counted as a completed deliverable. Full-history integration, account-history publication, end-to-end
-API validation, and complete Horizon compatibility will continue through Q4 and future funding work.
+synchronized with new ledgers. At the end of Q3, Orion had not been released and was not counted as a
+completed deliverable. Full-history integration, account-history publication, end-to-end API
+validation, and Horizon compatibility were carried into Q4. Current public availability and the
+remaining acceptance evidence are documented in the Q4 implementation status below.
 
 We also released StellarKey publicly: an open-source, self-custodial Stellar wallet with Merchant
 Mode and our own Private Payments implementation. The wallet and merchant tools are available now.
@@ -179,13 +180,14 @@ Evidence: [network metrics API](https://github.com/stellarchain/v4-api/commit/71
 
 ### Additional work during Q3
 
-### Orion full-history infrastructure — In progress and not released
+### Orion full-history infrastructure — Q3 status: in progress, not released
 
-We continued building Orion as a storage-efficient, Horizon-compatible service for Stellar's history.
-XDR remains the authoritative source, with compact Parquet history and indexes for account activity
-and transaction lookups. Full-history integration, account-history publication, gap handling, and
-end-to-end API validation remain unfinished. Orion has no public repository yet and is not counted as
-a completed Q3 commitment. Its release and historical coverage checks are proposed for Q4 below.
+During Q3, we continued building Orion as a storage-efficient, Horizon-compatible service for
+Stellar's history, using XDR as the authoritative source, compact Parquet history, and indexes for
+account activity and transaction lookups. At quarter end, full-history integration, account-history
+publication, gap handling, and end-to-end API validation were unfinished, and Orion had no public
+repository. It was not counted as a completed Q3 commitment. Its public availability during Q4 is
+recorded separately below; the Q3 delivery assessment is unchanged.
 
 ### StellarKey — Public wallet release; Private Payments remains Testnet-only
 
@@ -240,15 +242,27 @@ Public links: [StellarKey](https://stellarkey.io),
 
 Our main Q4 commitment is Orion: an open-source Stellar data node for full history, with compact
 Parquet storage, account and transaction indexes, continuous synchronization, and Horizon-compatible
-APIs. We will release this code and integrate it into StellarChain so users can query old
-transactions, accounts, and ledgers through the explorer. Supported API compatibility, historical
-coverage, and any gaps will be documented and verifiable.
+APIs. Its hosted Pubnet API and documentation are now public. We will complete the source release and
+verified explorer integration so users can query old transactions, accounts, and ledgers through
+StellarChain. Supported API compatibility, historical coverage, and any gaps will be documented and
+verifiable.
+
+Orion provides the indexing and aggregation layer StellarChain needs as the ecosystem moves from
+Horizon toward Stellar RPC. The
+[official migration guide](https://developers.stellar.org/docs/data/apis/migrate-from-horizon-to-rpc)
+identifies explorer queries without a direct RPC replacement and describes building indexed views for
+them. Historical lookups, account activity, and analytics therefore need an explicit data layer
+behind the explorer. This is the role Orion serves in our architecture.
 
 We will also rebuild the main explorer views around clearer summaries. Account pages will bring
 balances, asset allocation, and an activity calendar together. Ledger and transaction pages will
 explain what happened first, with the exact operations, fees, identifiers, and raw data still easy to
 inspect. Statistics will move into a searchable workspace with longer time ranges, useful
 comparisons, and exports that keep the exact source values.
+
+We will also refresh the SCF projects directory and restore the news feed, with source links and
+visible update dates. These are included in D3 alongside clearer coverage and feature-availability
+information. D5 will add checks for the availability and freshness of the data behind the explorer.
 
 The goal is practical: give everyday users a clearer way to understand Stellar activity, and give
 builders and researchers dependable access to its history without running their own archive. We will
@@ -265,10 +279,52 @@ quarter. As in our Q3 report, we count work as complete only when it is released
 A working prototype or a finished import is progress, but it does not replace the public release and
 the checks needed for each item.
 
-We will publish implementation progress, blockers, and evidence before the final review, and submit
-completion evidence by **31 December 2026**. D2 and the Orion-backed parts of D4 and D5 depend on
-D1's verified history. Missing releases, coverage, or validation will be reported as partial
-delivery.
+We will publish updates around releases and significant milestones, with implementation links,
+blockers, current limitations, and evidence, and submit completion evidence by **31 December 2026**.
+D2 and the Orion-backed parts of D4 and D5 depend on D1's verified history. Missing releases,
+coverage, or validation will be reported as partial delivery.
+
+### Current implementation status — 20 November 2026
+
+The Q3 section records the state at the end of that quarter. Orion's
+[public documentation and interactive playground](https://orion.stellarchain.io/) and
+[live Pubnet API](https://pubnet.stellarchain.io/) are now available. Public checks on 19 November
+returned successful JSON responses from root discovery and the
+[statistics catalog](https://pubnet.stellarchain.io/statistics), which listed 47 metrics. Root
+discovery reports a historical floor of ledger 3 and the current ingestion and history positions.
+These are service-reported coverage fields; the validation record required by D1 remains part of
+acceptance.
+
+| Deliverable                                      | Public evidence available now                                                                 | Evidence still required to close the deliverable                                                                                                               |
+| ------------------------------------------------ | --------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| D1. Orion full-history data node                 | Hosted Pubnet API, public documentation, and reported historical coverage.                    | Public source and versioned release, coverage validation, recovery results, seven-day synchronization record, and storage/query measurements.                  |
+| D2. Horizon-compatible API and integration       | Horizon-style root discovery and interactive public API examples.                             | Version-pinned route compatibility results and repeatable explorer checks for historical account, transaction, and ledger flows, including pagination.         |
+| D3. Explorer pages, projects directory, and news | Existing explorer pages and restored API responses. Directory and news refreshes are pending. | Refreshed SCF 41–45 profiles and award metadata, current news with sources and update dates, visible coverage limits, UX checks, and performance measurements. |
+| D4. Historical statistics and analytics          | Public catalog of 47 metrics and statistics documentation.                                    | Published coverage and independent validation for all nine committed series, explorer charts, matching exports, and query measurements.                        |
+| D5. Live activity and network health             | API root reports core, ingestion, and history ledger positions.                               | Public health and validator views, source and observation-window documentation, availability/freshness monitoring, and failure/recovery checks.                |
+
+This records the evidence currently linked in the proposal. Public service availability is progress
+toward the commitments below; each deliverable retains its stated acceptance criteria. Additional
+completed work will be recorded with evidence as it becomes available.
+
+The reported Contracts, Investigator, and Statistics API errors have been addressed. Checks on 19
+November returned successful responses from the
+[contracts collection](https://api.stellarchain.io/v1/contracts?itemsPerPage=1), an
+[investigation query](https://api.stellarchain.io/v1/payment-flow/investigation?network=mainnet&txHash=b5f4cb6f2315b5bf397f2a8863d68287aabea28a0323f848db3d0b8d928c15e1&limit=1)
+using a real transaction hash, and
+[network statistics](https://api.stellarchain.io/v1/statistics/network). Users can access the
+[contracts](https://stellarchain.io/contracts),
+[investigation](https://stellarchain.io/investigate/), and
+[statistics](https://stellarchain.io/statistics) pages. The data's coverage, freshness, and
+unavailable features must be visible in the UI; a successful response alone does not establish
+complete history.
+
+The [projects directory](https://stellarchain.io/projects) refresh for awarded SCF Build submissions
+from rounds 41–45 remains outstanding. Our audit found missing project profiles and outdated award
+metadata on existing entries. The outdated news section also needs a refresh. Both are now explicit
+parts of D3, with acceptance criteria below; neither is counted as complete. D5 also covers
+monitoring the data services behind the affected pages. These additions use the existing allocations
+and do not increase the requested budget or reduce the Orion commitments.
 
 ### Budget Allocation
 
@@ -283,31 +339,37 @@ to ingestion, indexing, synchronization, and APIs. Full-history support requires
 maintenance as the network and its data grow.
 
 The other **$45,000** funds the code deliverables below. **$28,000 goes directly to Orion and its
-Horizon-compatible integration** through D1 and D2; the remainder funds explorer pages, historical
-analytics, and live health features. This allocation reflects the work needed to release a reusable
-full-history service. Actual maintenance and delivery spending will be reported separately, without
-double-counting.
+Horizon-compatible integration** through D1 and D2; the remainder funds explorer pages, the projects
+directory and news refreshes, historical analytics, and live health features. The directory and news
+work is included in D3's existing **$8,000** allocation, and availability/freshness monitoring is
+included in D5's existing **$3,000**. These named tasks are funded through Other, while the
+maintenance reserve remains capacity for work that arrives during the quarter. Actual maintenance and
+delivery spending will be reported separately, without double-counting.
 
-| Deliverable                                |      Budget |
-| ------------------------------------------ | ----------: |
-| D1. Orion full-history data node           |     $20,000 |
-| D2. Horizon-compatible API and integration |      $8,000 |
-| D3. Clearer and faster explorer pages      |      $8,000 |
-| D4. Historical statistics and analytics    |      $6,000 |
-| D5. Live activity and network health       |      $3,000 |
-| **Other total**                            | **$45,000** |
-| Software maintenance reserve               |      $5,000 |
-| **Total requested**                        | **$50,000** |
+| Deliverable                                      |      Budget |
+| ------------------------------------------------ | ----------: |
+| D1. Orion full-history data node                 |     $20,000 |
+| D2. Horizon-compatible API and integration       |      $8,000 |
+| D3. Explorer pages, projects directory, and news |      $8,000 |
+| D4. Historical statistics and analytics          |      $6,000 |
+| D5. Live activity and network health             |      $3,000 |
+| **Other total**                                  | **$45,000** |
+| Software maintenance reserve                     |      $5,000 |
+| **Total requested**                              | **$50,000** |
 
 #### D1. Orion full-history data node
 
 **Budget: $20,000. Planned delivery: 31 December 2026.**
 
-Orion was in progress during Q3 and was not counted as a completed commitment. It remains in
-progress. In Q4, we will release its full-history ingestion, versioned Parquet storage, account and
-transaction indexes, continuous synchronization, and native query APIs. The public source, setup
-instructions, architecture, and validation and recovery tools are part of this deliverable. We will
-add the repository link when published.
+Orion was in progress during Q3 and was not counted as a completed commitment. Its
+[hosted Pubnet API](https://pubnet.stellarchain.io/) and
+[documentation](https://orion.stellarchain.io/) are now public. Q4 work completes the full release
+and validation of its full-history ingestion, versioned Parquet storage, account and transaction
+indexes, continuous synchronization, and native query APIs. The public source, setup instructions,
+architecture, and validation and recovery tools remain part of this deliverable. We will add the
+source repository and versioned release links when published.
+
+Ledgers, transactions, and contract IDs are already available in the current implementation.
 
 Orion will bring the original archive, intervening ranges, and new ledgers together. We will check
 which archive data is available, publish mainnet history from the earliest recoverable ledger to the
@@ -327,6 +389,8 @@ record will show the first and last ledger, source checksums, publication genera
 latest synchronized ledger. Missing archive intervals keep the work partial. Testnet and futurenet
 will have separate coverage notes, including their resets.
 
+The seven-day synchronization check will finish before the 31 December submission deadline.
+
 Evidence will include the public repository and release, coverage record, validation and recovery
 results, the seven-day synchronization record, and storage/query measurements with the dataset size,
 hardware, and workload stated. Sample storage savings will remain labeled as samples until the whole
@@ -341,9 +405,10 @@ record, and validation results described above.
 
 **Budget: $8,000. Planned delivery: 31 December 2026.**
 
-We will connect Orion to the account, transaction, and ledger pages so users can move through old
-history as naturally as recent activity. These pages already exist; the new work is the historical
-API and the integration behind them.
+We will build on the current implementation and public Orion API to complete and validate the
+account, transaction, and ledger integrations. These pages already exist; the Q4 work is the
+historical data path and its verified behavior through the explorer. The evidence record will state
+which routes use Orion, their supported networks and historical ranges, and any remaining fallbacks.
 
 The API will provide ledger lookup and its transactions, transaction lookup and its operations and
 effects, account state, and account transaction/operation history. A compatibility matrix against a
@@ -369,11 +434,11 @@ version-pinned compatibility matrix and results, pagination checks, and repeatab
 measurements. Users and external builders will have one dependable way to read historical data and
 trace it back to the chain.
 
-#### D3. Clearer and faster explorer pages
+#### D3. Explorer pages, projects directory, and news
 
 **Budget: $8,000. Planned delivery: 31 December 2026.**
 
-We will refactor the main explorer views around the information people need first. The overview will
+We will refine the main explorer views around the information people need first. The overview will
 bring global identifier search, the selected network, recent ledgers and transactions, and links into
 accounts and historical data together in a more compact layout.
 
@@ -394,6 +459,52 @@ long lists bounded, and cancel outdated reads. The pages will share the existing
 mobile and desktop, with keyboard navigation, light and dark themes, and stable loading, empty,
 partial-data, and error states. An unavailable source will not be shown as zero activity.
 
+##### Data coverage and supported workflows
+
+Contracts, Investigator, Statistics, and other indexed views will show their selected network,
+available historical range, source, and last update where those apply. Partial coverage, stale data,
+and unavailable features will be explained before users rely on a result. Unsupported actions will be
+disabled or clearly labeled, with a reason. Empty activity, incomplete history, and a failed source
+will remain distinct states.
+
+A feature and coverage summary linked from the explorer will explain which workflows users can
+reliably use, their data dependencies, and known limitations. It will include working examples and
+links to the relevant public documentation. Release and milestone updates will link to the changed
+functionality, evidence, and remaining limitations.
+
+##### SCF projects directory
+
+We will reconcile the directory against the official awarded Build submissions from SCF rounds 41–45.
+The refresh will add missing project profiles and update existing profiles with the correct rounds,
+awarded submissions, published award totals, website, category, description, and available images.
+Each profile will retain a link to its SCF source and show when its information was checked. A round
+tag or a submitted application alone will not be treated as proof of an award.
+
+Matching will use the stable SCF project and submission identifiers. Renamed projects and duplicate
+profiles will be reviewed before merging; separate products from the same organization will remain
+distinct where the SCF records distinguish them. The dated reconciliation record will identify the
+source snapshot, added and updated profiles, confirmed matches, and any unresolved entries. Missing
+awarded projects or unresolved identity matches keep the refresh partial.
+
+We will provide a repeatable refresh process with a preview of additions and updates before
+publication. Running it again against the same source snapshot must not create duplicate projects or
+awards. A failed refresh must preserve the published catalog and be visible to maintainers. Checks
+will cover the full paginated directory, project search and category filtering, and detail links for
+the reconciled profiles.
+
+##### News freshness
+
+We will restore the news feed using a documented set of active Stellar ecosystem sources. News items
+will link to their original source, retain the original publication date, and be deduplicated when
+fetched again. The feed will show its last successful refresh and explain when updates are delayed;
+older articles will retain their original dates.
+
+The refresh workflow will support repeatable updates and make source failures visible to maintainers
+without deleting previously published items. Acceptance will compare the public feed with the latest
+available items from the selected sources at the recorded check time, verify dates and outbound
+links, and repeat a refresh to confirm that it does not duplicate stories. Feed freshness and source
+failures will be checked separately from whether the page itself loads.
+
 We will check the overview, account, ledger, and transaction flows at 390px and 1440px widths, in
 both themes and with keyboard-only navigation. For performance, we will compare at least 30 runs per
 route against the current explorer using the same browser/device profile, network conditions, and
@@ -401,19 +512,28 @@ representative data. Median time to usable primary content must improve for the 
 and transaction pages, while p95 must not get worse. The report will include loading and interaction
 timings, request counts, and rendering/long-task observations.
 
+D3 also requires the SCF 41–45 reconciliation and current news feed described above to be public,
+with their source and update information. We will exercise partial, stale, unavailable, and empty
+states in Contracts, Investigator, and Statistics, and verify that users can understand the limits
+before relying on a feature. The feature/coverage summary and release evidence must be accessible
+from the explorer or its linked documentation.
+
 Evidence will include the public pages, implementation links, desktop/mobile recordings, and the
-before/after measurements. The result should help newcomers understand what happened faster while
-letting experienced users inspect the same exact evidence. A visual refresh alone will not count as
-the historical integration or the performance improvement.
+before/after measurements, together with the dated SCF reconciliation, news source list, refresh
+checks, and examples of the coverage and failure states. The result should help newcomers understand
+what happened faster while letting experienced users inspect the same exact evidence. A visual
+refresh alone will not count as the historical integration or the performance improvement.
 
 #### D4. Historical statistics and analytics
 
 **Budget: $6,000. Planned delivery: 31 December 2026.**
 
-Q3 brought dedicated chart pages for supported metrics. In Q4, we will bring them into a searchable
-analytics workspace and extend the verified history behind them. Metrics will be grouped into network
-activity, accounts and retention, payments, assets and stablecoins, DEX and liquidity, market data,
-fees, and Soroban contracts.
+Q3 brought dedicated chart pages for supported metrics. Orion now exposes a
+[public statistics catalog](https://pubnet.stellarchain.io/statistics), with definitions and API
+examples in the [statistics guide](https://orion.stellarchain.io/guide/statistics). In Q4, we will
+build on these foundations with a searchable analytics workspace and extend the verified history
+behind it. Metrics will be grouped into network activity, accounts and retention, payments, assets
+and stablecoins, DEX and liquidity, market data, fees, and Soroban contracts.
 
 Users will be able to choose recent, one-year, multi-year, or all-history views where the data
 supports them, with suitable hourly, daily, weekly, and monthly buckets. Charts will have period
@@ -446,11 +566,19 @@ chart includes. A long-range selector by itself does not prove that the history 
 
 **Budget: $3,000. Planned delivery: 31 December 2026.**
 
-We will add a clearer view of live activity and the data service behind the explorer. Recent ledgers,
-transactions, and operations will come from the synchronized indexed tip, with pause, reconnect,
-stale, unavailable, and recovery states. The health view will show Orion's indexed and published
-ledger, synchronization lag, verified historical range, active generation, verification state, and
-last observation time.
+The [public Orion API root](https://pubnet.stellarchain.io/) already reports core, ingestion, and
+history ledger positions. We will make live activity and the data service behind the explorer easier
+to check through the user-facing views below. Recent ledgers, transactions, and operations will come
+from the synchronized indexed tip, with pause, reconnect, stale, unavailable, and recovery states.
+The health view will show Orion's indexed and published ledger, synchronization lag, verified
+historical range, active generation, verification state, and last observation time.
+
+We will add scheduled availability and freshness checks for the data services behind Contracts,
+Investigator, and Statistics. Checks will use valid requests and inspect response structure and
+source timestamps or ledger positions where available. The check interval, freshness limits, and
+failure thresholds will be documented for each source. Maintainers must be able to see failed or
+stale checks and their recovery; a successful health response alone will not mark every feature as
+healthy.
 
 We will also add a searchable validator and organization view with public identifiers, observed
 status, software version, host/country information where available from a named source, and
@@ -466,10 +594,15 @@ window. Mainnet monitoring and other network coverage will be described separate
 the existing public API health endpoint while keeping service availability separate from historical
 completeness and chain-current synchronization.
 
+We will also check controlled unavailable and stale-source cases for the monitored features. The
+checks must detect those cases, record their observation time, and recover after the source is
+restored. The relevant public view or linked status information must distinguish a source incident
+from zero activity, with the feature limitations described in D3.
+
 Evidence will include the public live, health, and validator pages, implementation links, source and
-measurement documentation, and recovery/freshness checks. Users and operators will have a clearer way
-to spot stale data and understand observed network availability without treating it as a security
-endorsement.
+measurement documentation, monitoring configuration, and failure/recovery and freshness checks. Users
+and operators will have a clearer way to spot stale data and understand observed network availability
+without treating it as a security endorsement.
 
 ## Metrics loaded from PG Atlas
 
