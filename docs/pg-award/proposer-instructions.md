@@ -33,7 +33,9 @@ projects can submit a proposal in the next available quarterly round.
 5. **Decision.** The issue is labeled `pg-intake:accepted` or `pg-intake:rejected`, then closed and
    locked. If rejected, only Pilots can reopen the intake and discussion.
 
-Once accepted, you are eligible to submit a proposal in the next quarterly round.
+Once accepted, you are eligible to submit a proposal in the next quarterly round. You also set your
+project's [service level and continuity obligations](#service-level-and-continuity-obligations),
+once, separately from your proposal.
 
 ```mermaid
 flowchart TD
@@ -303,6 +305,72 @@ Three cases are easy to get wrong:
 - A **rewrite is maintenance**, however large, if it leaves the project doing the same things.
 - **Implementing a specification you did not previously support is Other**, even though maintaining
   it afterwards is maintenance.
+
+## Service Level and Continuity Obligations
+
+Every quarterly deliverables pull request has two parts: a retroactive part for the impact you
+demonstrated, evidenced on your project page, and a retainer part for ongoing maintenance, measured
+against Service Level Objectives (SLOs).
+
+You set your own SLOs, based on how your project works and what its users need. You submit them
+**once**, in a separate SLO file, not in your proposal or your deliverables. They stay in place from
+quarter to quarter and are only looked at again if you want to change them, or if reviewers find they
+no longer fit your project.
+
+### What Makes an SLO
+
+Each SLO says what is measured, the target, and where the evidence comes from, so it can be checked.
+"Remain a good steward" is not an SLO; "respond to new issues within 14 days" is. Choose targets you
+can hold through a holiday, an illness or a day job.
+
+| Obligation (example)                                                | Evidence source     |
+| ------------------------------------------------------------------- | ------------------- |
+| Median first response on issues ≤ 14 days                           | GitHub              |
+| At least 1 release per quarter                                      | Releases            |
+| Security vulnerabilities (CVEs) patched within N days of disclosure | Security advisories |
+| Documentation updated within one release of a breaking change       | Repository changes  |
+
+To start, reviewers check your SLOs by hand during each deliverables review. Over time the program
+will check them automatically from the evidence source each one names.
+
+### Continuity Obligations
+
+Every project also keeps:
+
+- a deploy and publish runbook, and
+- all code and configuration needed to build, deploy, and publish the project in its repository.
+
+Anything that cannot live in the repository, such as secrets, is named in your SLO file with the
+reason, never with its value.
+
+### How to Submit
+
+1. Once your intake form is accepted, or if you already have a project page, open a
+   [new Service Level and Continuity Obligations Form issue](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/issues/new?template=pg-award-slo-form.yml){:target="⚡"}.
+2. The form is validated automatically. If there are errors, the bot flags them and you can edit your
+   issue to fix them.
+3. Automation creates a pull request adding your SLO file at `docs/slos/{slug}.md` and closes the
+   issue with a link to it. Anyone can comment on the pull request, and you make changes on its
+   branch. There is no approval vote on SLOs yet; the pull request is merged once the form checks
+   pass.
+
+Projects that already hold an award submit their SLOs by the 2026 Q4 deliverables deadline, **7
+January 2027**. SLOs apply from 2027 Q1. You report against them in each quarter's deliverables pull
+request; in 2027 Q1 a missed SLO is reported but does not affect Tranche 2.
+
+### Changing Your SLOs
+
+1. Navigate to your SLO file in
+   [`docs/slos/`](https://github.com/SCF-Public-Goods-Maintenance/scf-public-goods-maintenance.github.io/tree/main/docs/slos){:target="⚡"}
+   on the `main` branch and click the **Edit** (pencil) icon.
+2. Choose **"Create a new branch for this commit and start a pull request."** Name your branch
+   `slos/{slug}-{quarter}`, for example `slos/stellar-sdk-2027q2`.
+3. Keep this pull request separate from your proposal and deliverables pull requests. Changes apply
+   from the next quarter.
+
+SLOs start as per-project commitments in 2027 Q1. After the first cycle, the program will review
+whether projects in the same category have set similar SLOs. If they have, shared category SLOs may
+be introduced; if they differ, SLOs stay per-project.
 
 ## Access & Permissions
 
